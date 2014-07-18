@@ -14,7 +14,8 @@ public interface IDBEnums {
 public enum EFAPId {
 PetId(1, "PetId", EFAPTable.Pet),
 PetTypeId(2, "PetTypeId", EFAPTable.PetType),
-PersonId(3, "PersonId", null);
+PersonId(3, "PersonId", null),
+OrgId(4, "OrgId", null);
 private final String    _name;
 private final int       _nextId;
 private final EFAPTable _table;
