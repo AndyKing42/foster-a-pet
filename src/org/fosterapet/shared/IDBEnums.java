@@ -15,7 +15,8 @@ public enum EFAPId {
 PetId(1, "PetId", EFAPTable.Pet),
 PetTypeId(2, "PetTypeId", EFAPTable.PetType),
 PersonId(3, "PersonId", null),
-OrgId(4, "OrgId", null);
+OrgId(4, "OrgId", null),
+OrgPerson(5, "OrgPersonId", null);
 private final String    _name;
 private final int       _nextId;
 private final EFAPTable _table;
