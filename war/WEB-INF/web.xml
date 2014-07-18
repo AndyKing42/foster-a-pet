@@ -10,15 +10,15 @@
     <param-value>cfg/FosterAPet.cfg</param-value>
   </context-param>
   <listener>
-    <listener-class>org.fosterapet.server.FosterAPetServletContextListener</listener-class>
+    <listener-class>org.fosterapet.server.FAPServletContextListener</listener-class>
   </listener>
   <servlet>
-    <servlet-name>FosterAPetRemoteServiceServlet</servlet-name>
-    <servlet-class>org.fosterapet.server.FosterAPetRemoteServiceServlet</servlet-class>
+    <servlet-name>FAPRemoteServiceServlet</servlet-name>
+    <servlet-class>org.fosterapet.server.FAPRemoteServiceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>FosterAPetRemoteServiceServlet</servlet-name>
-    <url-pattern>/fosterapet/FosterAPetRemoteServiceServlet</url-pattern>
+    <servlet-name>FAPRemoteServiceServlet</servlet-name>
+    <url-pattern>/fosterapet/FAPRemoteServiceServlet</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
