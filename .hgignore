@@ -6,5 +6,9 @@ syntax: regexp
 syntax: regexp
 ^war/WEB-INF/deploy$
 syntax: regexp
-^.classpath
+^.classpath$
+syntax: regexp
+^.project$
+syntax: regexp
+^.settings$
 
