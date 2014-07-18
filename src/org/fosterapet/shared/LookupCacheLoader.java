@@ -1,7 +1,7 @@
-package org.greatlogic.gxttestbed.shared;
+package org.fosterapet.shared;
 
+import org.fosterapet.shared.IGXTTestbedEnums.ELookupType;
 import org.greatlogic.glgwt.client.core.GLLookupCache;
-import org.greatlogic.gxttestbed.shared.IGXTTestbedEnums.ELookupType;
 
 public class LookupCacheLoader {
 //--------------------------------------------------------------------------------------------------

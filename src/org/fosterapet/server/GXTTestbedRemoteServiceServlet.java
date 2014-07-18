@@ -1,7 +1,7 @@
-package org.greatlogic.gxttestbed.server;
+package org.fosterapet.server;
 
+import org.fosterapet.shared.IRemoteService;
 import org.greatlogic.glgwt.server.GLRemoteServiceServlet;
-import org.greatlogic.gxttestbed.shared.IRemoteService;
 import com.google.appengine.api.modules.ModulesService;
 import com.google.appengine.api.modules.ModulesServiceFactory;
 import com.greatlogic.glbase.gllib.GLLog;

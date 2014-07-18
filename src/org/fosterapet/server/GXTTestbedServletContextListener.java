@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.server;
+package org.fosterapet.server;
 
 import javax.servlet.ServletContextEvent;
 import org.greatlogic.glgwt.server.GLServletContextListener;

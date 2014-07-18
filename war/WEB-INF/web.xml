@@ -10,11 +10,11 @@
     <param-value>cfg/GXTTestbed.cfg</param-value>
   </context-param>
   <listener>
-    <listener-class>org.greatlogic.gxttestbed.server.GXTTestbedServletContextListener</listener-class>
+    <listener-class>org.fosterapet.server.GXTTestbedServletContextListener</listener-class>
   </listener>
   <servlet>
     <servlet-name>GXTTestbedRemoteServiceServlet</servlet-name>
-    <servlet-class>org.greatlogic.gxttestbed.server.GXTTestbedRemoteServiceServlet</servlet-class>
+    <servlet-class>org.fosterapet.server.GXTTestbedRemoteServiceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GXTTestbedRemoteServiceServlet</servlet-name>

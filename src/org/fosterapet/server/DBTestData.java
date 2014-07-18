@@ -1,11 +1,11 @@
-package org.greatlogic.gxttestbed.server;
+package org.fosterapet.server;
 
 import java.util.List;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.Pet;
+import org.fosterapet.shared.IDBEnums.PetType;
+import org.fosterapet.shared.IGXTTestbedEnums.ETestDataOption;
 import org.greatlogic.glgwt.server.GLNextId;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.Pet;
-import org.greatlogic.gxttestbed.shared.IDBEnums.PetType;
-import org.greatlogic.gxttestbed.shared.IGXTTestbedEnums.ETestDataOption;
 import com.google.common.collect.Lists;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;

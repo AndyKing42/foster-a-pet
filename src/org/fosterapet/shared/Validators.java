@@ -1,12 +1,12 @@
-package org.greatlogic.gxttestbed.shared;
+package org.fosterapet.shared;
 
 import java.math.BigDecimal;
 import java.util.List;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.widget.GLValidationRecord;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidators;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.Pet;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorError;
 import com.sencha.gxt.widget.core.client.form.Validator;

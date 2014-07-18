@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.shared;
+package org.fosterapet.shared;
 
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
 import com.google.gwt.user.client.rpc.AsyncCallback;

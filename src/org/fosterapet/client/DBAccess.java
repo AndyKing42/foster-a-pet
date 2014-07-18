@@ -1,16 +1,16 @@
-package org.greatlogic.gxttestbed.client;
+package org.fosterapet.client;
 
+import org.fosterapet.client.widget.GridWidgetManager;
+import org.fosterapet.client.widget.PetGridWidget;
+import org.fosterapet.shared.IRemoteServiceAsync;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.Pet;
+import org.fosterapet.shared.IGXTTestbedEnums.ETestDataOption;
 import org.greatlogic.glgwt.client.core.GLDBException;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLSQL;
 import org.greatlogic.glgwt.client.core.IGLSQLSelectCallback;
-import org.greatlogic.gxttestbed.client.widget.GridWidgetManager;
-import org.greatlogic.gxttestbed.client.widget.PetGridWidget;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.Pet;
-import org.greatlogic.gxttestbed.shared.IGXTTestbedEnums.ETestDataOption;
-import org.greatlogic.gxttestbed.shared.IRemoteServiceAsync;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class DBAccess {

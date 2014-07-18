@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.client.widget;
+package org.fosterapet.client.widget;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,10 +12,10 @@ package org.greatlogic.gxttestbed.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.ClientFactory;
+import org.fosterapet.client.DBAccess;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
-import org.greatlogic.gxttestbed.client.ClientFactory;
-import org.greatlogic.gxttestbed.client.DBAccess;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;

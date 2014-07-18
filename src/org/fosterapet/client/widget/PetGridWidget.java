@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.client.widget;
+package org.fosterapet.client.widget;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,9 +12,9 @@ package org.greatlogic.gxttestbed.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
-import org.greatlogic.gxttestbed.shared.IDBEnums.Pet;
 import com.sencha.gxt.core.client.util.DateWrapper;
 
 public class PetGridWidget extends GLGridWidget {

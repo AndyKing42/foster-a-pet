@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.client.widget;
+package org.fosterapet.client.widget;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -13,12 +13,12 @@ package org.greatlogic.gxttestbed.client.widget;
  * the License.
  */
 import java.util.TreeMap;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLUtil;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.Pet;
 
 public class GridWidgetManager {
 //--------------------------------------------------------------------------------------------------

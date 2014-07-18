@@ -1,12 +1,12 @@
-package org.greatlogic.gxttestbed.client;
+package org.fosterapet.client;
 
+import org.fosterapet.client.widget.MainLayoutWidget;
+import org.fosterapet.shared.IRemoteService;
+import org.fosterapet.shared.IRemoteServiceAsync;
+import org.fosterapet.shared.LookupCacheLoader;
+import org.fosterapet.shared.Validators;
 import org.greatlogic.glgwt.client.core.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
-import org.greatlogic.gxttestbed.client.widget.MainLayoutWidget;
-import org.greatlogic.gxttestbed.shared.IRemoteService;
-import org.greatlogic.gxttestbed.shared.IRemoteServiceAsync;
-import org.greatlogic.gxttestbed.shared.LookupCacheLoader;
-import org.greatlogic.gxttestbed.shared.Validators;
 import com.google.gwt.core.client.GWT;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 

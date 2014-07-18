@@ -1,9 +1,9 @@
-package org.greatlogic.gxttestbed.server;
+package org.fosterapet.server;
 
 import java.util.Map;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedId;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.NextId;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedId;
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.NextId;
 import com.google.common.collect.Maps;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;

@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.server;
+package org.fosterapet.server;
 
 import com.greatlogic.glbase.glxml.IGLXMLAttributeEnum;
 

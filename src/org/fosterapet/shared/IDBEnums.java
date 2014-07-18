@@ -1,13 +1,13 @@
-package org.greatlogic.gxttestbed.shared;
+package org.fosterapet.shared;
 
 import java.util.Collection;
 import java.util.TreeMap;
+import org.fosterapet.shared.IGXTTestbedEnums.ELookupType;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
-import org.greatlogic.gxttestbed.shared.IGXTTestbedEnums.ELookupType;
 
 public interface IDBEnums {
 //--------------------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
-package org.greatlogic.gxttestbed.client;
+package org.fosterapet.client;
 
-import org.greatlogic.gxttestbed.client.widget.MainLayoutWidget;
+import org.fosterapet.client.widget.MainLayoutWidget;
 
 public class ClientFactoryUI extends ClientFactory {
 //--------------------------------------------------------------------------------------------------

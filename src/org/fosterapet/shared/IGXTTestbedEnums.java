@@ -1,8 +1,8 @@
-package org.greatlogic.gxttestbed.shared;
+package org.fosterapet.shared;
 
+import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
-import org.greatlogic.gxttestbed.shared.IDBEnums.EGXTTestbedTable;
 
 public interface IGXTTestbedEnums {
 //--------------------------------------------------------------------------------------------------

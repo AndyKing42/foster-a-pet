@@ -26,7 +26,7 @@
   <inherits name='org.greatlogic.glgwt.GLGWT'/>
   
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='org.greatlogic.gxttestbed.client.GXTTestbed'/>
+  <entry-point class='org.fosterapet.client.GXTTestbed'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

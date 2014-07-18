@@ -1,4 +1,4 @@
-package org.greatlogic.gxttestbed.client;
+package org.fosterapet.client;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,11 +12,11 @@ package org.greatlogic.gxttestbed.client;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.widget.GridWidgetManager;
+import org.fosterapet.client.widget.MainLayoutWidget;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLUtil;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
-import org.greatlogic.gxttestbed.client.widget.GridWidgetManager;
-import org.greatlogic.gxttestbed.client.widget.MainLayoutWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
