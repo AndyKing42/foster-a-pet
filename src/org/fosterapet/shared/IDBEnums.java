@@ -13,9 +13,10 @@ public interface IDBEnums {
 //--------------------------------------------------------------------------------------------------
 public enum EFAPId {
 PetId(1, "PetId", EFAPTable.Pet),
-PetTypeId(2, "PetTypeId", EFAPTable.PetType);
-private final String           _name;
-private final int              _nextId;
+PetTypeId(2, "PetTypeId", EFAPTable.PetType),
+PersonId(3, "PersonId", null);
+private final String    _name;
+private final int       _nextId;
 private final EFAPTable _table;
 private EFAPId(final int nextId, final String name, final EFAPTable table) {
   _nextId = nextId;
