@@ -1,13 +1,13 @@
 package org.fosterapet.shared;
 
-import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
 
-public interface IGXTTestbedEnums {
+public interface IFAPEnums {
 //--------------------------------------------------------------------------------------------------
 public enum ELookupType implements IGLLookupType {
-PetType(EGXTTestbedTable.PetType),
+PetType(EFAPTable.PetType),
 Sex(null);
 private final IGLTable _table;
 private ELookupType(final IGLTable table) {

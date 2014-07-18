@@ -10,11 +10,11 @@ import com.greatlogic.glbase.gldb.IGLDBEnums.EGLDBType;
 import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.glxml.GLXMLElement;
 
-public class GXTTestbedServletContextListener extends GLServletContextListener {
+public class FAPServletContextListener extends GLServletContextListener {
 //--------------------------------------------------------------------------------------------------
 @Override
 public void contextInitialized(final ServletContextEvent event) {
-  initialize("GXTTestbed");
+  initialize("FosterAPet");
   final GLXMLElement dsElement = new GLXMLElement("DataSources");
   final GLXMLElement fapElement = new GLXMLElement("FosterAPet", dsElement);
   fapElement.addAttribute(EGLDBConfigAttribute.Active, true);

@@ -20,7 +20,7 @@ import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
-public class GXTTestbed implements EntryPoint {
+public class FosterAPet implements EntryPoint {
 //--------------------------------------------------------------------------------------------------
 @Override
 public void onModuleLoad() {

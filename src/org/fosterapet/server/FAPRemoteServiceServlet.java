@@ -8,8 +8,7 @@ import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.gllib.IGLLibEnums.EGLLogLevel;
 
 @SuppressWarnings("serial")
-public class GXTTestbedRemoteServiceServlet extends GLRemoteServiceServlet implements
-                                                                          IRemoteService {
+public class FAPRemoteServiceServlet extends GLRemoteServiceServlet implements IRemoteService {
 //--------------------------------------------------------------------------------------------------
 @Override
 public String gaeTest() {

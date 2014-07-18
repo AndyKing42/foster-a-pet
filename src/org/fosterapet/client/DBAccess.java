@@ -3,9 +3,9 @@ package org.fosterapet.client;
 import org.fosterapet.client.widget.GridWidgetManager;
 import org.fosterapet.client.widget.PetGridWidget;
 import org.fosterapet.shared.IRemoteServiceAsync;
-import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
-import org.fosterapet.shared.IGXTTestbedEnums.ETestDataOption;
+import org.fosterapet.shared.IFAPEnums.ETestDataOption;
 import org.greatlogic.glgwt.client.core.GLDBException;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
@@ -18,8 +18,8 @@ public class DBAccess {
 public static void loadPets(final GLListStore petListStore) {
   try {
     final GLSQL petSQL = GLSQL.select();
-    petSQL.from(EGXTTestbedTable.Pet);
-    petSQL.orderBy(EGXTTestbedTable.Pet, Pet.PetName, true);
+    petSQL.from(EFAPTable.Pet);
+    petSQL.orderBy(EFAPTable.Pet, Pet.PetName, true);
     petSQL.executeSelect(petListStore, new IGLSQLSelectCallback() {
       @Override
       public void onFailure(final Throwable t) {

@@ -14,7 +14,7 @@ package org.fosterapet.client;
  */
 import java.util.ArrayList;
 import java.util.List;
-import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IDBEnums.PetType;
 import org.greatlogic.glgwt.client.core.GLListStore;
@@ -67,7 +67,7 @@ public static void loadPetTestData(final List<GLRecord> recordList) {
 private static void loadPetTestData(final GLListStore listStore, final List<GLRecord> recordList) {
   final IGLColumn[] columns = new IGLColumn[] {Pet.AdoptionFee, Pet.FosterDate, Pet.IntakeDate, //
       Pet.PetId, Pet.PetName, Pet.PetTypeId, Pet.Sex, Pet.TrainedFlag};
-  final GLRecordDef recordDef = new GLRecordDef(EGXTTestbedTable.Pet, columns);
+  final GLRecordDef recordDef = new GLRecordDef(EFAPTable.Pet, columns);
   clearList(listStore, recordList);
   int nextPetId = 1;
   for (final String petNameAndSex : PetNamesAndSex) {
@@ -102,7 +102,7 @@ public static void loadPetTypeTestData(final List<GLRecord> recordList) {
 private static void loadPetTypeTestData(final GLListStore listStore, final List<GLRecord> recordList) {
   final IGLColumn[] columns = new IGLColumn[] {PetType.PetTypeShortDesc, PetType.PetTypeDesc, //
       PetType.PetTypeId};
-  final GLRecordDef recordDef = new GLRecordDef(EGXTTestbedTable.PetType, columns);
+  final GLRecordDef recordDef = new GLRecordDef(EFAPTable.PetType, columns);
   clearList(listStore, recordList);
   int nextPetTypeId = 1;
   for (final String petType : PetTypes) {

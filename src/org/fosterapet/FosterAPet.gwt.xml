@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.5.1//EN"
   "http://google-web-toolkit.googlecode.com/svn/tags/2.5.1/distro-source/core/src/gwt-module.dtd">
-<module rename-to='gxttestbed'>
+<module rename-to='fosterapet'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='com.google.gwt.user.User'/>
 
@@ -26,7 +26,7 @@
   <inherits name='org.greatlogic.glgwt.GLGWT'/>
   
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='org.fosterapet.client.GXTTestbed'/>
+  <entry-point class='org.fosterapet.client.FosterAPet'/>
 
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>

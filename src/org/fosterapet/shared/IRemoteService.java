@@ -3,7 +3,7 @@ package org.fosterapet.shared;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-@RemoteServiceRelativePath("GXTTestbedRemoteServiceServlet")
+@RemoteServiceRelativePath("FAPRemoteServiceServlet")
 public interface IRemoteService extends IGLRemoteService {
 //--------------------------------------------------------------------------------------------------
 String gaeTest();

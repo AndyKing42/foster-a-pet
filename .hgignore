@@ -2,7 +2,7 @@
 syntax: regexp
 ^gwt-unitCache$
 syntax: regexp
-^war/gxttestbed$
+^war/fosterapet$
 syntax: regexp
 ^war/WEB-INF/deploy$
 syntax: regexp

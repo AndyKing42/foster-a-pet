@@ -2,7 +2,7 @@ package org.fosterapet.shared;
 
 import java.math.BigDecimal;
 import java.util.List;
-import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.widget.GLValidationRecord;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
@@ -25,7 +25,7 @@ private void addPetValidators() {
       return null;
     }
   });
-  addRecordValidator(EGXTTestbedTable.Pet, new GLRecordValidator() {
+  addRecordValidator(EFAPTable.Pet, new GLRecordValidator() {
     @Override
     public void validateRecord(final GLValidationRecord validationRecord) {
       if (validationRecord.asInt(Pet.NumberOfFosters) < 0) {

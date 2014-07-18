@@ -2,7 +2,7 @@ package org.fosterapet.shared;
 
 import java.util.Collection;
 import java.util.TreeMap;
-import org.fosterapet.shared.IGXTTestbedEnums.ELookupType;
+import org.fosterapet.shared.IFAPEnums.ELookupType;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
@@ -11,13 +11,13 @@ import org.greatlogic.glgwt.shared.IGLTable;
 
 public interface IDBEnums {
 //--------------------------------------------------------------------------------------------------
-public enum EGXTTestbedId {
-PetId(1, "PetId", EGXTTestbedTable.Pet),
-PetTypeId(2, "PetTypeId", EGXTTestbedTable.PetType);
+public enum EFAPId {
+PetId(1, "PetId", EFAPTable.Pet),
+PetTypeId(2, "PetTypeId", EFAPTable.PetType);
 private final String           _name;
 private final int              _nextId;
-private final EGXTTestbedTable _table;
-private EGXTTestbedId(final int nextId, final String name, final EGXTTestbedTable table) {
+private final EFAPTable _table;
+private EFAPId(final int nextId, final String name, final EFAPTable table) {
   _nextId = nextId;
   _name = name;
   _table = table;
@@ -28,12 +28,12 @@ public String getName() {
 public int getNextId() {
   return _nextId;
 }
-public EGXTTestbedTable getTable() {
+public EFAPTable getTable() {
   return _table;
 }
 }
 //--------------------------------------------------------------------------------------------------
-public enum EGXTTestbedTable implements IGLTable {
+public enum EFAPTable implements IGLTable {
 NextId(IDBEnums.NextId.class),
 Pet(IDBEnums.Pet.class),
 PetType(IDBEnums.PetType.class);
@@ -41,7 +41,7 @@ private TreeMap<String, IGLColumn>     _columnByColumnNameMap;
 private final Class<? extends Enum<?>> _columnClass;
 private TreeMap<Integer, IGLColumn>    _comboboxColumnMap;
 private TreeMap<Integer, IGLColumn>    _primaryKeyColumnMap;
-private EGXTTestbedTable(final Class<? extends Enum<?>> columnClass) {
+private EFAPTable(final Class<? extends Enum<?>> columnClass) {
   _columnClass = columnClass;
 }
 private void createColumnByColumnNameMap() {

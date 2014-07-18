@@ -1,8 +1,8 @@
 package org.fosterapet.server;
 
 import java.util.Map;
-import org.fosterapet.shared.IDBEnums.EGXTTestbedId;
-import org.fosterapet.shared.IDBEnums.EGXTTestbedTable;
+import org.fosterapet.shared.IDBEnums.EFAPId;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.NextId;
 import com.google.common.collect.Maps;
 import com.greatlogic.glbase.gldb.GLDBException;
@@ -17,9 +17,9 @@ class DBCreateTables {
 //--------------------------------------------------------------------------------------------------
 public static void recreateTables() {
   try {
-    GLDBUtil.dropTable(null, EGXTTestbedTable.NextId.name());
-    GLDBUtil.dropTable(null, EGXTTestbedTable.Pet.name());
-    GLDBUtil.dropTable(null, EGXTTestbedTable.PetType.name());
+    GLDBUtil.dropTable(null, EFAPTable.NextId.name());
+    GLDBUtil.dropTable(null, EFAPTable.Pet.name());
+    GLDBUtil.dropTable(null, EFAPTable.PetType.name());
     final String sql;
     sql = "" //
           + "create table NextId\n" //
@@ -75,7 +75,7 @@ public static void recreateTables() {
 }
 //--------------------------------------------------------------------------------------------------
 public static void addIds() throws GLDBException {
-  for (final EGXTTestbedId id : EGXTTestbedId.values()) {
+  for (final EFAPId id : EFAPId.values()) {
     int nextIdValue = 0;
     if (id.getTable() != null) {
       final String primaryKeyColumnName = id.getTable().getPrimaryKeyColumnMap().get(1).toString();
@@ -85,7 +85,7 @@ public static void addIds() throws GLDBException {
       sql.getAggregates(false, null, maxMap, null, primaryKeyColumnName);
       nextIdValue = GLUtil.stringToInt(maxMap.get(primaryKeyColumnName));
     }
-    final GLSQL nextIdSQL = GLSQL.insert(EGXTTestbedTable.NextId.name(), true);
+    final GLSQL nextIdSQL = GLSQL.insert(EFAPTable.NextId.name(), true);
     nextIdSQL.setValue(NextId.NextId.name(), id.getNextId());
     nextIdSQL.setValue(NextId.NextIdName.name(), id.getName());
     nextIdSQL.setValue(NextId.NextIdTableName.name(), id.getTable().name());
