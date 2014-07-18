@@ -1,0 +1,10 @@
+
+syntax: regexp
+^gwt-unitCache$
+syntax: regexp
+^war/gxttestbed$
+syntax: regexp
+^war/WEB-INF/deploy$
+syntax: regexp
+^.classpath
+
