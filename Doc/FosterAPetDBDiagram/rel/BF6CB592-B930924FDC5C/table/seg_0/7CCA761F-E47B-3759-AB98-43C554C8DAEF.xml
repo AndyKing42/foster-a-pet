@@ -1,0 +1,140 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7CCA761F-E47B-3759-AB98-43C554C8DAEF" name="SearchDefDetail">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:23:01 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SearchDefDetailId" id="1D6DE3AA-50E7-E397-8B46-8C58FE0BAA6F">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:24:01 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ArchiveDate" id="3A328A02-B216-2F80-A167-EA64D5F632AB">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:24:01 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SearchDefId" id="AF1B8DC7-B38B-9946-7705-3145A044B92E">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:28:18 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>79C8F9EA-35E9-CFFC-CEB0-F11F60AE1CE9</delegate>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CB95E2ED-AF66-CFFC-F6EC-691A18BBD1D6" referredColumn="79C8F9EA-35E9-CFFC-CEB0-F11F60AE1CE9"/>
+</associations>
+</Column>
+<Column name="Value1" id="E432F86F-B369-B7C5-C609-AD70F9B128C3">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:27:35 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Value2" id="E3D26402-B995-125F-7AEF-6D1A81E85B87">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:27:35 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Value3" id="4EE6CC62-AFA3-B7A7-2E65-8D7F63BA63AF">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:27:35 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ValueList" id="6A43B546-5E7D-C926-C46A-62613E19D631">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:27:35 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ValueName" id="91B0ED05-D872-D3CF-AD88-14EAFF504AC2">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:27:35 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Version" id="F732F649-6ECB-C7EC-2B44-9BCB00517060">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:24:01 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D293543C-E199-C380-6559-0D50A1A8D4BA" name="SearchDefDetailPK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:24:01 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1D6DE3AA-50E7-E397-8B46-8C58FE0BAA6F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DD423D66-13EC-32F3-E161-F164E153E605" name="SearchDefDetail__IDX">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:29:30 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF1B8DC7-B38B-9946-7705-3145A044B92E"/>
+<colUsage columnID="91B0ED05-D872-D3CF-AD88-14EAFF504AC2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="676BC8CF-85B6-9FCB-B4A7-47439AC92A82" name="SearchDefDetail_SearchDef_FK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-30 06:28:18 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF1B8DC7-B38B-9946-7705-3145A044B92E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

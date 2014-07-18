@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6009E92A-DC4A-2713-E5AD-BBF5786646BA" name="City">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:42:18 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CityId" id="27D644DD-3AF6-BF12-9594-DA27815CC851">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="ArchiveDate" id="B39F084F-08D6-77CF-20F9-B74B69C558C5">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="CityName" id="A751B606-7AB9-DD20-A51C-D76437A88D65">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+</Column>
+<Column name="StateId" id="86D4FBA5-8DED-7330-030D-EF83069383C0">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:45:58 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>CE1C464F-8FDD-6A3C-237E-D7582D4AA955</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="24793D45-BCF9-5E36-CA66-026F63A48702" referredColumn="CE1C464F-8FDD-6A3C-237E-D7582D4AA955"/>
+</associations>
+</Column>
+<Column name="Version" id="C7D96DDE-A273-B73C-C53B-FABB1E87333C">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="B95BD856-0455-62C2-A817-15F69E786172" name="CityPK">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="27D644DD-3AF6-BF12-9594-DA27815CC851"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6AF1F407-3110-CB57-892D-2503542DC632" name="City__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:31:58 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<indexColumnUsage>
+<colUsage columnID="86D4FBA5-8DED-7330-030D-EF83069383C0"/>
+<colUsage columnID="A751B606-7AB9-DD20-A51C-D76437A88D65"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B4A2E8B3-2C01-B8AA-573A-90BF6DC00628" name="City_State_FK">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:45:58 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="86D4FBA5-8DED-7330-030D-EF83069383C0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

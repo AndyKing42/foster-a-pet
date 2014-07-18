@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="00DAF1BA-FE13-72D7-D574-AFA22047B647" mainViewID="1F3EBFC6-0032-9953-A2AC-5233F447347E">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 19:09:17 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

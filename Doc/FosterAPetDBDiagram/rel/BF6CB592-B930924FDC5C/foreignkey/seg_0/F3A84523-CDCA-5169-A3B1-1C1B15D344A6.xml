@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="F3A84523-CDCA-5169-A3B1-1C1B15D344A6" name="OrgPerson_Role_FK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-15 03:39:17 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<containerWithKeyObject>1C024CD1-81DC-CDAF-4FAC-36B262336584</containerWithKeyObject>
+<deleteRule>RESTRICT</deleteRule>
+<localFKIndex>A9DE87E9-2AFF-40BC-F8C1-87515ACA39A0</localFKIndex>
+<keyObject>27EB6613-E7BF-093A-54B2-E4D51D4A438B</keyObject>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

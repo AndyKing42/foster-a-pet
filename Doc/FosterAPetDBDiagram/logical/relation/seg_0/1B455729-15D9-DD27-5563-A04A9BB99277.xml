@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="registeredUserId" directorySegmentName="seg_0" id="1B455729-15D9-DD27-5563-A04A9BB99277">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>512D4C62-750A-96C8-B82D-9B75A4D2F8B3</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<sourcePk>99D91B9C-F76A-90F2-4220-CB330D2D12B1</sourcePk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>BA9EE1C6-CB76-F466-6B2B-0F0D1E280E7E</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>2997B551-F8D6-5DE6-6802-9CF64C7C0F15</targetEntity>
+<transferable>true</transferable>
+</Relation>

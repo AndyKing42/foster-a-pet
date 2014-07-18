@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="54DC7F96-8039-69DD-575D-039AE358C7F9" name="DBAudit">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:45:19 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="DBAuditId" id="6C48FFBA-49AE-F42E-7DB7-F29CB1281ABA">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:45:54 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="AuditAction" id="8C927E6F-07F5-794D-903D-8AAA9B4701B9">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:47:37 UTC</createdTime>
+<comment>I, U, or D</comment>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+</Column>
+<Column name="AuditDate" id="FAA45C58-1131-43B3-833F-E6407C9A19D8">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:49:10 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="NewData" id="8831C2A3-D135-59AC-129A-9A3DBACBE2D2">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:53:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+</Column>
+<Column name="OldData" id="DBBE1D57-214E-3FC1-B201-1DFE3506FF95">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:53:48 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+</Column>
+<Column name="OrgId" id="C7298352-295E-CBBD-D2B3-1CA49B9C6F78">
+<createdBy>aking</createdBy>
+<createdTime>2011-10-19 15:09:50 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="PersonId" id="95120B66-4D90-9470-7B94-E574784BD81B">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-16 05:53:19 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="Version" id="56924727-5FBB-8296-D652-429AF5CA2D77">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-15 04:54:02 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="017A769D-B90E-A971-C713-2567B30B46EC" name="DBAuditPK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:45:57 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="6C48FFBA-49AE-F42E-7DB7-F29CB1281ABA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6AA87E54-B56E-07A4-B662-3FBEC6C7CAC4" name="DBAudit__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:40:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexColumnUsage>
+<colUsage columnID="C7298352-295E-CBBD-D2B3-1CA49B9C6F78"/>
+<colUsage columnID="FAA45C58-1131-43B3-833F-E6407C9A19D8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
