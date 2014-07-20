@@ -3,18 +3,16 @@ package org.fosterapet.databaseupdate;
 import java.io.IOException;
 import org.fosterapet.databaseupdate.IDatabaseUpdateEnums.EDBUConfigAD;
 import org.fosterapet.shared.IDBEnums;
+import org.fosterapet.shared.IDBEnums.DBUpdateNote;
+import org.fosterapet.shared.IDBEnums.EFAPId;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import com.greatlogic.glbase.gldb.GLDBException;
-import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gldb.GLSchemaLoader;
 import com.greatlogic.glbase.gldb.GLSchemaTable;
-import com.greatlogic.glbase.gldb.IGLDBEnums.EGLDBException;
 import com.greatlogic.glbase.gllib.GLConfig;
 import com.greatlogic.glbase.gllib.GLLog;
-import com.greatlogic.glbase.gllib.GLUtil;
-import com.greatlogic.glbase.gllib.IGLLibEnums.EGLLogLevel;
 
-final class DBUUtil {
+final class DBUUtil_old {
 //--------------------------------------------------------------------------------------------------
 private static final String  _dbEnumsClassName;
 private static final String  _projectPackageName;
@@ -24,24 +22,27 @@ private static StringBuilder _resultSB;
 //--------------------------------------------------------------------------------------------------
 static {
   _dbEnumsClassName = IDBEnums.class.getName();
-  _projectPackageName = GLConfig.getTopConfigElement().attributeAsString(EDBUConfigAD.ProjectPackageName);
-  _projectPackagePath = GLConfig.getTopConfigElement().attributeAsString(EDBUConfigAD.ProjectPackagePath);
+  _projectPackageName = GLConfig.getTopConfigElement() //
+                                .attributeAsString(EDBUConfigAD.ProjectPackageName);
+  _projectPackagePath = GLConfig.getTopConfigElement() //
+                                .attributeAsString(EDBUConfigAD.ProjectPackagePath);
   _resultSB = new StringBuilder(1000);
-} // static initialization
+}
 //--------------------------------------------------------------------------------------------------
 /**
  * Adds all database NextIds that do not already exist.
  */
-static void addNextIds() throws GLDBException {
-  ENextIdDef.addNextIds(_resultSB);
-} // addNextIds()
+static void addNextIds() {
+  EFAPId.addNextIds(null);
+}
 //--------------------------------------------------------------------------------------------------
 static void applySQLFile(final String sqlFilename) throws GLDBException {
   GLSchemaLoader schemaLoader;
   try {
     final String configFilename = GLConfig.getConfigFilename();
-    final String sqlFilePath = configFilename.substring(0, configFilename.lastIndexOf('/') + 1) +
-                               sqlFilename;
+    final String sqlFilePath =
+                               configFilename.substring(0, configFilename.lastIndexOf('/') + 1) +
+                                       sqlFilename;
     schemaLoader = GLSchemaLoader.createUsingFilename(sqlFilePath, "^ *[gG][oO] *$", "--");
     for (final GLSchemaTable table : schemaLoader.getTables()) {
       if (!table.getTableName().equalsIgnoreCase("DBUpdateNote")) {
@@ -59,11 +60,11 @@ static void applySQLFile(final String sqlFilename) throws GLDBException {
     throw new GLDBException(EGLDBException.ExecSQLError, "Error creating schema loader (" +
                                                          ioe.getMessage() + ")");
   }
-} // applySQLFile()
+}
 //--------------------------------------------------------------------------------------------------
 static void clearResultSB() {
   _resultSB.setLength(0);
-} // clearResultSB()
+}
 //--------------------------------------------------------------------------------------------------
 static String getResponse(final String prompt) {
   String result = "";
@@ -85,7 +86,7 @@ static String getResponse(final String prompt) {
     result = "";
   }
   return result;
-} // getResponse()
+}
 //--------------------------------------------------------------------------------------------------
 static void insertDBUpdateNote(final String dbRevNumber, final String devDate,
                                final String devTime, final String additionalUpdateDesc)
@@ -107,15 +108,15 @@ static void insertDBUpdateNote(final String dbRevNumber, final String devDate,
     GLLog.setThreadLogLevel(saveLogLevel);
   }
   final GLSQL dbUpdateNoteSQL = GLSQL.insert(EFAPTable.DBUpdateNote, false);
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.AppliedDateTime, GLUtil.currentTimeYYYYMMDDHHMMSS());
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.DBRevNumber, dbRevNumber);
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.DBUpdateDesc, dbUpdateDesc);
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.DBUpdateNoteId, nextValue);
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.DevDateTime, devDate + devTime);
-  dbUpdateNoteSQL.setValue(EDBUpdateNote.Version, 1);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.AppliedDateTime, GLUtil.currentTimeYYYYMMDDHHMMSS());
+  dbUpdateNoteSQL.setValue(DBUpdateNote.DBRevNumber, dbRevNumber);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateDesc, dbUpdateDesc);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateNoteId, nextValue);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.DevDateTime, devDate + devTime);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.Version, 1);
   dbUpdateNoteSQL.execute();
   _resultSB.setLength(0);
-} // insertDBUpdateNote()
+}
 //--------------------------------------------------------------------------------------------------
 static void outputEnumEntries(final GLSchemaLoader schemaLoader) {
   int nextId = 1;
@@ -128,10 +129,10 @@ static void outputEnumEntries(final GLSchemaLoader schemaLoader) {
   for (final GLSchemaTable table : schemaLoader.getTables()) {
     GLLog.toSystemOut(table.getEnum("E"), GLUtil.LineSeparator);
   }
-} // outputEnumEntries()
+}
 //--------------------------------------------------------------------------------------------------
-private DBUUtil() {
+private DBUUtil_old() {
   // prevent instantiation
-} // DBUUtil()
+}
 //--------------------------------------------------------------------------------------------------
 }

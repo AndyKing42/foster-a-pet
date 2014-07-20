@@ -3,6 +3,7 @@ package org.fosterapet.shared;
 import java.util.Collection;
 import java.util.TreeMap;
 import org.fosterapet.shared.IFAPEnums.ELookupType;
+import org.greatlogic.glgwt.client.core.GLDBException;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
@@ -12,14 +13,76 @@ import org.greatlogic.glgwt.shared.IGLTable;
 public interface IDBEnums {
 //--------------------------------------------------------------------------------------------------
 public enum EFAPId {
-PetId(1, "PetId", EFAPTable.Pet),
-PetTypeId(2, "PetTypeId", EFAPTable.PetType),
-PersonId(3, "PersonId", null),
-OrgId(4, "OrgId", null),
-OrgPerson(5, "OrgPersonId", null);
+AddressId(1, "AddressId", EFAPTable.Address),
+AttributeId(2, "AttributeId", EFAPTable.Attribute),
+AttributeDefId(3, "AttributeDefId", EFAPTable.AttributeDef),
+CityId(4, "CityId", EFAPTable.City),
+DBAuditId(5, "DBAuditId", EFAPTable.DBAudit),
+DBUpdateNoteId(6, "DBUpdateNoteId", EFAPTable.DBUpdateNote),
+FosterHistoryId(7, "FosterHistoryId", EFAPTable.FosterHistory),
+LocId(8, "LocId", EFAPTable.Loc),
+LocPersonId(9, "LocPersonId", EFAPTable.LocPerson),
+LocTypeId(10, "LocTypeId", EFAPTable.LocType),
+NextIdId(11, "NextIdId", EFAPTable.NextId),
+OrgId(12, "OrgId", EFAPTable.Org),
+OrgPersonId(13, "OrgPersonId", EFAPTable.OrgPerson),
+PersonId(14, "PersonId", EFAPTable.Person),
+PersonRelationshipId(15, "PersonRelationshipId", EFAPTable.PersonRelationship),
+PersonRoleId(16, "PersonRoleId", EFAPTable.PersonRole),
+PetId(17, "PetId", EFAPTable.Pet),
+PetTypeId(18, "PetTypeId", EFAPTable.PetType),
+PlanEntryId(19, "PlanEntryId", EFAPTable.PlanEntry),
+PlanPersonId(20, "PlanPersonId", EFAPTable.PlanPerson),
+PlanTemplateId(21, "PlanTemplateId", EFAPTable.PlanTemplate),
+PlanTemplateEntryId(22, "PlanTemplateEntryId", EFAPTable.PlanTemplateEntry),
+PlanTemplateTreatmentId(23, "PlanTemplateTreatmentId", EFAPTable.PlanTemplateTreatment),
+SearchDefId(24, "SearchDefId", EFAPTable.SearchDef),
+SearchDefDetailId(25, "SearchDefDetailId", EFAPTable.SearchDefDetail),
+StateId(26, "StateId", EFAPTable.State),
+TreatmentId(27, "TreatmentId", EFAPTable.Treatment),
+TreatmentTypeId(28, "TreatmentTypeId", EFAPTable.TreatmentType),
+ValueListId(29, "ValueListId", EFAPTable.ValueList);
 private final String    _name;
 private final int       _nextId;
 private final EFAPTable _table;
+public static String addNextIds(final StringBuilder resultSB) throws GLDBException {
+  final String result = "";
+  //  for (final EFAPId fapId : EFAPId.values()) {
+  //    boolean sequenceExists;
+  //    final EGLLogLevel saveLogLevel = GLLog.setThreadLogLevel(EGLLogLevel.Minor);
+  //    try {
+  //      final GLSQL sql = GLSQL.select();
+  //      sql.from(EFAPTable.NextId);
+  //      sql.whereAnd(NextId.NextId, EGLDBOp.Equals, fapId.getNextId());
+  //      sql.open();
+  //      try {
+  //        sequenceExists = sql.next();
+  //      }
+  //      finally {
+  //        sql.close();
+  //      }
+  //    }
+  //    finally {
+  //      GLLog.setThreadLogLevel(saveLogLevel);
+  //    }
+  //    if (!sequenceExists) {
+  //      final GLSQL sql = GLSQL.insert(ECirrusTable.XSequence, dataSourceName, false);
+  //      sql.setValue(XSequence.SequenceID, fapId.getID());
+  //      sql.setValue(XSequence.NextValue, 1000);
+  //      sql.setValue(XSequence.SequenceName, fapId.toString());
+  //      sql.execute();
+  //      result += (result.isEmpty() ? "" : ",") + fapId;
+  //    }
+  //  }
+  //  if (!result.isEmpty()) {
+  //    result = "Add sequence" + (result.contains(",") ? "s" : "") + ": " + result + ".";
+  //    GLLog.toSystemOut(result, GLUtil.LineSeparator);
+  //    if (resultSB != null) {
+  //      resultSB.append(result);
+  //    }
+  //  }
+  return result;
+}
 private EFAPId(final int nextId, final String name, final EFAPTable table) {
   _nextId = nextId;
   _name = name;
@@ -67,18 +130,18 @@ Treatment(Treatment.class),
 TreatmentType(TreatmentType.class),
 ValueList(ValueList.class);
 private TreeMap<String, IGLColumn>     _columnByColumnNameMap;
-private final Class<? extends Enum<?>> _columnClass;
+private final Class<? extends Enum<?>> _columnEnumClass;
 private TreeMap<Integer, IGLColumn>    _comboboxColumnMap;
 private TreeMap<Integer, IGLColumn>    _primaryKeyColumnMap;
-private EFAPTable(final Class<? extends Enum<?>> columnClass) {
-  _columnClass = columnClass;
+private EFAPTable(final Class<? extends Enum<?>> columnEnumClass) {
+  _columnEnumClass = columnEnumClass;
 }
 private void createColumnByColumnNameMap() {
   if (_columnByColumnNameMap == null) {
     _columnByColumnNameMap = new TreeMap<>();
     _comboboxColumnMap = new TreeMap<>();
     _primaryKeyColumnMap = new TreeMap<>();
-    for (final Enum<?> columnEnumConstant : _columnClass.getEnumConstants()) {
+    for (final Enum<?> columnEnumConstant : _columnEnumClass.getEnumConstants()) {
       final IGLColumn column = (IGLColumn)columnEnumConstant;
       _columnByColumnNameMap.put(column.toString(), column);
       if (column.getPrimaryKeySeq() > 0) {
@@ -96,6 +159,14 @@ public IGLColumn findColumnUsingColumnName(final String columnName) {
   return _columnByColumnNameMap.get(columnName);
 }
 @Override
+public String getAbbrev() {
+  return _columnEnumClass.getSimpleName();
+}
+@Override
+public Class<? extends Enum<?>> getColumnEnumClass() {
+  return _columnEnumClass;
+}
+@Override
 public Collection<IGLColumn> getColumns() {
   createColumnByColumnNameMap();
   return _columnByColumnNameMap.values();
@@ -103,6 +174,10 @@ public Collection<IGLColumn> getColumns() {
 @Override
 public TreeMap<Integer, IGLColumn> getComboboxColumnMap() {
   return _comboboxColumnMap;
+}
+@Override
+public String getDataSourceName() {
+  return null;
 }
 @Override
 public TreeMap<Integer, IGLColumn> getPrimaryKeyColumnMap() {

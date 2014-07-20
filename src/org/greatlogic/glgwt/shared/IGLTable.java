@@ -18,9 +18,12 @@ import org.greatlogic.glgwt.client.core.GLRecord;
  */
 public interface IGLTable {
 //--------------------------------------------------------------------------------------------------
+public String getAbbrev();
 public IGLColumn findColumnUsingColumnName(final String columnName);
+public Class<? extends Enum<?>> getColumnEnumClass();
 public Collection<IGLColumn> getColumns();
 public TreeMap<Integer, IGLColumn> getComboboxColumnMap();
+public String getDataSourceName();
 public TreeMap<Integer, IGLColumn> getPrimaryKeyColumnMap();
 public void initializeNewRecord(final GLRecord record);
 //--------------------------------------------------------------------------------------------------

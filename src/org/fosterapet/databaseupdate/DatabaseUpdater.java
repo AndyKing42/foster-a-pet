@@ -67,10 +67,10 @@ private void applyRevs(final Map<String, Method> unappliedMethodsMap,
       break;
     }
     maxDBRevNumberApplied = unappliedMethodsEntry.getKey();
-    DBUUtil.clearResultSB();
+    DBUUtil_old.clearResultSB();
   }
   if (!maxDBRevNumberApplied.isEmpty()) {
-    DBUUtil.addNextIds();
+    DBUUtil_old.addNextIds();
   }
 } // applyRevs()
 //--------------------------------------------------------------------------------------------------
@@ -160,7 +160,7 @@ private String getMaxDBRevNumberToBeApplied(final TreeMap<String, Method> unappl
   logMethodsToBeApplied(unappliedMethodsMap);
   boolean validResponse = false;
   do {
-    result = DBUUtil.getResponse("Maximum database revision to be applied "
+    result = DBUUtil_old.getResponse("Maximum database revision to be applied "
                                  + "(revision number or 'a' to apply all)? ");
     if (result.equalsIgnoreCase("a")) {
       result = unappliedMethodsMap.lastKey();

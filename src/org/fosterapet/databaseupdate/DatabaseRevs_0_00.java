@@ -22,7 +22,7 @@ static String rev_0_00_000(final String dbRevNumber, final boolean apply) throws
                                         + "Version INTEGER NOT NULL");
     GLDBUtil.createPrimaryKey(EFAPTable.DBUpdateNote, EDBUpdateNote.DBUpdateNoteId);
     GLDataSource.getTableResultSetMetaData(EFAPTable.DBUpdateNote.name());
-    DBUUtil.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
+    DBUUtil_old.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
   }
   return result;
 } // rev_0_00_000()
@@ -30,7 +30,7 @@ static String rev_0_00_000(final String dbRevNumber, final boolean apply) throws
 static String rev_0_00_001(final String dbRevNumber, final boolean apply) throws GLDBException {
   final String result = "Initial FAP table creation.";
   if (apply) {
-    DBUUtil.applySQLFile("FosterAPet.sql");
+    DBUUtil_old.applySQLFile("FosterAPet.sql");
     if (GLConfig.getTopConfigElement().attributeAsBoolean(EDBUConfigAD.RecreateAllTables)) {
       final GLSQL personSQL = GLSQL.insert(EFAPTable.Person, true);
       personSQL.setValue(EPerson.DisplayName, "System Administrator");
@@ -43,8 +43,8 @@ static String rev_0_00_001(final String dbRevNumber, final boolean apply) throws
       personSQL.setValue(EPerson.Version, "1");
       personSQL.execute();
     }
-    DBUUtil.addNextIds();
-    DBUUtil.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
+    DBUUtil_old.addNextIds();
+    DBUUtil_old.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
   }
   return result;
 } // rev_0_00_001()
