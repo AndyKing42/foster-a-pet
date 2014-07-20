@@ -10,7 +10,7 @@ import com.greatlogic.glbase.gllib.GLUtil;
 public class GLServerUtil {
 //--------------------------------------------------------------------------------------------------
 public static String generateVersion() {
-  return GLUtil.currentTimeYYYYMMDDHHMMSSmmm();
+  return GLUtil.currentTimeYYYYMMDDHHMMSS();
 }
 //--------------------------------------------------------------------------------------------------
 public static int getNextIdValue(final String tableName, final int numberOfValues) {

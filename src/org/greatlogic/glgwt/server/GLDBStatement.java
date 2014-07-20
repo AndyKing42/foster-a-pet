@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
+import com.greatlogic.glbase.gllib.GLUtil;
 import com.greatlogic.glbase.glxml.GLXML;
 import com.greatlogic.glbase.glxml.GLXMLException;
 
@@ -68,9 +69,11 @@ public static void applyDBChanges(final String dbChanges) {
 //--------------------------------------------------------------------------------------------------
 private static void delete(final String tableName, final String keyColumnName,
                            final String restOfLine) throws GLDBException {
-  final GLSQL deleteSQL = GLSQL.delete(tableName);
-  deleteSQL.whereAnd(0, keyColumnName + " in (" + restOfLine + ")", 0);
-  deleteSQL.execute();
+  final GLSQL sql = GLSQL.update(tableName);
+  sql.setValue("ArchiveDate", GLUtil.currentTimeYYYYMMDDHHMMSS());
+  sql.setValue("Version", GLServerUtil.generateVersion());
+  sql.whereAnd(0, keyColumnName + " in (" + restOfLine + ")", 0);
+  sql.execute();
 }
 //--------------------------------------------------------------------------------------------------
 private static void insertOrUpdateRows(final EChangeType changeType, final String tableName,
@@ -96,6 +99,7 @@ private static void insertOrUpdateRows(final EChangeType changeType, final Strin
         sql.setValue(columnName, value.isEmpty() ? null : value);
       }
     }
+    sql.setValue("Version", GLServerUtil.generateVersion());
     if (changeType == EChangeType.Update) {
       sql.whereAnd(0, keyColumnName + "=" + keyValue, 0);
     }
@@ -103,12 +107,15 @@ private static void insertOrUpdateRows(final EChangeType changeType, final Strin
   }
 }
 //--------------------------------------------------------------------------------------------------
-public static String select(final String xmlRequest) {
+public static String select(final String xmlRequest, final boolean includeArchivedRows) {
   GLLog.debug(xmlRequest);
   final StringBuilder result = new StringBuilder();
   try {
     final GLXML xml = new GLXML(xmlRequest);
     final GLSQL sql = GLSQL.selectUsingXML(xml);
+    if (!includeArchivedRows) {
+      sql.whereAnd(0, "ArchiveDate is null", 0);
+    }
     sql.open();
     try {
       result.append(StringUtils.join(sql.getColumnNameIterable(), ',')).append('\n');

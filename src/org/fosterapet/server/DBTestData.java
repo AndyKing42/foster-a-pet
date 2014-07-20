@@ -57,13 +57,17 @@ private static void reloadPets() throws GLDBException {
     final int minute = GLUtil.getRandomInt(4) * 15;
     final String intakeTime = (hour < 10 ? "0" : "") + hour + (minute < 10 ? "0" : "") + //
                               minute + "00";
+    final String dateOfBirth = GLUtil.dateAddDays(intakeDate, -GLUtil.getRandomInt(10, 4000));
     petSQL.setValue(Pet.AdoptionFee.name(), GLUtil.getRandomInt(3000, 10000) / 100.0);
+    petSQL.setValue(Pet.DateOfBirth.name(), dateOfBirth);
     petSQL.setValue(Pet.IntakeDate.name(), intakeDate + intakeTime);
+    petSQL.setValue(Pet.OrgId.name(), 1);
     petSQL.setValue(Pet.PetId.name(), GLServerUtil.getNextIdValue(EFAPTable.Pet.name(), 1));
     petSQL.setValue(Pet.PetName.name(), nameAndSex[0]);
     petSQL.setValue(Pet.PetTypeId.name(),
                     petTypeIdList.get(GLUtil.getRandomInt(petTypeIdList.size())));
     petSQL.setValue(Pet.Sex.name(), nameAndSex[1]);
+    petSQL.setValue(Pet.Version.name(), GLServerUtil.generateVersion());
     petSQL.execute(false);
   }
 }
@@ -92,9 +96,11 @@ private static void reloadPetTypes() throws GLDBException {
   for (final String petType : PetTypes) {
     final String[] petTypeFields = petType.split(",");
     final GLSQL petTypeSQL = GLSQL.insert(EFAPTable.PetType.name(), false);
+    petTypeSQL.setValue(PetType.OrgId.name(), 1);
     petTypeSQL.setValue(PetType.PetTypeDesc.name(), petTypeFields[0]);
-    petTypeSQL.setValue(PetType.PetTypeShortDesc.name(), petTypeFields[1]);
     petTypeSQL.setValue(Pet.PetTypeId.name(), nextPetTypeId++);
+    petTypeSQL.setValue(PetType.PetTypeShortDesc.name(), petTypeFields[1]);
+    petTypeSQL.setValue(PetType.Version.name(), GLServerUtil.generateVersion());
     petTypeSQL.execute();
   }
   GLServerUtil.getNextIdValue(EFAPTable.PetType.name(), PetTypes.length + 1);

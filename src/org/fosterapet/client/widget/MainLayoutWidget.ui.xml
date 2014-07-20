@@ -97,12 +97,6 @@
                 visible='true'/>
             </container:child>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-              <button:TextButton
-                ui:field='gaeStuffButton'
-                text='GAE Stuff'
-                visible='true'/>
-            </container:child>
-            <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
               <container:VBoxLayoutContainer borders='true'>
                 <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
                   <form:CheckBox

@@ -6,7 +6,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("FAPRemoteServiceServlet")
 public interface IRemoteService extends IGLRemoteService {
 //--------------------------------------------------------------------------------------------------
-String gaeTest();
 void loadTestData(final String testDataOptionString);
 //--------------------------------------------------------------------------------------------------
 }

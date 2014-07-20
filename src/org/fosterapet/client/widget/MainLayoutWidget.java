@@ -20,7 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.ContentPanel;
@@ -39,8 +38,6 @@ ContentPanel                centerPanel;
 @UiField
 CheckBox                    checkBoxSelectionModelCheckBox;
 @UiField
-TextButton                  gaeStuffButton;
-@UiField
 CheckBox                    inlineEditingCheckBox;
 @UiField
 TextButton                  recreateGridButton;
@@ -58,20 +55,6 @@ public MainLayoutWidget(final ClientFactory clientFactory) {
   _clientFactory = clientFactory;
   final MainLayoutWidgetUiBinder uiBinder = GWT.create(MainLayoutWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
-}
-//--------------------------------------------------------------------------------------------------
-@UiHandler({"gaeStuffButton"})
-public void onGAEStuffButtonClick(@SuppressWarnings("unused") final SelectEvent event) {
-  ClientFactory.Instance.getRemoteService().gaeTest(new AsyncCallback<String>() {
-    @Override
-    public void onFailure(final Throwable caught) {
-      GLLog.popup(30, "GAE test failed:" + caught.getMessage());
-    }
-    @Override
-    public void onSuccess(final String result) {
-      GLLog.popup(30, "GAE test:" + result);
-    }
-  });
 }
 //--------------------------------------------------------------------------------------------------
 public ContentPanel getCenterPanel() {

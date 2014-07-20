@@ -92,7 +92,7 @@ public Integer login(final String loginName, final String password) {
 //--------------------------------------------------------------------------------------------------
 @Override
 public String select(final String xmlRequest) {
-  return GLDBStatement.select(xmlRequest);
+  return GLDBStatement.select(xmlRequest, false);
 }
 //--------------------------------------------------------------------------------------------------
 }
