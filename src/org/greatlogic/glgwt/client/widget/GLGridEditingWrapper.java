@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidationError;
 import org.greatlogic.glgwt.shared.IGLColumn;
@@ -189,7 +189,7 @@ private void createFixedComboboxEditor(final GLColumnConfig<?> columnConfig) {
   final SimpleComboBox<String> combobox = new SimpleComboBox<>(new StringLabelProvider<>());
   combobox.setClearValueOnParseError(false);
   combobox.setTriggerAction(TriggerAction.ALL);
-  combobox.add(GLUtil.getLookupCache().getAbbrevList(columnConfig.getColumn().getLookupType()));
+  combobox.add(GLClientUtil.getLookupCache().getAbbrevList(columnConfig.getColumn().getLookupType()));
   combobox.setForceSelection(true);
   if (columnConfig.getValidator() != null) {
     combobox.addValidator((Validator<String>)columnConfig.getValidator());
@@ -202,7 +202,7 @@ private ComboBox<GLRecord> createForeignKeyComboboxEditor(final GLColumnConfig<?
   final ComboBox<GLRecord> result;
   final IGLColumn column = columnConfig.getColumn();
   final IGLTable parentTable = column.getLookupType().getTable();
-  final GLListStore lookupListStore = GLUtil.getLookupCache().getListStore(parentTable);
+  final GLListStore lookupListStore = GLClientUtil.getLookupCache().getListStore(parentTable);
   if (lookupListStore == null) {
     GLLog.popup(10, "Lookup list store not found for column:" + column);
     return null;
@@ -227,7 +227,7 @@ private ComboBox<GLRecord> createForeignKeyComboboxEditor(final GLColumnConfig<?
     }
     @Override
     public GLRecord convertModelValue(final String displayValue) {
-      return GLUtil.getLookupCache().lookupRecord(parentTable, displayValue);
+      return GLClientUtil.getLookupCache().lookupRecord(parentTable, displayValue);
     }
   };
   _gridEditing.addEditor((ColumnConfig<GLRecord, String>)columnConfig, converter, result);

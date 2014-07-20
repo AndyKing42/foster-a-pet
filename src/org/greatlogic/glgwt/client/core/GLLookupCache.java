@@ -166,7 +166,7 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
           keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumnMap().get(1)), record);
         }
         GLLog.popup(5, "Reload of " + table + " was successful");
-        GLUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table));
+        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table));
       }
     });
   }

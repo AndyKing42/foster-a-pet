@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
@@ -21,11 +21,11 @@ GLValidationRecord(final TreeMap<String, GLColumnConfig<?>> columnConfigMap,
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final IGLColumn column) {
-  return GLUtil.stringToDec(asString(column));
+  return GLClientUtil.stringToDec(asString(column));
 }
 //--------------------------------------------------------------------------------------------------
 public int asInt(final IGLColumn column) {
-  return GLUtil.stringToInt(asString(column));
+  return GLClientUtil.stringToInt(asString(column));
 }
 //--------------------------------------------------------------------------------------------------
 private Object asObject(final IGLColumn column) {

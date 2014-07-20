@@ -38,7 +38,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
-public class GLUtil {
+public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
 private static GLEventBus            _eventBus;
 private static LoginDialogBox        _loginDialogBox;
@@ -56,7 +56,7 @@ static {
 public static void createNewRecord(final GLRecordDef recordDef,
                                    final IGLCreateNewRecordCallback createNewRecordCallback) {
   final IGLTable table = recordDef.getTable();
-  GLUtil.getRemoteService().getNextId(table.toString(), 1, new AsyncCallback<Integer>() {
+  GLClientUtil.getRemoteService().getNextId(table.toString(), 1, new AsyncCallback<Integer>() {
     @Override
     public void onFailure(final Throwable caught) {
       if (createNewRecordCallback != null) {
@@ -67,7 +67,7 @@ public static void createNewRecord(final GLRecordDef recordDef,
     public void onSuccess(final Integer nextId) {
       final GLRecord record = new GLRecord(recordDef);
       record.put(table.getPrimaryKeyColumnMap().get(1), nextId);
-      GLUtil.getEventBus().fireEvent(new GLNewRecordEvent(record));
+      GLClientUtil.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {
         createNewRecordCallback.onSuccess(record);
       }

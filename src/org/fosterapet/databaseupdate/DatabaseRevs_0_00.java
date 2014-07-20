@@ -19,12 +19,12 @@ static String rev_0_00_000(final String dbRevNumber, final boolean apply) throws
   if (apply) {
     GLDBUtil.createTableFromSQL(EFAPTable.DBUpdateNote.name(), true,
                                 "" //
-                                        + "DBRevNumber VARCHAR(30) NOT NULL," //
-                                        + "AppliedDateTime DATETIME," //
-                                        + "DBUpdateDesc VARCHAR(2000) NOT NULL," //
                                         + "DBUpdateNoteId INTEGER NOT NULL," //
+                                        + "AppliedDateTime DATETIME," //
+                                        + "DBRevNumber VARCHAR(30) NOT NULL," //
+                                        + "DBUpdateDesc VARCHAR(2000) NOT NULL," //
                                         + "DevDateTime DATETIME NOT NULL," //
-                                        + "Version INTEGER NOT NULL");
+                                        + "Version VARCHAR(30) NOT NULL");
     GLDBUtil.createPrimaryKey(EFAPTable.DBUpdateNote.name(), DBUpdateNote.DBUpdateNoteId.name());
     GLDataSource.getTableResultSetMetadata(EFAPTable.DBUpdateNote.name());
     DBUUtil.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
@@ -52,7 +52,7 @@ static String rev_0_00_001(final String dbRevNumber, final boolean apply) throws
       DBUUtil.addNextIds();
     }
     catch (final Exception e) {
-      GLLog.major("EFAPId.addNextIds() failed", e);
+      GLLog.major("addNextIds failed", e);
       throw new GLDBException(EGLDBException.ExecSQLError);
     }
     DBUUtil.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);

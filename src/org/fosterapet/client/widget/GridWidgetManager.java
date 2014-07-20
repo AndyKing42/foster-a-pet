@@ -16,7 +16,7 @@ import java.util.TreeMap;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 
@@ -61,7 +61,7 @@ public static PetGridWidget getPetGrid(final String gridName, final boolean inli
       gridWidgetInfo._useCheckBoxSelectionModel != useCheckBoxSelectionModel ||
       gridWidgetInfo._rowLevelCommits != rowLevelCommits) {
     final GLRecordValidator validator;
-    validator = GLUtil.getValidators().getRecordValidator(EFAPTable.Pet);
+    validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.Pet);
     result = new PetGridWidget(validator, inlineEditing, useCheckBoxSelectionModel, //
                                rowLevelCommits, Pet.PetName, Pet.PetTypeId, Pet.Sex, //
                                Pet.IntakeDate, Pet.AdoptionFee);

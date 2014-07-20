@@ -48,7 +48,7 @@ void test() {
   catch (final Exception e) {
     GLLog.major("Error testing DatabaseUpdate", e);
   }
-  //  GLUtil.sleepAndExit(10000, false);
+  //  GLClientUtil.sleepAndExit(10000, false);
 } // test()
 //--------------------------------------------------------------------------------------------------
 }

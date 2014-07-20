@@ -43,7 +43,7 @@ public GLDBException(final EGLDBException dbException, final CharSequence messag
                      final Throwable originalThrowable) {
   super(dbException == null ? message.toString()
                            : dbException.toString() +
-                             (GLUtil.isBlank(message) ? "" : ":" + message) +
+                             (GLClientUtil.isBlank(message) ? "" : ":" + message) +
                              (originalThrowable == null ? "" : " - " +
                                                                originalThrowable.getMessage()),
         originalThrowable);

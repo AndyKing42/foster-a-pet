@@ -43,7 +43,7 @@ public void login() {
 //--------------------------------------------------------------------------------------------------
 public void login(final String loginName, final String password) {
   //  _loginPersonId = 0;
-  //  GLUtil.getRemoteService().login(loginName, password, new AsyncCallback<Integer>() {
+  //  GLClientUtil.getRemoteService().login(loginName, password, new AsyncCallback<Integer>() {
   //    @Override
   //    public void onFailure(final Throwable caught) {
   //

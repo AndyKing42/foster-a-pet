@@ -5,6 +5,7 @@ import org.fosterapet.shared.IDBEnums.DBUpdateNote;
 import org.fosterapet.shared.IDBEnums.EFAPId;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.NextId;
+import org.greatlogic.glgwt.server.GLServerUtil;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gldb.GLSchemaLoader;
@@ -42,6 +43,7 @@ public static String addNextIds() throws GLDBException {
       sql.setValue(NextId.NextIdValue.name(), 1000);
       sql.setValue(NextId.NextIdName.toString(), fapId.getName());
       sql.setValue(NextId.TableName.name(), fapId.getTable().name());
+      sql.setValue(NextId.Version.name(), GLServerUtil.generateVersion());
       sql.execute();
     }
   }
@@ -145,7 +147,10 @@ static void insertDBUpdateNote(final String dbRevNumber, final String devDate,
   dbUpdateNoteSQL.setValue(DBUpdateNote.AppliedDateTime.name(), GLUtil.currentTimeYYYYMMDDHHMMSS());
   dbUpdateNoteSQL.setValue(DBUpdateNote.DBRevNumber.name(), DBUUtil.convertRevToNewRev(dbRevNumber));
   dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateDesc.name(), dbUpdateDesc);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateNoteId.name(),
+                           GLServerUtil.getNextIdValue(EFAPTable.DBUpdateNote.name(), 1));
   dbUpdateNoteSQL.setValue(DBUpdateNote.DevDateTime.name(), devDate + devTime);
+  dbUpdateNoteSQL.setValue(DBUpdateNote.Version.name(), GLServerUtil.generateVersion());
   dbUpdateNoteSQL.execute();
   _resultSB.setLength(0);
 }

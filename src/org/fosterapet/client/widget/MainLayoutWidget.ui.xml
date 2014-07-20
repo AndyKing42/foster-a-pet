@@ -92,12 +92,6 @@
             padding='{padding_3_3_3_3}'>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
               <button:TextButton
-                ui:field='recreateTablesButton'
-                text='Recreate Database Tables'
-                visible='true'/>
-            </container:child>
-            <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-              <button:TextButton
                 ui:field='reloadTestDataButton'
                 text='Reload Test Data'
                 visible='true'/>

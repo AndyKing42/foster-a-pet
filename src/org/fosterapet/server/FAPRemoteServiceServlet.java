@@ -45,9 +45,4 @@ public void log(final int logLevelId, final String location, final String messag
   GLLog.log(EGLLogLevel.lookupUsingPriority(logLevelId * 10), location + "=>" + message);
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public void recreateTables() {
-  DBCreateTables.recreateTables();
-}
-//--------------------------------------------------------------------------------------------------
 }

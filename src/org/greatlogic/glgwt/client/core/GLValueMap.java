@@ -66,7 +66,7 @@ public boolean asBoolean(final String key) {
 }
 //--------------------------------------------------------------------------------------------------
 public boolean asBoolean(final String key, final boolean defaultValue) {
-  return GLUtil.stringToBoolean(asString(key), defaultValue);
+  return GLClientUtil.stringToBoolean(asString(key), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final IGLColumn column) {
@@ -82,7 +82,7 @@ public BigDecimal asDec(final String key) {
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final String key, final BigDecimal defaultValue) {
-  return GLUtil.stringToDec(asString(key), defaultValue);
+  return GLClientUtil.stringToDec(asString(key), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public double asDouble(final IGLColumn column) {
@@ -98,7 +98,7 @@ public double asDouble(final String key) {
 }
 //--------------------------------------------------------------------------------------------------
 public double asDouble(final String key, final double defaultValue) {
-  return GLUtil.stringToDouble(asString(key), defaultValue);
+  return GLClientUtil.stringToDouble(asString(key), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public float asFloat(final IGLColumn column) {
@@ -146,7 +146,7 @@ public long asLong(final String key) {
 }
 //--------------------------------------------------------------------------------------------------
 public long asLong(final String key, final long defaultValue) {
-  return GLUtil.stringToLong(asString(key), defaultValue);
+  return GLClientUtil.stringToLong(asString(key), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public Object asObject(final IGLColumn column) {
@@ -179,7 +179,7 @@ public String asString(final String key) {
  * @return A string representation of the requested value.
  */
 public String asString(final String key, final String defaultValue) {
-  return GLUtil.formatObjectSpecial(_valueMap.get(getAdjustedKey(key)), defaultValue);
+  return GLClientUtil.formatObjectSpecial(_valueMap.get(getAdjustedKey(key)), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public void clear() {

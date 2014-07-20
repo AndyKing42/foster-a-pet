@@ -30,7 +30,7 @@ public GLListStore() {
   addStoreUpdateHandler(new StoreUpdateHandler<GLRecord>() {
     @Override
     public void onUpdate(final StoreUpdateEvent<GLRecord> event) {
-      GLUtil.getEventBus().fireEvent(new GLCommitCompleteEvent());
+      GLClientUtil.getEventBus().fireEvent(new GLCommitCompleteEvent());
     }
   });
 }
@@ -71,7 +71,7 @@ private boolean commitChangesAddChange(final StringBuilder sb, final IGLTable ta
                                        final Change<GLRecord, ?> change, final boolean firstChange,
                                        final boolean insert,
                                        final TreeSet<IGLColumn> updatedColumnSet) {
-  final String value = GLUtil.formatObjectSpecial(change.getValue());
+  final String value = GLClientUtil.formatObjectSpecial(change.getValue());
   if (insert && value.isEmpty()) {
     return false;
   }
@@ -85,7 +85,7 @@ private boolean commitChangesAddChange(final StringBuilder sb, final IGLTable ta
       sb.append(value);
     }
     else {
-      sb.append(GLUtil.getLookupCache().lookupKeyValue(lookupTable, value));
+      sb.append(GLClientUtil.getLookupCache().lookupKeyValue(lookupTable, value));
     }
   }
   else {
@@ -124,7 +124,7 @@ public void remove(final ArrayList<GLRecord> recordList) {
 private void sendDBChangesToServer(final StringBuilder dbChangesSB,
                                    final ArrayList<GLRecord> insertedRecordList,
                                    final ArrayList<GLRecord> deletedRecordList) {
-  GLUtil.getRemoteService().applyDBChanges(dbChangesSB.toString(), new AsyncCallback<Void>() {
+  GLClientUtil.getRemoteService().applyDBChanges(dbChangesSB.toString(), new AsyncCallback<Void>() {
     @Override
     public void onFailure(final Throwable t) {
       GLLog.popup(10, "Database changes failed:" + t.getMessage());

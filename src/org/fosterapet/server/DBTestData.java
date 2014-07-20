@@ -5,7 +5,7 @@ import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IDBEnums.PetType;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
-import org.greatlogic.glgwt.server.GLNextId;
+import org.greatlogic.glgwt.server.GLServerUtil;
 import com.google.common.collect.Lists;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;
@@ -59,7 +59,7 @@ private static void reloadPets() throws GLDBException {
                               minute + "00";
     petSQL.setValue(Pet.AdoptionFee.name(), GLUtil.getRandomInt(3000, 10000) / 100.0);
     petSQL.setValue(Pet.IntakeDate.name(), intakeDate + intakeTime);
-    petSQL.setValue(Pet.PetId.name(), GLNextId.getNextIdValue(EFAPTable.Pet.name(), 1));
+    petSQL.setValue(Pet.PetId.name(), GLServerUtil.getNextIdValue(EFAPTable.Pet.name(), 1));
     petSQL.setValue(Pet.PetName.name(), nameAndSex[0]);
     petSQL.setValue(Pet.PetTypeId.name(),
                     petTypeIdList.get(GLUtil.getRandomInt(petTypeIdList.size())));
@@ -97,7 +97,7 @@ private static void reloadPetTypes() throws GLDBException {
     petTypeSQL.setValue(Pet.PetTypeId.name(), nextPetTypeId++);
     petTypeSQL.execute();
   }
-  GLNextId.getNextIdValue(EFAPTable.PetType.name(), PetTypes.length + 1);
+  GLServerUtil.getNextIdValue(EFAPTable.PetType.name(), PetTypes.length + 1);
 }
 //--------------------------------------------------------------------------------------------------
 private static void truncate(final EFAPTable table) throws GLDBException {

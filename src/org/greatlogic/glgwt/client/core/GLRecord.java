@@ -66,7 +66,7 @@ public boolean asBoolean(final String fieldName) {
 }
 //--------------------------------------------------------------------------------------------------
 public boolean asBoolean(final String fieldName, final boolean defaultValue) {
-  return GLUtil.stringToBoolean(asString(fieldName), defaultValue);
+  return GLClientUtil.stringToBoolean(asString(fieldName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final IGLColumn column) {
@@ -82,7 +82,7 @@ public BigDecimal asDec(final String fieldName) {
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final String fieldName, final BigDecimal defaultValue) {
-  return GLUtil.stringToDec(asString(fieldName), defaultValue);
+  return GLClientUtil.stringToDec(asString(fieldName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public double asDouble(final IGLColumn column) {
@@ -98,7 +98,7 @@ public double asDouble(final String fieldName) {
 }
 //--------------------------------------------------------------------------------------------------
 public double asDouble(final String fieldName, final double defaultValue) {
-  return GLUtil.stringToDouble(asString(fieldName), defaultValue);
+  return GLClientUtil.stringToDouble(asString(fieldName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public float asFloat(final IGLColumn column) {
@@ -146,7 +146,7 @@ public long asLong(final String fieldName) {
 }
 //--------------------------------------------------------------------------------------------------
 public long asLong(final String fieldName, final long defaultValue) {
-  return GLUtil.stringToLong(asString(fieldName), defaultValue);
+  return GLClientUtil.stringToLong(asString(fieldName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public Object asObject(final IGLColumn column) {
@@ -185,7 +185,7 @@ public String asString(final String fieldName) {
  */
 public String asString(final String fieldName, final String defaultValue) {
   try {
-    return GLUtil.formatObjectSpecial(_valueList.get(_recordDef.getFieldIndex(fieldName)),
+    return GLClientUtil.formatObjectSpecial(_valueList.get(_recordDef.getFieldIndex(fieldName)),
                                       defaultValue);
   }
   catch (final Exception e) {

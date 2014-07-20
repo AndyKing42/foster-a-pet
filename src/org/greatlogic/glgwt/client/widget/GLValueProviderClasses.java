@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -76,9 +76,9 @@ public Date getValue(final GLRecord record) {
   if (date.length() < 8) {
     return null;
   }
-  final int year = GLUtil.stringToInt(date.substring(0, 4));
-  final int month = GLUtil.stringToInt(date.substring(4, 6));
-  final int day = GLUtil.stringToInt(date.substring(6, 8));
+  final int year = GLClientUtil.stringToInt(date.substring(0, 4));
+  final int month = GLClientUtil.stringToInt(date.substring(4, 6));
+  final int day = GLClientUtil.stringToInt(date.substring(6, 8));
   return new Date(year - 1900, month - 1, day);
 }
 @Override
@@ -100,11 +100,11 @@ public GLForeignKeyValueProvider(final IGLTable lookupTable, final IGLColumn col
 }
 @Override
 public String getValue(final GLRecord record) {
-  return GLUtil.getLookupCache().lookupDisplayValue(_lookupTable, record.asInt(_column));
+  return GLClientUtil.getLookupCache().lookupDisplayValue(_lookupTable, record.asInt(_column));
 }
 @Override
 public void setValue(final GLRecord record, final String value) {
-  record.put(_column, GLUtil.getLookupCache().lookupKeyValue(_lookupTable, value));
+  record.put(_column, GLClientUtil.getLookupCache().lookupKeyValue(_lookupTable, value));
 }
 @Override
 public String getPath() {

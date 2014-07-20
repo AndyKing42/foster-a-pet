@@ -19,7 +19,7 @@ class TestDataSource {
 //Discrete,
 //Range;
 //public static ETestDataType lookup(final String lookupString) {
-//  return (ETestDataType)GLUtil.enumLookup(ETestDataType.class, lookupString, ETestDataType.Discrete);
+//  return (ETestDataType)GLClientUtil.enumLookup(ETestDataType.class, lookupString, ETestDataType.Discrete);
 //} // lookup()
 //} // enum ETestDataType
 ////==================================================================================================
@@ -84,9 +84,9 @@ class TestDataSource {
 //  }
 //  switch (_testDataType) {
 //    case DateRange:
-//      final int daysBetween = GLUtil.getDaysBetween(_rangeFromDate, _rangeToDate, false);
+//      final int daysBetween = GLClientUtil.getDaysBetween(_rangeFromDate, _rangeToDate, false);
 //      do {
-//        result = GLUtil.dateAddDays(_rangeFromDate, GLUtil.getRandomInt(daysBetween));
+//        result = GLClientUtil.dateAddDays(_rangeFromDate, GLClientUtil.getRandomInt(daysBetween));
 //      } while (!checkComparison(result, comparisonOperator, comparisonTestDataValue) ||
 //               (_removeFromList && _alreadyUsedValueSet.contains(result)));
 //      break;
@@ -96,15 +96,15 @@ class TestDataSource {
 //        return "";
 //      }
 //      do {
-//        result = _discreteValueList.get(GLUtil.getRandomInt(_discreteValueList.size()));
+//        result = _discreteValueList.get(GLClientUtil.getRandomInt(_discreteValueList.size()));
 //      } while (!checkComparison(result, comparisonOperator, comparisonTestDataValue) ||
 //               (_removeFromList && _alreadyUsedValueSet.contains(result)));
 //      break;
 //    case Range:
-//      final int comparisonTestDataValueInt = GLUtil.stringToInt(comparisonTestDataValue);
+//      final int comparisonTestDataValueInt = GLClientUtil.stringToInt(comparisonTestDataValue);
 //      int intResult;
 //      do {
-//        intResult = GLUtil.getRandomInt(_rangeFromInt, _rangeToPlusOne);
+//        intResult = GLClientUtil.getRandomInt(_rangeFromInt, _rangeToPlusOne);
 //      } while (!checkComparison(intResult, comparisonOperator, comparisonTestDataValueInt) ||
 //               (_removeFromList && _alreadyUsedValueSet.contains(result)));
 //      result = Integer.toString(intResult);
@@ -183,8 +183,8 @@ class TestDataSource {
 //            case Range:
 //              final int hyphenIndex = cellValue.indexOf('-');
 //              if (hyphenIndex > 0 && cellValue.length() > 2) {
-//                _rangeFromInt = GLUtil.stringToInt(cellValue.substring(0, hyphenIndex));
-//                _rangeToInt = GLUtil.stringToInt(cellValue.substring(hyphenIndex + 1));
+//                _rangeFromInt = GLClientUtil.stringToInt(cellValue.substring(0, hyphenIndex));
+//                _rangeToInt = GLClientUtil.stringToInt(cellValue.substring(hyphenIndex + 1));
 //              }
 //              else {
 //                GLLog.major("Invalid range:" + cellValue);

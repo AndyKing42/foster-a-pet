@@ -37,7 +37,7 @@ public void applyDBChanges(final String dbChanges) {
 //--------------------------------------------------------------------------------------------------
 @Override
 public int getNextId(final String tableName, final int numberOfValues) {
-  return GLNextId.getNextIdValue(tableName, numberOfValues);
+  return GLServerUtil.getNextIdValue(tableName, numberOfValues);
 }
 //--------------------------------------------------------------------------------------------------
 /**

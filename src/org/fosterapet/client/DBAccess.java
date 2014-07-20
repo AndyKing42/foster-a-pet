@@ -2,10 +2,10 @@ package org.fosterapet.client;
 
 import org.fosterapet.client.widget.GridWidgetManager;
 import org.fosterapet.client.widget.PetGridWidget;
-import org.fosterapet.shared.IRemoteServiceAsync;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
+import org.fosterapet.shared.IRemoteServiceAsync;
 import org.greatlogic.glgwt.client.core.GLDBException;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
@@ -32,24 +32,8 @@ public static void loadPets(final GLListStore petListStore) {
     });
   }
   catch (final GLDBException dbe) {
-    //    GLUtil.getRemoteService().log(logLevel, location, message, callback);
+    //    GLClientUtil.getRemoteService().log(logLevel, location, message, callback);
   }
-}
-//--------------------------------------------------------------------------------------------------
-public static void recreateTables() {
-  ClientFactory.Instance.getRemoteService().recreateTables(new AsyncCallback<Void>() {
-    @Override
-    public void onFailure(final Throwable t) {
-      GLLog.popup(10, "Database table creation failed:" + t.getMessage());
-    }
-    @Override
-    public void onSuccess(final Void result) {
-      GLLog.popup(10, "Database table creation is complete");
-      final PetGridWidget petGrid = GridWidgetManager.getPetGrid("Main");
-      ClientFactory.Instance.getLookupCache().reloadAll();
-      loadPets(petGrid.getListStore());
-    }
-  });
 }
 //--------------------------------------------------------------------------------------------------
 public static void reloadTestData() {

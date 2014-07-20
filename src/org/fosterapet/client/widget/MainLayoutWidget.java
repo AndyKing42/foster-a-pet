@@ -45,8 +45,6 @@ CheckBox                    inlineEditingCheckBox;
 @UiField
 TextButton                  recreateGridButton;
 @UiField
-TextButton                  recreateTablesButton;
-@UiField
 TextButton                  reloadTestDataButton;
 @UiField
 CheckBox                    rowLevelCommitsCheckBox;
@@ -90,23 +88,6 @@ public void onRecreateGridButtonClick(@SuppressWarnings("unused") final SelectEv
   _clientFactory.getCenterPanel().setWidget(gridWidget);
   DBAccess.loadPets(gridWidget.getListStore());
   _clientFactory.getCenterPanel().forceLayout();
-}
-//--------------------------------------------------------------------------------------------------
-@UiHandler({"recreateTablesButton"})
-public void onRecreateTablesButtonClick(@SuppressWarnings("unused") final SelectEvent event) {
-  final ConfirmMessageBox messageBox;
-  messageBox = new ConfirmMessageBox("Recreate Database Tables", //
-                                     "Are you sure you want to drop and recreate the " //
-                                             + "database tables?");
-  messageBox.addDialogHideHandler(new DialogHideHandler() {
-    @Override
-    public void onDialogHide(final DialogHideEvent hideEvent) {
-      if (hideEvent.getHideButton() == PredefinedButton.YES) {
-        DBAccess.recreateTables();
-      }
-    }
-  });
-  messageBox.show();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})

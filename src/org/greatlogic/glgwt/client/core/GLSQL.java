@@ -294,7 +294,7 @@ private GLSQL(final EGLSQLType sqlType, final String tableName, final String dat
 public GLSQL addFromHints(final String... fromHints) throws GLDBException {
   ensureSQLTypeIn(EGLSQLType.Select);
   for (final String fromHint : fromHints) {
-    _fromHint = (GLUtil.isBlank(_fromHint) ? "" : _fromHint + ",") + fromHint;
+    _fromHint = (GLClientUtil.isBlank(_fromHint) ? "" : _fromHint + ",") + fromHint;
   }
   return this;
 }
@@ -324,7 +324,7 @@ private void ensureSQLTypeIn(final EGLSQLType... sqlTypes) throws GLDBException 
  * @param sqlSelectCallback The object that contains the success and failure callback methods.
  */
 public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallback sqlSelectCallback) {
-  GLUtil.getRemoteService().select(toXMLSB().toString(), new AsyncCallback<String>() {
+  GLClientUtil.getRemoteService().select(toXMLSB().toString(), new AsyncCallback<String>() {
     @Override
     public void onFailure(final Throwable t) {
       sqlSelectCallback.onFailure(t);
@@ -348,7 +348,7 @@ public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallbac
             listStore.add(record);
           }
         }
-        GLUtil.getEventBus().fireEvent(new GLSelectCompleteEvent(listStore));
+        GLClientUtil.getEventBus().fireEvent(new GLSelectCompleteEvent(listStore));
         sqlSelectCallback.onSuccess();
       }
       catch (final GLCSVException csve) {
@@ -407,7 +407,7 @@ public GLSQL groupBy(final IGLTable table, final IGLColumn column) throws GLDBEx
  */
 public GLSQL groupBy(final CharSequence groupByClause) throws GLDBException {
   ensureSQLTypeIn(EGLSQLType.Select);
-  if (GLUtil.isBlank(groupByClause)) {
+  if (GLClientUtil.isBlank(groupByClause)) {
     return this;
   }
   createGroupByList();
@@ -499,7 +499,7 @@ public GLSQL selectColumns(final String... columnSQL) {
   }
   else {
     for (final String column : columnSQL) {
-      if (GLUtil.isBlank(column)) {
+      if (GLClientUtil.isBlank(column)) {
         _columnMap.put("*", null);
       }
       else {
@@ -521,7 +521,7 @@ public GLSQL selectColumns(final Collection<String> columnCollection) {
   }
   else {
     for (final String column : columnCollection) {
-      if (GLUtil.isBlank(column)) {
+      if (GLClientUtil.isBlank(column)) {
         _columnMap.put("*", null);
       }
       else {
@@ -630,7 +630,7 @@ public StringBuilder toXMLSB() {
     firstColumn = false;
   }
   result.append("' Table='").append(_tableName).append("'");
-  if (!GLUtil.isBlank(_dataSourceName)) {
+  if (!GLClientUtil.isBlank(_dataSourceName)) {
     result.append(" DataSource='").append(_dataSourceName).append("'");
   }
   if (_groupByList != null && _groupByList.size() > 0) {
@@ -642,7 +642,7 @@ public StringBuilder toXMLSB() {
     }
     result.append("'");
   }
-  if (!GLUtil.isBlank(_orderByClause)) {
+  if (!GLClientUtil.isBlank(_orderByClause)) {
     result.append(" OrderBy='").append(_orderByClause).append("'");
   }
   if (_ignoreDuplicates) {

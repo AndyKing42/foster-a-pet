@@ -2,7 +2,7 @@ package org.greatlogic.glgwt.client.widget;
 
 import java.util.ArrayList;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.IGLCreateNewRecordCallback;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
@@ -23,7 +23,7 @@ private final GLGridWidget _gridWidget;
 GLGridContentPanel(final GLGridWidget gridWidget, final String headingText) {
   super();
   _gridWidget = gridWidget;
-  if (GLUtil.isBlank(headingText)) {
+  if (GLClientUtil.isBlank(headingText)) {
     setHeaderVisible(false);
   }
   else {
@@ -96,7 +96,7 @@ private void addNewButton() {
   final SelectHandler selectHandler = new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
-      GLUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), newRecordCallback);
+      GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), newRecordCallback);
     }
   };
   addButton(new TextButton("New", selectHandler));

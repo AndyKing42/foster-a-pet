@@ -12,7 +12,7 @@ public class GLLog {
 private static IGLRemoteServiceAsync _remoteService;
 //--------------------------------------------------------------------------------------------------
 static {
-  _remoteService = GLUtil.getRemoteService();
+  _remoteService = GLClientUtil.getRemoteService();
 }
 //--------------------------------------------------------------------------------------------------
 public static void critical(final String location, final String message) {

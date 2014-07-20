@@ -20,7 +20,7 @@ import org.fosterapet.shared.IDBEnums.PetType;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.core.GLRecordDef;
-import org.greatlogic.glgwt.client.core.GLUtil;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLColumn;
 
 public class TestData {
@@ -72,20 +72,20 @@ private static void loadPetTestData(final GLListStore listStore, final List<GLRe
   int nextPetId = 1;
   for (final String petNameAndSex : PetNamesAndSex) {
     final String[] nameAndSex = petNameAndSex.split(",");
-    final String intakeDate = GLUtil.dateAddDays("20130501", GLUtil.getRandomInt(365));
-    final int hour = 6 + GLUtil.getRandomInt(12);
-    final int minute = GLUtil.getRandomInt(4) * 15;
+    final String intakeDate = GLClientUtil.dateAddDays("20130501", GLClientUtil.getRandomInt(365));
+    final int hour = 6 + GLClientUtil.getRandomInt(12);
+    final int minute = GLClientUtil.getRandomInt(4) * 15;
     final String intakeTime = (hour < 10 ? "0" : "") + hour + (minute < 10 ? "0" : "") + minute;
-    final String fosterDate = GLUtil.dateAddDays(intakeDate, 60);
+    final String fosterDate = GLClientUtil.dateAddDays(intakeDate, 60);
     final ArrayList<Object> valueList = new ArrayList<Object>(columns.length);
-    valueList.add(GLUtil.getRandomInt(3000, 10000) / 100.0);
+    valueList.add(GLClientUtil.getRandomInt(3000, 10000) / 100.0);
     valueList.add(fosterDate);
     valueList.add(intakeDate + intakeTime);
     valueList.add(nextPetId);
     valueList.add(nameAndSex[0]);
-    valueList.add(GLUtil.getRandomInt(PetTypes.length) + 1);
+    valueList.add(GLClientUtil.getRandomInt(PetTypes.length) + 1);
     valueList.add(nameAndSex[1]);
-    valueList.add(GLUtil.getRandomInt(2) == 0 ? "Y" : "N");
+    valueList.add(GLClientUtil.getRandomInt(2) == 0 ? "Y" : "N");
     final GLRecord record = new GLRecord(recordDef, valueList);
     addRecordToList(listStore, recordList, record);
     ++nextPetId;
