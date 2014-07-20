@@ -7,8 +7,37 @@ import org.greatlogic.glgwt.shared.IGLTable;
 public interface IFAPEnums {
 //--------------------------------------------------------------------------------------------------
 public enum ELookupType implements IGLLookupType {
+Address(EFAPTable.Address),
+Attribute(EFAPTable.Attribute),
+AttributeDef(EFAPTable.AttributeDef),
+City(EFAPTable.City),
+DBAudit(EFAPTable.DBAudit),
+DBUpdateNote(EFAPTable.DBUpdateNote),
+EntityType(null),
+FosterHistory(EFAPTable.FosterHistory),
+Loc(EFAPTable.Loc),
+LocPerson(EFAPTable.LocPerson),
+LocType(EFAPTable.LocType),
+NextId(EFAPTable.NextId),
+Org(EFAPTable.Org),
+OrgPerson(EFAPTable.OrgPerson),
+Person(EFAPTable.Person),
+PersonRelationship(EFAPTable.PersonRelationship),
+PersonRole(EFAPTable.PersonRole),
+Pet(EFAPTable.Pet),
 PetType(EFAPTable.PetType),
-Sex(null);
+PlanEntry(EFAPTable.PlanEntry),
+PlanPerson(EFAPTable.PlanPerson),
+PlanTemplate(EFAPTable.PlanTemplate),
+PlanTemplateEntry(EFAPTable.PlanTemplateEntry),
+PlanTemplateTreatment(EFAPTable.PlanTemplateTreatment),
+SearchDef(EFAPTable.SearchDef),
+SearchDefDetail(EFAPTable.SearchDefDetail),
+Sex(null),
+State(EFAPTable.State),
+Treatment(EFAPTable.Treatment),
+TreatmentType(EFAPTable.TreatmentType),
+ValueList(EFAPTable.ValueList);
 private final IGLTable _table;
 private ELookupType(final IGLTable table) {
   _table = table;

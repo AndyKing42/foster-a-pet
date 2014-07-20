@@ -18,11 +18,11 @@ public interface IGLColumn {
 //--------------------------------------------------------------------------------------------------
 public int getComboboxSeq();
 public EGLColumnDataType getDataType();
+public int getDecimalPlacesOrLength();
 public int getDefaultGridColumnWidth();
 public Object getDefaultValue();
 public IGLLookupType getLookupType();
 public boolean getNullable();
-public int getNumberOfDecimalPlaces();
 public int getPrimaryKeySeq();
 public String getTitle();
 //--------------------------------------------------------------------------------------------------

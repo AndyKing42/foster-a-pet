@@ -182,7 +182,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.TVNote" oid="EB376B58-BFDD-B442-6623-E0FF8206C589" otype="Note" vid="10591850-3C04-1D7F-7C26-B681E2C34E30">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1664" y="739" width="95" height="127"/>
+<bounds x="1669" y="763" width="95" height="106"/>
 <useDefaultColor>false</useDefaultColor>
 <backgroundColor>-154</backgroundColor>
 <foregroundColor>-16777216</foregroundColor>
