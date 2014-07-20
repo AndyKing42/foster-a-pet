@@ -1,5 +1,7 @@
 
 syntax: regexp
+^.gwt$
+syntax: regexp
 ^gwt-unitCache$
 syntax: regexp
 ^war/fosterapet$
