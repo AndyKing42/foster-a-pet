@@ -88,8 +88,8 @@ public static void addIds() throws GLDBException {
     final GLSQL nextIdSQL = GLSQL.insert(EFAPTable.NextId.name(), true);
     nextIdSQL.setValue(NextId.NextId.name(), id.getNextId());
     nextIdSQL.setValue(NextId.NextIdName.name(), id.getName());
-    nextIdSQL.setValue(NextId.NextIdTableName.name(), id.getTable().name());
     nextIdSQL.setValue(NextId.NextIdValue.name(), nextIdValue + 100);
+    nextIdSQL.setValue(NextId.TableName.name(), id.getTable().name());
     nextIdSQL.execute(false);
   }
 }

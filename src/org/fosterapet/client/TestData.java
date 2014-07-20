@@ -65,8 +65,8 @@ public static void loadPetTestData(final List<GLRecord> recordList) {
   loadPetTestData(null, recordList);
 }
 private static void loadPetTestData(final GLListStore listStore, final List<GLRecord> recordList) {
-  final IGLColumn[] columns = new IGLColumn[] {Pet.AdoptionFee, Pet.FosterDate, Pet.IntakeDate, //
-      Pet.PetId, Pet.PetName, Pet.PetTypeId, Pet.Sex, Pet.TrainedFlag};
+  final IGLColumn[] columns = new IGLColumn[] {Pet.AdoptionFee, Pet.IntakeDate, //
+      Pet.PetId, Pet.PetName, Pet.PetTypeId, Pet.Sex};
   final GLRecordDef recordDef = new GLRecordDef(EFAPTable.Pet, columns);
   clearList(listStore, recordList);
   int nextPetId = 1;

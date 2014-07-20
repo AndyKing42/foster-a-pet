@@ -98,7 +98,7 @@ void clearInvalidColumnConfigs() {
 private GLColumnConfig<BigDecimal> createBigDecimalColumnConfig(final IGLColumn column) {
   final GLColumnConfig<BigDecimal> result;
   final ValueProvider<GLRecord, BigDecimal> valueProvider;
-  valueProvider = new GLBigDecimalValueProvider(column, column.getNumberOfDecimalPlaces());
+  valueProvider = new GLBigDecimalValueProvider(column, column.getDecimalPlacesOrLength());
   result = new GLColumnConfig<>(column, valueProvider, column.getTitle(), //
                                 column.getDefaultGridColumnWidth());
   NumberFormat numberFormat;

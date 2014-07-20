@@ -29,15 +29,11 @@ public PetGridWidget(final GLRecordValidator recordValidator, final boolean inli
 @Override
 protected void addFilters() {
   addFilter(Pet.AdoptionFee);
-  addFilter(Pet.FosterDate, new DateWrapper().addYears(-20).asDate(), //
-            new DateWrapper().addDays(1).asDate());
   addFilter(Pet.IntakeDate, new DateWrapper().addYears(-20).asDate(), //
             new DateWrapper().addDays(1).asDate());
-  addFilter(Pet.NumberOfFosters);
   addFilter(Pet.PetName);
   addFilter(Pet.PetTypeId);
   addFilter(Pet.Sex);
-  addFilter(Pet.TrainedFlag);
 }
 //--------------------------------------------------------------------------------------------------
 }

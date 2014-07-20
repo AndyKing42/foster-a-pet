@@ -92,7 +92,7 @@ GLGridEditingWrapper(final GLGridWidget gridWidget, final boolean inlineEditing,
           break;
         }
         case Decimal:
-          field = createDecimalEditor(columnConfig, column.getNumberOfDecimalPlaces());
+          field = createDecimalEditor(columnConfig, column.getDecimalPlacesOrLength());
           break;
         case Int:
           if (column.getLookupType() == null || column.getLookupType().getTable() == null) {

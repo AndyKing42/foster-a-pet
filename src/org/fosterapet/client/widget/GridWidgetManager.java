@@ -64,8 +64,7 @@ public static PetGridWidget getPetGrid(final String gridName, final boolean inli
     validator = GLUtil.getValidators().getRecordValidator(EFAPTable.Pet);
     result = new PetGridWidget(validator, inlineEditing, useCheckBoxSelectionModel, //
                                rowLevelCommits, Pet.PetName, Pet.PetTypeId, Pet.Sex, //
-                               Pet.IntakeDate, Pet.TrainedFlag, Pet.AdoptionFee, Pet.FosterDate, //
-                               Pet.NumberOfFosters);
+                               Pet.IntakeDate, Pet.AdoptionFee);
     gridWidgetInfo = new GridWidgetInfo(result, inlineEditing, useCheckBoxSelectionModel, //
                                         rowLevelCommits);
     _gridWidgetInfoMap.put(gridName, gridWidgetInfo);

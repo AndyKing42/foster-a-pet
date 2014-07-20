@@ -57,18 +57,13 @@ private static void reloadPets() throws GLDBException {
     final int minute = GLUtil.getRandomInt(4) * 15;
     final String intakeTime = (hour < 10 ? "0" : "") + hour + (minute < 10 ? "0" : "") + //
                               minute + "00";
-    final String fosterDate = GLUtil.getRandomInt(3) == 0 ? null : GLUtil.dateAddDays(intakeDate, //
-                                                                                      60);
     petSQL.setValue(Pet.AdoptionFee.name(), GLUtil.getRandomInt(3000, 10000) / 100.0);
-    petSQL.setValue(Pet.FosterDate.name(), fosterDate);
     petSQL.setValue(Pet.IntakeDate.name(), intakeDate + intakeTime);
-    petSQL.setValue(Pet.NumberOfFosters.name(), GLUtil.getRandomInt(5));
     petSQL.setValue(Pet.PetId.name(), GLNextId.getNextIdValue(EFAPTable.Pet.name(), 1));
     petSQL.setValue(Pet.PetName.name(), nameAndSex[0]);
     petSQL.setValue(Pet.PetTypeId.name(),
                     petTypeIdList.get(GLUtil.getRandomInt(petTypeIdList.size())));
     petSQL.setValue(Pet.Sex.name(), nameAndSex[1]);
-    petSQL.setValue(Pet.TrainedFlag.name(), GLUtil.getRandomInt(2) == 0 ? "Y" : "N");
     petSQL.execute(false);
   }
 }
