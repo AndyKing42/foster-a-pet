@@ -8,7 +8,9 @@ import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;
 import com.greatlogic.glbase.gldb.GLDataSource;
 import com.greatlogic.glbase.gldb.GLSQL;
+import com.greatlogic.glbase.gldb.IGLDBEnums.EGLDBException;
 import com.greatlogic.glbase.gllib.GLConfig;
+import com.greatlogic.glbase.gllib.GLLog;
 
 class DatabaseRevs_0_00 {
 //--------------------------------------------------------------------------------------------------
@@ -46,7 +48,13 @@ static String rev_0_00_001(final String dbRevNumber, final boolean apply) throws
       personSQL.setValue(Person.Version.name(), "1");
       personSQL.execute();
     }
-    DBUUtil.addNextIds();
+    try {
+      DBUUtil.addNextIds();
+    }
+    catch (final Exception e) {
+      GLLog.major("EFAPId.addNextIds() failed", e);
+      throw new GLDBException(EGLDBException.ExecSQLError);
+    }
     DBUUtil.insertDBUpdateNote(dbRevNumber, "20130415", "113000", result);
   }
   return result;

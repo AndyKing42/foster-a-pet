@@ -3,7 +3,6 @@ package org.fosterapet.shared;
 import java.util.Collection;
 import java.util.TreeMap;
 import org.fosterapet.shared.IFAPEnums.ELookupType;
-import org.greatlogic.glgwt.client.core.GLDBException;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
@@ -45,44 +44,6 @@ ValueListId(29, "ValueListId", EFAPTable.ValueList);
 private final String    _name;
 private final int       _nextId;
 private final EFAPTable _table;
-public static String addNextIds(final StringBuilder resultSB) throws GLDBException {
-  final String result = "";
-  //  for (final EFAPId fapId : EFAPId.values()) {
-  //    boolean sequenceExists;
-  //    final EGLLogLevel saveLogLevel = GLLog.setThreadLogLevel(EGLLogLevel.Minor);
-  //    try {
-  //      final GLSQL sql = GLSQL.select();
-  //      sql.from(EFAPTable.NextId);
-  //      sql.whereAnd(NextId.NextId, EGLDBOp.Equals, fapId.getNextId());
-  //      sql.open();
-  //      try {
-  //        sequenceExists = sql.next();
-  //      }
-  //      finally {
-  //        sql.close();
-  //      }
-  //    }
-  //    finally {
-  //      GLLog.setThreadLogLevel(saveLogLevel);
-  //    }
-  //    if (!sequenceExists) {
-  //      final GLSQL sql = GLSQL.insert(ECirrusTable.XSequence, dataSourceName, false);
-  //      sql.setValue(XSequence.SequenceID, fapId.getID());
-  //      sql.setValue(XSequence.NextValue, 1000);
-  //      sql.setValue(XSequence.SequenceName, fapId.toString());
-  //      sql.execute();
-  //      result += (result.isEmpty() ? "" : ",") + fapId;
-  //    }
-  //  }
-  //  if (!result.isEmpty()) {
-  //    result = "Add sequence" + (result.contains(",") ? "s" : "") + ": " + result + ".";
-  //    GLLog.toSystemOut(result, GLUtil.LineSeparator);
-  //    if (resultSB != null) {
-  //      resultSB.append(result);
-  //    }
-  //  }
-  return result;
-}
 private EFAPId(final int nextId, final String name, final EFAPTable table) {
   _nextId = nextId;
   _name = name;

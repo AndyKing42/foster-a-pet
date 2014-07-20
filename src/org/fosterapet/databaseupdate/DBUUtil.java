@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.fosterapet.shared.IDBEnums.DBUpdateNote;
 import org.fosterapet.shared.IDBEnums.EFAPId;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.NextId;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gldb.GLSchemaLoader;
@@ -21,17 +22,34 @@ static {
   _resultSB = new StringBuilder(1000);
 }
 //--------------------------------------------------------------------------------------------------
-/**
- * Adds all database sequences that do not already exist.
- */
-static void addNextIds() {
-  final StringBuilder resultSB = new StringBuilder();
-  try {
-    EFAPId.addNextIds(resultSB);
+public static String addNextIds() throws GLDBException {
+  String result = "";
+  for (final EFAPId fapId : EFAPId.values()) {
+    boolean nextIdExists;
+    GLSQL sql = GLSQL.select();
+    sql.from(EFAPTable.NextId.name());
+    sql.whereAnd(0, NextId.NextId.name() + "=" + fapId.getNextId(), 0);
+    sql.open();
+    try {
+      nextIdExists = sql.next();
+    }
+    finally {
+      sql.close();
+    }
+    if (!nextIdExists) {
+      sql = GLSQL.insert(EFAPTable.NextId.name(), null, false);
+      sql.setValue(NextId.NextId.name(), fapId.getNextId());
+      sql.setValue(NextId.NextIdValue.name(), 1000);
+      sql.setValue(NextId.NextIdName.toString(), fapId.getName());
+      sql.setValue(NextId.TableName.name(), fapId.getTable().name());
+      sql.execute();
+    }
   }
-  catch (final Exception e) {
-    GLLog.major("EFAPId.addNextIds failed", e);
+  if (!result.isEmpty()) {
+    result = "Add sequence" + (result.contains(",") ? "s" : "") + ": " + result + ".";
+    GLLog.toSystemOut(result, GLUtil.LineSeparator);
   }
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 static void applySQLFile(final String sqlFilename) throws GLDBException {
@@ -84,7 +102,13 @@ static void createTablesFromSQL(final String sql) throws GLDBException {
   catch (final IOException ioe) {
     throw new GLDBException(EGLDBException.ClassCreatorError, "Error loading schema", ioe);
   }
-  DBUUtil.addNextIds();
+  try {
+    addNextIds();
+  }
+  catch (final Exception e) {
+    GLLog.major("EFAPId.addNextIds() failed", e);
+    throw new GLDBException(EGLDBException.ExecSQLError);
+  }
 }
 //--------------------------------------------------------------------------------------------------
 static String getResponse(final String prompt) {
