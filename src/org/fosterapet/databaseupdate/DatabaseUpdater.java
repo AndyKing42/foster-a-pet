@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import org.fosterapet.databaseupdate.IDatabaseUpdateEnums.EDBUConfigAD;
+import org.fosterapet.shared.IDBEnums.DBUpdateNote;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
@@ -23,7 +24,8 @@ public DatabaseUpdater() throws GLDBException {
   ensureDBUpdateNoteExists();
   final Map<String, Method> allMethodsMap = getAllMethodsMap();
   final Set<String> alreadyAppliedRevNumbersSet = getAlreadyAppliedRevNumbersSet();
-  final TreeMap<String, Method> unappliedMethodsMap = getUnappliedMethodsMap(allMethodsMap,
+  final TreeMap<String, Method> unappliedMethodsMap =
+                                                      getUnappliedMethodsMap(allMethodsMap,
                                                                              alreadyAppliedRevNumbersSet);
   if (unappliedMethodsMap.size() == 0) {
     GLLog.toSystemOut("The database is up to date", GLUtil.LineSeparator);
@@ -67,10 +69,10 @@ private void applyRevs(final Map<String, Method> unappliedMethodsMap,
       break;
     }
     maxDBRevNumberApplied = unappliedMethodsEntry.getKey();
-    DBUUtil_old.clearResultSB();
+    DBUUtil.clearResultSB();
   }
   if (!maxDBRevNumberApplied.isEmpty()) {
-    DBUUtil_old.addNextIds();
+    DBUUtil.addNextIds();
   }
 } // applyRevs()
 //--------------------------------------------------------------------------------------------------
@@ -79,7 +81,7 @@ private void ensureDBUpdateNoteExists() throws GLDBException {
     final EGLLogLevel saveLogLevel = GLLog.setThreadLogLevel(EGLLogLevel.Critical);
     try {
       final GLSQL dbUpdateNoteSQL = GLSQL.select();
-      dbUpdateNoteSQL.from(EFAPTable.DBUpdateNote);
+      dbUpdateNoteSQL.from(EFAPTable.DBUpdateNote.name());
       dbUpdateNoteSQL.open();
     }
     finally {
@@ -103,7 +105,8 @@ private Map<String, Method> getAllMethodsMap() {
   for (int major = 0; major < 10; ++major) {
     for (int minor = 0; minor < 10; ++minor) {
       for (int level2TagIndex = 0; level2TagIndex < level2Tag.length(); ++level2TagIndex) {
-        final String className = "DatabaseRevs_" + major + "_" + (minor < 10 ? "0" : "") + minor +
+        final String className = "DatabaseRevs_" + major + "_" + //
+                                 (minor < 10 ? "0" : "") + minor + //
                                  level2Tag.substring(level2TagIndex, level2TagIndex + 1).trim();
         Class<? extends Object> databaseRevClass;
         try {
@@ -135,13 +138,13 @@ private Set<String> getAlreadyAppliedRevNumbersSet() throws GLDBException {
   final EGLLogLevel saveLogLevel = GLLog.setThreadLogLevel(EGLLogLevel.Minor);
   try {
     final GLSQL dbUpdateNoteSQL = GLSQL.select();
-    dbUpdateNoteSQL.from(EFAPTable.DBUpdateNote);
+    dbUpdateNoteSQL.from(EFAPTable.DBUpdateNote.name());
     dbUpdateNoteSQL.open();
     try {
       while (dbUpdateNoteSQL.next()) {
-        final String dbRevNumber = dbUpdateNoteSQL.asString(EDBUpdateNote.DBRevNumber);
+        final String dbRevNumber = dbUpdateNoteSQL.asString(DBUpdateNote.DBRevNumber.name());
         if (dbRevNumber.contains(".")) {
-          result.add(dbUpdateNoteSQL.asString(EDBUpdateNote.DBRevNumber));
+          result.add(dbUpdateNoteSQL.asString(DBUpdateNote.DBRevNumber.name()));
         }
       }
     }
@@ -160,7 +163,7 @@ private String getMaxDBRevNumberToBeApplied(final TreeMap<String, Method> unappl
   logMethodsToBeApplied(unappliedMethodsMap);
   boolean validResponse = false;
   do {
-    result = DBUUtil_old.getResponse("Maximum database revision to be applied "
+    result = DBUUtil.getResponse("Maximum database revision to be applied " //
                                  + "(revision number or 'a' to apply all)? ");
     if (result.equalsIgnoreCase("a")) {
       result = unappliedMethodsMap.lastKey();

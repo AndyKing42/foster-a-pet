@@ -22,14 +22,13 @@ public static void main(final String... args) {
 //--------------------------------------------------------------------------------------------------
 private DatabaseUpdateMain() {
   try {
-    final String loadDataFilename =
-                                    GLConfig.getTopConfigElement()
+    final String loadDataFilename = GLConfig.getTopConfigElement() //
                                             .attributeAsString(EDBUConfigAD.LoadDataFilename);
     if (loadDataFilename.isEmpty()) {
       new DatabaseUpdater();
     }
     else {
-      new LoadTestData(loadDataFilename);
+      //      new LoadTestData(loadDataFilename);
     }
   }
   catch (final Exception e) {
