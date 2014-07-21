@@ -55,11 +55,17 @@ public MainLayoutWidget() {
   initWidget(uiBinder.createAndBindUi(this));
 }
 //--------------------------------------------------------------------------------------------------
-public void createPetsTab() {
-  final ContentPanel contentPanel = new ContentPanel();
-  contentPanel.setHeaderVisible(false);
-  _appContentPanelList.add(contentPanel);
-  appTabPanel.add(contentPanel, new TabItemConfig("Pets", true));
+public void createPetGrid(final int tabIndex) {
+  final ContentPanel contentPanel;
+  if (tabIndex < 0) {
+    contentPanel = new ContentPanel();
+    contentPanel.setHeaderVisible(false);
+    _appContentPanelList.add(contentPanel);
+    appTabPanel.add(contentPanel, new TabItemConfig("Pets", true));
+  }
+  else {
+    contentPanel = _appContentPanelList.get(tabIndex);
+  }
   final GLGridWidget gridWidget;
   gridWidget = GridWidgetManager.getPetGrid("Pets" + (_appContentPanelList.size() + 1), //
                                             inlineEditingCheckBox.getValue(), //
@@ -69,20 +75,24 @@ public void createPetsTab() {
   DBAccess.loadPets(gridWidget.getListStore());
 }
 //--------------------------------------------------------------------------------------------------
+public void createTestGrid() {
+  final ContentPanel contentPanel = new ContentPanel();
+  contentPanel.setHeaderVisible(false);
+  _appContentPanelList.add(contentPanel);
+  appTabPanel.add(contentPanel, new TabItemConfig("Test", true));
+  final TestGrid testGrid = new TestGrid();
+  contentPanel.setWidget(testGrid.asWidget());
+}
+//--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  createPetsTab();
+  createPetGrid(-1);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"recreateGridButton"})
 public void onRecreateGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   GLLog.popup(10, "Recreating grid ...");
-  final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getPetGrid("Pets1", inlineEditingCheckBox.getValue(), //
-                                            checkBoxSelectionModelCheckBox.getValue(), //
-                                            rowLevelCommitsCheckBox.getValue());
-  _appContentPanelList.get(0).setWidget(gridWidget);
-  DBAccess.loadPets(gridWidget.getListStore());
+  createPetGrid(0);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})
@@ -99,6 +109,11 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
     }
   });
   messageBox.show();
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"testGridButton"})
+public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  createTestGrid();
 }
 //--------------------------------------------------------------------------------------------------
 }

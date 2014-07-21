@@ -1,4 +1,4 @@
-package org.fosterapet.client.widget;
+package org.greatlogic.glgwt.client.widget;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,29 +12,27 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IDBEnums.Pet;
-import org.greatlogic.glgwt.client.widget.GLGridWidget;
-import org.greatlogic.glgwt.shared.GLRecordValidator;
-import com.sencha.gxt.core.client.util.DateWrapper;
+import org.greatlogic.glgwt.shared.IGLColumn;
+import org.greatlogic.glgwt.shared.IGLTable;
 
-public class PetGridWidget extends GLGridWidget {
+public class GLGenericGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
-public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
-                     final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                     final Pet... petColumns) {
-  super("Here's the conten panel!", "There are no pets", recordValidator, inlineEditing,
-        useCheckBoxSelectionModel, rowLevelCommits, petColumns);
+private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
+private IGLColumn[]              _columns;
+//--------------------------------------------------------------------------------------------------
+public static void createGenericGridWidget(final IGLTable table) {
+  new GLGenericGridWidget(table.getColumns().toArray(EmptyColumnArray));
+}
+//--------------------------------------------------------------------------------------------------
+private GLGenericGridWidget(final IGLColumn[] columns) {
+  super(null, "There are no rows", null, false, true, true, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addFilters() {
-  addFilter(Pet.AdoptionFee);
-  addFilter(Pet.DateOfBirth);
-  addFilter(Pet.IntakeDate, new DateWrapper().addYears(-20).asDate(), //
-            new DateWrapper().addDays(1).asDate());
-  addFilter(Pet.PetName);
-  addFilter(Pet.PetTypeId);
-  addFilter(Pet.Sex);
+  for (final IGLColumn column : _columns) {
+    addFilter(column);
+  }
 }
 //--------------------------------------------------------------------------------------------------
 }

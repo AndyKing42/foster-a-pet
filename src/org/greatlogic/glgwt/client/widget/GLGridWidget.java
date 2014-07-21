@@ -17,9 +17,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
@@ -229,7 +229,8 @@ private void addLookupLoadedEventHandler(final HashSet<IGLTable> lookupTableSet)
     };
     final Type<IGLLookupTableLoadedEventHandler> eventType;
     eventType = GLLookupTableLoadedEvent.LookupTableLoadedEventType;
-    _lookupTableLoadedHandlerRegistration = GLClientUtil.getEventBus().addHandler(eventType, handler);
+    _lookupTableLoadedHandlerRegistration = GLClientUtil.getEventBus().addHandler(eventType, //
+                                                                                  handler);
   }
 }
 //--------------------------------------------------------------------------------------------------
@@ -286,7 +287,9 @@ private Filter<GLRecord, ?> createListFilter(final IGLColumn column,
   });
   final IGLTable table = column.getLookupType().getTable();
   if (table == null) {
-    final ArrayList<String> list = GLClientUtil.getLookupCache().getAbbrevList(column.getLookupType());
+    final ArrayList<String> list =
+                                   GLClientUtil.getLookupCache()
+                                               .getAbbrevList(column.getLookupType());
     for (final String listEntry : list) {
       listStore.add(listEntry);
     }

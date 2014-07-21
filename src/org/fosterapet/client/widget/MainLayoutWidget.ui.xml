@@ -98,6 +98,12 @@
             </container:child>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
               <button:TextButton
+                ui:field='testGridButton'
+                text='Test Grid'
+                visible='true'/>
+            </container:child>
+            <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
+              <button:TextButton
                 ui:field='reloadTestDataButton'
                 text='Reload Test Data'
                 visible='true'/>
