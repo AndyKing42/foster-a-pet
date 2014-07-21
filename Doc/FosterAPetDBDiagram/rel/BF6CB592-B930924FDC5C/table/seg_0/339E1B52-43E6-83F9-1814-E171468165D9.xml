@@ -1,0 +1,94 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="339E1B52-43E6-83F9-1814-E171468165D9" name="PlanTemplateEntry">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:49:07 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PlanTemplateEntryId" id="9474C2F7-6ECD-0D55-E115-FD814C05D767">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="ArchiveDate" id="B3F6C8EA-63D7-355F-63C4-87EC15F742D3">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="OffsetNumberOfDays" id="27412853-F34C-EE2B-AB60-A09B017B0ADF">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="PlanTemplateEntryDesc" id="710C70A3-F893-8954-AF4B-80B5B3B4264C">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+</Column>
+<Column name="PlanTemplateId" id="1B691CB7-EB15-B28F-4549-029E0D4BFF8A">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:43 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>BC104BE9-59DA-C9FC-8DDA-EC3BFABBAFAE</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="AF9F7442-C513-A6EE-6720-DC7FEA0BB625" referredColumn="BC104BE9-59DA-C9FC-8DDA-EC3BFABBAFAE"/>
+</associations>
+</Column>
+<Column name="Version" id="4E36E735-DAEF-E0A5-9547-1BD5C89B105F">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="497A5144-617B-3EEE-9F01-F11105475E63" name="PlanTemplateEntryPK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="9474C2F7-6ECD-0D55-E115-FD814C05D767"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3906B4D9-1145-BF66-6061-142E94AC60DB" name="PlanTemplateEntry__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:45:36 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexColumnUsage>
+<colUsage columnID="1B691CB7-EB15-B28F-4549-029E0D4BFF8A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="30D9B113-6EE6-D5D8-E332-13352AC7A6FE" name="PlanTemplateEntry_PlanTemplate_FK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 04:51:43 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="1B691CB7-EB15-B28F-4549-029E0D4BFF8A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

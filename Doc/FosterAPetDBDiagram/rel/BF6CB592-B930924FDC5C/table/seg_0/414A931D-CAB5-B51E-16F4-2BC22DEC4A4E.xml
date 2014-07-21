@@ -1,0 +1,99 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="414A931D-CAB5-B51E-16F4-2BC22DEC4A4E" name="Address">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:40:04 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="AddressId" id="1C95F0BB-9514-1A58-847E-B760A86F8EF2">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="AddressLine1" id="0A78C890-28C9-F949-4997-91E85E5954F1">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+</Column>
+<Column name="AddressLine2" id="9B3CA165-E3CD-2D8A-15B3-3D497594C867">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+</Column>
+<Column name="ArchiveDate" id="F11EF397-A880-1379-C5F4-11C71108A311">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="CityId" id="EB7D4824-5F77-6E13-FD7C-475E2C3640EF">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:46 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>27D644DD-3AF6-BF12-9594-DA27815CC851</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="D5331671-9F7C-1CF2-9F59-25773B24AE65" referredColumn="27D644DD-3AF6-BF12-9594-DA27815CC851"/>
+</associations>
+</Column>
+<Column name="Version" id="61D7ECCE-4F43-FFF0-832C-B1CAB8D65628">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+<Column name="ZIPCode" id="4E02D337-EAB4-68E2-6823-7BAA460A59BC">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-18 16:56:51 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="391C8702-6D28-A5C3-9118-2ED19C23F600" name="AddressPK">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:41:59 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="1C95F0BB-9514-1A58-847E-B760A86F8EF2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DDC779A1-8A15-D063-477D-A00160974E70" name="Address_City_FK">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 22:43:46 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="EB7D4824-5F77-6E13-FD7C-475E2C3640EF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

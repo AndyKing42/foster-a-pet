@@ -1,0 +1,86 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="5255742A-A0D7-46BA-7CBB-B8EEC54C64D4" name="Org">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>EB83922B-C457-3EAB-577E-77D671569F40</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="047380DF-A764-0B5E-CF89-C09F8577BFB1">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>FFF1530C-1376-78EA-95D4-57E1EA78660F</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="desc" id="BEE024AA-D4F7-E92A-64FF-03B2A5B21FBB">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>3DEE52BF-B798-59BC-8E14-5B0754C9DD42</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+</Attribute>
+<Attribute name="name" id="43E42F4A-4EC8-A643-1FAF-E83C9B6FAB1C">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>EDAFD5DA-255B-A5D0-9CBF-54A4BF13A587</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+</Attribute>
+<Attribute name="version" id="AE788112-91B1-2AE3-4505-0D9AC619CFAA">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>7466C022-4BBB-E872-7A10-494FDBD4ED5A</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="0341836F-5E5E-ACB8-99A7-0294A9AECEB2" name="OrgPK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>50DC4310-A51A-F95B-B375-DF2E1F047BDC</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>047380DF-A764-0B5E-CF89-C09F8577BFB1</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

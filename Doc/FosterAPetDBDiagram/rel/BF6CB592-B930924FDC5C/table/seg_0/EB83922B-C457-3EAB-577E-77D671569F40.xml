@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EB83922B-C457-3EAB-577E-77D671569F40" name="Org">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:14:07 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="OrgId" id="FFF1530C-1376-78EA-95D4-57E1EA78660F">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:15:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="ArchiveDate" id="9A548CA2-BA73-0F82-5C38-8E3DC2429774">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:39:47 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="OrgDesc" id="3DEE52BF-B798-59BC-8E14-5B0754C9DD42">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:15:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+</Column>
+<Column name="OrgName" id="EDAFD5DA-255B-A5D0-9CBF-54A4BF13A587">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:15:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+</Column>
+<Column name="Version" id="7466C022-4BBB-E872-7A10-494FDBD4ED5A">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:15:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="50DC4310-A51A-F95B-B375-DF2E1F047BDC" name="OrgPK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:15:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="FFF1530C-1376-78EA-95D4-57E1EA78660F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4B05BE24-891D-E39F-7C73-85254C7D2FA6" name="Org__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:21:10 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<indexColumnUsage>
+<colUsage columnID="EDAFD5DA-255B-A5D0-9CBF-54A4BF13A587"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

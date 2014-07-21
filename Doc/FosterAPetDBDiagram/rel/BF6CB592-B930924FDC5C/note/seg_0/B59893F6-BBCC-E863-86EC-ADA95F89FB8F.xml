@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Note class="oracle.dbtools.crest.model.design.Note" name="Note_2" directorySegmentName="seg_0" id="B59893F6-BBCC-E863-86EC-ADA95F89FB8F">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 21:48:34 UTC</createdTime>
+<comment>The Attribute.EntityId will be the PersonId, PetId, LocId, or TreatmentId that the attribute is associated with. The AttributeDef.AttributeDefType indicates which table the entity id is associated with.</comment>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+</Note>

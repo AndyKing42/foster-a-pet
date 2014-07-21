@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Note class="oracle.dbtools.crest.model.design.Note" name="Note_3" directorySegmentName="seg_0" id="166B9594-8C11-F490-A782-F15778A580C6">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 21:59:13 UTC</createdTime>
+<comment>The AttributeDef.EntityTypeId will restrict the attribute definitions that will be available when applying an attribute to an entity. For example, if the attribute definition type is &quot;Pet&quot; then only pets that have a PetTypeId that matches the EntityTypeId will have visibility to the attribute definition.</comment>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+</Note>

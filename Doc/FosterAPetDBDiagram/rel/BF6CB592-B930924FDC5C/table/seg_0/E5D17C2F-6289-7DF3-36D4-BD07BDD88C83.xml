@@ -1,0 +1,192 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E5D17C2F-6289-7DF3-36D4-BD07BDD88C83" name="Treatment">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:56 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="TreatmentId" id="E2A96C96-CB75-09FB-0668-A2F93DEB1F6A">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="ArchiveDate" id="81C24246-2C5F-8F2B-6F96-3CF5ACF5328D">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:42:50 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="Cost" id="61E6C87D-13ED-BDB9-7677-9F81527E3111">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT026</logicalDatatype>
+<dataTypePrecision>19</dataTypePrecision>
+<dataTypeScale>4</dataTypeScale>
+</Column>
+<Column name="LocId" id="D081AF6A-7EC1-FF30-4417-9DBD40F7CFC6">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 14:46:32 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>B628D347-60D5-F44B-097F-F5E1E5294E0F</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="1318228B-B4B4-E50C-1889-12B20F0A5C07" referredColumn="B628D347-60D5-F44B-097F-F5E1E5294E0F"/>
+</associations>
+</Column>
+<Column name="OrgId" id="908D6039-2335-9B0B-0520-F7F628E2E901">
+<createdBy>aking</createdBy>
+<createdTime>2011-10-19 15:13:39 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="PetId" id="F3CCF7B2-041D-FD21-C632-2BA0B88271B7">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:14:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>D42EB375-24AB-5AA9-BFDC-466187C8F153</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="D636D629-9572-7CB7-DBB4-A884809F8A52" referredColumn="D42EB375-24AB-5AA9-BFDC-466187C8F153"/>
+</associations>
+</Column>
+<Column name="PlanEntryId" id="049F74AC-ECF8-4581-4B17-D7B67031158F">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 05:24:54 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>0AA67443-34F8-F7E1-9375-DE41B643F794</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="71216C70-BE62-0F11-BFE4-5150032FF879" referredColumn="0AA67443-34F8-F7E1-9375-DE41B643F794"/>
+</associations>
+</Column>
+<Column name="ScheduledDate" id="198FBED8-B227-7773-EBA8-45D4EF6EE120">
+<createdBy>Andy</createdBy>
+<createdTime>2013-06-09 23:51:51 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TreatmentDate" id="0F8F5584-AEA1-8D24-0114-1D2018294BE7">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+</Column>
+<Column name="TreatmentDesc" id="2D55AD72-271F-99AF-BAF0-D01BF148E4D3">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200</dataTypeSize>
+</Column>
+<Column name="TreatmentTypeId" id="DDA5215A-CD69-E2DC-9D4B-B2AF41C053B7">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:02:13 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<delegate>66AE9FE4-5D5D-D7FA-FB38-BECA325D93EE</delegate>
+<previousColumn>false</previousColumn>
+<associations>
+<colAssociation fkAssociation="1763DDB4-0DD3-E6D4-85E4-54779CB7C16C" referredColumn="66AE9FE4-5D5D-D7FA-FB38-BECA325D93EE"/>
+</associations>
+</Column>
+<Column name="Version" id="0676721D-6332-D494-AEE2-0D7533191894">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:25 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3EBDC413-10F6-7D57-5E23-1A58D4C838A7" name="TreatmentPK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:00:00 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="E2A96C96-CB75-09FB-0668-A2F93DEB1F6A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FE517C8A-3D6D-5BE8-7165-56FDB2AD9911" name="Treatment__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:40:33 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexColumnUsage>
+<colUsage columnID="F3CCF7B2-041D-FD21-C632-2BA0B88271B7"/>
+<colUsage columnID="0F8F5584-AEA1-8D24-0114-1D2018294BE7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2769A24C-C848-BBDA-FF83-854C10E7BD76" name="Treatment_TreatmentType_FK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:02:13 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="DDA5215A-CD69-E2DC-9D4B-B2AF41C053B7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F0A515AE-0526-2297-8647-D506F88E07C2" name="Treatment_Pet_FK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 23:14:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="F3CCF7B2-041D-FD21-C632-2BA0B88271B7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="50BFFBEA-EF79-63B0-46EE-D0E855A59A29" name="Treatment_Loc_FK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 14:46:32 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="D081AF6A-7EC1-FF30-4417-9DBD40F7CFC6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="50C35C7D-A96C-E4AD-BA26-32F765C9EDB5" name="Treatment_PlanEntry_FK">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 05:24:54 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<indexColumnUsage>
+<colUsage columnID="049F74AC-ECF8-4581-4B17-D7B67031158F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

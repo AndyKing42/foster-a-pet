@@ -1,0 +1,143 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="FDC5B75F-0DE1-95A7-84D1-28442BFB6C83" name="Person">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>3B5407A2-95AB-3ADA-487A-A55587DF67BB</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="3E49B017-4F33-5504-617E-FB1A5A190B73">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>D35F5BFF-7CB8-E742-68A6-DC07B11BD497</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Attribute>
+<Attribute name="dateOfBirth" id="5618B923-A16A-55E1-5042-7469763E1683">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>7168297D-BF41-4934-6064-085166548C45</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+</Attribute>
+<Attribute name="nameFirst" id="AD3A686C-97F6-8FCD-7DF8-3C5B24B9A944">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>D203D21B-9ECE-11F4-0937-C432628B1EFE</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+<Attribute name="nameLast" id="0CD32494-3D0A-FB11-5EA0-3B362E7920B6">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>073E13B0-A735-40EC-2438-F754E17C318B</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+<Attribute name="phoneNumberHome" id="E2B95C60-DFD2-2B60-F4DF-8F753803E7BE">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>D249B270-F0FD-DB43-6919-71DD52B45F11</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+</Attribute>
+<Attribute name="phoneNumberMobile" id="F3592C9B-1B22-C97F-7F46-2E76E6F96D29">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>8D1551E1-25D9-ACDC-A46C-9A76AB49C319</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+</Attribute>
+<Attribute name="phoneNumberOffice" id="80B94EBF-1E1F-32F1-C980-A88047B99A82">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>C487FBC4-09DB-EC36-A055-B7415254ACEE</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20</dataTypeSize>
+</Attribute>
+<Attribute name="version" id="EA6E8150-C978-BFDF-9253-0031D0A95DC1">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>A4B7E55E-4447-3549-E382-6780C5D3D149</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="2F2DC3B8-CDB1-FE16-2F97-B2DC73C64C03" name="PersonPK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 21:21:13 UTC</createdTime>
+<generatorID>0A7A4F21-16AF-9F68-470C-BC967800CB22</generatorID>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<engineerTo>
+<item key="BF6CB592-12B4-D17D-048A-B930924FDC5C" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>3E49B017-4F33-5504-617E-FB1A5A190B73</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

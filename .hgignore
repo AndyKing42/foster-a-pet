@@ -1,0 +1,19 @@
+
+syntax: regexp
+^.gwt$
+syntax: regexp
+^gwt-unitCache$
+syntax: regexp
+^war/fosterapet$
+syntax: regexp
+^war/WEB-INF/deploy$
+syntax: regexp
+^.classpath$
+syntax: regexp
+^.project$
+syntax: regexp
+^.settings$
+
+
+syntax: regexp
+^logs$
