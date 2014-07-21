@@ -14,8 +14,8 @@ package org.fosterapet.client;
  */
 import org.fosterapet.client.widget.GridWidgetManager;
 import org.fosterapet.client.widget.MainLayoutWidget;
-import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -26,20 +26,19 @@ public class FosterAPet implements EntryPoint {
 public void onModuleLoad() {
   final ClientFactory clientFactory = new ClientFactoryUI();
   GLClientUtil.initialize(clientFactory.getEventBus(), clientFactory.getLookupCache(),
-                    clientFactory.getRemoteService(), clientFactory.getValidators());
-  clientFactory.setMainLayoutWidget(new MainLayoutWidget(clientFactory));
+                          clientFactory.getRemoteService(), clientFactory.getValidators());
+  clientFactory.setMainLayoutWidget(new MainLayoutWidget());
   final boolean loadTestData = false;
-  clientFactory.getMainLayoutWidget().onRecreateGridButtonClick(null);
-  final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Main");
+  clientFactory.getMainLayoutWidget().createPetsTab();
+  final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
   if (loadTestData) {
     final GLListStore petTypeListStore = new GLListStore();
     TestData.loadPetTypeTestData(petTypeListStore);
     TestData.loadPetTestData(gridWidget.getListStore());
   }
-  //  clientFactory.getCenterPanel().setWidget(gridWidget);
   RootLayoutPanel.get().add(clientFactory.getMainLayoutWidget());
   DBAccess.loadPets(gridWidget.getListStore());
-  //  GLClientUtil.login();
+  // todo: GLClientUtil.login();
 }
 //--------------------------------------------------------------------------------------------------
 }

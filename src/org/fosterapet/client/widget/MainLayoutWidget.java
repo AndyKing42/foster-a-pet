@@ -12,7 +12,7 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.ClientFactory;
+import java.util.ArrayList;
 import org.fosterapet.client.DBAccess;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
@@ -24,8 +24,9 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.PlainTabPanel;
+import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
-import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -34,47 +35,58 @@ import com.sencha.gxt.widget.core.client.form.CheckBox;
 public class MainLayoutWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-ContentPanel                centerPanel;
+PlainTabPanel                         appTabPanel;
 @UiField
-CheckBox                    checkBoxSelectionModelCheckBox;
+CheckBox                              checkBoxSelectionModelCheckBox;
 @UiField
-CheckBox                    inlineEditingCheckBox;
+CheckBox                              inlineEditingCheckBox;
 @UiField
-TextButton                  recreateGridButton;
-@UiField
-TextButton                  reloadTestDataButton;
-@UiField
-CheckBox                    rowLevelCommitsCheckBox;
-private final ClientFactory _clientFactory;
+CheckBox                              rowLevelCommitsCheckBox;
+
+private final ArrayList<ContentPanel> _appContentPanelList;
 //==================================================================================================
 interface MainLayoutWidgetUiBinder extends UiBinder<Widget, MainLayoutWidget> { //
 }
 //==================================================================================================
-public MainLayoutWidget(final ClientFactory clientFactory) {
+public MainLayoutWidget() {
   super();
-  _clientFactory = clientFactory;
+  _appContentPanelList = new ArrayList<>();
   final MainLayoutWidgetUiBinder uiBinder = GWT.create(MainLayoutWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
 }
 //--------------------------------------------------------------------------------------------------
-public ContentPanel getCenterPanel() {
-  return centerPanel;
+public void createPetsTab() {
+  final ContentPanel contentPanel = new ContentPanel();
+  contentPanel.setHeaderVisible(false);
+  _appContentPanelList.add(contentPanel);
+  appTabPanel.add(contentPanel, new TabItemConfig("Pets", true));
+  final GLGridWidget gridWidget;
+  gridWidget = GridWidgetManager.getPetGrid("Pets" + (_appContentPanelList.size() + 1), //
+                                            inlineEditingCheckBox.getValue(), //
+                                            checkBoxSelectionModelCheckBox.getValue(), //
+                                            rowLevelCommitsCheckBox.getValue());
+  contentPanel.setWidget(gridWidget);
+  DBAccess.loadPets(gridWidget.getListStore());
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"petsButton"})
+public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  createPetsTab();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"recreateGridButton"})
-public void onRecreateGridButtonClick(@SuppressWarnings("unused") final SelectEvent event) {
+public void onRecreateGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   GLLog.popup(10, "Recreating grid ...");
   final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getPetGrid("Main", inlineEditingCheckBox.getValue(), //
+  gridWidget = GridWidgetManager.getPetGrid("Pets1", inlineEditingCheckBox.getValue(), //
                                             checkBoxSelectionModelCheckBox.getValue(), //
                                             rowLevelCommitsCheckBox.getValue());
-  _clientFactory.getCenterPanel().setWidget(gridWidget);
+  _appContentPanelList.get(0).setWidget(gridWidget);
   DBAccess.loadPets(gridWidget.getListStore());
-  _clientFactory.getCenterPanel().forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})
-public void onReloadTestDataButtonClick(@SuppressWarnings("unused") final SelectEvent event) {
+public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   final ConfirmMessageBox messageBox;
   messageBox = new ConfirmMessageBox("Reload Test Data", //
                                      "Are you sure you want to erase and reload all test data?");

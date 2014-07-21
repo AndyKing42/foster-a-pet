@@ -77,9 +77,9 @@
   </ui:with>
   <!--====== BoxLayoutData ===================================================================== -->
   <ui:with
-    type="com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData"
-    field="boxLayoutDataMargins_3_3_3_3">
-    <ui:attributes margins="{margins_3_3_3_3}"/>
+    type='com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData'
+    field='boxLayoutDataMargins_3_3_3_3'>
+    <ui:attributes margins='{margins_3_3_3_3}'/>
   </ui:with>
   <!--========================================================================================== -->
   <container:Viewport>
@@ -90,6 +90,12 @@
             hBoxLayoutAlign='TOP'
             pack='START'
             padding='{padding_3_3_3_3}'>
+            <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
+              <button:TextButton
+                ui:field='petsButton'
+                text='Pets'
+                visible='true'/>
+            </container:child>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
               <button:TextButton
                 ui:field='reloadTestDataButton'
@@ -131,9 +137,14 @@
         </gxt:ContentPanel>
       </container:west>
       <container:center>
-        <gxt:ContentPanel
-          ui:field='centerPanel'
-          headerVisible='false'/>
+        <gxt:ContentPanel headerVisible='false'>
+          <gxt:PlainTabPanel
+            ui:field='appTabPanel'
+            animScroll='true'
+            closeContextMenu='true'
+            pixelSize='450, 250'
+            tabScroll='true'/>
+        </gxt:ContentPanel>
       </container:center>
       <container:east layoutData='{eastData}'>
         <gxt:ContentPanel headerVisible='false'>

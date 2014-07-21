@@ -8,7 +8,6 @@ import org.fosterapet.shared.Validators;
 import org.greatlogic.glgwt.client.core.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import com.google.gwt.core.client.GWT;
-import com.sencha.gxt.widget.core.client.ContentPanel;
 
 public abstract class ClientFactory {
 //--------------------------------------------------------------------------------------------------
@@ -27,10 +26,6 @@ protected ClientFactory() {
   _lookupCache = new GLLookupCache();
   LookupCacheLoader.load(_lookupCache);
   _validators = new Validators();
-}
-//--------------------------------------------------------------------------------------------------
-public ContentPanel getCenterPanel() {
-  return _mainLayoutWidget == null ? null : _mainLayoutWidget.getCenterPanel();
 }
 //--------------------------------------------------------------------------------------------------
 public GLEventBus getEventBus() {

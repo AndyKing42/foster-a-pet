@@ -46,7 +46,7 @@ public static void reloadTestData() {
     @Override
     public void onSuccess(final Void result) {
       GLLog.popup(10, "Test data reload is complete");
-      final PetGridWidget petGrid = GridWidgetManager.getPetGrid("Main");
+      final PetGridWidget petGrid = GridWidgetManager.getPetGrid("Pet1");
       ClientFactory.Instance.getLookupCache().reloadAll();
       loadPets(petGrid.getListStore());
     }

@@ -16,7 +16,6 @@ import java.util.TreeMap;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 
@@ -44,12 +43,20 @@ static {
 //--------------------------------------------------------------------------------------------------
 public static PetGridWidget getPetGrid(final String gridName) {
   final GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
+  boolean inlineEditing;
+  boolean rowLevelCommits;
+  boolean useCheckBoxSelectionModel;
   if (gridWidgetInfo == null) {
-    GLLog.popup(60, "Attempted to get grid with no settings");
-    return null;
+    inlineEditing = false;
+    rowLevelCommits = true;
+    useCheckBoxSelectionModel = true;
   }
-  return getPetGrid(gridName, gridWidgetInfo._inlineEditing,
-                    gridWidgetInfo._useCheckBoxSelectionModel, gridWidgetInfo._rowLevelCommits);
+  else {
+    inlineEditing = gridWidgetInfo._inlineEditing;
+    rowLevelCommits = gridWidgetInfo._rowLevelCommits;
+    useCheckBoxSelectionModel = gridWidgetInfo._useCheckBoxSelectionModel;
+  }
+  return getPetGrid(gridName, inlineEditing, useCheckBoxSelectionModel, rowLevelCommits);
 }
 //--------------------------------------------------------------------------------------------------
 public static PetGridWidget getPetGrid(final String gridName, final boolean inlineEditing,
