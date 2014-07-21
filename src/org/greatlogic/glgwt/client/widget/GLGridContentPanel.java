@@ -1,8 +1,8 @@
 package org.greatlogic.glgwt.client.widget;
 
 import java.util.ArrayList;
-import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.core.IGLCreateNewRecordCallback;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
@@ -16,7 +16,7 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 
-class GLGridContentPanel extends ContentPanel {
+public class GLGridContentPanel extends ContentPanel {
 //--------------------------------------------------------------------------------------------------
 private final GLGridWidget _gridWidget;
 //--------------------------------------------------------------------------------------------------

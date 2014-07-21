@@ -15,6 +15,7 @@ package org.fosterapet.client.widget;
 import java.util.ArrayList;
 import org.fosterapet.client.DBAccess;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.widget.GLGridContentPanel;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -82,6 +83,13 @@ public void createTestGrid() {
   appTabPanel.add(contentPanel, new TabItemConfig("Test", true));
   final TestGrid testGrid = new TestGrid();
   contentPanel.setWidget(testGrid.asWidget());
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"gridDebugButton"})
+public void onGridDebugButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final GLGridContentPanel panel = (GLGridContentPanel)_appContentPanelList.get(0).getWidget();
+  final Widget childWidget = panel.getWidget();
+  GLLog.popup(20, (childWidget == null ? "null" : getClass().toString()));
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})

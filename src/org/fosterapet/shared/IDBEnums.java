@@ -134,6 +134,7 @@ public Collection<IGLColumn> getColumns() {
 }
 @Override
 public TreeMap<Integer, IGLColumn> getComboboxColumnMap() {
+  createColumnByColumnNameMap();
   return _comboboxColumnMap;
 }
 @Override

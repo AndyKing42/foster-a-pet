@@ -146,6 +146,7 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
   try {
     final GLSQL sql = GLSQL.select();
     sql.from(table);
+    GLLog.popup(20, "Reload of " + table + " was requested");
     sql.executeSelect(listStore, new IGLSQLSelectCallback() {
       @Override
       public void onFailure(final Throwable t) {
@@ -156,8 +157,13 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
         final GLCacheDef cacheDef = findCacheDef(table);
         final TreeMap<String, GLRecord> displayValueToRecordMap;
         displayValueToRecordMap = _displayValueToRecordMapByCacheDefMap.get(cacheDef);
+        GLLog.popup(20, "Reload of " + table + " was successful");
         final TreeMap<Integer, GLRecord> keyToRecordMap;
         keyToRecordMap = _keyToRecordMapByCacheDefMap.get(cacheDef);
+        if (displayValueToRecordMap == null || keyToRecordMap == null) {
+          GLLog.popup(30, "Lookup cache reload failed (map is null)");
+          return;
+        }
         displayValueToRecordMap.clear();
         keyToRecordMap.clear();
         for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
@@ -165,7 +171,6 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
           displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
           keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumnMap().get(1)), record);
         }
-        GLLog.popup(5, "Reload of " + table + " was successful");
         GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table));
       }
     });
