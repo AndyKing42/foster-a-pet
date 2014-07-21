@@ -22,8 +22,8 @@ public class PetGridWidget extends GLGridWidget {
 public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                      final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                      final Pet... petColumns) {
-  super("Here's the conten panel!", "There are no pets", recordValidator, inlineEditing,
-        useCheckBoxSelectionModel, rowLevelCommits, petColumns);
+  super(null, "There are no pets", recordValidator, inlineEditing, useCheckBoxSelectionModel,
+        rowLevelCommits, petColumns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

@@ -349,7 +349,9 @@ public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallbac
           }
         }
         GLClientUtil.getEventBus().fireEvent(new GLSelectCompleteEvent(listStore));
-        sqlSelectCallback.onSuccess();
+        if (sqlSelectCallback != null) {
+          sqlSelectCallback.onSuccess();
+        }
       }
       catch (final GLCSVException csve) {
         onFailure(csve);

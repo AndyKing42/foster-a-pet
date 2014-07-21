@@ -215,23 +215,21 @@ private void addHeaderContextMenuHandler() {
  * creating the grid.
  */
 private void addLookupLoadedEventHandler(final HashSet<IGLTable> lookupTableSet) {
-  if (_lookupTableLoadedHandlerRegistration == null) {
-    final IGLLookupTableLoadedEventHandler handler = new IGLLookupTableLoadedEventHandler() {
-      @Override
-      public void onLookupTableLoadedEvent(final GLLookupTableLoadedEvent lookupTableLoadedEvent) {
-        lookupTableSet.remove(lookupTableLoadedEvent.getTable());
-        if (lookupTableSet.size() == 0) {
-          _lookupTableLoadedHandlerRegistration.removeHandler();
-          _lookupTableLoadedHandlerRegistration = null;
-          createGrid();
-        }
+  final IGLLookupTableLoadedEventHandler handler = new IGLLookupTableLoadedEventHandler() {
+    @Override
+    public void onLookupTableLoadedEvent(final GLLookupTableLoadedEvent lookupTableLoadedEvent) {
+      lookupTableSet.remove(lookupTableLoadedEvent.getTable());
+      if (lookupTableSet.size() == 0) {
+        _lookupTableLoadedHandlerRegistration.removeHandler();
+        _lookupTableLoadedHandlerRegistration = null;
+        createGrid();
       }
-    };
-    final Type<IGLLookupTableLoadedEventHandler> eventType;
-    eventType = GLLookupTableLoadedEvent.LookupTableLoadedEventType;
-    _lookupTableLoadedHandlerRegistration = GLClientUtil.getEventBus().addHandler(eventType, //
-                                                                                  handler);
-  }
+    }
+  };
+  final Type<IGLLookupTableLoadedEventHandler> eventType;
+  eventType = GLLookupTableLoadedEvent.LookupTableLoadedEventType;
+  _lookupTableLoadedHandlerRegistration = GLClientUtil.getEventBus().addHandler(eventType, //
+                                                                                handler);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
@@ -264,6 +262,7 @@ private void createGrid() {
     _gridFilters.initPlugin(_grid);
   }
   _contentPanel.add(_grid);
+  final Widget childWidget = _contentPanel.getWidget();
   _contentPanel.forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
@@ -395,13 +394,17 @@ private void waitForComboBoxData() {
       final IGLTable table = lookupType.getTable();
       if (table != null) {
         lookupTableSet.add(table);
-        addLookupLoadedEventHandler(lookupTableSet);
-        GLClientUtil.getLookupCache().reload(table, true);
       }
     }
   }
   if (lookupTableSet.size() == 0) {
     createGrid();
+  }
+  else {
+    addLookupLoadedEventHandler(lookupTableSet);
+    for (final IGLTable table : lookupTableSet) {
+      GLClientUtil.getLookupCache().reload(table, true);
+    }
   }
 }
 //--------------------------------------------------------------------------------------------------
