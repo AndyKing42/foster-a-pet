@@ -67,6 +67,23 @@ public MainLayoutWidget() {
   createTableNameCombobox();
 }
 //--------------------------------------------------------------------------------------------------
+public void createGenericTableGrid(final IGLTable table, final int tabIndex) {
+  final ContentPanel contentPanel;
+  if (tabIndex < 0) {
+    contentPanel = new ContentPanel();
+    contentPanel.setHeaderVisible(false);
+    _appContentPanelList.add(contentPanel);
+    appTabPanel.add(contentPanel, new TabItemConfig(table.toString(), true));
+  }
+  else {
+    contentPanel = _appContentPanelList.get(tabIndex);
+  }
+  final GLGenericGridWidget gridWidget =
+                                         GLGenericGridWidget.createGenericGridWidget(table.toString());
+  contentPanel.setWidget(gridWidget.asWidget());
+  DBAccess.load(gridWidget.getListStore(), table);
+}
+//--------------------------------------------------------------------------------------------------
 public void createPetGrid(final int tabIndex) {
   final ContentPanel contentPanel;
   if (tabIndex < 0) {
@@ -115,12 +132,8 @@ public void onGenericTableGridButtonSelect(@SuppressWarnings("unused") final Sel
     GLLog.popup(10, "You must select a table");
     return;
   }
-  final ContentPanel contentPanel = new ContentPanel();
-  contentPanel.setHeaderVisible(false);
-  _appContentPanelList.add(contentPanel);
-  appTabPanel.add(contentPanel, new TabItemConfig(tableName, true));
-  final GLGenericGridWidget gridWidget = GLGenericGridWidget.createGenericGridWidget(tableName);
-  contentPanel.setWidget(gridWidget.asWidget());
+  final IGLTable table = EFAPTable.valueOf(tableName);
+  createGenericTableGrid(table, -1);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"gridDebugButton"})

@@ -17,16 +17,21 @@ import java.util.TreeMap;
 public interface IGLEnums {
 //--------------------------------------------------------------------------------------------------
 public enum EGLColumnDataType {
-Boolean(false),
-Currency(true),
-Date(false),
-DateTime(false),
-Decimal(true),
-Int(true),
-String(false);
+Boolean(false, 30),
+Currency(true, 100),
+Date(false, 100),
+DateTime(false, 125),
+Decimal(true, 100),
+Int(true, 50),
+String(false, 80);
+private final int     _defaultGridColumnWidth;
 private final boolean _numeric;
-private EGLColumnDataType(final boolean numeric) {
+private EGLColumnDataType(final boolean numeric, final int defaultGridColumnWidth) {
   _numeric = numeric;
+  _defaultGridColumnWidth = defaultGridColumnWidth;
+}
+public int getDefaultGridColumnWidth() {
+  return _defaultGridColumnWidth;
 }
 public boolean getNumeric() {
   return _numeric;
