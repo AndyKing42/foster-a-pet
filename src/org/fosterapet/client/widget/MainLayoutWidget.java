@@ -14,24 +14,31 @@ package org.fosterapet.client.widget;
  */
 import java.util.ArrayList;
 import org.fosterapet.client.DBAccess;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.widget.GLGenericGridWidget;
 import org.greatlogic.glgwt.client.widget.GLGridContentPanel;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
+import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
+import com.sencha.gxt.data.shared.StringLabelProvider;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.PlainTabPanel;
 import com.sencha.gxt.widget.core.client.TabItemConfig;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
+import com.sencha.gxt.widget.core.client.container.SimpleContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.SimpleComboBox;
 
 public class MainLayoutWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
@@ -43,8 +50,11 @@ CheckBox                              checkBoxSelectionModelCheckBox;
 CheckBox                              inlineEditingCheckBox;
 @UiField
 CheckBox                              rowLevelCommitsCheckBox;
+@UiField
+SimpleContainer                       tableNameComboBoxContainer;
 
 private final ArrayList<ContentPanel> _appContentPanelList;
+private SimpleComboBox<String>        _tableNameCombobox;
 //==================================================================================================
 interface MainLayoutWidgetUiBinder extends UiBinder<Widget, MainLayoutWidget> { //
 }
@@ -54,6 +64,7 @@ public MainLayoutWidget() {
   _appContentPanelList = new ArrayList<>();
   final MainLayoutWidgetUiBinder uiBinder = GWT.create(MainLayoutWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
+  createTableNameCombobox();
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final int tabIndex) {
@@ -76,6 +87,18 @@ public void createPetGrid(final int tabIndex) {
   DBAccess.loadPets(gridWidget.getListStore());
 }
 //--------------------------------------------------------------------------------------------------
+private void createTableNameCombobox() {
+  _tableNameCombobox = new SimpleComboBox<>(new StringLabelProvider<>());
+  _tableNameCombobox.setEmptyText("Select a table ...");
+  _tableNameCombobox.setTriggerAction(TriggerAction.ALL);
+  _tableNameCombobox.setTypeAhead(true);
+  _tableNameCombobox.setWidth(200);
+  for (final IGLTable table : EFAPTable.values()) {
+    _tableNameCombobox.add(table.toString());
+  }
+  tableNameComboBoxContainer.add(_tableNameCombobox);
+}
+//--------------------------------------------------------------------------------------------------
 public void createTestGrid() {
   final ContentPanel contentPanel = new ContentPanel();
   contentPanel.setHeaderVisible(false);
@@ -83,6 +106,21 @@ public void createTestGrid() {
   appTabPanel.add(contentPanel, new TabItemConfig("Test", true));
   final TestGrid testGrid = new TestGrid();
   contentPanel.setWidget(testGrid.asWidget());
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"genericTableGridButton"})
+public void onGenericTableGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final String tableName = _tableNameCombobox.getCurrentValue();
+  if (tableName == null) {
+    GLLog.popup(10, "You must select a table");
+    return;
+  }
+  final ContentPanel contentPanel = new ContentPanel();
+  contentPanel.setHeaderVisible(false);
+  _appContentPanelList.add(contentPanel);
+  appTabPanel.add(contentPanel, new TabItemConfig(tableName, true));
+  final GLGenericGridWidget gridWidget = GLGenericGridWidget.createGenericGridWidget(tableName);
+  contentPanel.setWidget(gridWidget.asWidget());
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"gridDebugButton"})

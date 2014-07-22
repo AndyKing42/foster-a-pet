@@ -51,7 +51,7 @@ public static void minor(final String location, final String message) {
 }
 //--------------------------------------------------------------------------------------------------
 public static void popup(final int seconds, final String message) {
-  final InfoConfig infoConfig = new DefaultInfoConfig("", message);
+  final InfoConfig infoConfig = new DefaultInfoConfig("", message == null ? "null" : message);
   infoConfig.setDisplay(seconds * 1000);
   final Info info = new Info();
   info.show(infoConfig);
