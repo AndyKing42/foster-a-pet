@@ -11,9 +11,30 @@ import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLSQL;
 import org.greatlogic.glgwt.client.core.IGLSQLSelectCallback;
+import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class DBAccess {
+//--------------------------------------------------------------------------------------------------
+public static void load(final GLListStore listStore, final IGLTable table) {
+  try {
+    final GLSQL sql = GLSQL.select();
+    sql.from(table);
+    sql.executeSelect(listStore, new IGLSQLSelectCallback() {
+      @Override
+      public void onFailure(final Throwable t) {
+        GLLog.popup(30, table + " loading failed: " + t.getMessage());
+      }
+      @Override
+      public void onSuccess() {
+        GLLog.popup(5, table + " loaded successfully (" + listStore.size() + " rows)");
+      }
+    });
+  }
+  catch (final GLDBException dbe) {
+    //    GLClientUtil.getRemoteService().log(logLevel, location, message, callback);
+  }
+}
 //--------------------------------------------------------------------------------------------------
 public static void loadPets(final GLListStore petListStore) {
   try {

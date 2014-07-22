@@ -169,13 +169,13 @@ public void initializeNewRecord(final GLRecord record) {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Address implements IGLColumn {
-AddressId("Address Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-AddressLine1("Address Line 1", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-AddressLine2("Address Line 2", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-CityId("City Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.City, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0),
-ZIPCode("ZIP Code", EGLColumnDataType.String, 10, true, null, false, 0, null, 0);
+AddressId("Address Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AddressLine1("Address Line 1", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+AddressLine2("Address Line 2", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CityId("City Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.City, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+ZIPCode("ZIP Code", EGLColumnDataType.String, 10, true, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -238,15 +238,15 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Attribute implements IGLColumn {
-AdditionalComments("Additional Comments", EGLColumnDataType.String, 2000, true, null, false, 0, null, 0),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.AttributeDef, 0),
-AttributeId("Attribute Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-AttributeSeq("Attribute Seq", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-AttributeValue("Attribute Value", EGLColumnDataType.String, 2000, true, null, false, 0, null, 0),
-CreatedByPersonId("Created By Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-EntityId("Entity Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+AdditionalComments("Additional Comments", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.AttributeDef, -1),
+AttributeId("Attribute Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AttributeSeq("Attribute Seq", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+AttributeValue("Attribute Value", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+CreatedByPersonId("Created By Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+EntityId("Entity Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -309,18 +309,18 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum AttributeDef implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-AttributeDefName("Attribute Def Name", EGLColumnDataType.String, 30, false, null, false, 1, null, 0),
-AttributeDefType("Attribute Def Type", EGLColumnDataType.String, 3, false, null, false, 0, null, 0),
-AutomaticallyCreateFlag("Automatically Create Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, 0),
-DataType("Data Type", EGLColumnDataType.String, 10, false, null, false, 0, null, 0),
-EntityTypeId("Entity Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.EntityType, 0),
-MaxOccurrences("Max Occurrences", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-RequiredFlag("Required Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, 0),
-ValueListId("Value List Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.ValueList, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AttributeDefName("Attribute Def Name", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+AttributeDefType("Attribute Def Type", EGLColumnDataType.String, 3, false, null, false, 0, null, -1),
+AutomaticallyCreateFlag("Automatically Create Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+DataType("Data Type", EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
+EntityTypeId("Entity Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.EntityType, -1),
+MaxOccurrences("Max Occurrences", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+RequiredFlag("Required Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+ValueListId("Value List Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.ValueList, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -383,11 +383,11 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum City implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-CityId("City Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-CityName("City Name", EGLColumnDataType.String, 100, false, null, false, 1, null, 0),
-StateId("State Id", EGLColumnDataType.Int, 0, false, null, false, 2, ELookupType.State, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CityId("City Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+CityName("City Name", EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
+StateId("State Id", EGLColumnDataType.Int, 0, false, null, false, 2, ELookupType.State, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -449,14 +449,14 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum DBAudit implements IGLColumn {
-AuditAction("Audit Action", EGLColumnDataType.String, 1, false, null, false, 0, null, 0),
-AuditDate("Audit Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, 0),
-DBAuditId("D B Audit Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-NewData("New Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, 0),
-OldData("Old Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+AuditAction("Audit Action", EGLColumnDataType.String, 1, false, null, false, 0, null, -1),
+AuditDate("Audit Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+DBAuditId("D B Audit Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+NewData("New Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+OldData("Old Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -519,12 +519,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum DBUpdateNote implements IGLColumn {
-AppliedDateTime("Applied Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-DBRevNumber("DB Rev Number", EGLColumnDataType.String, 30, false, null, false, 1, null, 0),
-DBUpdateDesc("DB Update Description", EGLColumnDataType.String, 2000, false, null, false, 0, null, 0),
-DBUpdateNoteId("DB Update Note Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-DevDateTime("Development Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+AppliedDateTime("Applied Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DBRevNumber("DB Rev Number", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+DBUpdateDesc("DB Update Description", EGLColumnDataType.String, 2000, false, null, false, 0, null, -1),
+DBUpdateNoteId("DB Update Note Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+DevDateTime("Development Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -587,15 +587,15 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum FosterHistory implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-FosterDateFinish("Foster Date Finish", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-FosterDateStart("Foster Date Start", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, 0),
-FosterHistoryId("Foster History Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, 0),
-PrimaryPersonId("Primary Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+FosterDateFinish("Foster Date Finish", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+FosterDateStart("Foster Date Start", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+FosterHistoryId("Foster History Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PrimaryPersonId("Primary Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -658,14 +658,14 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Loc implements IGLColumn {
-AddressId("Address Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Address, 0),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-LocDesc("Loc Description", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-LocShortDesc("Loc Short Description", EGLColumnDataType.String, 30, false, null, false, 1, null, 0),
-LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.LocType, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+AddressId("Address Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Address, -1),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocDesc("Loc Description", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocShortDesc("Loc Short Description", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.LocType, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -727,13 +727,13 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum LocPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, 0),
-LocPersonId("Loc Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PrimaryFlag("Primary Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+LocPersonId("Loc Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PrimaryFlag("Primary Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -796,12 +796,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum LocType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-LocTypeDesc("Loc Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, 0),
-LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-LocTypeShortDesc("Loc Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocTypeDesc("Loc Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocTypeShortDesc("Loc Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -864,11 +864,11 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum NextId implements IGLColumn {
-NextId("Next Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-NextIdName("Next Id Name", EGLColumnDataType.String, 30, false, null, false, 1, null, 0),
-NextIdValue("Next Id Value", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-TableName("Table Name", EGLColumnDataType.String, 30, true, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+NextId("Next Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+NextIdName("Next Id Name", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+NextIdValue("Next Id Value", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+TableName("Table Name", EGLColumnDataType.String, 30, true, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -931,11 +931,11 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Org implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgDesc("Org Description", EGLColumnDataType.String, 200, false, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, true, 0, ELookupType.Org, 0),
-OrgName("Org Name", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgDesc("Org Description", EGLColumnDataType.String, 200, false, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, true, 0, ELookupType.Org, -1),
+OrgName("Org Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -997,12 +997,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum OrgPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-OrgPersonId("Org Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PersonRole, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+OrgPersonId("Org Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PersonRole, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1065,20 +1065,20 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Person implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-CurrentOrgId("Current Org Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Org, 0),
-DateOfBirth("Date Of Birth", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-DisplayName("Display Name", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-EmailAddress("Email Address", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-FirstName("First Name", EGLColumnDataType.String, 30, false, null, false, 0, null, 0),
-LastName("Last Name", EGLColumnDataType.String, 30, false, null, false, 0, null, 0),
-LoginName("Login Name", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-PasswordHash("Password Hash", EGLColumnDataType.String, 200, true, null, false, 0, null, 0),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PhoneNumberHome("Phone Number Home", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-PhoneNumberMobile("Phone Number Mobile", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-PhoneNumberOffice("Phone Number Office", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CurrentOrgId("Current Org Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Org, -1),
+DateOfBirth("Date Of Birth", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DisplayName("Display Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+EmailAddress("Email Address", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+FirstName("First Name", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+LastName("Last Name", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+LoginName("Login Name", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+PasswordHash("Password Hash", EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PhoneNumberHome("Phone Number Home", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberMobile("Phone Number Mobile", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberOffice("Phone Number Office", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1141,13 +1141,13 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PersonRelationship implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-PersonId1("Person Id 1", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PersonId2("Person Id 2", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PersonRelationshipId("Person Relationship Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-RelationshipOf1To2("Relationship Of 1 To 2", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, 0),
-RelationshipOf2To1("Relationship Of 2 To 1", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+PersonId1("Person Id 1", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonId2("Person Id 2", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonRelationshipId("Person Relationship Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+RelationshipOf1To2("Relationship Of 1 To 2", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
+RelationshipOf2To1("Relationship Of 2 To 1", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1211,11 +1211,11 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PersonRole implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-RoleDesc("Role Description", EGLColumnDataType.String, 30, false, null, false, 0, null, 0),
-RoleShortDesc("Role Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+RoleDesc("Role Description", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+RoleShortDesc("Role Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1278,16 +1278,16 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Pet implements IGLColumn {
-AdoptionFee("Adoption Fee", EGLColumnDataType.Currency, 0, false, "0", false, 0, null, 100),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 125),
-DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, false, null, false, 0, null, 100),
-IntakeDate("Intake Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, 125),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 50),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 50),
-PetName("Pet Name", EGLColumnDataType.String, 50, false, null, false, 1, null, 80),
-PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PetType, 80),
-Sex("Sex", EGLColumnDataType.String, 1, false, "U", false, 0, ELookupType.Sex, 50),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 50);
+AdoptionFee("Adoption Fee", EGLColumnDataType.Currency, 0, false, "0", false, 0, null, -1),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
+IntakeDate("Intake Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PetName("Pet Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PetType, -1),
+Sex("Sex", EGLColumnDataType.String, 1, false, "U", false, 0, ELookupType.Sex, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1349,12 +1349,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PetType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PetTypeDesc("Pet Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, 0),
-PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PetTypeShortDesc("Pet Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetTypeDesc("Pet Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PetTypeShortDesc("Pet Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1417,15 +1417,15 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanEntry implements IGLColumn {
-ActionDate("Action Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, 0),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, 0),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PlanEntryNotes("Plan Entry Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, 0),
-ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.TreatmentType, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ActionDate("Action Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
+PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanEntryNotes("Plan Entry Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.TreatmentType, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1488,13 +1488,13 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-Notes("Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, 0),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanEntry, 0),
-PlanPersonId("Plan Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-ReminderType("Reminder Type", EGLColumnDataType.String, 10, false, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Notes("Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanEntry, -1),
+PlanPersonId("Plan Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+ReminderType("Reminder Type", EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1557,12 +1557,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplate implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PlanTemplateDesc("Plan Template Description", EGLColumnDataType.String, 2000, true, null, false, 0, null, 0),
-PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PlanTemplateName("Plan Template Name", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PlanTemplateDesc("Plan Template Description", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanTemplateName("Plan Template Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1625,12 +1625,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplateEntry implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OffsetNumberOfDays("Offset Number Of Days", EGLColumnDataType.Int, 0, true, null, false, 0, null, 0),
-PlanTemplateEntryDesc("Plan Template Entry Description", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplate, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OffsetNumberOfDays("Offset Number Of Days", EGLColumnDataType.Int, 0, true, null, false, 0, null, -1),
+PlanTemplateEntryDesc("Plan Template Entry Description", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplate, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1694,12 +1694,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplateTreatment implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, 0),
-PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplateEntry, 0),
-PlanTemplateTreatmentId("Plan Template Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.TreatmentType, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
+PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplateEntry, -1),
+PlanTemplateTreatmentId("Plan Template Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.TreatmentType, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1763,16 +1763,16 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum SearchDef implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-OwnerPersonId("Owner Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, 0),
-PublicFlag("Public Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, 0),
-SearchDefDesc("Search Def Description", EGLColumnDataType.String, 100, true, null, false, 0, null, 0),
-SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-SearchDefName("Search Def Name", EGLColumnDataType.String, 30, true, null, false, 1, null, 0),
-SearchDefType("Search Def Type", EGLColumnDataType.String, 20, false, null, false, 0, null, 0),
-SortColumns("Sort Columns", EGLColumnDataType.String, 200, true, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+OwnerPersonId("Owner Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PublicFlag("Public Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+SearchDefDesc("Search Def Description", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+SearchDefName("Search Def Name", EGLColumnDataType.String, 30, true, null, false, 1, null, -1),
+SearchDefType("Search Def Type", EGLColumnDataType.String, 20, false, null, false, 0, null, -1),
+SortColumns("Sort Columns", EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1835,15 +1835,15 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum SearchDefDetail implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-SearchDefDetailId("Search Def Detail Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.SearchDef, 0),
-Value1("Value 1", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-Value2("Value 2", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-Value3("Value 3", EGLColumnDataType.String, 50, true, null, false, 0, null, 0),
-ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, 0),
-ValueName("Value Name", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+SearchDefDetailId("Search Def Detail Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.SearchDef, -1),
+Value1("Value 1", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Value2("Value 2", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Value3("Value 3", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+ValueName("Value Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1906,11 +1906,11 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum State implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-StateAbbrev("State Abbreviation", EGLColumnDataType.String, 2, false, null, false, 1, null, 0),
-StateId("State Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-StateName("State Name", EGLColumnDataType.String, 50, false, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+StateAbbrev("State Abbreviation", EGLColumnDataType.String, 2, false, null, false, 1, null, -1),
+StateId("State Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+StateName("State Name", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1973,18 +1973,18 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Treatment implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-Cost("Cost", EGLColumnDataType.Currency, 0, false, null, false, 0, null, 0),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, 0),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.PlanEntry, 0),
-ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-TreatmentDate("Treatment Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-TreatmentDesc("Treatment Description", EGLColumnDataType.String, 200, true, null, false, 1, null, 0),
-TreatmentId("Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Cost("Cost", EGLColumnDataType.Currency, 0, false, null, false, 0, null, -1),
+LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.PlanEntry, -1),
+ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentDate("Treatment Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentDesc("Treatment Description", EGLColumnDataType.String, 200, true, null, false, 1, null, -1),
+TreatmentId("Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2047,12 +2047,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum TreatmentType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-TreatmentTypeDesc("Treatment Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, 0),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-TreatmentTypeShortDesc("Treatment Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+TreatmentTypeDesc("Treatment Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeShortDesc("Treatment Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2115,12 +2115,12 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum ValueList implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, 0),
-ValueListDesc("Value List Description", EGLColumnDataType.String, 50, false, null, false, 1, null, 0),
-ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, 0),
-ValueListId("Value List Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, 0),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, 0);
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+ValueListDesc("Value List Description", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+ValueListId("Value List Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;

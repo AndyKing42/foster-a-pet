@@ -1,8 +1,8 @@
 package org.greatlogic.glgwt.client.widget;
 
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import com.google.gwt.i18n.shared.DateTimeFormat;
@@ -26,7 +26,14 @@ public GLColumnConfig(final IGLColumn column,
                       final int width) {
   super(valueProvider, width, header);
   _column = column;
-  setWidth(width < 0 ? column.getDefaultGridColumnWidth() : width);
+  if (width < 0) {
+    if (column.getDefaultGridColumnWidth() < 0) {
+      setWidth(column.getDataType().getDefaultGridColumnWidth());
+    }
+    else {
+      setWidth(column.getDefaultGridColumnWidth());
+    }
+  }
   if (_column != null) {
     _validator = GLClientUtil.getValidators().getColumnValidator(_column);
     final EGLColumnDataType dataType = _column.getDataType();

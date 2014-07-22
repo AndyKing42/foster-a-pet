@@ -262,7 +262,6 @@ private void createGrid() {
     _gridFilters.initPlugin(_grid);
   }
   _contentPanel.add(_grid);
-  final Widget childWidget = _contentPanel.getWidget();
   _contentPanel.forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
