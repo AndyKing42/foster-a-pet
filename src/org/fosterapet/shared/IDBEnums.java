@@ -93,7 +93,7 @@ ValueList(ValueList.class);
 private TreeMap<String, IGLColumn>     _columnByColumnNameMap;
 private final Class<? extends Enum<?>> _columnEnumClass;
 private TreeMap<Integer, IGLColumn>    _comboboxColumnMap;
-private TreeMap<Integer, IGLColumn>    _primaryKeyColumnMap;
+private IGLColumn                      _primaryKeyColumn;
 private EFAPTable(final Class<? extends Enum<?>> columnEnumClass) {
   _columnEnumClass = columnEnumClass;
 }
@@ -101,16 +101,25 @@ private void createColumnByColumnNameMap() {
   if (_columnByColumnNameMap == null) {
     _columnByColumnNameMap = new TreeMap<>();
     _comboboxColumnMap = new TreeMap<>();
-    _primaryKeyColumnMap = new TreeMap<>();
+    IGLColumn possiblePrimaryKeyColumn = null;
     for (final Enum<?> columnEnumConstant : _columnEnumClass.getEnumConstants()) {
       final IGLColumn column = (IGLColumn)columnEnumConstant;
       _columnByColumnNameMap.put(column.toString(), column);
-      if (column.getPrimaryKeySeq() > 0) {
-        _primaryKeyColumnMap.put(column.getPrimaryKeySeq(), column);
+      if (column.getPrimaryKey() > 0) {
+        _primaryKeyColumnMap.put(column.getPrimaryKey(), column);
       }
       if (column.getComboboxSeq() > 0) {
         _comboboxColumnMap.put(column.getComboboxSeq(), column);
       }
+      if (possiblePrimaryKeyColumn == null || column.toString().equalsIgnoreCase(name() + "Id")) {
+        possiblePrimaryKeyColumn = column;
+      }
+    }
+    if (_primaryKeyColumnMap.size() == 0) {
+      _primaryKeyColumnMap.put(1, possiblePrimaryKeyColumn);
+    }
+    if (_comboboxColumnMap.size() == 0) {
+      _comboboxColumnMap.put(1, primaryKeyColumn);
     }
   }
 }
@@ -173,11 +182,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Address(final String title, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-                final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -218,7 +227,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -244,11 +253,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Attribute(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -289,7 +298,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -318,11 +327,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private AttributeDef(final String title, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
-                     final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                     final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -363,7 +372,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -385,10 +394,10 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private City(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-             final boolean nullable, final String defaultValue, final int primaryKeySeq,
+             final boolean nullable, final String defaultValue, final boolean primaryKey,
              final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -429,7 +438,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -454,11 +463,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private DBAudit(final String title, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-                final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -499,7 +508,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -522,11 +531,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private DBUpdateNote(final String title, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
-                     final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                     final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -567,7 +576,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -593,11 +602,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private FosterHistory(final String title, final EGLColumnDataType dataType,
                       final int decimalPlacesOrLength, final boolean nullable,
-                      final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                       final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -638,7 +647,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -663,10 +672,10 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Loc(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final int primaryKeySeq,
+            final boolean nullable, final String defaultValue, final boolean primaryKey,
             final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -707,7 +716,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -731,11 +740,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private LocPerson(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -776,7 +785,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -799,11 +808,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private LocType(final String title, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-                final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -844,7 +853,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -866,11 +875,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private NextId(final String title, final EGLColumnDataType dataType,
                final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-               final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+               final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -911,7 +920,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -933,10 +942,10 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Org(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final int primaryKeySeq,
+            final boolean nullable, final String defaultValue, final boolean primaryKey,
             final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -977,7 +986,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1000,11 +1009,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private OrgPerson(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1045,7 +1054,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1076,11 +1085,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Person(final String title, final EGLColumnDataType dataType,
                final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-               final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+               final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1121,7 +1130,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1145,11 +1154,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PersonRelationship(final String title, final EGLColumnDataType dataType,
                            final int decimalPlacesOrLength, final boolean nullable,
-                           final String defaultValue, final int primaryKeySeq,
+                           final String defaultValue, final boolean primaryKey,
                            final int comboboxSeq, final IGLLookupType lookupType,
                            final int defaultGridColumnWidth) {
   _title = title;
@@ -1191,7 +1200,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1213,11 +1222,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PersonRole(final String title, final EGLColumnDataType dataType,
                    final int decimalPlacesOrLength, final boolean nullable,
-                   final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                    final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1258,7 +1267,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1285,10 +1294,10 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Pet(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final int primaryKeySeq,
+            final boolean nullable, final String defaultValue, final boolean primaryKey,
             final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1329,7 +1338,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1352,11 +1361,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PetType(final String title, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-                final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1397,7 +1406,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1423,11 +1432,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PlanEntry(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1468,7 +1477,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1492,11 +1501,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PlanPerson(final String title, final EGLColumnDataType dataType,
                    final int decimalPlacesOrLength, final boolean nullable,
-                   final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                    final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1537,7 +1546,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1560,11 +1569,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PlanTemplate(final String title, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
-                     final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                     final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1605,7 +1614,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1628,11 +1637,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PlanTemplateEntry(final String title, final EGLColumnDataType dataType,
                           final int decimalPlacesOrLength, final boolean nullable,
-                          final String defaultValue, final int primaryKeySeq,
+                          final String defaultValue, final boolean primaryKey,
                           final int comboboxSeq, final IGLLookupType lookupType,
                           final int defaultGridColumnWidth) {
   _title = title;
@@ -1674,7 +1683,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1697,11 +1706,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private PlanTemplateTreatment(final String title, final EGLColumnDataType dataType,
                               final int decimalPlacesOrLength, final boolean nullable,
-                              final String defaultValue, final int primaryKeySeq,
+                              final String defaultValue, final boolean primaryKey,
                               final int comboboxSeq, final IGLLookupType lookupType,
                               final int defaultGridColumnWidth) {
   _title = title;
@@ -1743,7 +1752,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1770,11 +1779,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private SearchDef(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1815,7 +1824,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1841,11 +1850,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private SearchDefDetail(final String title, final EGLColumnDataType dataType,
                         final int decimalPlacesOrLength, final boolean nullable,
-                        final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                        final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                         final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1886,7 +1895,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1908,11 +1917,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private State(final String title, final EGLColumnDataType dataType,
               final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
-              final int primaryKeySeq, final int comboboxSeq, final IGLLookupType lookupType,
+              final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
               final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -1953,7 +1962,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -1982,11 +1991,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private Treatment(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -2027,7 +2036,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -2050,11 +2059,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private TreatmentType(final String title, final EGLColumnDataType dataType,
                       final int decimalPlacesOrLength, final boolean nullable,
-                      final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                       final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -2095,7 +2104,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override
@@ -2105,7 +2114,7 @@ public String getTitle() {
 }
 //--------------------------------------------------------------------------------------------------
 public enum ValueList implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, 0, 0, null, 0),
+ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, 0),
 OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, 0, 0, ELookupType.Org, 0),
 ValueListDesc("Value List Description", EGLColumnDataType.String, 50, false, null, 0, 1, null, 0),
 ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, 0, 0, null, 0),
@@ -2118,11 +2127,11 @@ private final int               _defaultGridColumnWidth;
 private final Object            _defaultValue;
 private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
-private final int               _primaryKeySeq;
+private final boolean           _primaryKey;
 private final String            _title;
 private ValueList(final String title, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
-                  final String defaultValue, final int primaryKeySeq, final int comboboxSeq,
+                  final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
@@ -2163,7 +2172,7 @@ public boolean getNullable() {
   return _nullable;
 }
 @Override
-public int getPrimaryKeySeq() {
+public boolean getPrimaryKey() {
   return _primaryKeySeq;
 }
 @Override

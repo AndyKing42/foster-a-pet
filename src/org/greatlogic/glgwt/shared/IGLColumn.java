@@ -23,7 +23,7 @@ public int getDefaultGridColumnWidth();
 public Object getDefaultValue();
 public IGLLookupType getLookupType();
 public boolean getNullable();
-public int getPrimaryKeySeq();
+public boolean getPrimaryKey();
 public String getTitle();
 //--------------------------------------------------------------------------------------------------
 }
