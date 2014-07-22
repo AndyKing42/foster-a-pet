@@ -186,7 +186,7 @@ public String asString(final String fieldName) {
 public String asString(final String fieldName, final String defaultValue) {
   try {
     return GLClientUtil.formatObjectSpecial(_valueList.get(_recordDef.getFieldIndex(fieldName)),
-                                      defaultValue);
+                                            defaultValue);
   }
   catch (final Exception e) {
     return defaultValue;
@@ -210,7 +210,7 @@ public boolean getInserted() {
 }
 //--------------------------------------------------------------------------------------------------
 public String getKeyValueAsString() {
-  return asString(_recordDef.getTable().getPrimaryKeyColumnMap().get(1));
+  return asString(_recordDef.getTable().getPrimaryKeyColumn());
 }
 //--------------------------------------------------------------------------------------------------
 public GLRecordDef getRecordDef() {

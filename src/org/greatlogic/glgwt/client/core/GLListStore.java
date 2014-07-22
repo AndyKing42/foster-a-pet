@@ -40,7 +40,7 @@ public void commitChanges() {
   final StringBuilder sb = new StringBuilder();
   final ArrayList<GLRecord> insertedRecordList = new ArrayList<>();
   final IGLTable table = _recordDef.getTable();
-  final String primaryKeyColumnName = table.getPrimaryKeyColumnMap().get(1).toString();
+  final String primaryKeyColumnName = table.getPrimaryKeyColumn().toString();
   for (final Record record : getModifiedRecords()) {
     final GLRecord glRecord = record.getModel();
     final boolean insert = glRecord.getInserted();
@@ -110,7 +110,7 @@ public void remove(final ArrayList<GLRecord> recordList) {
   final StringBuilder sb = new StringBuilder();
   final IGLTable table = _recordDef.getTable();
   sb.append("D-").append(table.toString()).append("/");
-  sb.append(table.getPrimaryKeyColumnMap().get(1)).append("=");
+  sb.append(table.getPrimaryKeyColumn().toString()).append("=");
   boolean firstRecord = true;
   for (final GLRecord record : recordList) {
     sb.append(firstRecord ? "" : ",").append(record.getKeyValueAsString());
