@@ -66,7 +66,7 @@ public static void createNewRecord(final GLRecordDef recordDef,
     @Override
     public void onSuccess(final Integer nextId) {
       final GLRecord record = new GLRecord(recordDef);
-      record.put(table.getPrimaryKeyColumnMap().get(1), nextId);
+      record.put(table.getPrimaryKeyColumn(), nextId);
       GLClientUtil.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {
         createNewRecordCallback.onSuccess(record);

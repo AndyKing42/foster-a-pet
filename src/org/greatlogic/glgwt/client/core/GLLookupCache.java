@@ -119,7 +119,7 @@ public int lookupKeyValue(final IGLTable lookupTable, final String displayValue)
   if (record == null) {
     return 0;
   }
-  return record.asInt(lookupTable.getPrimaryKeyColumnMap().get(1));
+  return record.asInt(lookupTable.getPrimaryKeyColumn());
 }
 //--------------------------------------------------------------------------------------------------
 public GLRecord lookupRecord(final IGLTable lookupTable, final String displayValue) {
@@ -169,7 +169,7 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
         for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
           final GLRecord record = listStore.get(recordIndex);
           displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
-          keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumnMap().get(1)), record);
+          keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumn()), record);
         }
         GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table));
       }

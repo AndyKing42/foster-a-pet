@@ -24,7 +24,8 @@ public Class<? extends Enum<?>> getColumnEnumClass();
 public Collection<IGLColumn> getColumns();
 public TreeMap<Integer, IGLColumn> getComboboxColumnMap();
 public String getDataSourceName();
-public TreeMap<Integer, IGLColumn> getPrimaryKeyColumnMap();
+public IGLColumn getPrimaryKeyColumn();
+public void initializeColumnSettings();
 public void initializeNewRecord(final GLRecord record);
 //--------------------------------------------------------------------------------------------------
 }
