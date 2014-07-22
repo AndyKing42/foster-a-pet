@@ -115,13 +115,9 @@
                 visible='true'/>
             </container:child>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-              <container:VBoxLayoutContainer ui:field='genericTableSelectionContainer' borders='true'>
+              <container:VBoxLayoutContainer borders='true'>
                 <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                  <form:ComboBox
-                    ui:field='tableNameComboBox'
-                    emptyText='Select a table'
-                    typeAhead='true'
-                    width='200'/>
+                  <container:SimpleContainer ui:field='tableNameComboBoxContainer'/>
                 </container:child>
                 <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
                   <button:TextButton
