@@ -117,6 +117,26 @@ public EGLLogLevel next() {
 }
 }
 //--------------------------------------------------------------------------------------------------
+public enum EGLSQLAttribute {
+Ascending,
+Close,
+Column,
+Columns,
+Condition,
+DataSource,
+Expression,
+GroupBy,
+IgnoreDuplicates,
+IncludeArchivedRows,
+MaxRows,
+Op,
+Open,
+OrderBy,
+Table,
+Type,
+Value
+}
+//--------------------------------------------------------------------------------------------------
 public enum EGLSQLType {
 Delete,
 Insert,
