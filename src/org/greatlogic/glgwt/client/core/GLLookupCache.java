@@ -133,11 +133,15 @@ public GLRecord lookupRecord(final IGLTable lookupTable, final String displayVal
 //--------------------------------------------------------------------------------------------------
 public void reloadAll() {
   for (final IGLTable table : _cachedTableList) {
-    reload(table, false);
+    reload(table, false, true);
   }
 }
 //--------------------------------------------------------------------------------------------------
-public void reload(final IGLTable table, final boolean addToReloadList) {
+public void reload(final IGLTable table, final boolean addToReloadList, final boolean forceReload) {
+  if (!forceReload && _cacheDefByTableMap.containsKey(table)) {
+    GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, false));
+    return;
+  }
   if (addToReloadList) {
     _cachedTableList.add(table);
   }
@@ -157,13 +161,8 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
         final GLCacheDef cacheDef = findCacheDef(table);
         final TreeMap<String, GLRecord> displayValueToRecordMap;
         displayValueToRecordMap = _displayValueToRecordMapByCacheDefMap.get(cacheDef);
-        GLLog.popup(20, "Reload of " + table + " was successful");
         final TreeMap<Integer, GLRecord> keyToRecordMap;
         keyToRecordMap = _keyToRecordMapByCacheDefMap.get(cacheDef);
-        if (displayValueToRecordMap == null || keyToRecordMap == null) {
-          GLLog.popup(30, "Lookup cache reload failed (map is null)");
-          return;
-        }
         displayValueToRecordMap.clear();
         keyToRecordMap.clear();
         for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
@@ -171,7 +170,8 @@ public void reload(final IGLTable table, final boolean addToReloadList) {
           displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
           keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumn()), record);
         }
-        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table));
+        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, true));
+        GLLog.popup(20, "Reload of " + table + " was successful");
       }
     });
   }

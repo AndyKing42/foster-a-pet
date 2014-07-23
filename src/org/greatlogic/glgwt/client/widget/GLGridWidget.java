@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
@@ -214,7 +215,7 @@ private void addHeaderContextMenuHandler() {
  * @param lookupTableSet The set that contains the list of tables that need to be loaded prior to
  * creating the grid.
  */
-private void addLookupLoadedEventHandler(final HashSet<IGLTable> lookupTableSet) {
+private void addLookupTableLoadedEventHandler(final HashSet<IGLTable> lookupTableSet) {
   final IGLLookupTableLoadedEventHandler handler = new IGLLookupTableLoadedEventHandler() {
     @Override
     public void onLookupTableLoadedEvent(final GLLookupTableLoadedEvent lookupTableLoadedEvent) {
@@ -238,8 +239,11 @@ public Widget asWidget() {
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
+  GLLog.popup(20, "1");
   _selectionModel = new CellSelectionModel<>();
+  GLLog.popup(20, "2");
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
+  GLLog.popup(20, "3");
   _grid = new Grid<>(_listStore, _columnModel);
   _grid.addRowClickHandler(new RowClickEvent.RowClickHandler() {
     @Override
@@ -250,18 +254,23 @@ private void createGrid() {
       }
     }
   });
+  GLLog.popup(20, "4");
   _grid.setBorders(true);
   _grid.setColumnReordering(true);
   _grid.setLoadMask(true);
   _grid.setSelectionModel(_selectionModel);
   _grid.setView(createGridView());
+  GLLog.popup(20, "5");
   addHeaderContextMenuHandler();
   _gridEditingWrapper = new GLGridEditingWrapper(this, _inlineEditing, _recordValidator);
+  GLLog.popup(20, "6");
   addFilters();
   if (_gridFilters != null) {
     _gridFilters.initPlugin(_grid);
   }
+  GLLog.popup(20, "7");
   _contentPanel.add(_grid);
+  GLLog.popup(20, "8");
   _contentPanel.forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
@@ -400,9 +409,9 @@ private void waitForComboBoxData() {
     createGrid();
   }
   else {
-    addLookupLoadedEventHandler(lookupTableSet);
+    addLookupTableLoadedEventHandler(lookupTableSet);
     for (final IGLTable table : lookupTableSet) {
-      GLClientUtil.getLookupCache().reload(table, true);
+      GLClientUtil.getLookupCache().reload(table, true, false);
     }
   }
 }
