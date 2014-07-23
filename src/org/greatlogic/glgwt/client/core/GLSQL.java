@@ -651,6 +651,7 @@ public StringBuilder toXMLSB() {
     result.append(firstColumn ? "" : ",").append(columnName);
     firstColumn = false;
   }
+  result.append("'");
   appendAttribute(result, EGLSQLAttribute.Table, _tableName);
   if (!GLClientUtil.isBlank(_dataSourceName)) {
     appendAttribute(result, EGLSQLAttribute.DataSource, _dataSourceName);

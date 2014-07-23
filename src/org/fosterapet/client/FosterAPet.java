@@ -14,8 +14,6 @@ package org.fosterapet.client;
  */
 import org.fosterapet.client.widget.GridWidgetManager;
 import org.fosterapet.client.widget.MainLayoutWidget;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
@@ -39,7 +37,6 @@ public void onModuleLoad() {
     TestData.loadPetTestData(gridWidget.getListStore());
   }
   RootLayoutPanel.get().add(clientFactory.getMainLayoutWidget());
-  DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
   // todo: GLClientUtil.login();
 }
 //--------------------------------------------------------------------------------------------------
