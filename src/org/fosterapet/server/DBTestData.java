@@ -2,6 +2,7 @@ package org.fosterapet.server;
 
 import java.util.List;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.Org;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IDBEnums.PetType;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
@@ -28,8 +29,23 @@ public static void processRequest(final String testDataOptionString) throws GLDB
 }
 //--------------------------------------------------------------------------------------------------
 private static void reload() throws GLDBException {
+  reloadOrgs();
   reloadPetTypes();
   reloadPets();
+}
+//--------------------------------------------------------------------------------------------------
+private static final String[] Orgs = new String[] {"1,Organization 1,The first organization"};
+private static void reloadOrgs() throws GLDBException {
+  truncate(EFAPTable.Org);
+  for (final String org : Orgs) {
+    final String[] orgFields = org.split(",");
+    final GLSQL orgSQL = GLSQL.insert(EFAPTable.Org.name(), false);
+    orgSQL.setValue(Org.OrgDesc.name(), orgFields[2]);
+    orgSQL.setValue(Org.OrgId.name(), GLUtil.stringToInt(orgFields[0]));
+    orgSQL.setValue(Org.OrgName.name(), orgFields[1]);
+    orgSQL.setValue(Org.Version.name(), GLServerUtil.generateVersion());
+    orgSQL.execute();
+  }
 }
 //--------------------------------------------------------------------------------------------------
 private static final String[] PetNamesAndSex = new String[] {"Angel,F", "Ashley,F", "Bandit,M",
@@ -92,13 +108,13 @@ private static final String[] PetTypes = new String[] {"Cat,Cat", "Dog,Dog", "He
     "Invisible Pink Unicorn,IPU"       };
 private static void reloadPetTypes() throws GLDBException {
   truncate(EFAPTable.PetType);
-  int nextPetTypeId = 1;
   for (final String petType : PetTypes) {
     final String[] petTypeFields = petType.split(",");
     final GLSQL petTypeSQL = GLSQL.insert(EFAPTable.PetType.name(), false);
     petTypeSQL.setValue(PetType.OrgId.name(), 1);
     petTypeSQL.setValue(PetType.PetTypeDesc.name(), petTypeFields[0]);
-    petTypeSQL.setValue(Pet.PetTypeId.name(), nextPetTypeId++);
+    petTypeSQL.setValue(Pet.PetTypeId.name(),
+                        GLServerUtil.getNextIdValue(EFAPTable.PetType.name(), 1));
     petTypeSQL.setValue(PetType.PetTypeShortDesc.name(), petTypeFields[1]);
     petTypeSQL.setValue(PetType.Version.name(), GLServerUtil.generateVersion());
     petTypeSQL.execute();

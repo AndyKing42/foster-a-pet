@@ -21,6 +21,7 @@ import org.greatlogic.glgwt.shared.IGLEnums.EGLDBConj;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLDBException;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLDBOp;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLJoinType;
+import org.greatlogic.glgwt.shared.IGLEnums.EGLSQLAttribute;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLSQLType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -35,6 +36,7 @@ private String                         _dataSourceName;
 private String                         _fromHint;
 private ArrayList<String>              _groupByList;
 private boolean                        _ignoreDuplicates;
+private boolean                        _includeArchivedRows;
 private ArrayList<GLJoinDef>           _joinDefList;
 private int                            _maxNumberOfRows;
 private String                         _orderByClause;
@@ -44,10 +46,10 @@ private String                         _tableName;
 private final ArrayList<GLWhereClause> _whereClauseList;
 //==================================================================================================
 private static class GLJoinDef {
-private final CharSequence _condition;
-private final String       _joinTable;
-private final EGLJoinType  _joinType;
-private GLJoinDef(final EGLJoinType joinType, final String joinTable, final CharSequence condition) {
+private final String      _condition;
+private final String      _joinTable;
+private final EGLJoinType _joinType;
+private GLJoinDef(final EGLJoinType joinType, final String joinTable, final String condition) {
   _joinType = joinType;
   _joinTable = joinTable;
   _condition = condition;
@@ -58,12 +60,12 @@ private static class GLWhereClause {
 private final int       _closeParens;
 private String          _columnName;
 private final EGLDBConj _conjunction;
-private CharSequence    _expression;
+private String          _expression;
 private final int       _openParens;
 private EGLDBOp         _operator;
 private Object          _value;
-public GLWhereClause(final EGLDBConj conjunction, final int openParens,
-                     final CharSequence expression, final int closeParens) {
+public GLWhereClause(final EGLDBConj conjunction, final int openParens, final String expression,
+                     final int closeParens) {
   _conjunction = conjunction;
   _openParens = openParens;
   _expression = expression;
@@ -299,6 +301,16 @@ public GLSQL addFromHints(final String... fromHints) throws GLDBException {
   return this;
 }
 //--------------------------------------------------------------------------------------------------
+private StringBuilder appendAttribute(final StringBuilder sb, final EGLSQLAttribute attribute,
+                                      final int value) {
+  return appendAttribute(sb, attribute, Integer.toString(value));
+}
+//--------------------------------------------------------------------------------------------------
+private StringBuilder appendAttribute(final StringBuilder sb, final EGLSQLAttribute attribute,
+                                      final String value) {
+  return sb.append(" ").append(attribute).append("='").append(value).append("'");
+}
+//--------------------------------------------------------------------------------------------------
 private void createGroupByList() {
   if (_groupByList == null) {
     _groupByList = new ArrayList<String>();
@@ -424,7 +436,7 @@ public GLSQL groupBy(final CharSequence groupByClause) throws GLDBException {
  * @param condition The condition for the join.
  * @return The GLSQL object.
  */
-public GLSQL join(final EGLJoinType joinType, final String joinTable, final CharSequence condition)
+public GLSQL join(final EGLJoinType joinType, final String joinTable, final String condition)
   throws GLDBException {
   ensureSQLTypeIn(EGLSQLType.Select);
   final GLJoinDef joinDef = new GLJoinDef(joinType, joinTable, condition);
@@ -442,7 +454,7 @@ public GLSQL join(final EGLJoinType joinType, final String joinTable, final Char
  * @param condition The condition for the join.
  * @return The GLSQL object.
  */
-public GLSQL join(final EGLJoinType joinType, final IGLTable joinTable, final CharSequence condition)
+public GLSQL join(final EGLJoinType joinType, final IGLTable joinTable, final String condition)
   throws GLDBException {
   return join(joinType, joinTable.toString(), condition);
 }
@@ -467,6 +479,9 @@ public GLSQL orderBy(final IGLTable table, final IGLColumn column, final boolean
  */
 public GLSQL orderBy(final String orderByClause) throws GLDBException {
   ensureSQLTypeIn(EGLSQLType.Select);
+  if (orderByClause == null) {
+    return this;
+  }
   if (_orderByClause == null) {
     _orderByClause = "";
   }
@@ -532,6 +547,10 @@ public GLSQL selectColumns(final Collection<String> columnCollection) {
     }
   }
   return this;
+}
+//--------------------------------------------------------------------------------------------------
+public void setIncludeArchivedRows(final boolean includeArchivedRows) {
+  _includeArchivedRows = includeArchivedRows;
 }
 //--------------------------------------------------------------------------------------------------
 /**
@@ -625,18 +644,19 @@ public String toString() {
 //--------------------------------------------------------------------------------------------------
 public StringBuilder toXMLSB() {
   final StringBuilder result = new StringBuilder(200);
-  result.append("<").append(_sqlType.name()).append(" Columns='");
+  result.append("<").append(_sqlType.name());
+  result.append(" ").append(EGLSQLAttribute.Columns).append("='");
   boolean firstColumn = true;
   for (final String columnName : _columnMap.keySet()) {
     result.append(firstColumn ? "" : ",").append(columnName);
     firstColumn = false;
   }
-  result.append("' Table='").append(_tableName).append("'");
+  appendAttribute(result, EGLSQLAttribute.Table, _tableName);
   if (!GLClientUtil.isBlank(_dataSourceName)) {
-    result.append(" DataSource='").append(_dataSourceName).append("'");
+    appendAttribute(result, EGLSQLAttribute.DataSource, _dataSourceName);
   }
   if (_groupByList != null && _groupByList.size() > 0) {
-    result.append(" GroupBy='");
+    result.append(" ").append(EGLSQLAttribute.GroupBy).append("='");
     firstColumn = true;
     for (final String columnName : _groupByList) {
       result.append(firstColumn ? "" : ",").append(columnName);
@@ -645,39 +665,43 @@ public StringBuilder toXMLSB() {
     result.append("'");
   }
   if (!GLClientUtil.isBlank(_orderByClause)) {
-    result.append(" OrderBy='").append(_orderByClause).append("'");
+    appendAttribute(result, EGLSQLAttribute.OrderBy, _orderByClause);
   }
   if (_ignoreDuplicates) {
-    result.append(" IgnoreDuplicates='Y'");
+    appendAttribute(result, EGLSQLAttribute.IgnoreDuplicates, "Y");
   }
   if (_maxNumberOfRows > 0) {
-    result.append(" MaxRows='").append(_maxNumberOfRows).append("'");
+    appendAttribute(result, EGLSQLAttribute.MaxRows, _maxNumberOfRows);
+  }
+  if (_includeArchivedRows) {
+    appendAttribute(result, EGLSQLAttribute.IncludeArchivedRows, "Y");
   }
   result.append(">");
   if (_joinDefList != null && _joinDefList.size() > 0) {
     for (final GLJoinDef joinDef : _joinDefList) {
-      result.append("<Join Type='").append(joinDef._joinType.name()).append("'");
-      result.append(" Table='").append(joinDef._joinTable).append("'");
-      result.append(" Condition='").append(joinDef._condition).append("'");
+      result.append("<Join");
+      appendAttribute(result, EGLSQLAttribute.Type, joinDef._joinType.name());
+      appendAttribute(result, EGLSQLAttribute.Table, joinDef._joinTable);
+      appendAttribute(result, EGLSQLAttribute.Condition, joinDef._condition);
     }
   }
   for (final GLWhereClause whereClause : _whereClauseList) {
     result.append("<Where").append(whereClause._conjunction.name());
     if (whereClause._openParens > 0) {
-      result.append(" Open='").append(whereClause._openParens).append("'");
+      appendAttribute(result, EGLSQLAttribute.Open, whereClause._openParens);
     }
     if (whereClause._expression == null) {
-      result.append(" Column='").append(whereClause._columnName).append("'");
-      result.append(" Op='").append(whereClause._operator.getSQL()).append("'");
+      appendAttribute(result, EGLSQLAttribute.Column, whereClause._columnName);
+      appendAttribute(result, EGLSQLAttribute.Op, whereClause._operator.getSQL());
       if (whereClause._value != null) {
-        result.append(" Value='").append(whereClause._value.toString()).append("'");
+        appendAttribute(result, EGLSQLAttribute.Value, whereClause._value.toString());
       }
     }
     else {
-      result.append(" Expression='").append(whereClause._expression).append("'");
+      appendAttribute(result, EGLSQLAttribute.Expression, whereClause._expression);
     }
     if (whereClause._closeParens > 0) {
-      result.append(" Close='").append(whereClause._closeParens).append("'");
+      appendAttribute(result, EGLSQLAttribute.Close, whereClause._closeParens);
     }
     result.append("/>");
   }
@@ -731,8 +755,8 @@ public GLSQL where(final EGLDBConj conjunction, final int openParens, final IGLC
  * @param closeParens The number of close parentheses to be added.
  * @return The GLSQL object.
  */
-public GLSQL where(final EGLDBConj conjunction, final int openParens,
-                   final CharSequence expression, final int closeParens) throws GLDBException {
+public GLSQL where(final EGLDBConj conjunction, final int openParens, final String expression,
+                   final int closeParens) throws GLDBException {
   ensureSQLTypeIn(EGLSQLType.Delete, EGLSQLType.Select, EGLSQLType.Update);
   _whereClauseList.add(new GLWhereClause(conjunction, openParens, expression, closeParens));
   return this;
@@ -745,7 +769,7 @@ public GLSQL where(final EGLDBConj conjunction, final int openParens,
  * @param closeParens The number of close parentheses to be added.
  * @return The GLSQL object.
  */
-public GLSQL whereAnd(final int openParens, final CharSequence expression, final int closeParens)
+public GLSQL whereAnd(final int openParens, final String expression, final int closeParens)
   throws GLDBException {
   return where(EGLDBConj.And, openParens, expression, closeParens);
 }
@@ -788,7 +812,7 @@ public GLSQL whereAnd(final int openParens, final IGLColumn column, final EGLDBO
  * @param closeParens The number of close parentheses to be added.
  * @return The GLSQL object.
  */
-public GLSQL whereOr(final int openParens, final CharSequence expression, final int closeParens)
+public GLSQL whereOr(final int openParens, final String expression, final int closeParens)
   throws GLDBException {
   return where(EGLDBConj.Or, openParens, expression, closeParens);
 }

@@ -15,6 +15,7 @@ package org.fosterapet.client.widget;
 import java.util.ArrayList;
 import org.fosterapet.client.DBAccess;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.widget.GLGenericGridWidget;
 import org.greatlogic.glgwt.client.widget.GLGridContentPanel;
@@ -67,30 +68,33 @@ public MainLayoutWidget() {
   createTableNameCombobox();
 }
 //--------------------------------------------------------------------------------------------------
+private ContentPanel addTab(final String tabLabel) {
+  final ContentPanel result = new ContentPanel();
+  result.setHeaderVisible(false);
+  _appContentPanelList.add(result);
+  appTabPanel.add(result, new TabItemConfig(tabLabel, true));
+  appTabPanel.setActiveWidget(appTabPanel.getWidget(appTabPanel.getWidgetCount() - 1));
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
 public void createGenericTableGrid(final IGLTable table, final int tabIndex) {
   final ContentPanel contentPanel;
   if (tabIndex < 0) {
-    contentPanel = new ContentPanel();
-    contentPanel.setHeaderVisible(false);
-    _appContentPanelList.add(contentPanel);
-    appTabPanel.add(contentPanel, new TabItemConfig(table.toString(), true));
+    contentPanel = addTab(table.toString());
   }
   else {
     contentPanel = _appContentPanelList.get(tabIndex);
   }
-  final GLGenericGridWidget gridWidget =
-                                         GLGenericGridWidget.createGenericGridWidget(table.toString());
+  final GLGenericGridWidget gridWidget;
+  gridWidget = GLGenericGridWidget.createGenericGridWidget(table.toString());
   contentPanel.setWidget(gridWidget.asWidget());
-  DBAccess.load(gridWidget.getListStore(), table);
+  DBAccess.load(gridWidget.getListStore(), table, null, true);
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final int tabIndex) {
   final ContentPanel contentPanel;
   if (tabIndex < 0) {
-    contentPanel = new ContentPanel();
-    contentPanel.setHeaderVisible(false);
-    _appContentPanelList.add(contentPanel);
-    appTabPanel.add(contentPanel, new TabItemConfig("Pets", true));
+    contentPanel = addTab("Pets");
   }
   else {
     contentPanel = _appContentPanelList.get(tabIndex);
@@ -101,7 +105,7 @@ public void createPetGrid(final int tabIndex) {
                                             checkBoxSelectionModelCheckBox.getValue(), //
                                             rowLevelCommitsCheckBox.getValue());
   contentPanel.setWidget(gridWidget);
-  DBAccess.loadPets(gridWidget.getListStore());
+  DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
 }
 //--------------------------------------------------------------------------------------------------
 private void createTableNameCombobox() {
@@ -117,10 +121,7 @@ private void createTableNameCombobox() {
 }
 //--------------------------------------------------------------------------------------------------
 public void createTestGrid() {
-  final ContentPanel contentPanel = new ContentPanel();
-  contentPanel.setHeaderVisible(false);
-  _appContentPanelList.add(contentPanel);
-  appTabPanel.add(contentPanel, new TabItemConfig("Test", true));
+  final ContentPanel contentPanel = addTab("Test");
   final TestGrid testGrid = new TestGrid();
   contentPanel.setWidget(testGrid.asWidget());
 }
