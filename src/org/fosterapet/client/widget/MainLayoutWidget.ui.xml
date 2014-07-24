@@ -5,7 +5,9 @@
   xmlns:button='urn:import:com.sencha.gxt.widget.core.client.button'
   xmlns:container='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:form='urn:import:com.sencha.gxt.widget.core.client.form'
-  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'>
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:menu='urn:import:com.sencha.gxt.widget.core.client.menu'
+  xmlns:toolbar='urn:import:com.sencha.gxt.widget.core.client.toolbar'>
   <!--====== Padding =========================================================================== -->
   <ui:with
     type='com.sencha.gxt.core.client.util.Padding'
@@ -86,16 +88,18 @@
     <container:BorderLayoutContainer borders='true'>
       <container:north layoutData='{northData}'>
         <gxt:ContentPanel headerVisible='false'>
+          <toolbar:ToolBar
+            height='-1'
+            width='1'>
+            <button:TextButton
+              ui:field='petsButton'
+              text='Pets'>
+            </button:TextButton>
+          </toolbar:ToolBar>
           <container:HBoxLayoutContainer
             hBoxLayoutAlign='TOP'
             pack='START'
             padding='{padding_3_3_3_3}'>
-            <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-              <button:TextButton
-                ui:field='petsButton'
-                text='Pets'
-                visible='true'/>
-            </container:child>
             <container:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
               <button:TextButton
                 ui:field='testGridButton'
