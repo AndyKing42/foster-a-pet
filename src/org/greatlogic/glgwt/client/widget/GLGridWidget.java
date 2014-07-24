@@ -19,7 +19,6 @@ import java.util.HashSet;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
@@ -66,7 +65,7 @@ private static final int             _resizeColumnExtraPadding;
 private static final TextMetrics     _textMetrics;
 
 private GLGridColumnModel            _columnModel;
-private final IGLColumn[]            _columns;
+protected IGLColumn[]                _columns;
 private final GLGridContentPanel     _contentPanel;
 protected Grid<GLRecord>             _grid;
 private GLGridEditingWrapper         _gridEditingWrapper;
@@ -239,11 +238,8 @@ public Widget asWidget() {
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
-  GLLog.popup(20, "1");
   _selectionModel = new CellSelectionModel<>();
-  GLLog.popup(20, "2");
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
-  GLLog.popup(20, "3");
   _grid = new Grid<>(_listStore, _columnModel);
   _grid.addRowClickHandler(new RowClickEvent.RowClickHandler() {
     @Override
@@ -254,23 +250,18 @@ private void createGrid() {
       }
     }
   });
-  GLLog.popup(20, "4");
   _grid.setBorders(true);
   _grid.setColumnReordering(true);
   _grid.setLoadMask(true);
   _grid.setSelectionModel(_selectionModel);
   _grid.setView(createGridView());
-  GLLog.popup(20, "5");
   addHeaderContextMenuHandler();
   _gridEditingWrapper = new GLGridEditingWrapper(this, _inlineEditing, _recordValidator);
-  GLLog.popup(20, "6");
   addFilters();
   if (_gridFilters != null) {
     _gridFilters.initPlugin(_grid);
   }
-  GLLog.popup(20, "7");
   _contentPanel.add(_grid);
-  GLLog.popup(20, "8");
   _contentPanel.forceLayout();
 }
 //--------------------------------------------------------------------------------------------------

@@ -18,7 +18,6 @@ import org.greatlogic.glgwt.shared.IGLColumn;
 public class GLGenericGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
-private final IGLColumn[]        _columns;
 //--------------------------------------------------------------------------------------------------
 public static GLGenericGridWidget createGenericGridWidget(final String tableName) {
   final EFAPTable table = EFAPTable.valueOf(tableName);
