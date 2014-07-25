@@ -16,7 +16,9 @@ import java.util.ArrayList;
 import org.fosterapet.client.DBAccess;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
+import org.greatlogic.glgwt.client.widget.GLGenericGridWidget;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
+import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -54,14 +56,20 @@ public ContentPanel addTab(final String tabLabel) {
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public void createPetGrid() {
+public void createGenericTableGrid(final IGLTable table) {
+  final ContentPanel contentPanel = addTab(table.toString());
+  final GLGenericGridWidget gridWidget;
+  gridWidget = new GLGenericGridWidget(table);
+  contentPanel.setWidget(gridWidget.asWidget());
+  DBAccess.load(gridWidget.getListStore(), table, null, true);
+}
+//--------------------------------------------------------------------------------------------------
+public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
+                          final boolean rowLevelCommits) {
   final ContentPanel contentPanel = addTab("Pets");
   final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1));
-  //          , //
-  //                                            inlineEditingCheckBox.getValue(), //
-  //                                            checkBoxSelectionModelCheckBox.getValue(), //
-  //                                            rowLevelCommitsCheckBox.getValue());
+  gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), inlineEditing, //
+                                            checkBoxSelectionModel, rowLevelCommits);
   contentPanel.setWidget(gridWidget);
   DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
 }

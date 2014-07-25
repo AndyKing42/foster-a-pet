@@ -933,7 +933,7 @@ public String getTitle() {
 public enum Org implements IGLColumn {
 ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
 OrgDesc("Org Description", EGLColumnDataType.String, 200, false, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, true, 0, ELookupType.Org, -1),
+OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
 OrgName("Org Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
 Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;

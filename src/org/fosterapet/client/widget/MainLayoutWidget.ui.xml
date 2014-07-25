@@ -89,44 +89,6 @@
         <gxt:ContentPanel headerVisible='false'>
           <gxtcontainer:VerticalLayoutContainer>
             <fap:MainMenuWidget ui:field='mainMenuWidget'/>
-            <gxtcontainer:HBoxLayoutContainer
-              hBoxLayoutAlign='TOP'
-              pack='START'
-              padding='{padding_3_3_3_3}'>
-              <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                <gxtcontainer:VBoxLayoutContainer borders='true'>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtcontainer:SimpleContainer ui:field='tableNameComboBoxContainer'/>
-                  </gxtcontainer:child>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtbutton:TextButton
-                      ui:field='genericTableGridButton'
-                      text='Create Generic Table Grid'/>
-                  </gxtcontainer:child>
-                </gxtcontainer:VBoxLayoutContainer>
-              </gxtcontainer:child>
-              <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                <gxtcontainer:VBoxLayoutContainer borders='true'>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtform:CheckBox
-                      ui:field='inlineEditingCheckBox'
-                      boxLabel='Inline Editing?'/>
-                  </gxtcontainer:child>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtform:CheckBox
-                      ui:field='checkBoxSelectionModelCheckBox'
-                      boxLabel='Checkbox Selection Model?'
-                      value='true'/>
-                  </gxtcontainer:child>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtform:CheckBox
-                      ui:field='rowLevelCommitsCheckBox'
-                      boxLabel='Row Level Commits?'
-                      value='true'/>
-                  </gxtcontainer:child>
-                </gxtcontainer:VBoxLayoutContainer>
-              </gxtcontainer:child>
-            </gxtcontainer:HBoxLayoutContainer>
           </gxtcontainer:VerticalLayoutContainer>
         </gxt:ContentPanel>
       </gxtcontainer:north>

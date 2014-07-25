@@ -12,21 +12,16 @@ package org.greatlogic.glgwt.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.shared.IGLColumn;
+import org.greatlogic.glgwt.shared.IGLTable;
 
 public class GLGenericGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
 //--------------------------------------------------------------------------------------------------
-public static GLGenericGridWidget createGenericGridWidget(final String tableName) {
-  final EFAPTable table = EFAPTable.valueOf(tableName);
-  return new GLGenericGridWidget(table.getColumns().toArray(EmptyColumnArray));
-}
-//--------------------------------------------------------------------------------------------------
-private GLGenericGridWidget(final IGLColumn[] columns) {
-  super(null, "There are no rows", null, false, true, true, columns);
-  _columns = columns;
+public GLGenericGridWidget(final IGLTable table) {
+  super(null, "There are no rows in the " + table + " table", null, false, true, true,
+        table.getColumns().toArray(EmptyColumnArray));
 }
 //--------------------------------------------------------------------------------------------------
 @Override

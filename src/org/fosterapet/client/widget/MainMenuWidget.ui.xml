@@ -16,13 +16,43 @@
         text='Pets'
         toolTip='(right click to create a new Pets tab)'>
       </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
         ui:field='testGridButton'
-        text='Test Grid'></gxtbutton:TextButton>
+        text='Test Grid'>
+      </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
         ui:field='reloadTestDataButton'
         text='Reload Test Data'
         visible='true'>
+      </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
+      <gxtbutton:TextButton text='Grid Options'>
+        <gxtbutton:menu>
+          <gxtmenu:Menu>
+            <gxtmenu:CheckMenuItem
+              ui:field='inlineEditingCheckMenuItem'
+              text='Inline Editing?'
+              checked='false'/>
+            <gxtmenu:CheckMenuItem
+              ui:field='checkBoxSelectionModelCheckMenuItem'
+              text='Checkbox Selection Model?'
+              checked='true'/>
+            <gxtmenu:CheckMenuItem
+              ui:field='rowLevelCommitsCheckMenuItem'
+              text='Row Level Commits?'
+              checked='true'/>
+          </gxtmenu:Menu>
+        </gxtbutton:menu>
+      </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
+      <gxtbutton:TextButton text='Generic Grid'>
+        <gxtbutton:menu>
+          <gxtmenu:Menu
+            ui:field='genericGridMenu'
+            maxHeight='300'/>
+        </gxtbutton:menu>
       </gxtbutton:TextButton>
     </gxttoolbar:ToolBar>
   </gxtcontainer:SimpleContainer>
