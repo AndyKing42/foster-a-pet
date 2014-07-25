@@ -401,7 +401,9 @@ private void waitForComboBoxData() {
   }
   else {
     addLookupTableLoadedEventHandler(lookupTableSet);
-    for (final IGLTable table : lookupTableSet) {
+    // use a copy of the lookup table set to prevent a ConcurrentModificationException
+    final IGLTable[] lookupTables = lookupTableSet.toArray(new IGLTable[lookupTableSet.size()]);
+    for (final IGLTable table : lookupTables) {
       GLClientUtil.getLookupCache().reload(table, true, false);
     }
   }

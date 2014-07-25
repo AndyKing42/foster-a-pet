@@ -94,24 +94,6 @@
               pack='START'
               padding='{padding_3_3_3_3}'>
               <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                <gxtbutton:TextButton
-                  ui:field='testGridButton'
-                  text='Test Grid'
-                  visible='true'/>
-              </gxtcontainer:child>
-              <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                <gxtbutton:TextButton
-                  ui:field='gridDebugButton'
-                  text='Grid Debug'
-                  visible='true'/>
-              </gxtcontainer:child>
-              <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                <gxtbutton:TextButton
-                  ui:field='reloadTestDataButton'
-                  text='Reload Test Data'
-                  visible='true'/>
-              </gxtcontainer:child>
-              <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
                 <gxtcontainer:VBoxLayoutContainer borders='true'>
                   <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
                     <gxtcontainer:SimpleContainer ui:field='tableNameComboBoxContainer'/>
@@ -142,11 +124,6 @@
                       boxLabel='Row Level Commits?'
                       value='true'/>
                   </gxtcontainer:child>
-                  <gxtcontainer:child layoutData="{boxLayoutDataMargins_3_3_3_3}">
-                    <gxtbutton:TextButton
-                      ui:field='recreateGridButton'
-                      text='Recreate Grid'/>
-                  </gxtcontainer:child>
                 </gxtcontainer:VBoxLayoutContainer>
               </gxtcontainer:child>
             </gxtcontainer:HBoxLayoutContainer>
@@ -160,7 +137,7 @@
       </gxtcontainer:west>
       <gxtcontainer:center>
         <gxt:ContentPanel headerVisible='false'>
-          <fap:AppTabPanelWidget ui:field='appTabPanel'/>
+          <fap:AppTabPanelWidget ui:field='appTabPanelWidget'/>
         </gxt:ContentPanel>
       </gxtcontainer:center>
       <gxtcontainer:east layoutData='{eastData}'>

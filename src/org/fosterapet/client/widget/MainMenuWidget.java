@@ -12,6 +12,7 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.DBAccess;
 import org.greatlogic.glgwt.client.core.GLLog;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -22,16 +23,19 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.widget.core.client.PlainTabPanel;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
+import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class MainMenuWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-TextButton            petsButton;
+TextButton                petsButton;
 
-private PlainTabPanel _appTabPanel;
+private AppTabPanelWidget _appTabPanelWidget;
 //==================================================================================================
 interface MainMenuWidgetUiBinder extends UiBinder<Widget, MainMenuWidget> { //
 }
@@ -56,11 +60,32 @@ private void addPetsContextMenuHandler() {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  //createPetGrid(-1);
+  _appTabPanelWidget.createPetGrid();
 }
 //--------------------------------------------------------------------------------------------------
-public void setAppTabPanel(final PlainTabPanel appTabPanel) {
-  _appTabPanel = appTabPanel;
+@UiHandler({"reloadTestDataButton"})
+public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final ConfirmMessageBox messageBox;
+  messageBox = new ConfirmMessageBox("Reload Test Data", //
+                                     "Are you sure you want to erase and reload all test data?");
+  messageBox.addDialogHideHandler(new DialogHideHandler() {
+    @Override
+    public void onDialogHide(final DialogHideEvent hideEvent) {
+      if (hideEvent.getHideButton() == PredefinedButton.YES) {
+        DBAccess.reloadTestData();
+      }
+    }
+  });
+  messageBox.show();
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"testGridButton"})
+public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  _appTabPanelWidget.createTestGrid();
+}
+//--------------------------------------------------------------------------------------------------
+public void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget) {
+  _appTabPanelWidget = appTabPanelWidget;
 }
 //--------------------------------------------------------------------------------------------------
 }
