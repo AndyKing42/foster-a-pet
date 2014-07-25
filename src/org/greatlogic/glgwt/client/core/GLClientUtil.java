@@ -24,6 +24,10 @@ import org.greatlogic.glgwt.client.widget.LoginDialogBox;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
 import org.greatlogic.glgwt.shared.IGLTable;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
@@ -34,23 +38,31 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.web.bindery.event.shared.UmbrellaException;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
-private static GLEventBus            _eventBus;
-private static LoginDialogBox        _loginDialogBox;
-private static GLLookupCache         _lookupCache;
-private static Random                _random;
-private static IGLRemoteServiceAsync _remoteService;
-private static GLValidators          _validators;
-private static DateTimeFormat        _yyyymmddDateTimeFormat;
+private static GLClientFactory _clientFactory;
+private static LoginDialogBox  _loginDialogBox;
+private static Random          _random;
+private static DateTimeFormat  _yyyymmddDateTimeFormat;
 //--------------------------------------------------------------------------------------------------
 static {
   _random = new Random(System.currentTimeMillis());
   _yyyymmddDateTimeFormat = DateTimeFormat.getFormat("yyyyMMdd");
+}
+//--------------------------------------------------------------------------------------------------
+private static void addWindowClosingHandler(final String appDescription) {
+  Window.addWindowClosingHandler(new Window.ClosingHandler() {
+    @Override
+    public void onWindowClosing(final Window.ClosingEvent closingEvent) {
+      closingEvent.setMessage("You are about to exit from " + appDescription);
+    }
+  });
 }
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
@@ -67,7 +79,7 @@ public static void createNewRecord(final GLRecordDef recordDef,
     public void onSuccess(final Integer nextId) {
       final GLRecord record = new GLRecord(recordDef);
       record.put(table.getPrimaryKeyColumn(), nextId);
-      GLClientUtil.getEventBus().fireEvent(new GLNewRecordEvent(record));
+      _clientFactory.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {
         createNewRecordCallback.onSuccess(record);
       }
@@ -145,11 +157,11 @@ public static String formatObjectSpecial(final Object value, final String defaul
 }
 //--------------------------------------------------------------------------------------------------
 public static GLEventBus getEventBus() {
-  return _eventBus;
+  return _clientFactory.getEventBus();
 }
 //--------------------------------------------------------------------------------------------------
 public static GLLookupCache getLookupCache() {
-  return _lookupCache;
+  return _clientFactory.getLookupCache();
 }
 //--------------------------------------------------------------------------------------------------
 public static String getLowestLevelCSSClassName(final Element element, final String attributeName) {
@@ -183,21 +195,17 @@ public static int getRandomInt(final int minValue, final int maxValue) {
 }
 //--------------------------------------------------------------------------------------------------
 public static IGLRemoteServiceAsync getRemoteService() {
-  return _remoteService;
+  return _clientFactory.getRemoteService();
 }
 //--------------------------------------------------------------------------------------------------
 public static GLValidators getValidators() {
-  return _validators;
+  return _clientFactory.getValidators();
 }
 //--------------------------------------------------------------------------------------------------
-public static void initialize(final GLEventBus eventBus, final GLLookupCache lookupCache,
-                              final IGLRemoteServiceAsync remoteService,
-                              final GLValidators validators) {
-  _eventBus = eventBus;
-  _lookupCache = lookupCache;
-  _remoteService = remoteService;
-  _validators = validators;
+public static void initialize(final String appDescription, final GLClientFactory clientFactory) {
+  _clientFactory = clientFactory;
   disableBackspace();
+  addWindowClosingHandler(appDescription);
 }
 //--------------------------------------------------------------------------------------------------
 public static boolean isBlank(final CharSequence s) {
@@ -267,6 +275,29 @@ public static void setTheme(final String themeClassName) {
   /* 1 */Document.get().getBody().setClassName(themeClassName);
   /* 2 */RootPanel.get().setStyleName(themeClassName);
   /* 3 */RootPanel.get().setStylePrimaryName(themeClassName);
+}
+//--------------------------------------------------------------------------------------------------
+public static void setUncaughtExceptionHandler(final ScheduledCommand moduleLoadCommand) {
+  GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+    @Override
+    public void onUncaughtException(final Throwable throwable) {
+      final Throwable unwrappedThrowable = unwrapThrowable(throwable);
+      todo(); // http://www.summa-tech.com/blog/2012/06/11/7-tips-for-exception-handling-in-gwt/
+    }
+  });
+  Scheduler.get().scheduleDeferred(moduleLoadCommand);
+}
+//--------------------------------------------------------------------------------------------------
+public static Throwable unwrapThrowable(final Throwable throwable) {
+  UmbrellaException result;
+  if (!(throwable instanceof UmbrellaException)) {
+    return throwable;
+  }
+  result = (UmbrellaException)throwable;
+  if (result.getCauses().size() != 1) {
+    return result;
+  }
+  return unwrapThrowable(result.getCauses().iterator().next());
 }
 //--------------------------------------------------------------------------------------------------
 /**

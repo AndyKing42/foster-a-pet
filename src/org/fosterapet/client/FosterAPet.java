@@ -18,26 +18,35 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.widget.GLGridWidget;
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 public class FosterAPet implements EntryPoint {
 //--------------------------------------------------------------------------------------------------
 @Override
 public void onModuleLoad() {
-  final ClientFactory clientFactory = new ClientFactoryUI();
-  GLClientUtil.initialize(clientFactory.getEventBus(), clientFactory.getLookupCache(),
-                          clientFactory.getRemoteService(), clientFactory.getValidators());
-  clientFactory.setMainLayoutWidget(new MainLayoutWidget());
-  final boolean loadTestData = false;
-  clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
-  final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
-  if (loadTestData) {
-    final GLListStore petTypeListStore = new GLListStore();
-    TestData.loadPetTypeTestData(petTypeListStore);
-    TestData.loadPetTestData(gridWidget.getListStore());
-  }
-  RootLayoutPanel.get().add(clientFactory.getMainLayoutWidget());
-  // todo: GLClientUtil.login();
+  GLClientUtil.setUncaughtExceptionHandler(createModuleLoadCommand());
+}
+//--------------------------------------------------------------------------------------------------
+private ScheduledCommand createModuleLoadCommand() {
+  return new ScheduledCommand() {
+    @Override
+    public void execute() {
+      final ClientFactory clientFactory = new ClientFactoryUI();
+      GLClientUtil.initialize("Foster A Pet", clientFactory);
+      clientFactory.setMainLayoutWidget(new MainLayoutWidget());
+      final boolean loadTestData = false;
+      clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
+      final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
+      if (loadTestData) {
+        final GLListStore petTypeListStore = new GLListStore();
+        TestData.loadPetTypeTestData(petTypeListStore);
+        TestData.loadPetTestData(gridWidget.getListStore());
+      }
+      RootLayoutPanel.get().add(clientFactory.getMainLayoutWidget());
+      // todo: GLClientUtil.login();
+    }
+  };
 }
 //--------------------------------------------------------------------------------------------------
 }

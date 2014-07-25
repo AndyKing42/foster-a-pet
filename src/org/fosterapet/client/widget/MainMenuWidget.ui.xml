@@ -28,7 +28,9 @@
         visible='true'>
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
-      <gxtbutton:TextButton text='Grid Options'>
+      <gxtbutton:TextButton
+        text='Grid Options'
+        toolTip='Grid options apply only to Pet grids, and will take effect the next time a Pet grid is created'>
         <gxtbutton:menu>
           <gxtmenu:Menu>
             <gxtmenu:CheckMenuItem
