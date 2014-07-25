@@ -51,7 +51,7 @@
     type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_3_3_3_3}'
-      size='160'
+      size='30'
       split='true'/>
   </ui:with>
   <ui:with
