@@ -50,6 +50,8 @@ CheckBox                              checkBoxSelectionModelCheckBox;
 @UiField
 CheckBox                              inlineEditingCheckBox;
 @UiField
+MainMenuWidget                        mainMenuWidget;
+@UiField
 CheckBox                              rowLevelCommitsCheckBox;
 @UiField
 SimpleContainer                       tableNameComboBoxContainer;
@@ -65,6 +67,7 @@ public MainLayoutWidget() {
   _appContentPanelList = new ArrayList<>();
   final MainLayoutWidgetUiBinder uiBinder = GWT.create(MainLayoutWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
+  mainMenuWidget.setAppTabPanel(appTabPanel);
   createTableNameCombobox();
 }
 //--------------------------------------------------------------------------------------------------
@@ -142,11 +145,6 @@ public void onGridDebugButtonSelect(@SuppressWarnings("unused") final SelectEven
   final GLGridContentPanel panel = (GLGridContentPanel)_appContentPanelList.get(0).getWidget();
   final Widget childWidget = panel.getWidget();
   GLLog.popup(20, (childWidget == null ? "null" : getClass().toString()));
-}
-//--------------------------------------------------------------------------------------------------
-@UiHandler({"petsButton"})
-public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  createPetGrid(-1);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"recreateGridButton"})
