@@ -16,6 +16,14 @@
         text='Pets'
         toolTip='(right click to create a new Pets tab)'>
       </gxtbutton:TextButton>
+      <gxtbutton:TextButton
+        ui:field='testGridButton'
+        text='Test Grid'></gxtbutton:TextButton>
+      <gxtbutton:TextButton
+        ui:field='reloadTestDataButton'
+        text='Reload Test Data'
+        visible='true'>
+      </gxtbutton:TextButton>
     </gxttoolbar:ToolBar>
   </gxtcontainer:SimpleContainer>
 </ui:UiBinder>

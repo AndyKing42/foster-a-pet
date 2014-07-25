@@ -2,12 +2,15 @@
 <ui:UiBinder
   xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
   <!--========================================================================================== -->
-  <gxt:PlainTabPanel
-    ui:field='appTabPanel'
-    animScroll='true'
-    closeContextMenu='true'
-    pixelSize='450, 250'>
-  </gxt:PlainTabPanel>
+  <gxtcontainer:SimpleContainer>
+    <gxt:PlainTabPanel
+      ui:field='tabPanel'
+      animScroll='true'
+      closeContextMenu='true'
+      tabScroll='true'>
+    </gxt:PlainTabPanel>
+  </gxtcontainer:SimpleContainer>
 </ui:UiBinder>

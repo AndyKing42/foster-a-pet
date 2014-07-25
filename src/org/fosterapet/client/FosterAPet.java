@@ -29,7 +29,7 @@ public void onModuleLoad() {
                           clientFactory.getRemoteService(), clientFactory.getValidators());
   clientFactory.setMainLayoutWidget(new MainLayoutWidget());
   final boolean loadTestData = false;
-  clientFactory.getMainLayoutWidget().createPetGrid(-1);
+  clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid();
   final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
   if (loadTestData) {
     final GLListStore petTypeListStore = new GLListStore();
