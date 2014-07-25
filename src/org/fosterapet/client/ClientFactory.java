@@ -2,22 +2,18 @@ package org.fosterapet.client;
 
 import org.fosterapet.client.widget.MainLayoutWidget;
 import org.fosterapet.shared.IRemoteService;
-import org.fosterapet.shared.IRemoteServiceAsync;
 import org.fosterapet.shared.LookupCacheLoader;
 import org.fosterapet.shared.Validators;
+import org.greatlogic.glgwt.client.core.GLClientFactory;
 import org.greatlogic.glgwt.client.core.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import com.google.gwt.core.client.GWT;
 
-public abstract class ClientFactory {
+public abstract class ClientFactory extends GLClientFactory {
 //--------------------------------------------------------------------------------------------------
-public static ClientFactory   Instance;
+public static ClientFactory Instance;
 
-private final GLEventBus      _eventBus;
-protected GLLookupCache       _lookupCache;
-protected MainLayoutWidget    _mainLayoutWidget;
-protected IRemoteServiceAsync _remoteService;
-protected Validators          _validators;
+protected MainLayoutWidget  _mainLayoutWidget;
 //--------------------------------------------------------------------------------------------------
 protected ClientFactory() {
   Instance = this;
@@ -28,24 +24,8 @@ protected ClientFactory() {
   _validators = new Validators();
 }
 //--------------------------------------------------------------------------------------------------
-public GLEventBus getEventBus() {
-  return _eventBus;
-}
-//--------------------------------------------------------------------------------------------------
-public GLLookupCache getLookupCache() {
-  return _lookupCache;
-}
-//--------------------------------------------------------------------------------------------------
 public MainLayoutWidget getMainLayoutWidget() {
   return _mainLayoutWidget;
-}
-//--------------------------------------------------------------------------------------------------
-public IRemoteServiceAsync getRemoteService() {
-  return _remoteService;
-}
-//--------------------------------------------------------------------------------------------------
-public Validators getValidators() {
-  return _validators;
 }
 //--------------------------------------------------------------------------------------------------
 public abstract void hidePleaseWait();
