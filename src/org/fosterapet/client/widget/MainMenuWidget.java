@@ -13,10 +13,13 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.client.DBAccess;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
+import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -29,11 +32,23 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.menu.CheckMenuItem;
+import com.sencha.gxt.widget.core.client.menu.Item;
+import com.sencha.gxt.widget.core.client.menu.Menu;
+import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
 public class MainMenuWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
+CheckMenuItem             checkBoxSelectionModelCheckMenuItem;
+@UiField
+Menu                      genericGridMenu;
+@UiField
+CheckMenuItem             inlineEditingCheckMenuItem;
+@UiField
 TextButton                petsButton;
+@UiField
+CheckMenuItem             rowLevelCommitsCheckMenuItem;
 
 private AppTabPanelWidget _appTabPanelWidget;
 //==================================================================================================
@@ -45,6 +60,7 @@ public MainMenuWidget() {
   final MainMenuWidgetUiBinder uiBinder = GWT.create(MainMenuWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   addPetsContextMenuHandler();
+  addTableNamesToGenericGridMenu();
 }
 //--------------------------------------------------------------------------------------------------
 private void addPetsContextMenuHandler() {
@@ -58,9 +74,28 @@ private void addPetsContextMenuHandler() {
   }, ContextMenuEvent.getType());
 }
 //--------------------------------------------------------------------------------------------------
+private void addTableNamesToGenericGridMenu() {
+  for (final IGLTable table : EFAPTable.values()) {
+    genericGridMenu.add(new MenuItem(table.toString()));
+  }
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"genericGridMenu"})
+public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
+  final String tableName = ((MenuItem)event.getSelectedItem()).getText();
+  if (tableName == null) {
+    GLLog.popup(10, "You must select a table");
+    return;
+  }
+  final IGLTable table = EFAPTable.valueOf(tableName);
+  _appTabPanelWidget.createGenericTableGrid(table);
+}
+//--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  _appTabPanelWidget.createPetGrid();
+  _appTabPanelWidget.createPetGrid(inlineEditingCheckMenuItem.isChecked(),
+                                   checkBoxSelectionModelCheckMenuItem.isChecked(),
+                                   rowLevelCommitsCheckMenuItem.isChecked());
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})
