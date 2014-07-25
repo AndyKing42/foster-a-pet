@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM 'http://dl.google.com/gwt/DTD/xhtml.ent'>
+<ui:UiBinder
+  xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  <!--========================================================================================== -->
+  <gxt:PlainTabPanel
+    ui:field='appTabPanel'
+    animScroll='true'
+    closeContextMenu='true'
+    pixelSize='450, 250'>
+  </gxt:PlainTabPanel>
+</ui:UiBinder>
