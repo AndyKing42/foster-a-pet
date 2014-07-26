@@ -13,7 +13,10 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.shared.IDBEnums.Pet;
-import org.greatlogic.glgwt.client.widget.GLGridWidget;
+import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.widget.GLContextMenuSelectionEvent;
+import org.greatlogic.glgwt.client.widget.IGLContextMenuSelectionHandler;
+import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import com.sencha.gxt.core.client.util.DateWrapper;
 
@@ -35,6 +38,19 @@ protected void addFilters() {
   addFilter(Pet.PetName);
   addFilter(Pet.PetTypeId);
   addFilter(Pet.Sex);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+protected void addContextMenuEntries() {
+  final IGLContextMenuSelectionHandler viewDetailsSelectionHandler;
+  viewDetailsSelectionHandler = new IGLContextMenuSelectionHandler() {
+    @Override
+    public void onSelection(final GLContextMenuSelectionEvent event) {
+      GLLog.popup(20, "View:" + event.getSelectedRecord());
+    }
+  };
+  addContextMenuEntry("View Details", viewDetailsSelectionHandler);
+  addContextMenuDelete();
 }
 //--------------------------------------------------------------------------------------------------
 }

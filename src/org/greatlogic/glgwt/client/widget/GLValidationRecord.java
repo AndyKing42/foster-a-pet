@@ -2,9 +2,10 @@ package org.greatlogic.glgwt.client.widget;
 
 import java.math.BigDecimal;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.widget.grid.GLColumnConfig;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import com.sencha.gxt.widget.core.client.form.IsField;
 import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
@@ -14,8 +15,8 @@ public class GLValidationRecord {
 private final TreeMap<String, GLColumnConfig<?>> _columnConfigMap; // column name -> GLColumnConfig
 private final GridRowEditing<GLRecord>           _gridEditing;
 //--------------------------------------------------------------------------------------------------
-GLValidationRecord(final TreeMap<String, GLColumnConfig<?>> columnConfigMap,
-                   final GridRowEditing<GLRecord> gridEditing) {
+public GLValidationRecord(final TreeMap<String, GLColumnConfig<?>> columnConfigMap,
+                          final GridRowEditing<GLRecord> gridEditing) {
   _columnConfigMap = columnConfigMap;
   _gridEditing = gridEditing;
 }

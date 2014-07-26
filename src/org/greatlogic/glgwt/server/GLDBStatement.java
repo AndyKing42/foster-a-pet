@@ -1,6 +1,7 @@
 package org.greatlogic.glgwt.server;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greatlogic.glgwt.shared.IGLEnums.EGLSQLAttribute;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
@@ -107,13 +108,13 @@ private static void insertOrUpdateRows(final EChangeType changeType, final Strin
   }
 }
 //--------------------------------------------------------------------------------------------------
-public static String select(final String xmlRequest, final boolean includeArchivedRows) {
+public static String select(final String xmlRequest) {
   GLLog.debug(xmlRequest);
   final StringBuilder result = new StringBuilder();
   try {
     final GLXML xml = new GLXML(xmlRequest);
     final GLSQL sql = GLSQL.selectUsingXML(xml);
-    if (!includeArchivedRows) {
+    if (!xml.getTopElement().attributeAsBoolean(EGLSQLAttribute.IncludeArchivedRows.name())) {
       sql.whereAnd(0, "ArchiveDate is null", 0);
     }
     sql.open();

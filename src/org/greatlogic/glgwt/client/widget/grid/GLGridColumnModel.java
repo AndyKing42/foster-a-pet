@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -7,21 +7,25 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLBigDecimalValueProvider;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLBooleanValueProvider;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLDateValueProvider;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLForeignKeyValueProvider;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLIntegerValueProvider;
-import org.greatlogic.glgwt.client.widget.GLValueProviderClasses.GLStringValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLBigDecimalValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLBooleanValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLDateValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLForeignKeyValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLIntegerValueProvider;
+import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLStringValueProvider;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat;
+import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
@@ -231,11 +235,19 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
       }
     }
   };
+  checkBoxCell.addHandler(new DoubleClickHandler() {
+    @Override
+    public void onDoubleClick(final DoubleClickEvent event) {
+      GLLog.popup(10, "double click");
+    }
+  }, DoubleClickEvent.getType());
   result.setCell(checkBoxCell);
   result.setFixed(true);
   result.setHideable(false);
   result.setMenuDisabled(true);
   result.setResizable(false);
+  final SafeStyles textStyles = SafeStylesUtils.fromTrustedString("padding: 4px 5px 3px 5px;");
+  result.setColumnTextStyle(textStyles);
   result.setSortable(false);
   return result;
 }

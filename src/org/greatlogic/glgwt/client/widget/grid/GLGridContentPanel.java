@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 
 import java.util.ArrayList;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
