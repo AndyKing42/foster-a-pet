@@ -3,19 +3,24 @@ package org.greatlogic.glgwt.client.widget;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidationError;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.sencha.gxt.cell.core.client.form.ComboBoxCell.TriggerAction;
 import com.sencha.gxt.cell.core.client.form.NumberInputCell;
+import com.sencha.gxt.core.client.util.TextMetrics;
 import com.sencha.gxt.data.shared.Converter;
 import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.StringLabelProvider;
@@ -26,6 +31,8 @@ import com.sencha.gxt.widget.core.client.event.BeforeSelectEvent;
 import com.sencha.gxt.widget.core.client.event.BeforeSelectEvent.BeforeSelectHandler;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
+import com.sencha.gxt.widget.core.client.event.ExpandEvent;
+import com.sencha.gxt.widget.core.client.event.ExpandEvent.ExpandHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.BigDecimalField;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
@@ -46,11 +53,14 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 
 class GLGridEditingWrapper {
 //--------------------------------------------------------------------------------------------------
-private static final String     Zeroes;
+private static final String                        Zeroes;
 
-private GridEditing<GLRecord>   _gridEditing;
-private final GLGridWidget      _gridWidget;
-private final GLRecordValidator _recordValidator;
+private static TextMetrics                         _textMetrics;
+
+private final HashMap<Widget, HandlerRegistration> _comboboxExpandHandlerMap;
+private GridEditing<GLRecord>                      _gridEditing;
+private final GLGridWidget                         _gridWidget;
+private final GLRecordValidator                    _recordValidator;
 //--------------------------------------------------------------------------------------------------
 static {
   Zeroes = "0000000000000000000000000000000000000000";
@@ -61,6 +71,7 @@ GLGridEditingWrapper(final GLGridWidget gridWidget, final boolean inlineEditing,
                      final GLRecordValidator recordValidator) {
   _gridWidget = gridWidget;
   _recordValidator = recordValidator;
+  _comboboxExpandHandlerMap = new HashMap<>();
   createGridEditing(inlineEditing);
   for (final GLColumnConfig<?> columnConfig : _gridWidget.getColumnModel().getColumnConfigs()) {
     final IGLColumn column = columnConfig.getColumn();
@@ -116,6 +127,31 @@ GLGridEditingWrapper(final GLGridWidget gridWidget, final boolean inlineEditing,
       }
     }
   }
+}
+//--------------------------------------------------------------------------------------------------
+private void addComboboxExpandHandler(final ComboBox<?> combobox) {
+  final HandlerRegistration expandHandler = combobox.addExpandHandler(new ExpandHandler() {
+    @Override
+    public void onExpand(final ExpandEvent event) {
+      int maxWidth = 0;
+      for (final Element element : combobox.getListView().getElements()) {
+        if (_textMetrics == null) {
+          _textMetrics = TextMetrics.get();
+          _textMetrics.bind(element.getClassName());
+        }
+        final int width = _textMetrics.getWidth(element.getInnerText());
+        if (width > maxWidth) {
+          maxWidth = width;
+        }
+      }
+      combobox.setMinListWidth(maxWidth + 10);
+      final HandlerRegistration handler = _comboboxExpandHandlerMap.get(combobox);
+      if (handler != null) {
+        handler.removeHandler();
+      }
+    }
+  });
+  _comboboxExpandHandlerMap.put(combobox, expandHandler);
 }
 //--------------------------------------------------------------------------------------------------
 @SuppressWarnings("unchecked")
@@ -189,11 +225,13 @@ private void createFixedComboboxEditor(final GLColumnConfig<?> columnConfig) {
   final SimpleComboBox<String> combobox = new SimpleComboBox<>(new StringLabelProvider<>());
   combobox.setClearValueOnParseError(false);
   combobox.setTriggerAction(TriggerAction.ALL);
-  combobox.add(GLClientUtil.getLookupCache().getAbbrevList(columnConfig.getColumn().getLookupType()));
+  combobox.add(GLClientUtil.getLookupCache()
+                           .getAbbrevList(columnConfig.getColumn().getLookupType()));
   combobox.setForceSelection(true);
   if (columnConfig.getValidator() != null) {
     combobox.addValidator((Validator<String>)columnConfig.getValidator());
   }
+  addComboboxExpandHandler(combobox);
   _gridEditing.addEditor((ColumnConfig<GLRecord, String>)columnConfig, combobox);
 }
 //--------------------------------------------------------------------------------------------------
@@ -231,6 +269,7 @@ private ComboBox<GLRecord> createForeignKeyComboboxEditor(final GLColumnConfig<?
     }
   };
   _gridEditing.addEditor((ColumnConfig<GLRecord, String>)columnConfig, converter, result);
+  addComboboxExpandHandler(result);
   return result;
 }
 //--------------------------------------------------------------------------------------------------

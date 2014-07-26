@@ -23,4 +23,9 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  <init-param>
+    <!-- This value assumes a GWT compile with '-deploy war/WEB-INF/deploy/' -->
+    <param-name>symbolMapsFileSystem</param-name>
+    <param-value>WEB-INF/deploy/fosterapet/symbolMaps/</param-value>
+  </init-param>
 </web-app>
