@@ -12,7 +12,8 @@
     name="user.agent"
     value="safari"/>
   -->
-  <!-- Compile all permutations into one file -->   
+  
+  <!-- Compile all permutations into one file -->
   <collapse-all-properties/>
      
   <!-- Inherit the core Web Toolkit stuff.                        -->
@@ -40,4 +41,5 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
+  
 </module>

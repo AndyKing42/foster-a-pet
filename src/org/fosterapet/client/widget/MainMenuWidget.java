@@ -26,6 +26,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+import com.sencha.gxt.core.client.util.TextMetrics;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
@@ -68,16 +69,30 @@ private void addPetsContextMenuHandler() {
   petsButton.addHandler(new ContextMenuHandler() {
     @Override
     public void onContextMenu(final ContextMenuEvent event) {
-      GLLog.popup(20, "hey");
+      _appTabPanelWidget.createPetGrid(inlineEditingCheckMenuItem.isChecked(),
+                                       checkBoxSelectionModelCheckMenuItem.isChecked(),
+                                       rowLevelCommitsCheckMenuItem.isChecked());
       event.preventDefault();
     }
   }, ContextMenuEvent.getType());
 }
 //--------------------------------------------------------------------------------------------------
 private void addTableNamesToGenericGridMenu() {
+  TextMetrics textMetrics = null;
+  int maxWidth = 0;
   for (final IGLTable table : EFAPTable.values()) {
-    genericGridMenu.add(new MenuItem(table.toString()));
+    final MenuItem menuItem = new MenuItem(table.toString());
+    if (textMetrics == null) {
+      textMetrics = TextMetrics.get();
+      textMetrics.bind(menuItem.getElement().getClassName());
+    }
+    final int width = textMetrics.getWidth(table.toString());
+    if (width > maxWidth) {
+      maxWidth = width;
+    }
+    genericGridMenu.add(menuItem);
   }
+  genericGridMenu.setWidth(maxWidth + 35);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"genericGridMenu"})
@@ -93,9 +108,7 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  _appTabPanelWidget.createPetGrid(inlineEditingCheckMenuItem.isChecked(),
-                                   checkBoxSelectionModelCheckMenuItem.isChecked(),
-                                   rowLevelCommitsCheckMenuItem.isChecked());
+  GLLog.popup(10, "Navigate to the next Pets tab");
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})

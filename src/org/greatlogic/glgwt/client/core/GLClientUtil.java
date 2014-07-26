@@ -281,23 +281,18 @@ public static void setUncaughtExceptionHandler(final ScheduledCommand moduleLoad
   GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
     @Override
     public void onUncaughtException(final Throwable throwable) {
-      final Throwable unwrappedThrowable = unwrapThrowable(throwable);
-      todo(); // http://www.summa-tech.com/blog/2012/06/11/7-tips-for-exception-handling-in-gwt/
+      Throwable unwrappedThrowable = throwable;
+      if (throwable instanceof UmbrellaException) {
+        for (final Throwable t : ((UmbrellaException)throwable).getCauses()) {
+          unwrappedThrowable = t;
+        }
+      }
+      GLLog.popup(20, unwrappedThrowable.getMessage());
+      // todo:      GLLog.major(unwrappedThrowable);
+      // todo: use https://code.google.com/p/gwt-log/
     }
   });
   Scheduler.get().scheduleDeferred(moduleLoadCommand);
-}
-//--------------------------------------------------------------------------------------------------
-public static Throwable unwrapThrowable(final Throwable throwable) {
-  UmbrellaException result;
-  if (!(throwable instanceof UmbrellaException)) {
-    return throwable;
-  }
-  result = (UmbrellaException)throwable;
-  if (result.getCauses().size() != 1) {
-    return result;
-  }
-  return unwrapThrowable(result.getCauses().iterator().next());
 }
 //--------------------------------------------------------------------------------------------------
 /**
