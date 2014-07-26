@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,6 +9,7 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.widget.GLValidationRecord;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidationError;
 import org.greatlogic.glgwt.shared.IGLColumn;
@@ -24,13 +25,9 @@ import com.sencha.gxt.core.client.util.TextMetrics;
 import com.sencha.gxt.data.shared.Converter;
 import com.sencha.gxt.data.shared.LabelProvider;
 import com.sencha.gxt.data.shared.StringLabelProvider;
-import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
-import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.BeforeSelectEvent;
 import com.sencha.gxt.widget.core.client.event.BeforeSelectEvent.BeforeSelectHandler;
-import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
-import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent;
 import com.sencha.gxt.widget.core.client.event.ExpandEvent.ExpandHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -66,67 +63,24 @@ static {
   Zeroes = "0000000000000000000000000000000000000000";
 }
 //--------------------------------------------------------------------------------------------------
-@SuppressWarnings("unchecked")
 GLGridEditingWrapper(final GLGridWidget gridWidget, final boolean inlineEditing,
                      final GLRecordValidator recordValidator) {
   _gridWidget = gridWidget;
   _recordValidator = recordValidator;
   _comboboxExpandHandlerMap = new HashMap<>();
   createGridEditing(inlineEditing);
-  for (final GLColumnConfig<?> columnConfig : _gridWidget.getColumnModel().getColumnConfigs()) {
-    final IGLColumn column = columnConfig.getColumn();
-    if (column == null) { // if column == null then this is the "select" checkbox column
-      final Field<Boolean> checkBox = new CheckBox();
-      checkBox.setEnabled(false);
-      _gridEditing.addEditor((ColumnConfig<GLRecord, Boolean>)columnConfig, checkBox);
+  createFields(inlineEditing);
+}
+//--------------------------------------------------------------------------------------------------
+private void addButtonBarDeleteButton(final GridRowEditing<GLRecord> gridRowEditing) {
+  final TextButton deleteButton = new TextButton("Delete");
+  deleteButton.addSelectHandler(new SelectEvent.SelectHandler() {
+    @Override
+    public void onSelect(final SelectEvent event) {
+      _gridWidget.requestRowDeleteConfirmation(gridRowEditing);
     }
-    else if (column.getLookupType() != null && column.getLookupType().getTable() == null) {
-      createFixedComboboxEditor(columnConfig);
-    }
-    else {
-      Field<?> field = null;
-      switch (column.getDataType()) {
-        case Boolean:
-          if (!inlineEditing) {
-            field = createBooleanEditor(columnConfig);
-          }
-          break;
-        case Currency:
-          field = createDecimalEditor(columnConfig, 2);
-          break;
-        case Date: {
-          field = createDateEditor(columnConfig);
-          break;
-        }
-        case DateTime: {
-          field = createDateTimeEditor(columnConfig);
-          break;
-        }
-        case Decimal:
-          field = createDecimalEditor(columnConfig, column.getDecimalPlacesOrLength());
-          break;
-        case Int:
-          if (column.getLookupType() == null || column.getLookupType().getTable() == null) {
-            field = createIntegerEditor(columnConfig);
-          }
-          else {
-            field = createForeignKeyComboboxEditor(columnConfig);
-          }
-          break;
-        case String:
-          field = createStringEditor(columnConfig);
-          break;
-      }
-      if (field != null) {
-        columnConfig.setField(field);
-        if (field instanceof ValueBaseField) {
-          final ValueBaseField<GLRecord> valueBaseField = (ValueBaseField<GLRecord>)field;
-          valueBaseField.setAllowBlank(column.getNullable());
-          valueBaseField.setClearValueOnParseError(false);
-        }
-      }
-    }
-  }
+  });
+  gridRowEditing.getButtonBar().add(deleteButton);
 }
 //--------------------------------------------------------------------------------------------------
 private void addComboboxExpandHandler(final ComboBox<?> combobox) {
@@ -221,6 +175,64 @@ private BigDecimalField createDecimalEditor(final GLColumnConfig<?> columnConfig
 }
 //--------------------------------------------------------------------------------------------------
 @SuppressWarnings("unchecked")
+private void createFields(final boolean inlineEditing) {
+  for (final GLColumnConfig<?> columnConfig : _gridWidget.getColumnModel().getColumnConfigs()) {
+    final IGLColumn column = columnConfig.getColumn();
+    if (column == null) { // if column == null then this is the "select" checkbox column
+      final Field<Boolean> checkBox = new CheckBox();
+      checkBox.setEnabled(false);
+      _gridEditing.addEditor((ColumnConfig<GLRecord, Boolean>)columnConfig, checkBox);
+    }
+    else if (column.getLookupType() != null && column.getLookupType().getTable() == null) {
+      createFixedComboboxEditor(columnConfig);
+    }
+    else {
+      Field<?> field = null;
+      switch (column.getDataType()) {
+        case Boolean:
+          if (!inlineEditing) {
+            field = createBooleanEditor(columnConfig);
+          }
+          break;
+        case Currency:
+          field = createDecimalEditor(columnConfig, 2);
+          break;
+        case Date: {
+          field = createDateEditor(columnConfig);
+          break;
+        }
+        case DateTime: {
+          field = createDateTimeEditor(columnConfig);
+          break;
+        }
+        case Decimal:
+          field = createDecimalEditor(columnConfig, column.getDecimalPlacesOrLength());
+          break;
+        case Int:
+          if (column.getLookupType() == null || column.getLookupType().getTable() == null) {
+            field = createIntegerEditor(columnConfig);
+          }
+          else {
+            field = createForeignKeyComboboxEditor(columnConfig);
+          }
+          break;
+        case String:
+          field = createStringEditor(columnConfig);
+          break;
+      }
+      if (field != null) {
+        columnConfig.setField(field);
+        if (field instanceof ValueBaseField) {
+          final ValueBaseField<GLRecord> valueBaseField = (ValueBaseField<GLRecord>)field;
+          valueBaseField.setAllowBlank(column.getNullable());
+          valueBaseField.setClearValueOnParseError(false);
+        }
+      }
+    }
+  }
+}
+//--------------------------------------------------------------------------------------------------
+@SuppressWarnings("unchecked")
 private void createFixedComboboxEditor(final GLColumnConfig<?> columnConfig) {
   final SimpleComboBox<String> combobox = new SimpleComboBox<>(new StringLabelProvider<>());
   combobox.setClearValueOnParseError(false);
@@ -281,51 +293,8 @@ private void createGridEditing(final boolean inlineEditing) {
     final GridRowEditing<GLRecord> gridRowEditing = new GridRowEditing<>(_gridWidget.getGrid());
     _gridEditing = gridRowEditing;
     createGridRowEditingSaveButtonHandler(gridRowEditing);
-    gridRowEditing.getButtonBar().add(createGridRowEditingDeleteButton(gridRowEditing));
+    addButtonBarDeleteButton(gridRowEditing);
   }
-}
-//--------------------------------------------------------------------------------------------------
-@SuppressWarnings("unchecked")
-private Field<?> createIntegerEditor(final GLColumnConfig<?> columnConfig) {
-  final IntegerField result = new IntegerField();
-  if (columnConfig.getValidator() != null) {
-    result.addValidator((Validator<Integer>)columnConfig.getValidator());
-  }
-  _gridEditing.addEditor((ColumnConfig<GLRecord, Integer>)columnConfig, result);
-  return result;
-}
-//--------------------------------------------------------------------------------------------------
-@SuppressWarnings("unchecked")
-private Field<String> createStringEditor(final GLColumnConfig<?> columnConfig) {
-  final Field<String> result = new TextField();
-  if (columnConfig.getValidator() != null) {
-    result.addValidator((Validator<String>)columnConfig.getValidator());
-  }
-  _gridEditing.addEditor((ColumnConfig<GLRecord, String>)columnConfig, result);
-  return result;
-}
-//--------------------------------------------------------------------------------------------------
-private TextButton createGridRowEditingDeleteButton(final GridRowEditing<GLRecord> gridRowEditing) {
-  final TextButton result = new TextButton("Delete");
-  result.addSelectHandler(new SelectEvent.SelectHandler() {
-    @Override
-    public void onSelect(final SelectEvent event) {
-      final ConfirmMessageBox messageBox;
-      messageBox = new ConfirmMessageBox("Delete Row", "Are you sure you want to delete this row?");
-      messageBox.addDialogHideHandler(new DialogHideHandler() {
-        @Override
-        public void onDialogHide(final DialogHideEvent hideEvent) {
-          if (hideEvent.getHideButton() == PredefinedButton.YES) {
-            final GLRecord record = _gridWidget.getSelectionModel().getSelectedItem();
-            _gridWidget.getListStore().remove(record);
-            gridRowEditing.cancelEditing();
-          }
-        }
-      });
-      messageBox.show();
-    }
-  });
-  return result;
 }
 //--------------------------------------------------------------------------------------------------
 private void createGridRowEditingSaveButtonHandler(final GridRowEditing<GLRecord> gridRowEditing) {
@@ -354,6 +323,26 @@ private void createGridRowEditingSaveButtonHandler(final GridRowEditing<GLRecord
       }
     }
   });
+}
+//--------------------------------------------------------------------------------------------------
+@SuppressWarnings("unchecked")
+private Field<?> createIntegerEditor(final GLColumnConfig<?> columnConfig) {
+  final IntegerField result = new IntegerField();
+  if (columnConfig.getValidator() != null) {
+    result.addValidator((Validator<Integer>)columnConfig.getValidator());
+  }
+  _gridEditing.addEditor((ColumnConfig<GLRecord, Integer>)columnConfig, result);
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
+@SuppressWarnings("unchecked")
+private Field<String> createStringEditor(final GLColumnConfig<?> columnConfig) {
+  final Field<String> result = new TextField();
+  if (columnConfig.getValidator() != null) {
+    result.addValidator((Validator<String>)columnConfig.getValidator());
+  }
+  _gridEditing.addEditor((ColumnConfig<GLRecord, String>)columnConfig, result);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 GridEditing<GLRecord> getGridEditing() {

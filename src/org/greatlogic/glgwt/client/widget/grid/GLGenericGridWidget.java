@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 

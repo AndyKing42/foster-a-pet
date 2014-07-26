@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -22,6 +22,9 @@ import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
+import org.greatlogic.glgwt.client.widget.GLContextMenuEntry;
+import org.greatlogic.glgwt.client.widget.GLContextMenuSelectionEvent;
+import org.greatlogic.glgwt.client.widget.IGLContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLLookupType;
@@ -40,7 +43,11 @@ import com.sencha.gxt.core.client.util.TextMetrics;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.Store;
+import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
+import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.box.ProgressMessageBox;
+import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
+import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent.HeaderContextMenuHandler;
 import com.sencha.gxt.widget.core.client.event.RowClickEvent;
@@ -48,7 +55,9 @@ import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropert
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.IntegerPropertyEditor;
 import com.sencha.gxt.widget.core.client.grid.CellSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
+import com.sencha.gxt.widget.core.client.grid.GridSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.GridView;
+import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 import com.sencha.gxt.widget.core.client.grid.filters.BooleanFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.DateFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.Filter;
@@ -57,28 +66,31 @@ import com.sencha.gxt.widget.core.client.grid.filters.ListFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.NumericFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.StringFilter;
 import com.sencha.gxt.widget.core.client.menu.Item;
+import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
 public abstract class GLGridWidget implements IsWidget {
 //--------------------------------------------------------------------------------------------------
-private static final int             _resizeColumnExtraPadding;
-private static final TextMetrics     _textMetrics;
+private static final int              _resizeColumnExtraPadding;
+private static final TextMetrics      _textMetrics;
 
-private GLGridColumnModel            _columnModel;
-protected IGLColumn[]                _columns;
-private final GLGridContentPanel     _contentPanel;
-protected Grid<GLRecord>             _grid;
-private GLGridEditingWrapper         _gridEditingWrapper;
-private GridFilters<GLRecord>        _gridFilters;
-private final boolean                _inlineEditing;
-protected GLListStore                _listStore;
-private HandlerRegistration          _lookupTableLoadedHandlerRegistration;
-private final String                 _noRowsMessage;
-private final GLRecordValidator      _recordValidator;
-private final boolean                _rowLevelCommits;
-private final TreeSet<GLRecord>      _selectedRecordSet;
-private CellSelectionModel<GLRecord> _selectionModel;
-private final boolean                _useCheckBoxSelection;
+private GLGridColumnModel             _columnModel;
+protected IGLColumn[]                 _columns;
+private final GLGridContentPanel      _contentPanel;
+private ArrayList<GLContextMenuEntry> _contextMenuEntryList;
+private boolean                       _contextMenuIncludeDelete;
+protected Grid<GLRecord>              _grid;
+private GLGridEditingWrapper          _gridEditingWrapper;
+private GridFilters<GLRecord>         _gridFilters;
+private final boolean                 _inlineEditing;
+protected GLListStore                 _listStore;
+private HandlerRegistration           _lookupTableLoadedHandlerRegistration;
+private final String                  _noRowsMessage;
+private final GLRecordValidator       _recordValidator;
+private final boolean                 _rowLevelCommits;
+private final TreeSet<GLRecord>       _selectedRecordSet;
+private GridSelectionModel<GLRecord>  _selectionModel;
+private final boolean                 _useCheckBoxSelection;
 //--------------------------------------------------------------------------------------------------
 static {
   _resizeColumnExtraPadding = 10;
@@ -102,12 +114,12 @@ protected GLGridWidget(final String headingText, final String noRowsMessage,
   waitForComboBoxData();
 }
 //--------------------------------------------------------------------------------------------------
-protected void addFilter(final IGLColumn column) {
+protected final void addFilter(final IGLColumn column) {
   addFilter(column, null, null);
 }
 //--------------------------------------------------------------------------------------------------
 @SuppressWarnings("unchecked")
-protected void addFilter(final IGLColumn column, final Date minDate, final Date maxDate) {
+protected final void addFilter(final IGLColumn column, final Date minDate, final Date maxDate) {
   final ValueProvider<GLRecord, ?> vp = _columnModel.getValueProvider(column);
   Filter<GLRecord, ?> filter = null;
   if (column.getLookupType() != null && column.getLookupType().getTable() == null) {
@@ -161,7 +173,7 @@ protected void addFilter(final IGLColumn column, final Date minDate, final Date 
   addFilter(filter);
 }
 //--------------------------------------------------------------------------------------------------
-protected void addFilter(final Filter<GLRecord, ?> filter) {
+protected final void addFilter(final Filter<GLRecord, ?> filter) {
   if (filter != null) {
     if (_gridFilters == null) {
       _gridFilters = new GridFilters<GLRecord>();
@@ -237,8 +249,62 @@ public Widget asWidget() {
   return _contentPanel;
 }
 //--------------------------------------------------------------------------------------------------
+protected final void addContextMenuDelete() {
+  _contextMenuIncludeDelete = true;
+}
+//--------------------------------------------------------------------------------------------------
+protected void addContextMenuEntries() {
+  //
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addContextMenuEntry(final String text,
+                                         final IGLContextMenuSelectionHandler selectionHandler) {
+  if (_contextMenuEntryList == null) {
+    _contextMenuEntryList = new ArrayList<>();
+  }
+  _contextMenuEntryList.add(new GLContextMenuEntry(text, selectionHandler));
+}
+//--------------------------------------------------------------------------------------------------
+public void createContextMenu() {
+  addContextMenuEntries();
+  final ArrayList<MenuItem> menuItemList = new ArrayList<>();
+  if (_contextMenuEntryList != null) {
+    for (final GLContextMenuEntry contextMenuEntry : _contextMenuEntryList) {
+      final MenuItem menuItem;
+      menuItem = new MenuItem(contextMenuEntry.getText(), new SelectionHandler<MenuItem>() {
+        @Override
+        public void onSelection(final SelectionEvent<MenuItem> event) {
+          final GLRecord selectedRecord = _selectionModel.getSelectedItem();
+          contextMenuEntry.getSelectionHandler()
+                          .onSelection(new GLContextMenuSelectionEvent(event.getSelectedItem(),
+                                                                       selectedRecord));
+        }
+      });
+      menuItemList.add(menuItem);
+    }
+  }
+  if (_contextMenuIncludeDelete) {
+    final MenuItem deleteMenuItem = new MenuItem("Delete");
+    deleteMenuItem.addSelectionHandler(new SelectionHandler<Item>() {
+      @Override
+      public void onSelection(final SelectionEvent<Item> event) {
+        requestRowDeleteConfirmation(null);
+      }
+    });
+    menuItemList.add(deleteMenuItem);
+  }
+  if (menuItemList.size() > 0) {
+    final Menu menu = new Menu();
+    for (final MenuItem menuItem : menuItemList) {
+      menu.add(menuItem);
+    }
+    _grid.setContextMenu(menu);
+  }
+}
+//--------------------------------------------------------------------------------------------------
 private void createGrid() {
   _selectionModel = new CellSelectionModel<>();
+  _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   _grid = new Grid<>(_listStore, _columnModel);
   _grid.addRowClickHandler(new RowClickEvent.RowClickHandler() {
@@ -261,6 +327,7 @@ private void createGrid() {
   if (_gridFilters != null) {
     _gridFilters.initPlugin(_grid);
   }
+  createContextMenu();
   _contentPanel.add(_grid);
   _contentPanel.forceLayout();
 }
@@ -329,8 +396,26 @@ TreeSet<GLRecord> getSelectedRecordSet() {
   return _selectedRecordSet;
 }
 //--------------------------------------------------------------------------------------------------
-CellSelectionModel<GLRecord> getSelectionModel() {
+GridSelectionModel<GLRecord> getSelectionModel() {
   return _selectionModel;
+}
+//--------------------------------------------------------------------------------------------------
+public void requestRowDeleteConfirmation(final GridRowEditing<GLRecord> gridRowEditing) {
+  final ConfirmMessageBox messageBox;
+  messageBox = new ConfirmMessageBox("Delete Row", "Are you sure you want to delete this record?");
+  messageBox.addDialogHideHandler(new DialogHideHandler() {
+    @Override
+    public void onDialogHide(final DialogHideEvent hideEvent) {
+      if (hideEvent.getHideButton() == PredefinedButton.YES) {
+        final GLRecord record = getSelectionModel().getSelectedItem();
+        _listStore.remove(record);
+        if (gridRowEditing != null) {
+          gridRowEditing.cancelEditing();
+        }
+      }
+    }
+  });
+  messageBox.show();
 }
 //--------------------------------------------------------------------------------------------------
 private int resizeColumnGetWidth(final Object value, final DateTimeFormat dateTimeFormat) {
