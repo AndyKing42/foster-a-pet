@@ -12,8 +12,8 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.Pet;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.widget.GLContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.IGLContextMenuSelectionHandler;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
@@ -46,7 +46,7 @@ protected void addContextMenuEntries() {
   viewDetailsSelectionHandler = new IGLContextMenuSelectionHandler() {
     @Override
     public void onSelection(final GLContextMenuSelectionEvent event) {
-      GLLog.popup(20, "View:" + event.getSelectedRecord());
+      FAPUtil.getClientFactory().getAppTabPanelWidget().createPetDetails(event.getSelectedRecord());
     }
   };
   addContextMenuEntry("View Details", viewDetailsSelectionHandler);
