@@ -13,7 +13,6 @@ package org.fosterapet.client;
  * the License.
  */
 import org.fosterapet.client.widget.GridWidgetManager;
-import org.fosterapet.client.widget.MainLayoutWidget;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
@@ -32,18 +31,15 @@ private ScheduledCommand createModuleLoadCommand() {
   return new ScheduledCommand() {
     @Override
     public void execute() {
-      final ClientFactory clientFactory = new ClientFactoryUI();
-      GLClientUtil.initialize("Foster A Pet", clientFactory);
-      clientFactory.setMainLayoutWidget(new MainLayoutWidget());
+      FAPUtil.initialize();
       final boolean loadTestData = false;
-      clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
       final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
       if (loadTestData) {
         final GLListStore petTypeListStore = new GLListStore();
         TestData.loadPetTypeTestData(petTypeListStore);
         TestData.loadPetTestData(gridWidget.getListStore());
       }
-      RootLayoutPanel.get().add(clientFactory.getMainLayoutWidget());
+      RootLayoutPanel.get().add(FAPUtil.getClientFactory().getMainLayoutWidget());
       // todo: GLClientUtil.login();
     }
   };

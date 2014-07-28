@@ -13,6 +13,7 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.client.DBAccess;
+import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.shared.IGLTable;
@@ -41,17 +42,15 @@ import com.sencha.gxt.widget.core.client.menu.MenuItem;
 public class MainMenuWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-CheckMenuItem             checkBoxSelectionModelCheckMenuItem;
+CheckMenuItem checkBoxSelectionModelCheckMenuItem;
 @UiField
-Menu                      genericGridMenu;
+Menu          genericGridMenu;
 @UiField
-CheckMenuItem             inlineEditingCheckMenuItem;
+CheckMenuItem inlineEditingCheckMenuItem;
 @UiField
-TextButton                petsButton;
+TextButton    petsButton;
 @UiField
-CheckMenuItem             rowLevelCommitsCheckMenuItem;
-
-private AppTabPanelWidget _appTabPanelWidget;
+CheckMenuItem rowLevelCommitsCheckMenuItem;
 //==================================================================================================
 interface MainMenuWidgetUiBinder extends UiBinder<Widget, MainMenuWidget> { //
 }
@@ -69,9 +68,11 @@ private void addPetsContextMenuHandler() {
   petsButton.addHandler(new ContextMenuHandler() {
     @Override
     public void onContextMenu(final ContextMenuEvent event) {
-      _appTabPanelWidget.createPetGrid(inlineEditingCheckMenuItem.isChecked(),
-                                       checkBoxSelectionModelCheckMenuItem.isChecked(),
-                                       rowLevelCommitsCheckMenuItem.isChecked());
+      FAPUtil.getClientFactory()
+             .getAppTabPanelWidget()
+             .createPetGrid(inlineEditingCheckMenuItem.isChecked(),
+                            checkBoxSelectionModelCheckMenuItem.isChecked(),
+                            rowLevelCommitsCheckMenuItem.isChecked());
       event.preventDefault();
     }
   }, ContextMenuEvent.getType());
@@ -103,7 +104,7 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
     return;
   }
   final IGLTable table = EFAPTable.valueOf(tableName);
-  _appTabPanelWidget.createGenericTableGrid(table);
+  FAPUtil.getClientFactory().getAppTabPanelWidget().createGenericTableGrid(table);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
@@ -129,11 +130,7 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"testGridButton"})
 public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  _appTabPanelWidget.createTestGrid();
-}
-//--------------------------------------------------------------------------------------------------
-public void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget) {
-  _appTabPanelWidget = appTabPanelWidget;
+  FAPUtil.getClientFactory().getAppTabPanelWidget().createTestGrid();
 }
 //--------------------------------------------------------------------------------------------------
 }

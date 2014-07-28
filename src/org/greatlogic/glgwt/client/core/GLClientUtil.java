@@ -60,7 +60,7 @@ private static void addWindowClosingHandler(final String appDescription) {
   Window.addWindowClosingHandler(new Window.ClosingHandler() {
     @Override
     public void onWindowClosing(final Window.ClosingEvent closingEvent) {
-      closingEvent.setMessage("You are about to exit from " + appDescription);
+      closingEvent.setMessage("You are about to leave " + appDescription);
     }
   });
 }

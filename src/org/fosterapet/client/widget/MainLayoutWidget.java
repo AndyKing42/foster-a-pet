@@ -12,6 +12,7 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.FAPUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -32,7 +33,7 @@ public MainLayoutWidget() {
   super();
   final MainLayoutWidgetUiBinder uiBinder = GWT.create(MainLayoutWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
-  mainMenuWidget.setAppTabPanelWidget(appTabPanelWidget);
+  FAPUtil.getClientFactory().setAppTabPanelWidget(appTabPanelWidget);
 }
 //--------------------------------------------------------------------------------------------------
 public AppTabPanelWidget getAppTabPanelWidget() {

@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM 'http://dl.google.com/gwt/DTD/xhtml.ent'>
+<ui:UiBinder
+  xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxtbutton='urn:import:com.sencha.gxt.widget.core.client.button'
+  xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
+  xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'
+>
+  <gxtcontainer:FlowLayoutContainer ui:field='flowLayoutContainer'>
+    <gxtcontainer:VerticalLayoutContainer>
+      <gxtcontainer:HorizontalLayoutContainer>
+        <gxtform:FieldLabel text="Name"/>
+        <gxtform:TextField ui:field="petNameField"/>
+        <gxtform:FieldLabel text="Type"/>
+        <!-- 
+        <gxtform:ComboBox
+          ui:field="petTypeComboBox"
+          forceSelection="true"
+          triggerAction="ALL"/>
+           -->
+      </gxtcontainer:HorizontalLayoutContainer>
+    </gxtcontainer:VerticalLayoutContainer>
+  </gxtcontainer:FlowLayoutContainer>
+</ui:UiBinder>
