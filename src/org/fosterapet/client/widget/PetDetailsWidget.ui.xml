@@ -10,14 +10,14 @@
   <gxtcontainer:FlowLayoutContainer ui:field='flowLayoutContainer'>
     <gxtcontainer:VerticalLayoutContainer>
       <gxtcontainer:HorizontalLayoutContainer>
-        <gxtform:FieldLabel text="Name"/>
-        <gxtform:TextField ui:field="petNameField"/>
-        <gxtform:FieldLabel text="Type"/>
+        <gxtform:FieldLabel text='Name'/>
+        <gxtform:TextField ui:field='petNameField' itemId='Pet.PetName'/>
+        <gxtform:FieldLabel text='Type'/>
         <!-- 
         <gxtform:ComboBox
-          ui:field="petTypeComboBox"
-          forceSelection="true"
-          triggerAction="ALL"/>
+          ui:field='petTypeComboBox'
+          forceSelection='true'
+          triggerAction='ALL'/>
            -->
       </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:VerticalLayoutContainer>
