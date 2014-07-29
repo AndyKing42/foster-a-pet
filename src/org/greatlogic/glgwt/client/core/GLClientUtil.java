@@ -42,6 +42,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.event.shared.UmbrellaException;
+import com.greatlogic.glbase.gllib.GLUtil;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
@@ -313,6 +314,40 @@ public static boolean stringToBoolean(final CharSequence stringValue, final bool
              stringValue.toString().equalsIgnoreCase("true");
   }
   return result;
+}
+//--------------------------------------------------------------------------------------------------
+/**
+ * Converts a string value in the format "YYYYMMDDHHMMSS" to a Date value.
+ * @param yyyymmddhhmmss The string value in the format "YYYYMMDDHHMMSS" (the "HHMMSS" is optional).
+ * @return A Date object based upon the string value.
+ */
+@SuppressWarnings("deprecation")
+public static Date stringToDate(final String yyyymmddhhmmss) {
+  int hour;
+  int minute;
+  int second;
+  try {
+    if (yyyymmddhhmmss.length() >= 14) {
+      hour = GLUtil.stringToInt(yyyymmddhhmmss.substring(8, 10));
+      minute = GLUtil.stringToInt(yyyymmddhhmmss.substring(10, 12));
+      second = GLUtil.stringToInt(yyyymmddhhmmss.substring(12, 14));
+      hour = hour < 0 || hour > 23 ? 0 : hour;
+      minute = minute < 0 || minute > 59 ? 0 : minute;
+      second = second < 0 || second > 59 ? 0 : second;
+    }
+    else {
+      hour = 0;
+      minute = 0;
+      second = 0;
+    }
+    return new Date(Integer.parseInt(yyyymmddhhmmss.substring(0, 4)), //
+                    Integer.parseInt(yyyymmddhhmmss.substring(4, 6)) - 1, //
+                    Integer.parseInt(yyyymmddhhmmss.substring(6, 8)), //
+                    hour, minute, second);
+  }
+  catch (final Exception e) {
+    return null;
+  }
 }
 //--------------------------------------------------------------------------------------------------
 /**

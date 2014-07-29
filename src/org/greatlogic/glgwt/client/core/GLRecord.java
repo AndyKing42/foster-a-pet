@@ -3,6 +3,7 @@ package org.greatlogic.glgwt.client.core;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.shared.IGLColumn;
 /**
  * A thin wrapper around a list of field values. The objective is to provide easy access to the
@@ -49,8 +50,8 @@ public void addChangedField(final IGLColumn column) {
   addChangedField(column.toString());
 }
 //--------------------------------------------------------------------------------------------------
-public void addChangedField(final String fieldName) {
-  getChangedFieldNameList().add(fieldName);
+public void addChangedField(final String columnName) {
+  getChangedFieldNameList().add(columnName);
 }
 //--------------------------------------------------------------------------------------------------
 public boolean asBoolean(final IGLColumn column) {
@@ -61,12 +62,12 @@ public boolean asBoolean(final IGLColumn column, final boolean defaultValue) {
   return asBoolean(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public boolean asBoolean(final String fieldName) {
-  return asBoolean(fieldName, false);
+public boolean asBoolean(final String columnName) {
+  return asBoolean(columnName, false);
 }
 //--------------------------------------------------------------------------------------------------
-public boolean asBoolean(final String fieldName, final boolean defaultValue) {
-  return GLClientUtil.stringToBoolean(asString(fieldName), defaultValue);
+public boolean asBoolean(final String columnName, final boolean defaultValue) {
+  return GLClientUtil.stringToBoolean(asString(columnName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final IGLColumn column) {
@@ -77,12 +78,12 @@ public BigDecimal asDec(final IGLColumn column, final BigDecimal defaultValue) {
   return asDec(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public BigDecimal asDec(final String fieldName) {
-  return asDec(fieldName, BigDecimal.ZERO);
+public BigDecimal asDec(final String columnName) {
+  return asDec(columnName, BigDecimal.ZERO);
 }
 //--------------------------------------------------------------------------------------------------
-public BigDecimal asDec(final String fieldName, final BigDecimal defaultValue) {
-  return GLClientUtil.stringToDec(asString(fieldName), defaultValue);
+public BigDecimal asDec(final String columnName, final BigDecimal defaultValue) {
+  return GLClientUtil.stringToDec(asString(columnName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public double asDouble(final IGLColumn column) {
@@ -93,12 +94,12 @@ public double asDouble(final IGLColumn column, final double defaultValue) {
   return asDouble(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public double asDouble(final String fieldName) {
-  return asDouble(fieldName, 0);
+public double asDouble(final String columnName) {
+  return asDouble(columnName, 0);
 }
 //--------------------------------------------------------------------------------------------------
-public double asDouble(final String fieldName, final double defaultValue) {
-  return GLClientUtil.stringToDouble(asString(fieldName), defaultValue);
+public double asDouble(final String columnName, final double defaultValue) {
+  return GLClientUtil.stringToDouble(asString(columnName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public float asFloat(final IGLColumn column) {
@@ -109,12 +110,12 @@ public float asFloat(final IGLColumn column, final float defaultValue) {
   return asFloat(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public float asFloat(final String fieldName) {
-  return asFloat(fieldName, 0);
+public float asFloat(final String columnName) {
+  return asFloat(columnName, 0);
 }
 //--------------------------------------------------------------------------------------------------
-public float asFloat(final String fieldName, final float defaultValue) {
-  return (float)asDouble(fieldName, defaultValue);
+public float asFloat(final String columnName, final float defaultValue) {
+  return (float)asDouble(columnName, defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public int asInt(final IGLColumn column) {
@@ -125,12 +126,12 @@ public int asInt(final IGLColumn column, final int defaultValue) {
   return asInt(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public int asInt(final String fieldName) {
-  return asInt(fieldName, 0);
+public int asInt(final String columnName) {
+  return asInt(columnName, 0);
 }
 //--------------------------------------------------------------------------------------------------
-public int asInt(final String fieldName, final int defaultValue) {
-  return (int)asLong(fieldName, defaultValue);
+public int asInt(final String columnName, final int defaultValue) {
+  return (int)asLong(columnName, defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public long asLong(final IGLColumn column) {
@@ -141,21 +142,21 @@ public long asLong(final IGLColumn column, final long defaultValue) {
   return asLong(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public long asLong(final String fieldName) {
-  return asLong(fieldName, 0);
+public long asLong(final String columnName) {
+  return asLong(columnName, 0);
 }
 //--------------------------------------------------------------------------------------------------
-public long asLong(final String fieldName, final long defaultValue) {
-  return GLClientUtil.stringToLong(asString(fieldName), defaultValue);
+public long asLong(final String columnName, final long defaultValue) {
+  return GLClientUtil.stringToLong(asString(columnName), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
 public Object asObject(final IGLColumn column) {
   return asObject(column.toString());
 }
 //--------------------------------------------------------------------------------------------------
-public Object asObject(final String fieldName) {
+public Object asObject(final String columnName) {
   try {
-    return _valueList.get(_recordDef.getFieldIndex(fieldName));
+    return _valueList.get(_recordDef.getFieldIndex(columnName));
   }
   catch (final Exception e) {
     return null;
@@ -170,22 +171,22 @@ public String asString(final IGLColumn column, final String defaultValue) {
   return asString(column.toString(), defaultValue);
 }
 //--------------------------------------------------------------------------------------------------
-public String asString(final String fieldName) {
-  return asString(fieldName, "");
+public String asString(final String columnName) {
+  return asString(columnName, "");
 }
 //--------------------------------------------------------------------------------------------------
 /**
- * Returns a string representation of the value retrieved using <code>fieldName</code>. If the value
- * is a <code>Date</code> type value then the result will be returned as a date/time in the format
- * YYYYMMDDHHMMSS.
- * @param fieldName The field name of the value that is to be returned.
+ * Returns a string representation of the value retrieved using <code>columnName</code>. If the
+ * value is a <code>Date</code> type value then the result will be returned as a date/time in the
+ * format YYYYMMDDHHMMSS.
+ * @param columnName The field name of the value that is to be returned.
  * @param defaultValue The default value that will be returned if there is no entry in the map for
  * the specified field name.
  * @return A string representation of the requested value.
  */
-public String asString(final String fieldName, final String defaultValue) {
+public String asString(final String columnName, final String defaultValue) {
   try {
-    return GLClientUtil.formatObjectSpecial(_valueList.get(_recordDef.getFieldIndex(fieldName)),
+    return GLClientUtil.formatObjectSpecial(_valueList.get(_recordDef.getFieldIndex(columnName)),
                                             defaultValue);
   }
   catch (final Exception e) {
@@ -217,10 +218,15 @@ public GLRecordDef getRecordDef() {
   return _recordDef;
 }
 //--------------------------------------------------------------------------------------------------
-public Object put(final String fieldName, final Object value) {
+public Object put(final IGLColumn column, final Object value) {
+  return put(column.toString(), value);
+}
+//--------------------------------------------------------------------------------------------------
+public Object put(final String columnName, final Object newValue) {
+  final Object result;
   int fieldIndex;
   try {
-    fieldIndex = _recordDef.getFieldIndex(fieldName);
+    fieldIndex = _recordDef.getFieldIndex(columnName);
     if (fieldIndex >= _valueList.size()) {
       for (int i = _valueList.size(); i <= fieldIndex; ++i) {
         _valueList.add("");
@@ -228,22 +234,20 @@ public Object put(final String fieldName, final Object value) {
     }
   }
   catch (final GLInvalidFieldOrColumnException ifoce) {
-    fieldIndex = _recordDef.addField(fieldName);
+    fieldIndex = _recordDef.addField(columnName);
     _valueList.add("");
   }
-  return _valueList.set(fieldIndex, value);
-}
-//--------------------------------------------------------------------------------------------------
-public Object put(final IGLColumn column, final Object value) {
-  return put(column.toString(), value);
-}
-//--------------------------------------------------------------------------------------------------
-public Object set(final String fieldName, final Object value) {
-  return put(fieldName, value);
+  result = _valueList.set(fieldIndex, newValue);
+  GLClientUtil.getEventBus().fireEvent(new GLRecordChangeEvent(this, columnName, result, newValue));
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 public Object set(final IGLColumn column, final Object value) {
   return put(column, value);
+}
+//--------------------------------------------------------------------------------------------------
+public Object set(final String columnName, final Object value) {
+  return put(columnName, value);
 }
 //--------------------------------------------------------------------------------------------------
 public void setInserted(final boolean inserted) {
@@ -256,8 +260,8 @@ public String toString() {
   boolean firstTime = true;
   for (final Entry<String, Integer> fieldEntry : _recordDef.getFieldIndexByFieldNameMap()
                                                            .entrySet()) {
-    final String fieldName = fieldEntry.getKey();
-    sb.append(firstTime ? "" : ";").append(fieldName).append(":").append(asString(fieldName));
+    final String columnName = fieldEntry.getKey();
+    sb.append(firstTime ? "" : ";").append(columnName).append(":").append(asString(columnName));
     firstTime = false;
   }
   return sb.toString();

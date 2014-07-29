@@ -8,6 +8,7 @@ import com.google.web.bindery.event.shared.Event;
 public class GLNewRecordEvent extends Event<IGLNewRecordEventHandler> {
 //--------------------------------------------------------------------------------------------------
 public static final Type<IGLNewRecordEventHandler> NewRecordEventType;
+
 private final GLRecord                             _record;
 //==================================================================================================
 public interface IGLNewRecordEventHandler extends EventHandler {
