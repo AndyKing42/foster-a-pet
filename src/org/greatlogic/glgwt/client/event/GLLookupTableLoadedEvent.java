@@ -8,6 +8,7 @@ import com.google.web.bindery.event.shared.Event;
 public class GLLookupTableLoadedEvent extends Event<IGLLookupTableLoadedEventHandler> {
 //--------------------------------------------------------------------------------------------------
 public static final Type<IGLLookupTableLoadedEventHandler> LookupTableLoadedEventType;
+
 private final boolean                                      _reloadedFromServer;
 private final IGLTable                                     _table;
 //==================================================================================================
