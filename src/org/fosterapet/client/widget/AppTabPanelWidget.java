@@ -67,7 +67,7 @@ public void createGenericTableGrid(final IGLTable table) {
 //--------------------------------------------------------------------------------------------------
 public void createPetDetails(final GLRecord pet) {
   final ContentPanel contentPanel = addTab(pet.asString(Pet.PetName));
-  contentPanel.setWidget(new PetDetailsWidget());
+  contentPanel.setWidget(new PetDetailsWidget(pet));
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,

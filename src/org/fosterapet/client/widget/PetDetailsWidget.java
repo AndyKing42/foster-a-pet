@@ -1,6 +1,8 @@
 package org.fosterapet.client.widget;
 
-import org.greatlogic.glgwt.client.core.GLLog;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.editor.GLRecordEditorDriver;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -13,18 +15,22 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 public class PetDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-FlowLayoutContainer flowLayoutContainer;
+FlowLayoutContainer                flowLayoutContainer;
 @UiField
-TextField           petNameField;
+TextField                          petNameField;
+
+private final GLRecordEditorDriver _editorDriver;
 //==================================================================================================
 interface PetDetailsWidgetUiBinder extends UiBinder<Widget, PetDetailsWidget> { //
 }
 //==================================================================================================
-public PetDetailsWidget() {
+public PetDetailsWidget(final GLRecord record) {
   final PetDetailsWidgetUiBinder uiBinder = GWT.create(PetDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
-  GLLog.popup(10, petNameField.getItemId());
+  _editorDriver = new GLRecordEditorDriver(EFAPTable.class);
+  _editorDriver.addWidget(flowLayoutContainer);
+  _editorDriver.edit(record);
 }
 //--------------------------------------------------------------------------------------------------
 }
