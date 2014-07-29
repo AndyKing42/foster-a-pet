@@ -64,8 +64,9 @@ public void initialize(final Container container) {
   container.addAddHandler(new AddHandler() {
     @Override
     public void onAdd(final AddEvent event) {
-      if (adding_a_container_widget()) {
-        addChildWidgets(new_container);
+      final Widget widget = event.getWidget();
+      if (widget instanceof Container) {
+        addChildWidgets((Container)widget);
       }
       else {
         addWidget(widget);
