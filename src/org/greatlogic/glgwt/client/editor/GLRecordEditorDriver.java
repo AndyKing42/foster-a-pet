@@ -1,13 +1,13 @@
 package org.greatlogic.glgwt.client.editor;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import javax.validation.ConstraintViolation;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLFieldInitializers;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
@@ -25,6 +25,11 @@ import com.sencha.gxt.widget.core.client.event.AddEvent;
 import com.sencha.gxt.widget.core.client.event.AddEvent.AddHandler;
 import com.sencha.gxt.widget.core.client.event.RemoveEvent;
 import com.sencha.gxt.widget.core.client.event.RemoveEvent.RemoveHandler;
+import com.sencha.gxt.widget.core.client.form.BigDecimalField;
+import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.DateField;
+import com.sencha.gxt.widget.core.client.form.IntegerField;
+import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class GLRecordEditorDriver implements EditorDriver<GLRecord>, IGLRecordChangeEventHandler {
 //--------------------------------------------------------------------------------------------------
@@ -197,28 +202,50 @@ private void setWidgetValue(final HasValue<?> hasValue, final GLRecord record,
 //--------------------------------------------------------------------------------------------------
 private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, final Object value) {
   final String stringValue = value == null ? "" : value.toString();
+  GLLog.popup(10, column + ":" + stringValue);
   switch (column.getDataType()) {
-    case Boolean:
-      ((HasValue<Boolean>)hasValue).setValue(GLClientUtil.stringToBoolean(stringValue));
+    case Boolean: {
+      final CheckBox field = (CheckBox)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToBoolean(stringValue));
       break;
-    case Currency:
-      ((HasValue<BigDecimal>)hasValue).setValue(GLClientUtil.stringToDec(stringValue));
+    }
+    case Currency: {
+      final BigDecimalField field = (BigDecimalField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToDec(stringValue));
       break;
-    case Date:
-      ((HasValue<Date>)hasValue).setValue(GLClientUtil.stringToDate(stringValue));
+    }
+    case Date: {
+      final DateField field = (DateField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToDate(stringValue));
       break;
-    case DateTime:
-      ((HasValue<Date>)hasValue).setValue(GLClientUtil.stringToDate(stringValue));
+    }
+    case DateTime: {
+      final DateField field = (DateField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToDate(stringValue));
       break;
-    case Decimal:
-      ((HasValue<BigDecimal>)hasValue).setValue(GLClientUtil.stringToDec(stringValue));
+    }
+    case Decimal: {
+      final BigDecimalField field = (BigDecimalField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToDec(stringValue));
       break;
-    case Int:
-      ((HasValue<Integer>)hasValue).setValue(GLClientUtil.stringToInt(stringValue));
+    }
+    case Int: {
+      final IntegerField field = (IntegerField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(GLClientUtil.stringToInt(stringValue));
       break;
-    case String:
-      ((HasValue<String>)hasValue).setValue(stringValue);
+    }
+    case String: {
+      final TextField field = (TextField)hasValue;
+      GLFieldInitializers.initialize(field, column);
+      field.setValue(stringValue);
       break;
+    }
   }
 }
 //--------------------------------------------------------------------------------------------------
