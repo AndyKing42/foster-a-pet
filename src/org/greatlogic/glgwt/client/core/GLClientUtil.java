@@ -42,7 +42,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.web.bindery.event.shared.UmbrellaException;
-import com.greatlogic.glbase.gllib.GLUtil;
 import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
@@ -328,9 +327,9 @@ public static Date stringToDate(final String yyyymmddhhmmss) {
   int second;
   try {
     if (yyyymmddhhmmss.length() >= 14) {
-      hour = GLUtil.stringToInt(yyyymmddhhmmss.substring(8, 10));
-      minute = GLUtil.stringToInt(yyyymmddhhmmss.substring(10, 12));
-      second = GLUtil.stringToInt(yyyymmddhhmmss.substring(12, 14));
+      hour = GLClientUtil.stringToInt(yyyymmddhhmmss.substring(8, 10));
+      minute = GLClientUtil.stringToInt(yyyymmddhhmmss.substring(10, 12));
+      second = GLClientUtil.stringToInt(yyyymmddhhmmss.substring(12, 14));
       hour = hour < 0 || hour > 23 ? 0 : hour;
       minute = minute < 0 || minute > 59 ? 0 : minute;
       second = second < 0 || second > 59 ? 0 : second;
@@ -340,7 +339,7 @@ public static Date stringToDate(final String yyyymmddhhmmss) {
       minute = 0;
       second = 0;
     }
-    return new Date(Integer.parseInt(yyyymmddhhmmss.substring(0, 4)), //
+    return new Date(Integer.parseInt(yyyymmddhhmmss.substring(0, 4)) - 1900, //
                     Integer.parseInt(yyyymmddhhmmss.substring(4, 6)) - 1, //
                     Integer.parseInt(yyyymmddhhmmss.substring(6, 8)), //
                     hour, minute, second);

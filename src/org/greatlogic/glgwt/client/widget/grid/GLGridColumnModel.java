@@ -152,10 +152,10 @@ private void createColumnConfigs() {
         columnConfig = createBigDecimalColumnConfig(column);
         break;
       case Date:
-        columnConfig = createDateTimeColumnConfig(column, "MM/dd/yy");
+        columnConfig = createDateTimeColumnConfig(column, "MM/dd/yyyy");
         break;
       case DateTime:
-        columnConfig = createDateTimeColumnConfig(column, "MM/dd/yy hh:mma");
+        columnConfig = createDateTimeColumnConfig(column, "MM/dd/yyyy hh:mma");
         break;
       case Decimal:
         columnConfig = createBigDecimalColumnConfig(column);

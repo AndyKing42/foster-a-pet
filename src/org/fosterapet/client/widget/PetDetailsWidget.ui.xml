@@ -9,17 +9,22 @@
 >
   <gxtcontainer:FlowLayoutContainer ui:field='flowLayoutContainer'>
     <gxtcontainer:VerticalLayoutContainer>
-      <gxtcontainer:HorizontalLayoutContainer>
-        <gxtform:FieldLabel text='Name'/>
-        <gxtform:TextField ui:field='petNameField' itemId='Pet.PetName'/>
-        <gxtform:FieldLabel text='Type'/>
+      <gxtform:FieldLabel text='Name'/>
+      <gxtform:TextField itemId='Pet.PetName'/>
+      <gxtform:FieldLabel text='Type'/>
         <!-- 
         <gxtform:ComboBox
           ui:field='petTypeComboBox'
           forceSelection='true'
           triggerAction='ALL'/>
            -->
-      </gxtcontainer:HorizontalLayoutContainer>
+      <gxtform:FieldLabel text='Date of Birth'/>
+      <gxtform:DateField itemId='Pet.DateOfBirth'/>
+      <gxtform:FieldLabel text='Adoption Fee'/>
+      <gxtform:BigDecimalField itemId='Pet.AdoptionFee'/>
+      <gxtbutton:TextButton
+        ui:field='updatePetButton'
+        text='Update Pet Name'/>
     </gxtcontainer:VerticalLayoutContainer>
   </gxtcontainer:FlowLayoutContainer>
 </ui:UiBinder>
