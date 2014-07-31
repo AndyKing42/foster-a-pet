@@ -13,6 +13,7 @@ import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEven
 import org.greatlogic.glgwt.client.ui.GLFieldInitializers;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.editor.client.EditorDriver;
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.editor.client.EditorVisitor;
@@ -202,51 +203,55 @@ private void setWidgetValue(final HasValue<?> hasValue, final GLRecord record,
 //--------------------------------------------------------------------------------------------------
 private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, final Object value) {
   final String stringValue = value == null ? "" : value.toString();
-  GLLog.popup(10, column + ":" + stringValue);
   switch (column.getDataType()) {
-    case Boolean: {
-      final CheckBox field = (CheckBox)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToBoolean(stringValue));
+    case Boolean:
+      final CheckBox checkBox = (CheckBox)hasValue;
+      GLFieldInitializers.initialize(checkBox, column);
+      checkBox.setValue(GLClientUtil.stringToBoolean(stringValue));
       break;
-    }
-    case Currency: {
-      final BigDecimalField field = (BigDecimalField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToDec(stringValue));
+    case Currency:
+      final BigDecimalField currencyField = (BigDecimalField)hasValue;
+      GLFieldInitializers.initialize(currencyField, column);
+      currencyField.setValue(GLClientUtil.stringToDec(stringValue));
       break;
-    }
-    case Date: {
-      final DateField field = (DateField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToDate(stringValue));
+    case Date:
+      final DateField dateField = (DateField)hasValue;
+      GLFieldInitializers.initialize(dateField, column);
+      dateField.setValue(GLClientUtil.stringToDate(stringValue));
       break;
-    }
-    case DateTime: {
-      final DateField field = (DateField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToDate(stringValue));
+    case DateTime:
+      final DateField dateTimeField = (DateField)hasValue;
+      GLFieldInitializers.initialize(dateTimeField, column);
+      dateTimeField.setValue(GLClientUtil.stringToDate(stringValue));
       break;
-    }
-    case Decimal: {
-      final BigDecimalField field = (BigDecimalField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToDec(stringValue));
+    case Decimal:
+      final BigDecimalField bigDecimalField = (BigDecimalField)hasValue;
+      GLFieldInitializers.initialize(bigDecimalField, column);
+      bigDecimalField.setValue(GLClientUtil.stringToDec(stringValue));
       break;
-    }
-    case Int: {
-      final IntegerField field = (IntegerField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(GLClientUtil.stringToInt(stringValue));
+    case Int:
+      final IntegerField integerField = (IntegerField)hasValue;
+      GLFieldInitializers.initialize(integerField, column);
+      integerField.setValue(GLClientUtil.stringToInt(stringValue));
       break;
-    }
-    case String: {
-      final TextField field = (TextField)hasValue;
-      GLFieldInitializers.initialize(field, column);
-      field.setValue(stringValue);
+    case String:
+      final TextField textField = (TextField)hasValue;
+      GLFieldInitializers.initialize(textField, column);
+      textField.setValue(stringValue);
+      addCutHandler(textField.getElement());
       break;
-    }
   }
 }
 //--------------------------------------------------------------------------------------------------
+public native void addCutHandler(Element element)
+/*-{
+	var temp = this; // hack to hold on to 'this' reference
+	element.oncut = function(e) {
+		temp.@org.greatlogic.glgwt.client.editor.GLRecordEditorDriver::handleCut()();
+	}
+}-*/;
+
+public void handleCut() {
+  GLLog.popup(10, "cut");
+}
 }
