@@ -3,11 +3,9 @@ package org.greatlogic.glgwt.client.db;
 import java.util.ArrayList;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLCommitCompleteEvent;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.ListStore;
 import com.sencha.gxt.data.shared.ModelKeyProvider;
 import com.sencha.gxt.data.shared.event.StoreUpdateEvent;
@@ -39,7 +37,10 @@ public GLListStore() {
 //--------------------------------------------------------------------------------------------------
 @Override
 public void commitChanges() {
-  final StringBuilder sb = new StringBuilder();
+  throw new UnsupportedOperationException("Use GLDBUpdater#commitChanges");
+}
+//--------------------------------------------------------------------------------------------------
+void commitChangesAddAllChanges(final StringBuilder sb) {
   final ArrayList<GLRecord> insertedRecordList = new ArrayList<>();
   final IGLTable table = _recordDef.getTable();
   final String primaryKeyColumnName = table.getPrimaryKeyColumn().toString();
@@ -66,7 +67,6 @@ public void commitChanges() {
     }
     sb.append("\n");
   }
-  sendDBChangesToServer(sb, insertedRecordList, null);
 }
 //--------------------------------------------------------------------------------------------------
 private boolean commitChangesAddChange(final StringBuilder sb, final IGLTable table,
@@ -121,32 +121,6 @@ public void remove(final ArrayList<GLRecord> recordList) {
   if (sb.length() > 0) {
     sendDBChangesToServer(sb, null, recordList);
   }
-}
-//--------------------------------------------------------------------------------------------------
-private void sendDBChangesToServer(final StringBuilder dbChangesSB,
-                                   final ArrayList<GLRecord> insertedRecordList,
-                                   final ArrayList<GLRecord> deletedRecordList) {
-  GLClientUtil.getRemoteService().applyDBChanges(dbChangesSB.toString(), new AsyncCallback<Void>() {
-    @Override
-    public void onFailure(final Throwable t) {
-      GLLog.popup(10, "Database changes failed:" + t.getMessage());
-    }
-    @Override
-    public void onSuccess(final Void result) {
-      GLLog.popup(10, "Database changes have been saved on the server");
-      if (insertedRecordList != null) {
-        for (final GLRecord record : insertedRecordList) {
-          record.setInserted(false);
-        }
-      }
-      if (deletedRecordList != null) {
-        for (final GLRecord record : deletedRecordList) {
-          GLListStore.super.remove(record);
-        }
-      }
-      GLListStore.super.commitChanges();
-    }
-  });
 }
 //--------------------------------------------------------------------------------------------------
 public void setRecordDef(final GLRecordDef recordDef) {

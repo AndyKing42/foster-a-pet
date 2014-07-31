@@ -148,6 +148,7 @@ private void createFields(final boolean inlineEditing) {
   }
 }
 //--------------------------------------------------------------------------------------------------
+@SuppressWarnings("unchecked")
 private Field<?> createFieldUsingDataType(final GLColumnConfig<?> columnConfig,
                                           final IGLColumn column, final boolean inlineEditing) {
   Field<?> result = null;
