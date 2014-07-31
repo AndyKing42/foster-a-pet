@@ -5,7 +5,7 @@ import com.sencha.gxt.widget.core.client.form.Validator;
 
 public abstract class GLValidators {
 //--------------------------------------------------------------------------------------------------
-private final HashMap<IGLColumn, Validator<?>>      _columnValidatorMap;
+private final HashMap<IGLColumn, Validator<?>>     _columnValidatorMap;
 private final HashMap<IGLTable, GLRecordValidator> _recordValidatorMap;
 //--------------------------------------------------------------------------------------------------
 protected GLValidators() {

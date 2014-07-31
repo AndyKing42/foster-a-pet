@@ -23,8 +23,8 @@
       <gxtform:FieldLabel text='Adoption Fee'/>
       <gxtform:BigDecimalField itemId='Pet.AdoptionFee'/>
       <gxtbutton:TextButton
-        ui:field='updatePetButton'
-        text='Update Pet Name'/>
+        ui:field='saveButton'
+        text='Save'/>
     </gxtcontainer:VerticalLayoutContainer>
   </gxtcontainer:FlowLayoutContainer>
 </ui:UiBinder>

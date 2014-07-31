@@ -53,8 +53,9 @@ public static void initialize(final BigDecimalField bigDecimalField, final IGLCo
 }
 //--------------------------------------------------------------------------------------------------
 public static void initialize(final DateField dateField, final IGLColumn column) {
-  dateField.setPropertyEditor(column.getDataType() == EGLColumnDataType.Date ? DatePropertyEditor
-                                                                        : DateTimePropertyEditor);
+  dateField.setPropertyEditor(column.getDataType() == EGLColumnDataType.Date
+                                                                            ? DatePropertyEditor
+                                                                            : DateTimePropertyEditor);
   final Validator<?> validator = GLClientUtil.getValidators().getColumnValidator(column);
   if (validator != null) {
     dateField.addValidator((Validator<Date>)validator);

@@ -1,8 +1,6 @@
 package org.fosterapet.client.widget;
 
 import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.Pet;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.editor.GLRecordEditorDriver;
 import com.google.gwt.core.client.GWT;
@@ -36,9 +34,9 @@ public PetDetailsWidget(final GLRecord pet) {
   _editorDriver.edit(_pet);
 }
 //--------------------------------------------------------------------------------------------------
-@UiHandler({"updatePetButton"})
-public void onUpdatePetButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  _pet.set(Pet.PetName, "Hey " + GLClientUtil.getRandomInt(1000));
+@UiHandler({"saveButton"})
+public void onSaveButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  _editorDriver.flush();
 }
 //--------------------------------------------------------------------------------------------------
 }

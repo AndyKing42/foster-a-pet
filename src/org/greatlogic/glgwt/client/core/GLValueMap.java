@@ -22,10 +22,10 @@ import org.greatlogic.glgwt.shared.IGLColumn;
 /**
  * Instances of this class represent a map of keys to values. The benefit of using this class over
  * the Properties or a simple {@link Map} object are that the values can be accessed using
- * {@link IGLColumn} enum entries, in addition to using simple String keys. Additionally, the values
- * can be retrieved and stored using simple data types, and values can be retrieved using a
- * different data type than the data type of the original value, and the returned value will be
- * automatically converted (with a best guess attempt in some cases).
+ * {@link IGLColumn} enum entries, in addition to using simple String keys. Also, the values can be
+ * retrieved and stored using simple data types, and values can be retrieved using a different data
+ * type than the data type of the original value, where the returned value will be automatically
+ * converted (with a best guess attempt in some cases).
  */
 public class GLValueMap {
 //--------------------------------------------------------------------------------------------------
