@@ -6,7 +6,7 @@ import org.fosterapet.shared.IRemoteService;
 import org.fosterapet.shared.LookupCacheLoader;
 import org.fosterapet.shared.Validators;
 import org.greatlogic.glgwt.client.core.GLClientFactory;
-import org.greatlogic.glgwt.client.core.GLLookupCache;
+import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import com.google.gwt.core.client.GWT;
 

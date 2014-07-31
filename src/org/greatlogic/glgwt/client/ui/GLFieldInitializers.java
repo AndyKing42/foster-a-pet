@@ -1,7 +1,8 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.ui;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import com.google.gwt.i18n.client.NumberFormat;

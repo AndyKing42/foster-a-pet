@@ -6,11 +6,11 @@ import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
 import org.fosterapet.shared.IRemoteServiceAsync;
-import org.greatlogic.glgwt.client.core.GLDBException;
-import org.greatlogic.glgwt.client.core.GLListStore;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.core.GLSQL;
-import org.greatlogic.glgwt.client.core.IGLSQLSelectCallback;
+import org.greatlogic.glgwt.client.db.GLDBException;
+import org.greatlogic.glgwt.client.db.GLListStore;
+import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLSQLSelectCallback;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

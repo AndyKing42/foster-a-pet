@@ -3,7 +3,7 @@ package org.fosterapet.client.widget;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.editor.GLRecordEditorDriver;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;

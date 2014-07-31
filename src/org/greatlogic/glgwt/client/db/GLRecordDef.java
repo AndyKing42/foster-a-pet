@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
 
 import java.util.TreeMap;
 import org.greatlogic.glgwt.shared.IGLColumn;

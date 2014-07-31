@@ -1,6 +1,6 @@
 package org.greatlogic.glgwt.client.widget;
 
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import com.google.gwt.event.shared.GwtEvent;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 

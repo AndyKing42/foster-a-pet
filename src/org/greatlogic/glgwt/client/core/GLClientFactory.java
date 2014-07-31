@@ -2,6 +2,7 @@ package org.greatlogic.glgwt.client.core;
 
 import org.fosterapet.shared.IRemoteServiceAsync;
 import org.fosterapet.shared.Validators;
+import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 
 public abstract class GLClientFactory {

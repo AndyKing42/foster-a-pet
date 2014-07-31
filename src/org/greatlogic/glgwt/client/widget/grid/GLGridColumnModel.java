@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLBigDecimalValueProvider;
 import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLBooleanValueProvider;
 import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLDateValueProvider;
