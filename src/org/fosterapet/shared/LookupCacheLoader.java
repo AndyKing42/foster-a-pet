@@ -1,7 +1,7 @@
 package org.fosterapet.shared;
 
 import org.fosterapet.shared.IFAPEnums.ELookupType;
-import org.greatlogic.glgwt.client.core.GLLookupCache;
+import org.greatlogic.glgwt.client.db.GLLookupCache;
 
 public class LookupCacheLoader {
 //--------------------------------------------------------------------------------------------------

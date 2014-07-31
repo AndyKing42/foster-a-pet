@@ -1,4 +1,5 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 

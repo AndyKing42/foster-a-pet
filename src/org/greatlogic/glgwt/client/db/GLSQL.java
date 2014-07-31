@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -15,6 +15,9 @@ package org.greatlogic.glgwt.client.core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.GLCSV;
+import org.greatlogic.glgwt.client.core.GLCSVException;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLSelectCompleteEvent;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLDBConj;

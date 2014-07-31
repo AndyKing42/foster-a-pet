@@ -1,8 +1,9 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Map.Entry;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.shared.IGLColumn;
 /**

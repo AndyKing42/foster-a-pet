@@ -18,7 +18,7 @@ import org.fosterapet.client.DBAccess;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import org.greatlogic.glgwt.client.widget.grid.GLGenericGridWidget;

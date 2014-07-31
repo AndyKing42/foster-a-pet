@@ -1,6 +1,6 @@
 package org.greatlogic.glgwt.client.event;
 
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.web.bindery.event.shared.Event;

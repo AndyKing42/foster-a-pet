@@ -17,10 +17,10 @@ import java.util.List;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IDBEnums.PetType;
-import org.greatlogic.glgwt.client.core.GLListStore;
-import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.GLRecordDef;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.db.GLListStore;
+import org.greatlogic.glgwt.client.db.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecordDef;
 import org.greatlogic.glgwt.shared.IGLColumn;
 
 public class TestData {

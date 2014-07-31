@@ -1,8 +1,10 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;

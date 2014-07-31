@@ -2,8 +2,8 @@ package org.greatlogic.glgwt.client.widget.grid;
 
 import java.util.ArrayList;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLRecord;
-import org.greatlogic.glgwt.client.core.IGLCreateNewRecordCallback;
+import org.greatlogic.glgwt.client.db.GLRecord;
+import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;

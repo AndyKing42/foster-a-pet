@@ -1,6 +1,6 @@
 package org.greatlogic.glgwt.client.event;
 
-import org.greatlogic.glgwt.client.core.GLListStore;
+import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.event.GLSelectCompleteEvent.IGLSelectCompleteEventHandler;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.web.bindery.event.shared.Event;

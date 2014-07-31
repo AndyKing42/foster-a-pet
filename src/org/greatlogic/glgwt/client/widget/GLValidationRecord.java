@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.widget.grid.GLColumnConfig;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import com.sencha.gxt.widget.core.client.form.IsField;

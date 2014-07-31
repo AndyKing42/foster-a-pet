@@ -2,7 +2,7 @@ package org.greatlogic.glgwt.shared;
 
 import java.util.Collection;
 import java.util.TreeMap;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 

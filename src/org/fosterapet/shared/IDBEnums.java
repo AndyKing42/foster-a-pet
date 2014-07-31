@@ -3,7 +3,7 @@ package org.fosterapet.shared;
 import java.util.Collection;
 import java.util.TreeMap;
 import org.fosterapet.shared.IFAPEnums.ELookupType;
-import org.greatlogic.glgwt.client.core.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLLookupType;

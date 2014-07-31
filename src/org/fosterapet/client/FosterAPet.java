@@ -14,7 +14,7 @@ package org.fosterapet.client;
  */
 import org.fosterapet.client.widget.GridWidgetManager;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLListStore;
+import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;

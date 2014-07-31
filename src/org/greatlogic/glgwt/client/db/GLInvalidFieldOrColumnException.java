@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.client.core;
+package org.greatlogic.glgwt.client.db;
 
 @SuppressWarnings("serial")
 public class GLInvalidFieldOrColumnException extends Exception {
