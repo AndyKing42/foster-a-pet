@@ -31,6 +31,7 @@ public GLListStore() {
       GLClientUtil.getEventBus().fireEvent(new GLCommitCompleteEvent());
     }
   });
+  GLClientUtil.getDBUpdater().registerListStore(this);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
