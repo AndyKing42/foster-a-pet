@@ -150,11 +150,13 @@ public void saveAllChanges() {
     }
   }
   for (final GLListStore listStore : _listStoreSet) {
-    final IGLTable table = listStore.getRecordDef().getTable();
-    for (final Store<GLRecord>.Record record : listStore.getModifiedRecords()) {
-      addListStoreInsertsAndUpdatesToSB(sb, table, record);
+    if (listStore.getRecordDef() != null) {
+      final IGLTable table = listStore.getRecordDef().getTable();
+      for (final Store<GLRecord>.Record record : listStore.getModifiedRecords()) {
+        addListStoreInsertsAndUpdatesToSB(sb, table, record);
+      }
+      addDeletesToSB(sb, table, listStore.getDeletedRecordList());
     }
-    addDeletesToSB(sb, table, listStore.getDeletedRecordList());
   }
   sendDBChangesToServer(sb);
 }

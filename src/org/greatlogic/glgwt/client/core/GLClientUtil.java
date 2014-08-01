@@ -62,12 +62,14 @@ static {
 }
 //--------------------------------------------------------------------------------------------------
 private static void addWindowClosingHandler(final String appDescription) {
-  Window.addWindowClosingHandler(new Window.ClosingHandler() {
-    @Override
-    public void onWindowClosing(final Window.ClosingEvent closingEvent) {
-      closingEvent.setMessage("You are about to leave " + appDescription);
-    }
-  });
+  if (isProdMode()) {
+    Window.addWindowClosingHandler(new Window.ClosingHandler() {
+      @Override
+      public void onWindowClosing(final Window.ClosingEvent closingEvent) {
+        closingEvent.setMessage("You are about to leave " + appDescription);
+      }
+    });
+  }
 }
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
@@ -221,6 +223,10 @@ public static boolean isBlank(final CharSequence s) {
   return s == null || s.toString().trim().length() == 0;
 }
 //--------------------------------------------------------------------------------------------------
+public static boolean isProdMode() {
+  return GWT.isProdMode() || !GWT.isClient();
+}
+//--------------------------------------------------------------------------------------------------
 /**
  * Converts a string containing a comma-delimited list of values into a <code>List</code> containing
  * those values.
@@ -287,20 +293,22 @@ public static void setTheme(final String themeClassName) {
 }
 //--------------------------------------------------------------------------------------------------
 public static void setUncaughtExceptionHandler(final ScheduledCommand moduleLoadCommand) {
-  GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-    @Override
-    public void onUncaughtException(final Throwable throwable) {
-      Throwable unwrappedThrowable = throwable;
-      if (throwable instanceof UmbrellaException) {
-        for (final Throwable t : ((UmbrellaException)throwable).getCauses()) {
-          unwrappedThrowable = t;
+  if (isProdMode()) {
+    GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+      @Override
+      public void onUncaughtException(final Throwable throwable) {
+        Throwable unwrappedThrowable = throwable;
+        if (throwable instanceof UmbrellaException) {
+          for (final Throwable t : ((UmbrellaException)throwable).getCauses()) {
+            unwrappedThrowable = t;
+          }
         }
+        GLLog.popup(20, unwrappedThrowable.getMessage());
+        // todo:      GLLog.major(unwrappedThrowable);
+        // todo: use https://code.google.com/p/gwt-log/
       }
-      GLLog.popup(20, unwrappedThrowable.getMessage());
-      // todo:      GLLog.major(unwrappedThrowable);
-      // todo: use https://code.google.com/p/gwt-log/
-    }
-  });
+    });
+  }
   Scheduler.get().scheduleDeferred(moduleLoadCommand);
 }
 //--------------------------------------------------------------------------------------------------

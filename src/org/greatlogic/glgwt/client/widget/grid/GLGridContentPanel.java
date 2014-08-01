@@ -67,6 +67,7 @@ private TextButton addDeleteButton() {
             for (final GLRecord record : _gridWidget.getSelectedRecordSet()) {
               _gridWidget.getListStore().delete(record);
             }
+            _gridWidget.getSelectedRecordSet().clear();
           }
         }
       });

@@ -20,9 +20,8 @@ import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.safecss.shared.SafeStyles;
@@ -43,17 +42,17 @@ import com.sencha.gxt.widget.core.client.grid.ColumnModel;
 class GLGridColumnModel extends ColumnModel<GLRecord> {
 //--------------------------------------------------------------------------------------------------
 private static final List<ColumnConfig<GLRecord, ?>> EmptyColumnConfigList;
-private static final String                          SelectComboboxColumnName;
+private static final String                          RowSelectCheckboxColumnName;
 
 private final HashSet<GLColumnConfig<?>>             _checkBoxSet;
-private final TreeMap<String, GLColumnConfig<?>>     _columnConfigMap;        // column name -> GLColumnConfig
+private final TreeMap<String, GLColumnConfig<?>>     _columnConfigMap;           // column name -> GLColumnConfig
 private final GLGridWidget                           _gridWidget;
 private final boolean                                _inlineEditing;
 private final boolean                                _useCheckBoxSelection;
 //--------------------------------------------------------------------------------------------------
 static {
   EmptyColumnConfigList = new ArrayList<>();
-  SelectComboboxColumnName = "SelectCombobox";
+  RowSelectCheckboxColumnName = "RowSelectCheckbox";
 }
 //--------------------------------------------------------------------------------------------------
 public GLGridColumnModel(final GLGridWidget gridWidget, final boolean inlineEditing,
@@ -214,7 +213,7 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
   rowSelectValueProvider = new ValueProvider<GLRecord, Boolean>() {
     @Override
     public String getPath() {
-      return "SelectCheckBox";
+      return RowSelectCheckboxColumnName;
     }
     @Override
     public Boolean getValue(final GLRecord record) {
@@ -222,6 +221,7 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
     }
     @Override
     public void setValue(final GLRecord record, final Boolean selected) { //
+      GLLog.popup(10, "Select checkbox setValue");
     }
   };
   result = new GLColumnConfig<>(null, rowSelectValueProvider, "", 23);
@@ -229,18 +229,21 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
     @Override
     protected void onClick(final XElement parent, final NativeEvent event) {
       super.onClick(parent, event);
-      final GLRecord record = _gridWidget.getSelectionModel().getSelectedItem();
-      if (!_gridWidget.getSelectedRecordSet().remove(record)) {
-        _gridWidget.getSelectedRecordSet().add(record);
+      event.getEventTarget();
+      final Element eventTarget = Element.as(event.getEventTarget());
+      final int rowIndex = _gridWidget.getGrid().getView().findRowIndex(eventTarget);
+      if (rowIndex != -1) {
+        // todo: if the grid isn't filtered then the row index can be used as an index into the list store
+        // todo: but if it's filtered then all bets are off!
+        GLLog.popup(10, "Row select checkbox click - row:" + rowIndex);
+        //        final GLRecord record = _gridWidget.getSelectionModel().getSelectedItem();
+        //        GLLog.popup(10, "Row select check box click");
+        //        if (!_gridWidget.getSelectedRecordSet().remove(record)) {
+        //          _gridWidget.getSelectedRecordSet().add(record);
+        //        }
       }
     }
   };
-  checkBoxCell.addHandler(new DoubleClickHandler() {
-    @Override
-    public void onDoubleClick(final DoubleClickEvent event) {
-      GLLog.popup(10, "double click");
-    }
-  }, DoubleClickEvent.getType());
   result.setCell(checkBoxCell);
   result.setFixed(true);
   result.setHideable(false);
@@ -253,10 +256,9 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
 }
 //--------------------------------------------------------------------------------------------------
 private void createRowSelectColumnConfig() {
-  final GLColumnConfig<Boolean> rowSelectColumnConfig;
-  rowSelectColumnConfig = createRowSelectCheckboxColumnConfig();
+  final GLColumnConfig<Boolean> rowSelectColumnConfig = createRowSelectCheckboxColumnConfig();
   configs.add(rowSelectColumnConfig);
-  _columnConfigMap.put(SelectComboboxColumnName, rowSelectColumnConfig);
+  _columnConfigMap.put(RowSelectCheckboxColumnName, rowSelectColumnConfig);
 }
 //--------------------------------------------------------------------------------------------------
 private GLColumnConfig<String> createStringColumnConfig(final IGLColumn column) {

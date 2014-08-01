@@ -13,7 +13,6 @@ package org.greatlogic.glgwt.client.widget.grid;
  * the License.
  */
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
@@ -50,10 +49,8 @@ import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent.HeaderContextMenuHandler;
-import com.sencha.gxt.widget.core.client.event.RowClickEvent;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.IntegerPropertyEditor;
-import com.sencha.gxt.widget.core.client.grid.CellSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.Grid;
 import com.sencha.gxt.widget.core.client.grid.GridSelectionModel;
 import com.sencha.gxt.widget.core.client.grid.GridView;
@@ -303,19 +300,10 @@ public void createContextMenu() {
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
-  _selectionModel = new CellSelectionModel<>();
+  //  _selectionModel = new CellSelectionModel<>(); // this causes a problem with the row select checkbox
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   _grid = new Grid<>(_listStore, _columnModel);
-  _grid.addRowClickHandler(new RowClickEvent.RowClickHandler() {
-    @Override
-    public void onRowClick(final RowClickEvent event) {
-      final Collection<Store<GLRecord>.Record> records = _listStore.getModifiedRecords();
-      if (records.size() > 0) {
-        _grid.setBorders(false);
-      }
-    }
-  });
   _grid.setBorders(true);
   _grid.setColumnReordering(true);
   _grid.setLoadMask(true);
