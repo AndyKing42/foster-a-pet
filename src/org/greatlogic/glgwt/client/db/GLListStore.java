@@ -15,7 +15,8 @@ import com.sencha.gxt.data.shared.event.StoreUpdateEvent.StoreUpdateHandler;
  */
 public class GLListStore extends ListStore<GLRecord> {
 //--------------------------------------------------------------------------------------------------
-private GLRecordDef _recordDef;
+private ArrayList<GLRecord> _deletedRecordList;
+private GLRecordDef         _recordDef;
 //--------------------------------------------------------------------------------------------------
 /**
  * Creates a new GLListStore.
@@ -52,7 +53,7 @@ void commitChangesAddAllChanges(final StringBuilder sb) {
     boolean firstChange = true;
     final TreeSet<IGLColumn> updatedColumnSet = new TreeSet<>();
     for (final Change<GLRecord, ?> change : record.getChanges()) {
-      if (commitChangesAddChange(sb, table, change, firstChange, insert, updatedColumnSet)) {
+      if (commitChangesAddColumnChange(sb, table, change, firstChange, insert, updatedColumnSet)) {
         firstChange = false;
       }
     }
@@ -69,10 +70,10 @@ void commitChangesAddAllChanges(final StringBuilder sb) {
   }
 }
 //--------------------------------------------------------------------------------------------------
-private boolean commitChangesAddChange(final StringBuilder sb, final IGLTable table,
-                                       final Change<GLRecord, ?> change, final boolean firstChange,
-                                       final boolean insert,
-                                       final TreeSet<IGLColumn> updatedColumnSet) {
+private boolean commitChangesAddColumnChange(final StringBuilder sb, final IGLTable table,
+                                             final Change<GLRecord, ?> change,
+                                             final boolean firstChange, final boolean insert,
+                                             final TreeSet<IGLColumn> updatedColumnSet) {
   final String value = GLClientUtil.formatObjectSpecial(change.getValue());
   if (insert && value.isEmpty()) {
     return false;
@@ -96,12 +97,20 @@ private boolean commitChangesAddChange(final StringBuilder sb, final IGLTable ta
   return true;
 }
 //--------------------------------------------------------------------------------------------------
+public void delete(final GLRecord record) {
+  if (_deletedRecordList == null) {
+    _deletedRecordList = new ArrayList<>();
+  }
+  _deletedRecordList.add(record);
+}
+//--------------------------------------------------------------------------------------------------
 public GLRecordDef getRecordDef() {
   return _recordDef;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 public boolean remove(final GLRecord record) {
+  throw new UnsupportedOperationException("Use 'GLListStore#delete' to delete records");
   final ArrayList<GLRecord> recordList = new ArrayList<>(1);
   recordList.add(record);
   remove(recordList);
