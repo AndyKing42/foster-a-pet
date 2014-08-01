@@ -1,6 +1,5 @@
 package org.greatlogic.glgwt.client.widget.grid;
 
-import java.util.ArrayList;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
@@ -65,12 +64,9 @@ private TextButton addDeleteButton() {
         @Override
         public void onDialogHide(final DialogHideEvent hideEvent) {
           if (hideEvent.getHideButton() == PredefinedButton.YES) {
-            final ArrayList<GLRecord> recordList;
-            recordList = new ArrayList<>(_gridWidget.getSelectedRecordSet().size());
             for (final GLRecord record : _gridWidget.getSelectedRecordSet()) {
-              recordList.add(record);
+              _gridWidget.getListStore().delete(record);
             }
-            _gridWidget.getListStore().remove(recordList);
           }
         }
       });
@@ -106,7 +102,7 @@ private void addSaveButton() {
   addButton(new TextButton("Save", new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
-      _gridWidget.getListStore().commitChanges();
+      GLClientUtil.getDBUpdater().saveAllChanges();
     }
   }));
 }

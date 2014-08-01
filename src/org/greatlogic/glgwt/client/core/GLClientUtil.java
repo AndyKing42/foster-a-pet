@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordDef;
@@ -158,6 +159,10 @@ public static String formatObjectSpecial(final Object value, final String defaul
     result = value.toString();
   }
   return result;
+}
+//--------------------------------------------------------------------------------------------------
+public static GLDBUpdater getDBUpdater() {
+  return _clientFactory.getDBUpdater();
 }
 //--------------------------------------------------------------------------------------------------
 public static GLEventBus getEventBus() {
