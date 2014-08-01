@@ -288,7 +288,7 @@ private void createGridRowEditingSaveButtonHandler(final GridRowEditing<GLRecord
       }
       if (_gridWidget.getRowLevelCommits()) {
         gridRowEditing.completeEditing();
-        _gridWidget.getListStore().commitChanges();
+        GLClientUtil.getDBUpdater().saveAllChanges();
       }
     }
   });

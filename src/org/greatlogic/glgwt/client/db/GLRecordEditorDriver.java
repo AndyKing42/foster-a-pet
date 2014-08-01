@@ -1,19 +1,17 @@
-package org.greatlogic.glgwt.client.editor;
+package org.greatlogic.glgwt.client.db;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import javax.validation.ConstraintViolation;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import org.greatlogic.glgwt.client.ui.GLFieldInitializers;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.editor.client.EditorDriver;
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.editor.client.EditorVisitor;
@@ -144,6 +142,14 @@ public boolean hasErrors() {
   return false;
 }
 //--------------------------------------------------------------------------------------------------
+Collection<GLRecord> getModifiedRecords() {
+  return _modifiedRecordMap.values();
+}
+//--------------------------------------------------------------------------------------------------
+GLRecord getOriginalRecord(final GLRecord modifiedRecord) {
+  return _originalRecordMap.get(modifiedRecord.getRecordDef().getTable());
+}
+//--------------------------------------------------------------------------------------------------
 @Override
 public boolean isDirty() {
   // todo Auto-generated method stub
@@ -238,20 +244,8 @@ private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, 
       final TextField textField = (TextField)hasValue;
       GLFieldInitializers.initialize(textField, column);
       textField.setValue(stringValue);
-      addCutHandler(textField.getElement());
       break;
   }
 }
 //--------------------------------------------------------------------------------------------------
-public native void addCutHandler(Element element)
-/*-{
-	var temp = this; // hack to hold on to 'this' reference
-	element.oncut = function(e) {
-		temp.@org.greatlogic.glgwt.client.editor.GLRecordEditorDriver::handleCut()();
-	}
-}-*/;
-
-public void handleCut() {
-  GLLog.popup(10, "cut");
-}
 }
