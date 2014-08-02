@@ -17,13 +17,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
-import org.greatlogic.glgwt.client.widget.GLContextMenuEntry;
-import org.greatlogic.glgwt.client.widget.GLContextMenuSelectionEvent;
-import org.greatlogic.glgwt.client.widget.IGLContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLLookupType;
@@ -49,6 +48,7 @@ import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent.HeaderContextMenuHandler;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.DoublePropertyEditor;
 import com.sencha.gxt.widget.core.client.form.NumberPropertyEditor.IntegerPropertyEditor;
 import com.sencha.gxt.widget.core.client.grid.Grid;
@@ -63,31 +63,29 @@ import com.sencha.gxt.widget.core.client.grid.filters.ListFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.NumericFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.StringFilter;
 import com.sencha.gxt.widget.core.client.menu.Item;
-import com.sencha.gxt.widget.core.client.menu.Menu;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
 public abstract class GLGridWidget implements IsWidget {
 //--------------------------------------------------------------------------------------------------
-private static final int              _resizeColumnExtraPadding;
-private static final TextMetrics      _textMetrics;
+private static final int             _resizeColumnExtraPadding;
+private static final TextMetrics     _textMetrics;
 
-private GLGridColumnModel             _columnModel;
-protected IGLColumn[]                 _columns;
-private final GLGridContentPanel      _contentPanel;
-private ArrayList<GLContextMenuEntry> _contextMenuEntryList;
-private boolean                       _contextMenuIncludeDelete;
-protected Grid<GLRecord>              _grid;
-private GLGridEditingWrapper          _gridEditingWrapper;
-private GridFilters<GLRecord>         _gridFilters;
-private final boolean                 _inlineEditing;
-protected GLListStore                 _listStore;
-private HandlerRegistration           _lookupTableLoadedHandlerRegistration;
-private final String                  _noRowsMessage;
-private final GLRecordValidator       _recordValidator;
-private final boolean                 _rowLevelCommits;
-private final TreeSet<GLRecord>       _selectedRecordSet;
-private GridSelectionModel<GLRecord>  _selectionModel;
-private final boolean                 _useCheckBoxSelection;
+private GLGridColumnModel            _columnModel;
+protected IGLColumn[]                _columns;
+private final GLGridContentPanel     _contentPanel;
+private GLGridContextMenu            _contextMenu;
+protected Grid<GLRecord>             _grid;
+private GLGridEditingWrapper         _gridEditingWrapper;
+private GridFilters<GLRecord>        _gridFilters;
+private final boolean                _inlineEditing;
+protected GLListStore                _listStore;
+private HandlerRegistration          _lookupTableLoadedHandlerRegistration;
+private final String                 _noRowsMessage;
+private final GLRecordValidator      _recordValidator;
+private final boolean                _rowLevelCommits;
+private final TreeSet<GLRecord>      _selectedRecordSet;
+private GridSelectionModel<GLRecord> _selectionModel;
+private final boolean                _useCheckBoxSelection;
 //--------------------------------------------------------------------------------------------------
 static {
   _resizeColumnExtraPadding = 10;
@@ -108,7 +106,36 @@ protected GLGridWidget(final String headingText, final String noRowsMessage,
   _listStore = new GLListStore();
   _selectedRecordSet = new TreeSet<>();
   _contentPanel = new GLGridContentPanel(this, headingText);
+  addContentPanelButtons();
   waitForComboBoxData();
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addContentPanelButton(final String buttonLabel,
+                                           final EGLGridContentPanelButtonType contentPanelButtonType) {
+  _contentPanel.addContentPanelButton(buttonLabel, contentPanelButtonType);
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addContentPanelButton(final String buttonLabel,
+                                           final SelectHandler selectHandler) {
+  _contentPanel.addContentPanelButton(buttonLabel, selectHandler);
+}
+//--------------------------------------------------------------------------------------------------
+protected void addContentPanelButtons() {
+  //
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addContextMenuItem(final String menuLabel,
+                                        final EGLContextMenuItemType contextMenuItemType) {
+  _contextMenu.addContextMenuItem(menuLabel, contextMenuItemType);
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addContextMenuItem(final String menuLabel,
+                                        final IGLGridContextMenuSelectionHandler selectionHandler) {
+  _contextMenu.addContextMenuItem(menuLabel, selectionHandler);
+}
+//--------------------------------------------------------------------------------------------------
+protected void addContextMenuItems() {
+  //
 }
 //--------------------------------------------------------------------------------------------------
 protected final void addFilter(final IGLColumn column) {
@@ -246,61 +273,14 @@ public Widget asWidget() {
   return _contentPanel;
 }
 //--------------------------------------------------------------------------------------------------
-protected final void addContextMenuDelete() {
-  _contextMenuIncludeDelete = true;
-}
-//--------------------------------------------------------------------------------------------------
-protected void addContextMenuEntries() {
-  //
-}
-//--------------------------------------------------------------------------------------------------
-protected final void addContextMenuEntry(final String text,
-                                         final IGLContextMenuSelectionHandler selectionHandler) {
-  if (_contextMenuEntryList == null) {
-    _contextMenuEntryList = new ArrayList<>();
+public void clearAllRowSelectCheckboxes() {
+  if (_useCheckBoxSelection) {
+    _selectedRecordSet.clear();
   }
-  _contextMenuEntryList.add(new GLContextMenuEntry(text, selectionHandler));
-}
-//--------------------------------------------------------------------------------------------------
-public void createContextMenu() {
-  addContextMenuEntries();
-  final ArrayList<MenuItem> menuItemList = new ArrayList<>();
-  if (_contextMenuEntryList != null) {
-    for (final GLContextMenuEntry contextMenuEntry : _contextMenuEntryList) {
-      final MenuItem menuItem;
-      menuItem = new MenuItem(contextMenuEntry.getText(), new SelectionHandler<MenuItem>() {
-        @Override
-        public void onSelection(final SelectionEvent<MenuItem> event) {
-          final GLRecord selectedRecord = _selectionModel.getSelectedItem();
-          contextMenuEntry.getSelectionHandler()
-                          .onSelection(new GLContextMenuSelectionEvent(event.getSelectedItem(),
-                                                                       selectedRecord));
-        }
-      });
-      menuItemList.add(menuItem);
-    }
-  }
-  if (_contextMenuIncludeDelete) {
-    final MenuItem deleteMenuItem = new MenuItem("Delete");
-    deleteMenuItem.addSelectionHandler(new SelectionHandler<Item>() {
-      @Override
-      public void onSelection(final SelectionEvent<Item> event) {
-        requestRowDeleteConfirmation(null);
-      }
-    });
-    menuItemList.add(deleteMenuItem);
-  }
-  if (menuItemList.size() > 0) {
-    final Menu menu = new Menu();
-    for (final MenuItem menuItem : menuItemList) {
-      menu.add(menuItem);
-    }
-    _grid.setContextMenu(menu);
-  }
+  _grid.getView().refresh(false);
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
-  //  _selectionModel = new CellSelectionModel<>(); // this causes a problem with the row select checkbox
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   _grid = new Grid<>(_listStore, _columnModel);
@@ -315,7 +295,8 @@ private void createGrid() {
   if (_gridFilters != null) {
     _gridFilters.initPlugin(_grid);
   }
-  createContextMenu();
+  _contextMenu = new GLGridContextMenu(this);
+  _grid.setContextMenu(_contextMenu.build());
   _contentPanel.add(_grid);
   _contentPanel.forceLayout();
 }
@@ -456,6 +437,15 @@ private void resizeNextColumn(final ProgressMessageBox messageBox, final int col
       resizeNextColumn(messageBox, columnIndex + 1, lastColumnIndex);
     }
   });
+}
+//--------------------------------------------------------------------------------------------------
+public void selectAllRowSelectCheckboxes() {
+  if (_useCheckBoxSelection) {
+    for (int recordIndex = 0; recordIndex < _listStore.size(); ++recordIndex) {
+      _selectedRecordSet.add(_listStore.get(recordIndex));
+    }
+  }
+  _grid.getView().refresh(false);
 }
 //--------------------------------------------------------------------------------------------------
 private void waitForComboBoxData() {

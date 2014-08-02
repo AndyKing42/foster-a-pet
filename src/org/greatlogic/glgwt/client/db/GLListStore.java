@@ -41,6 +41,9 @@ public void commitChanges() {
 //--------------------------------------------------------------------------------------------------
 void commitChangesAfterDBUpdate() {
   GLListStore.super.commitChanges();
+  if (_deletedRecordList != null) {
+    _deletedRecordList.clear();
+  }
 }
 //--------------------------------------------------------------------------------------------------
 public void delete(final GLRecord record) {

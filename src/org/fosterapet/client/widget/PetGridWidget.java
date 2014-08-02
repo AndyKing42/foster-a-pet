@@ -12,13 +12,18 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+
 import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.Pet;
-import org.greatlogic.glgwt.client.widget.GLContextMenuSelectionEvent;
-import org.greatlogic.glgwt.client.widget.IGLContextMenuSelectionHandler;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
+import org.greatlogic.glgwt.client.widget.grid.GLGridContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
+import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import com.sencha.gxt.core.client.util.DateWrapper;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
 public class PetGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
@@ -30,6 +35,34 @@ public PetGridWidget(final GLRecordValidator recordValidator, final boolean inli
 }
 //--------------------------------------------------------------------------------------------------
 @Override
+protected void addContentPanelButtons() {
+  addContentPanelButton("View Details", new SelectHandler() {
+    @Override
+    public void onSelect(final SelectEvent event) {
+      FAPUtil.getClientFactory().getAppTabPanelWidget()
+             .createPetDetails(_grid.getSelectionModel().getSelectedItem());
+    }
+  });
+  addContentPanelButton("New Pet", EGLGridContentPanelButtonType.New);
+  addContentPanelButton("Save Changes", EGLGridContentPanelButtonType.Save);
+  addContentPanelButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
+  addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+protected void addContextMenuItems() {
+  addContextMenuItem("Select All", EGLContextMenuItemType.SelectAll);
+  addContextMenuItem("Clear Selections", EGLContextMenuItemType.ClearAll);
+  addContextMenuItem("View Details", new IGLGridContextMenuSelectionHandler() {
+    @Override
+    public void onContextMenuSelectionEvent(final GLGridContextMenuSelectionEvent event) {
+      FAPUtil.getClientFactory().getAppTabPanelWidget().createPetDetails(event.getSelectedRecord());
+    }
+  });
+  addContextMenuItem("Delete", EGLContextMenuItemType.Delete);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
 protected void addFilters() {
   addFilter(Pet.AdoptionFee);
   addFilter(Pet.DateOfBirth);
@@ -38,19 +71,6 @@ protected void addFilters() {
   addFilter(Pet.PetName);
   addFilter(Pet.PetTypeId);
   addFilter(Pet.Sex);
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-protected void addContextMenuEntries() {
-  final IGLContextMenuSelectionHandler viewDetailsSelectionHandler;
-  viewDetailsSelectionHandler = new IGLContextMenuSelectionHandler() {
-    @Override
-    public void onSelection(final GLContextMenuSelectionEvent event) {
-      FAPUtil.getClientFactory().getAppTabPanelWidget().createPetDetails(event.getSelectedRecord());
-    }
-  };
-  addContextMenuEntry("View Details", viewDetailsSelectionHandler);
-  addContextMenuDelete();
 }
 //--------------------------------------------------------------------------------------------------
 }

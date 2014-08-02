@@ -293,7 +293,8 @@ public static void setTheme(final String themeClassName) {
 }
 //--------------------------------------------------------------------------------------------------
 public static void setUncaughtExceptionHandler(final ScheduledCommand moduleLoadCommand) {
-  if (isProdMode()) {
+  if (isProdMode() && false) {
+    // todo: unwrap the exception
     GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
       @Override
       public void onUncaughtException(final Throwable throwable) {
