@@ -1,21 +1,24 @@
 package org.greatlogic.glgwt.client.widget;
 
+import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
+
 public class GLContextMenuEntry {
 //--------------------------------------------------------------------------------------------------
-private final IGLContextMenuSelectionHandler _selectionHandler;
-private final String                         _text;
+private final IGLGridContextMenuSelectionHandler _selectionHandler;
+private final String                         _menuLabel;
 //--------------------------------------------------------------------------------------------------
-public GLContextMenuEntry(final String text, final IGLContextMenuSelectionHandler selectionHandler) {
-  _text = text;
+public GLContextMenuEntry(final String menuLabel,
+                          final IGLGridContextMenuSelectionHandler selectionHandler) {
+  _menuLabel = menuLabel;
   _selectionHandler = selectionHandler;
 }
 //--------------------------------------------------------------------------------------------------
-public IGLContextMenuSelectionHandler getSelectionHandler() {
-  return _selectionHandler;
+public String getMenuLabel() {
+  return _menuLabel;
 }
 //--------------------------------------------------------------------------------------------------
-public String getText() {
-  return _text;
+public IGLGridContextMenuSelectionHandler getSelectionHandler() {
+  return _selectionHandler;
 }
 //--------------------------------------------------------------------------------------------------
 }

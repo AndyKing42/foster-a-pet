@@ -229,18 +229,15 @@ private GLColumnConfig<Boolean> createRowSelectCheckboxColumnConfig() {
     @Override
     protected void onClick(final XElement parent, final NativeEvent event) {
       super.onClick(parent, event);
-      event.getEventTarget();
       final Element eventTarget = Element.as(event.getEventTarget());
-      final int rowIndex = _gridWidget.getGrid().getView().findRowIndex(eventTarget);
-      if (rowIndex != -1) {
-        // todo: if the grid isn't filtered then the row index can be used as an index into the list store
-        // todo: but if it's filtered then all bets are off!
-        GLLog.popup(10, "Row select checkbox click - row:" + rowIndex);
-        //        final GLRecord record = _gridWidget.getSelectionModel().getSelectedItem();
-        //        GLLog.popup(10, "Row select check box click");
-        //        if (!_gridWidget.getSelectedRecordSet().remove(record)) {
-        //          _gridWidget.getSelectedRecordSet().add(record);
-        //        }
+      if (eventTarget.getAttribute("type").equals("checkbox")) {
+        final int rowIndex = _gridWidget.getGrid().getView().findRowIndex(eventTarget);
+        if (rowIndex != -1) {
+          final GLRecord record = _gridWidget.getListStore().get(rowIndex);
+          if (!_gridWidget.getSelectedRecordSet().remove(record)) {
+            _gridWidget.getSelectedRecordSet().add(record);
+          }
+        }
       }
     }
   };

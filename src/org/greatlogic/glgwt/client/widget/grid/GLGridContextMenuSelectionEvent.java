@@ -1,30 +1,31 @@
-package org.greatlogic.glgwt.client.widget;
+package org.greatlogic.glgwt.client.widget.grid;
 
 import org.greatlogic.glgwt.client.db.GLRecord;
 import com.google.gwt.event.shared.GwtEvent;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 
-public class GLContextMenuSelectionEvent extends GwtEvent<IGLContextMenuSelectionHandler> {
+public class GLGridContextMenuSelectionEvent extends GwtEvent<IGLGridContextMenuSelectionHandler> {
 //--------------------------------------------------------------------------------------------------
-private static Type<IGLContextMenuSelectionHandler> TYPE;
+private static Type<IGLGridContextMenuSelectionHandler> TYPE;
 
-private final MenuItem                              _selectedMenuItem;
-private final GLRecord                              _selectedRecord;
+private final MenuItem                                  _selectedMenuItem;
+private final GLRecord                                  _selectedRecord;
 //--------------------------------------------------------------------------------------------------
-public static Type<IGLContextMenuSelectionHandler> getType() {
+public static Type<IGLGridContextMenuSelectionHandler> getType() {
   if (TYPE == null) {
-    TYPE = new Type<IGLContextMenuSelectionHandler>();
+    TYPE = new Type<IGLGridContextMenuSelectionHandler>();
   }
   return TYPE;
 }
 //--------------------------------------------------------------------------------------------------
-public GLContextMenuSelectionEvent(final MenuItem selectedMenuItem, final GLRecord selectedRecord) {
+public GLGridContextMenuSelectionEvent(final MenuItem selectedMenuItem,
+                                       final GLRecord selectedRecord) {
   _selectedMenuItem = selectedMenuItem;
   _selectedRecord = selectedRecord;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-public final Type<IGLContextMenuSelectionHandler> getAssociatedType() {
+public final Type<IGLGridContextMenuSelectionHandler> getAssociatedType() {
   return TYPE;
 }
 //--------------------------------------------------------------------------------------------------
@@ -37,8 +38,8 @@ public GLRecord getSelectedRecord() {
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void dispatch(final IGLContextMenuSelectionHandler handler) {
-  handler.onSelection(this);
+protected void dispatch(final IGLGridContextMenuSelectionHandler handler) {
+  handler.onContextMenuSelectionEvent(this);
 }
 //--------------------------------------------------------------------------------------------------
 }

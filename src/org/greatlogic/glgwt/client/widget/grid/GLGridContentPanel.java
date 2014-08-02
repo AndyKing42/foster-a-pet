@@ -1,6 +1,8 @@
 package org.greatlogic.glgwt.client.widget.grid;
 
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import com.sencha.gxt.widget.core.client.ContentPanel;
@@ -30,18 +32,45 @@ GLGridContentPanel(final GLGridWidget gridWidget, final String headingText) {
     setHeadingText(headingText);
   }
   setButtonAlign(BoxLayoutPack.START);
-  createButtons();
 }
 //--------------------------------------------------------------------------------------------------
-private void createButtons() {
-  addNewButton();
-  addUndoChangesButton();
-  addSaveButton();
-  addButton(addDeleteButton());
+public void addContentPanelButton(final String buttonLabel,
+                                  final EGLGridContentPanelButtonType contentPanelButtonType) {
+  SelectHandler selectHandler;
+  switch (contentPanelButtonType) {
+    case Delete:
+      selectHandler = createDeleteButtonHandler();
+      break;
+    case New:
+      selectHandler = createNewButtonHandler();
+      break;
+    case Save:
+      selectHandler = createSaveButtonHandler();
+      break;
+    case Undo:
+      selectHandler = createUndoButtonHandler();
+      break;
+    default:
+      selectHandler = null;
+      break;
+  }
+  if (selectHandler == null) {
+    GLLog.popup(30, "There is no standard button for the button type:" + contentPanelButtonType);
+  }
+  addContentPanelButton(buttonLabel, selectHandler);
 }
 //--------------------------------------------------------------------------------------------------
-private TextButton addDeleteButton() {
-  return new TextButton("Delete Selected", new SelectHandler() {
+protected final void addContentPanelButton(final String buttonLabel,
+                                           final SelectHandler selectHandler) {
+  if (selectHandler == null) {
+    GLLog.popup(30, "Missing select handler for content panel button:" + buttonLabel);
+    return;
+  }
+  addButton(new TextButton(buttonLabel, selectHandler));
+}
+//--------------------------------------------------------------------------------------------------
+private SelectHandler createDeleteButtonHandler() {
+  return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent selectEvent) {
       if (_gridWidget.getSelectedRecordSet().size() == 0) {
@@ -73,10 +102,10 @@ private TextButton addDeleteButton() {
       });
       messageBox.show();
     }
-  });
+  };
 }
 //--------------------------------------------------------------------------------------------------
-private void addNewButton() {
+private SelectHandler createNewButtonHandler() {
   final IGLCreateNewRecordCallback newRecordCallback = new IGLCreateNewRecordCallback() {
     @Override
     public void onFailure(final Throwable t) {
@@ -90,31 +119,30 @@ private void addNewButton() {
       _gridWidget.getGridEditingWrapper().getGridEditing().startEditing(new GridCell(row, 0));
     }
   };
-  final SelectHandler selectHandler = new SelectHandler() {
+  return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
       GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), newRecordCallback);
     }
   };
-  addButton(new TextButton("New", selectHandler));
 }
 //--------------------------------------------------------------------------------------------------
-private void addSaveButton() {
-  addButton(new TextButton("Save", new SelectHandler() {
+private SelectHandler createSaveButtonHandler() {
+  return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
       GLClientUtil.getDBUpdater().saveAllChanges();
     }
-  }));
+  };
 }
 //--------------------------------------------------------------------------------------------------
-private void addUndoChangesButton() {
-  addButton(new TextButton("Undo Changes", new SelectHandler() {
+private SelectHandler createUndoButtonHandler() {
+  return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
       _gridWidget.getListStore().rejectChanges();
     }
-  }));
+  };
 }
 //--------------------------------------------------------------------------------------------------
 }
