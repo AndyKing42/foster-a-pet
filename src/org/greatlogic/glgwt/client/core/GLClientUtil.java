@@ -25,7 +25,7 @@ import org.greatlogic.glgwt.client.db.GLRecordDef;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
-import org.greatlogic.glgwt.client.widget.LoginDialogBox;
+import org.greatlogic.glgwt.client.widget.GLLoginWidget;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
 import org.greatlogic.glgwt.shared.IGLTable;
@@ -51,10 +51,10 @@ import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
-private static GLClientFactory _clientFactory;
-private static LoginDialogBox  _loginDialogBox;
-private static Random          _random;
-private static DateTimeFormat  _yyyymmddDateTimeFormat;
+private static GLClientFactory  _clientFactory;
+private static GLLoginWidget _loginWidget;
+private static Random           _random;
+private static DateTimeFormat   _yyyymmddDateTimeFormat;
 //--------------------------------------------------------------------------------------------------
 static {
   _random = new Random(System.currentTimeMillis());
@@ -266,11 +266,11 @@ public static ArrayList<String> loadListFromStrings(final ArrayList<String> stri
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public static void login() {
-  if (_loginDialogBox == null) {
-    _loginDialogBox = new LoginDialogBox();
+public static void logIn(final String windowHeadingText) {
+  if (_loginWidget == null) {
+    _loginWidget = new GLLoginWidget();
   }
-  _loginDialogBox.login();
+  _loginWidget.logIn(windowHeadingText);
 }
 //--------------------------------------------------------------------------------------------------
 /**

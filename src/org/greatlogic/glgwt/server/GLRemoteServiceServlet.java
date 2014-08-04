@@ -87,10 +87,11 @@ public void log(final int priority, final String location, final String message)
  * @param loginName The login name that will be used for the login attempt.
  * @param password The password that will be used for the login attempt (this is the plain text
  * password, not the encrypted hash value).
- * @return The id of the Person row, or zero if the login request fails.
+ * @return If the login attempt is successful then the session token will be returned; if the
+ * attempt is unsuccessful then the return value will be an empty string.
  */
 @Override
-public Integer login(final String loginName, final String password) {
+public String login(final String loginName, final String currentSessionToken, final String password) {
   // find the user using the loginName and password
   // if the user isn't found {
   //    GLLog.infoSummary("Login failed for login name:" + loginName);
@@ -99,7 +100,7 @@ public Integer login(final String loginName, final String password) {
   //  GLLog.infoSummary("Login succeeded for login name:" + user.getLoginName());
   //  getThreadLocalRequest().getSession().setAttribute(ESessionAttribute.LoginUser.name(), user);
   //  return user.getUserId();
-  return 0;
+  return getThreadLocalRequest().getSession().getId();
 }
 //--------------------------------------------------------------------------------------------------
 @Override

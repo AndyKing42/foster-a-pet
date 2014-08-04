@@ -29,8 +29,8 @@
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
-        ui:field='oauthTestButton'
-        text='OAuth Test'
+        ui:field='logInButton'
+        text='Log In'
         visible='true'>
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>

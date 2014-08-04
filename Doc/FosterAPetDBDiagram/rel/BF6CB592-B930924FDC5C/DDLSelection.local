@@ -1,2 +1,38 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<oracle.dbtools.crest.model.design.relational.RelationalDesign objectID="BF6CB592-12B4-D17D-048A-B930924FDC5C"/>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign objectID="BF6CB592-12B4-D17D-048A-B930924FDC5C">
+   <object objectID="D5331671-9F7C-1CF2-9F59-25773B24AE65" markedGenerate="false"/>
+   <object objectID="A8372325-7D59-4D3C-6AE3-AFEF00C0CF3F" markedGenerate="false"/>
+   <object objectID="0F378469-1C5E-DDC5-2200-414F895272F6" markedGenerate="false"/>
+   <object objectID="24793D45-BCF9-5E36-CA66-026F63A48702" markedGenerate="false"/>
+   <object objectID="1EAA761D-9FA9-E3B3-85F6-BD2FF6A35226" markedGenerate="false"/>
+   <object objectID="2DE0F67E-EA7A-436E-7CAB-12797520AE8F" markedGenerate="false"/>
+   <object objectID="EAC5A78E-94E8-A138-5C50-E91B28DE8753" markedGenerate="false"/>
+   <object objectID="B320B766-E2AF-8191-9509-FF972F4364BB" markedGenerate="false"/>
+   <object objectID="FB154A6D-CEF1-DB6D-0C52-EB522A92F9C4" markedGenerate="false"/>
+   <object objectID="F6CAA9D7-1347-7CAD-145B-AD674BB2A466" markedGenerate="false"/>
+   <object objectID="F7ADDAE8-DEB4-D2A1-83D3-7D19B06C1E80" markedGenerate="false"/>
+   <object objectID="E27ED12E-EBD5-B2B0-BCAD-74CDD40D9580" markedGenerate="false"/>
+   <object objectID="17D26FFE-F8FE-EB1B-7741-DA2AF65B37F5" markedGenerate="false"/>
+   <object objectID="F3A84523-CDCA-5169-A3B1-1C1B15D344A6" markedGenerate="false"/>
+   <object objectID="A9A95EAF-13A1-8DAE-8320-D7716D882C14" markedGenerate="false"/>
+   <object objectID="1BB66F62-A041-4AB5-FA6D-0A098C2C9ED5" markedGenerate="false"/>
+   <object objectID="C202882D-3597-D578-51C9-3DBB9B15E5EE" markedGenerate="false"/>
+   <object objectID="7969E597-226C-311C-872A-DBC9D2FC36FB" markedGenerate="false"/>
+   <object objectID="E64EE4E4-8020-739C-1490-B285CE2537CE" markedGenerate="false"/>
+   <object objectID="F5B8FDD5-BFBC-B035-2E58-7FE23BCF160A" markedGenerate="false"/>
+   <object objectID="8200CC2A-F12E-B7D6-6E30-BC223BEA0A49" markedGenerate="false"/>
+   <object objectID="6087B1B9-29FF-C091-B810-853671A73FBD" markedGenerate="false"/>
+   <object objectID="813A8A60-FB0E-F6F5-7F61-8B4BBBAB7E3C" markedGenerate="false"/>
+   <object objectID="AF9F7442-C513-A6EE-6720-DC7FEA0BB625" markedGenerate="false"/>
+   <object objectID="C625417F-5DF4-30F8-EDF6-956CB9D6842C" markedGenerate="false"/>
+   <object objectID="CB6E3431-7113-D0D5-F1A5-3CD8E6C5F0C3" markedGenerate="false"/>
+   <object objectID="0A5983E0-AEBE-0DDE-9B4D-9848C604C606" markedGenerate="false"/>
+   <object objectID="19E969E9-4540-0988-B936-BA1C8ABB1C5F" markedGenerate="false"/>
+   <object objectID="61282AE6-9811-C740-D5FB-75CC2F91CD04" markedGenerate="false"/>
+   <object objectID="CB95E2ED-AF66-CFFC-F6EC-691A18BBD1D6" markedGenerate="false"/>
+   <object objectID="EF343635-D71D-54D5-9344-19654E2831BC" markedGenerate="false"/>
+   <object objectID="1763DDB4-0DD3-E6D4-85E4-54779CB7C16C" markedGenerate="false"/>
+   <object objectID="D636D629-9572-7CB7-DBB4-A884809F8A52" markedGenerate="false"/>
+   <object objectID="1318228B-B4B4-E50C-1889-12B20F0A5C07" markedGenerate="false"/>
+   <object objectID="71216C70-BE62-0F11-BFE4-5150032FF879" markedGenerate="false"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

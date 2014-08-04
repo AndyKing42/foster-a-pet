@@ -17,11 +17,13 @@ import org.fosterapet.shared.Validators;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
+import org.greatlogic.glgwt.client.widget.GLLoginWidget;
 
 public abstract class GLClientFactory {
 //--------------------------------------------------------------------------------------------------
 protected GLDBUpdater         _dbUpdater;
 protected GLEventBus          _eventBus;
+private GLLoginWidget         _loginWidget;
 protected GLLookupCache       _lookupCache;
 protected IRemoteServiceAsync _remoteService;
 protected Validators          _validators;
@@ -32,6 +34,10 @@ public GLDBUpdater getDBUpdater() {
 //--------------------------------------------------------------------------------------------------
 public GLEventBus getEventBus() {
   return _eventBus;
+}
+//--------------------------------------------------------------------------------------------------
+public GLLoginWidget getLoginWidget() {
+  return _loginWidget;
 }
 //--------------------------------------------------------------------------------------------------
 public GLLookupCache getLookupCache() {

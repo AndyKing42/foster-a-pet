@@ -12,48 +12,71 @@ package org.greatlogic.glgwt.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.web.bindery.event.shared.HandlerRegistration;
+import com.sencha.gxt.widget.core.client.Window;
+import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.event.SelectEvent;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
+import com.sencha.gxt.widget.core.client.form.PasswordField;
+import com.sencha.gxt.widget.core.client.form.TextField;
 
-public class LoginDialogBox extends DialogBox {
+public class GLLoginWidget extends Window {
 //--------------------------------------------------------------------------------------------------
-@UiField
-Label                       errorMessageLabel;
-@UiField
-TextBox                     loginNameTextBox;
-@UiField
-Button                      okButton;
-@UiField
-PasswordTextBox             passwordTextBox;
+protected static final String SessionTokenCookie = "SessionToken";
 
-private HandlerRegistration _loginResponseEventHandler;
+@UiField
+FieldLabel                    errorMessageLabel;
+@UiField
+TextField                     loginNameField;
+@UiField
+TextButton                    okButton;
+@UiField
+PasswordField                 passwordField;
+@UiField
+Window                        window;
 //==================================================================================================
-interface ILoginDialogBoxBinder extends UiBinder<Widget, LoginDialogBox> { //
-} // interface ILoginDialogBoxBinder
+interface IGLLoginWidgetBinder extends UiBinder<Widget, GLLoginWidget> { //
+}
 //==================================================================================================
-public LoginDialogBox() {
-  final ILoginDialogBoxBinder binder = GWT.create(ILoginDialogBoxBinder.class);
-  setHTML("Login");
-  setWidget(binder.createAndBindUi(this));
+public GLLoginWidget() {
+  final IGLLoginWidgetBinder binder = GWT.create(IGLLoginWidgetBinder.class);
+  binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void login() {
-  setGlassEnabled(true);
-  show();
-  center();
+public void logIn(final String windowHeadingText) {
+  window.setHeadingText(windowHeadingText);
+  window.show();
 }
 //--------------------------------------------------------------------------------------------------
-public void login(final String loginName, final String password) {
+public void logIn(final String loginName, final String password) {
+  final AsyncCallback<String> callback = new AsyncCallback<String>() {
+    @Override
+    public void onFailure(final Throwable caught) {
+      GLLog.popup(10, "Login failed");
+      errorMessageLabel.setText("Login failed ... please try again");
+    }
+    @Override
+    public void onSuccess(final String result) {
+      if (result.isEmpty()) {
+        GLLog.popup(10, "Login failed");
+        errorMessageLabel.setText("Login failed ... please try again");
+        return;
+      }
+      GLLog.popup(10, "Login succeeded:" + result);
+      Cookies.setCookie(SessionTokenCookie, result);
+      window.hide();
+    }
+  };
+  final String currentSessionToken = Cookies.getCookie(SessionTokenCookie);
+  GLClientUtil.getRemoteService().login(loginName, password, currentSessionToken, callback);
   //  _loginPersonId = 0;
   //  GLClientUtil.getRemoteService().login(loginName, password, new AsyncCallback<Integer>() {
   //    @Override
@@ -71,23 +94,8 @@ public void login(final String loginName, final String password) {
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler("okButton")
-public void onOKButtonClick(@SuppressWarnings("unused") final ClickEvent clickEvent) {
-  //  _loginResponseEventHandler =
-  //                               _clientFactory.getFAPEventBus()
-  //                                             .addHandler(LoginResponseEvent.LoginResponseEventType,
-  //                                                         this);
-  //  _clientFactory.getCacheManager().getPersonCache()
-  //                .login(loginNameTextBox.getText(), passwordTextBox.getText());
+public void onOKButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  logIn(loginNameField.getValue(), passwordField.getValue());
 }
-//--------------------------------------------------------------------------------------------------
-//@Override
-//public void onLoginResponseEvent(final LoginResponseEvent loginResponseEvent) {
-//  _loginResponseEventHandler.removeHandler();
-//  if (loginResponseEvent.getPersonId() > 0) {
-//    hide();
-//    return;
-//  }
-//  errorMessageLabel.setText("Login failed ... please try again");
-//}
 //--------------------------------------------------------------------------------------------------
 }

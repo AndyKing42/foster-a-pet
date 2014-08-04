@@ -1,0 +1,23 @@
+<ui:UiBinder
+  xmlns:g='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:gxtbutton='urn:import:com.sencha.gxt.widget.core.client.button'
+  xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
+  xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  <gxt:Window
+    ui:field='window'
+    blinkModal='true' closable='false'
+    focusWidget='{okButton}'
+    modal='true'
+    pixelSize='200, 160'>
+    <gxtcontainer:VerticalLayoutContainer>
+      <gxtform:FieldLabel>Login Name</gxtform:FieldLabel>
+      <gxtform:TextField ui:field='loginNameField'></gxtform:TextField>
+      <gxtform:FieldLabel>Password</gxtform:FieldLabel>
+      <gxtform:PasswordField ui:field='passwordField'></gxtform:PasswordField>
+      <gxtbutton:TextButton ui:field='okButton'>OK</gxtbutton:TextButton>
+      <gxtform:FieldLabel ui:field='errorMessageLabel'/>
+    </gxtcontainer:VerticalLayoutContainer>
+  </gxt:Window>
+</ui:UiBinder>
