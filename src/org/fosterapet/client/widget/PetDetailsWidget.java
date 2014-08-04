@@ -41,7 +41,7 @@ public PetDetailsWidget(final GLRecord pet) {
   final PetDetailsWidgetUiBinder uiBinder = GWT.create(PetDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
-  _editorDriver = new GLRecordEditorDriver(EFAPTable.class);
+  _editorDriver = new GLRecordEditorDriver(EFAPTable.class, true);
   _editorDriver.addWidget(flowLayoutContainer);
   _editorDriver.edit(_pet);
 }
