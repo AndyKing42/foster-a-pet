@@ -51,14 +51,14 @@ protected void addContentPanelButtons() {
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addContextMenuItems() {
-  addContextMenuItem("Select All", EGLContextMenuItemType.SelectAll);
-  addContextMenuItem("Clear Selections", EGLContextMenuItemType.ClearAll);
   addContextMenuItem("View Details", new IGLGridContextMenuSelectionHandler() {
     @Override
     public void onContextMenuSelectionEvent(final GLGridContextMenuSelectionEvent event) {
       FAPUtil.getClientFactory().getAppTabPanelWidget().createPetDetails(event.getSelectedRecord());
     }
   });
+  addContextMenuItem("Select All", EGLContextMenuItemType.SelectAll);
+  addContextMenuItem("Clear Selections", EGLContextMenuItemType.ClearAll);
   addContextMenuItem("Delete", EGLContextMenuItemType.Delete);
 }
 //--------------------------------------------------------------------------------------------------

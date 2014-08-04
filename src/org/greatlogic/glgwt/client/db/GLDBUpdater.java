@@ -32,7 +32,7 @@ private void addColumnValueToSB(final StringBuilder sb, final IGLColumn column, 
       sb.append(value);
     }
     else {
-      sb.append(GLClientUtil.getLookupCache().lookupKeyValue(lookupTable, value));
+      sb.append(GLClientUtil.getLookupCache().lookupKeyValueUsingDisplayValue(lookupTable, value));
     }
   }
   else {

@@ -106,31 +106,35 @@ public GLListStore getListStore(final IGLTable table) {
   return addTableCache(table);
 }
 //--------------------------------------------------------------------------------------------------
-public String lookupDisplayValue(final IGLTable lookupTable, final int key) {
-  final TreeMap<Integer, GLRecord> keyToRecordMap;
-  keyToRecordMap = _keyToRecordMapByCacheDefMap.get(findCacheDef(lookupTable));
-  if (keyToRecordMap == null) {
-    return "?";
-  }
-  final GLRecord record = keyToRecordMap.get(key);
+public String lookupDisplayValueUsingKeyValue(final IGLTable lookupTable, final int key) {
+  final GLRecord record = lookupRecordUsingKeyValue(lookupTable, key);
   return record == null ? "?" : record.asString(lookupTable.getComboboxColumnMap().get(1));
 }
 //--------------------------------------------------------------------------------------------------
-public int lookupKeyValue(final IGLTable lookupTable, final String displayValue) {
-  final GLRecord record = lookupRecord(lookupTable, displayValue);
+public int lookupKeyValueUsingDisplayValue(final IGLTable lookupTable, final String displayValue) {
+  final GLRecord record = lookupRecordUsingDisplayValue(lookupTable, displayValue);
   if (record == null) {
     return 0;
   }
   return record.asInt(lookupTable.getPrimaryKeyColumn());
 }
 //--------------------------------------------------------------------------------------------------
-public GLRecord lookupRecord(final IGLTable lookupTable, final String displayValue) {
+public GLRecord lookupRecordUsingDisplayValue(final IGLTable lookupTable, final String displayValue) {
   final TreeMap<String, GLRecord> displayValueToRecordMap;
   displayValueToRecordMap = _displayValueToRecordMapByCacheDefMap.get(findCacheDef(lookupTable));
   if (displayValueToRecordMap == null) {
     return null;
   }
   return displayValueToRecordMap.get(displayValue);
+}
+//--------------------------------------------------------------------------------------------------
+public GLRecord lookupRecordUsingKeyValue(final IGLTable lookupTable, final int key) {
+  final TreeMap<Integer, GLRecord> keyToRecordMap;
+  keyToRecordMap = _keyToRecordMapByCacheDefMap.get(findCacheDef(lookupTable));
+  if (keyToRecordMap == null) {
+    return null;
+  }
+  return keyToRecordMap.get(key);
 }
 //--------------------------------------------------------------------------------------------------
 public void reloadAll() {
