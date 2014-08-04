@@ -72,4 +72,43 @@ static String rev_0_00_001(final String dbRevNumber, final boolean apply) throws
   return result;
 }
 //--------------------------------------------------------------------------------------------------
+static String rev_0_00_002(final String dbRevNumber, final boolean apply) throws GLDBException {
+  final String result = "Create the SessionToken table.";
+  if (apply) {
+    final String sql = "CREATE TABLE SessionToken\n" //
+                       + "  (\n" //
+                       + "    SessionTokenId INTEGER NOT NULL ,\n" //
+                       + "    PersonId       INTEGER NOT NULL ,\n" //
+                       + "    SessionToken   VARCHAR (100) ,\n" //
+                       + "    CONSTRAINT SessionTokenPK PRIMARY KEY CLUSTERED (SessionTokenId)\n" //
+                       + "WITH\n" //
+                       + "  (\n" //
+                       + "    ALLOW_PAGE_LOCKS = ON ,\n" //
+                       + "    ALLOW_ROW_LOCKS  = ON\n" //
+                       + "  )\n" //
+                       + "  ON \"default\"\n" //
+                       + "  )\n" //
+                       + "  ON \"default\"\n" //
+                       + "GO\n" //
+                       + "CREATE UNIQUE NONCLUSTERED INDEX\n" //
+                       + "SessionToken_SessionToken_IDX ON SessionToken\n" //
+                       + "(\n" //
+                       + "  SessionToken\n" //
+                       + ")\n" //
+                       + "ON \"default\"\n" //
+                       + "GO\n" //
+                       + "CREATE UNIQUE NONCLUSTERED INDEX\n" //
+                       + "SessionToken_PersonId_SessionToken_IDX ON SessionToken\n" //
+                       + "(\n" //
+                       + "  PersonId ,\n" //
+                       + "  SessionToken\n" //
+                       + ")\n" //
+                       + "ON \"default\"\n" //
+                       + "GO\n";
+    DBUUtil.createTablesFromSQL(sql);
+    DBUUtil.insertDBUpdateNote(dbRevNumber, "20140804", "113000", result);
+  }
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
 }

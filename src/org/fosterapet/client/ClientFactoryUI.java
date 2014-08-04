@@ -27,11 +27,6 @@ public void hidePleaseWait() {
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-public void login() {
-
-}
-//--------------------------------------------------------------------------------------------------
-@Override
 public void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget) {
   _appTabPanelWidget = appTabPanelWidget;
 }

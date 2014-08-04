@@ -22,7 +22,8 @@ void getNextId(final String tableName, final int numberOfValues,
 void getTableMetadata(final String tableNames, final AsyncCallback<String> callback);
 void log(final int priority, final String location, final String message,
          final AsyncCallback<Void> callback);
-void login(final String loginName, final String password, final AsyncCallback<Integer> callback);
+void login(final String loginName, final String password, String currentSessionToken,
+           final AsyncCallback<String> callback);
 void select(final String xmlRequest, final AsyncCallback<String> asyncCallback);
 //--------------------------------------------------------------------------------------------------
 }

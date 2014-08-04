@@ -50,8 +50,6 @@ public MainLayoutWidget getMainLayoutWidget() {
 //--------------------------------------------------------------------------------------------------
 public abstract void hidePleaseWait();
 //--------------------------------------------------------------------------------------------------
-public abstract void login();
-//--------------------------------------------------------------------------------------------------
 public abstract void showPleaseWait();
 //--------------------------------------------------------------------------------------------------
 public abstract void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget);

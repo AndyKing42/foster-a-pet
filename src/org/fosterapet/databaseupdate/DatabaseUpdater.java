@@ -36,9 +36,8 @@ public DatabaseUpdater() throws GLDBException {
   ensureDBUpdateNoteExists();
   final Map<String, Method> allMethodsMap = getAllMethodsMap();
   final Set<String> alreadyAppliedRevNumbersSet = getAlreadyAppliedRevNumbersSet();
-  final TreeMap<String, Method> unappliedMethodsMap =
-                                                      getUnappliedMethodsMap(allMethodsMap,
-                                                                             alreadyAppliedRevNumbersSet);
+  final TreeMap<String, Method> unappliedMethodsMap;
+  unappliedMethodsMap = getUnappliedMethodsMap(allMethodsMap, alreadyAppliedRevNumbersSet);
   if (unappliedMethodsMap.size() == 0) {
     GLLog.toSystemOut("The database is up to date", GLUtil.LineSeparator);
   }

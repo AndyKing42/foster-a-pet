@@ -70,9 +70,8 @@ static void applySQLFile(final String sqlFilename) throws GLDBException {
   GLSchemaLoader schemaLoader;
   try {
     final String configFilename = GLConfig.getConfigFilename();
-    final String sqlFilePath =
-                               configFilename.substring(0, configFilename.lastIndexOf('/') + 1) +
-                                       sqlFilename;
+    final String sqlFilePath = configFilename.substring(0, configFilename.lastIndexOf('/') + 1) + //
+                               sqlFilename;
     schemaLoader = GLSchemaLoader.createUsingFilename(sqlFilePath, "^ *[gG][oO] *$", "--");
     for (final GLSchemaTable table : schemaLoader.getTables()) {
       if (!table.getTableName().equalsIgnoreCase("DBUpdateNote")) {
