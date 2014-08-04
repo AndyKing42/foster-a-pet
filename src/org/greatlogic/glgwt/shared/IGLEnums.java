@@ -1,6 +1,4 @@
 package org.greatlogic.glgwt.shared;
-
-import java.util.TreeMap;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -14,6 +12,8 @@ import java.util.TreeMap;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import java.util.TreeMap;
+
 public interface IGLEnums {
 //--------------------------------------------------------------------------------------------------
 public enum EGLColumnDataType {

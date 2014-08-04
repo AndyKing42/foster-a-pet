@@ -1,5 +1,4 @@
 package org.greatlogic.glgwt.client.db;
-import org.greatlogic.glgwt.client.core.GLClientUtil;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -13,6 +12,7 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.shared.IGLEnums.EGLDBException;
 
 public class GLDBException extends Exception {
