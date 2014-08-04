@@ -17,6 +17,9 @@ import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.shared.IGLTable;
+import com.google.api.gwt.oauth2.client.Auth;
+import com.google.api.gwt.oauth2.client.AuthRequest;
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
@@ -105,6 +108,24 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
   }
   final IGLTable table = EFAPTable.valueOf(tableName);
   FAPUtil.getClientFactory().getAppTabPanelWidget().createGenericTableGrid(table);
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"oauthTestButton"})
+public void onOAuthTestButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final String clientId;
+  clientId = "744923829607-h9dfeu9p4pjsvmgcgdu6o1hbnt5ret76.apps.googleusercontent.com";
+  AuthRequest authRequest = new AuthRequest("https://accounts.google.com/o/oauth2/auth", clientId);
+  authRequest = authRequest.withScopes("profile");
+  Auth.get().login(authRequest, new Callback<String, Throwable>() {
+    @Override
+    public void onFailure(final Throwable t) {
+      GLLog.popup(30, "OAuth failed:" + t.getMessage());
+    }
+    @Override
+    public void onSuccess(final String result) {
+      GLLog.popup(30, "OAuth succeeded");
+    }
+  });
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})

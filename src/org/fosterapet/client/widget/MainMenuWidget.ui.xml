@@ -29,6 +29,12 @@
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
+        ui:field='oauthTestButton'
+        text='OAuth Test'
+        visible='true'>
+      </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
+      <gxtbutton:TextButton
         text='Grid Options'
         toolTip='Grid options apply only to Pet grids, and will take effect the next time a Pet grid is created'>
         <gxtbutton:menu>
