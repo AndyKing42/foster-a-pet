@@ -6,10 +6,11 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import javax.validation.ConstraintViolation;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
-import org.greatlogic.glgwt.client.ui.GLFieldInitializers;
+import org.greatlogic.glgwt.client.ui.GLFieldUtils;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.editor.client.EditorDriver;
@@ -26,9 +27,9 @@ import com.sencha.gxt.widget.core.client.event.RemoveEvent;
 import com.sencha.gxt.widget.core.client.event.RemoveEvent.RemoveHandler;
 import com.sencha.gxt.widget.core.client.form.BigDecimalField;
 import com.sencha.gxt.widget.core.client.form.CheckBox;
+import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.DateField;
-import com.sencha.gxt.widget.core.client.form.IntegerField;
-import com.sencha.gxt.widget.core.client.form.TextField;
+import com.sencha.gxt.widget.core.client.form.FieldLabel;
 
 public class GLRecordEditorDriver implements EditorDriver<GLRecord>, IGLRecordChangeEventHandler {
 //--------------------------------------------------------------------------------------------------
@@ -61,32 +62,48 @@ public void accept(final EditorVisitor visitor) {
 }
 //--------------------------------------------------------------------------------------------------
 public void addWidget(final Widget widget) {
-  if (widget instanceof Container) {
+  if (widget instanceof Container && !(widget instanceof FieldLabel)) {
     final Container container = (Container)widget;
+    createContainerHandlers(container);
     for (final Widget childWidget : container) {
       addWidget(childWidget);
     }
-    HandlerRegistration handler = container.addAddHandler(new AddHandler() {
-      @Override
-      public void onAdd(final AddEvent event) {
-        addWidget(event.getWidget());
-      }
-    });
-    _containerAddHandlerMap.put(container, handler);
-    handler = container.addRemoveHandler(new RemoveHandler() {
-      @Override
-      public void onRemove(final RemoveEvent event) {
-        removeWidget(event.getWidget());
-      }
-    });
-    _removeHandlerMap.put(container, handler);
   }
   else {
     final IGLColumn column = getColumnFromWidget(widget);
     if (column != null) {
-      _hasValueByColumnMap.put(column, (HasValue<?>)widget);
+      HasValue<?> hasValue;
+      if (widget instanceof FieldLabel) {
+        final FieldLabel fieldLabel = (FieldLabel)widget;
+        if (fieldLabel.getText().isEmpty()) {
+          fieldLabel.setText(column.getTitle());
+        }
+        hasValue = GLFieldUtils.createField(column);
+        fieldLabel.add((Widget)hasValue);
+      }
+      else {
+        hasValue = (HasValue<?>)widget;
+      }
+      _hasValueByColumnMap.put(column, hasValue);
     }
   }
+}
+//--------------------------------------------------------------------------------------------------
+private void createContainerHandlers(final Container container) {
+  HandlerRegistration handler = container.addAddHandler(new AddHandler() {
+    @Override
+    public void onAdd(final AddEvent event) {
+      addWidget(event.getWidget());
+    }
+  });
+  _containerAddHandlerMap.put(container, handler);
+  handler = container.addRemoveHandler(new RemoveHandler() {
+    @Override
+    public void onRemove(final RemoveEvent event) {
+      removeWidget(event.getWidget());
+    }
+  });
+  _removeHandlerMap.put(container, handler);
 }
 //--------------------------------------------------------------------------------------------------
 public void edit(final GLRecord... records) {
@@ -194,7 +211,7 @@ public boolean setConstraintViolations(final Iterable<ConstraintViolation<?>> vi
   throw new UnsupportedOperationException();
 }
 //--------------------------------------------------------------------------------------------------
-public void setValue(final IGLTable table, final String columnName, final Object value) {
+private void setValue(final IGLTable table, final String columnName, final Object value) {
   final IGLColumn column = table.findColumnUsingColumnName(columnName);
   final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
   if (hasValue != null) {
@@ -207,43 +224,38 @@ private void setWidgetValue(final HasValue<?> hasValue, final GLRecord record,
   setWidgetValue(hasValue, column, record.asObject(column));
 }
 //--------------------------------------------------------------------------------------------------
+@SuppressWarnings("unchecked")
 private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, final Object value) {
   final String stringValue = value == null ? "" : value.toString();
   switch (column.getDataType()) {
     case Boolean:
-      final CheckBox checkBox = (CheckBox)hasValue;
-      GLFieldInitializers.initialize(checkBox, column);
-      checkBox.setValue(GLClientUtil.stringToBoolean(stringValue));
+      ((CheckBox)hasValue).setValue(GLClientUtil.stringToBoolean(stringValue));
       break;
     case Currency:
-      final BigDecimalField currencyField = (BigDecimalField)hasValue;
-      GLFieldInitializers.initialize(currencyField, column);
-      currencyField.setValue(GLClientUtil.stringToDec(stringValue));
+      ((BigDecimalField)hasValue).setValue(GLClientUtil.stringToDec(stringValue));
       break;
     case Date:
-      final DateField dateField = (DateField)hasValue;
-      GLFieldInitializers.initialize(dateField, column);
-      dateField.setValue(GLClientUtil.stringToDate(stringValue));
+      ((DateField)hasValue).setValue(GLClientUtil.stringToDate(stringValue));
       break;
     case DateTime:
-      final DateField dateTimeField = (DateField)hasValue;
-      GLFieldInitializers.initialize(dateTimeField, column);
-      dateTimeField.setValue(GLClientUtil.stringToDate(stringValue));
+      ((DateField)hasValue).setValue(GLClientUtil.stringToDate(stringValue));
       break;
     case Decimal:
-      final BigDecimalField bigDecimalField = (BigDecimalField)hasValue;
-      GLFieldInitializers.initialize(bigDecimalField, column);
-      bigDecimalField.setValue(GLClientUtil.stringToDec(stringValue));
+      ((BigDecimalField)hasValue).setValue(GLClientUtil.stringToDec(stringValue));
       break;
     case Int:
-      final IntegerField integerField = (IntegerField)hasValue;
-      GLFieldInitializers.initialize(integerField, column);
-      integerField.setValue(GLClientUtil.stringToInt(stringValue));
+      if (column.getLookupType().getTable() == null) {
+        ((HasValue<Integer>)hasValue).setValue(GLClientUtil.stringToInt(stringValue));
+      }
+      else if (hasValue instanceof ComboBox) {
+        final int key = GLClientUtil.stringToInt(stringValue);
+        final GLRecord record = GLClientUtil.getLookupCache() //
+                                            .lookupRecordUsingKeyValue(EFAPTable.PetType, key);
+        ((ComboBox<GLRecord>)hasValue).setValue(record);
+      }
       break;
     case String:
-      final TextField textField = (TextField)hasValue;
-      GLFieldInitializers.initialize(textField, column);
-      textField.setValue(stringValue);
+      ((HasValue<String>)hasValue).setValue(stringValue);
       break;
   }
 }

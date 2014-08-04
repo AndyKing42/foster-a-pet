@@ -9,19 +9,12 @@
 >
   <gxtcontainer:FlowLayoutContainer ui:field='flowLayoutContainer'>
     <gxtcontainer:VerticalLayoutContainer>
-      <gxtform:FieldLabel text='Name'/>
-      <gxtform:TextField itemId='Pet.PetName'/>
-      <gxtform:FieldLabel text='Type'/>
-        <!-- 
-        <gxtform:ComboBox
-          ui:field='petTypeComboBox'
-          forceSelection='true'
-          triggerAction='ALL'/>
-           -->
-      <gxtform:FieldLabel text='Date of Birth'/>
-      <gxtform:DateField itemId='Pet.DateOfBirth'/>
-      <gxtform:FieldLabel text='Adoption Fee'/>
-      <gxtform:BigDecimalField itemId='Pet.AdoptionFee'/>
+      <gxtform:FieldLabel itemId='Pet.PetName'/>
+      <gxtform:FieldLabel itemId='Pet.PetTypeId'/>
+      <gxtform:FieldLabel itemId='Pet.Sex'/>
+      <gxtform:FieldLabel itemId='Pet.DateOfBirth'/>
+      <gxtform:FieldLabel itemId='Pet.IntakeDate'/>
+      <gxtform:FieldLabel itemId='Pet.AdoptionFee'/>
       <gxtbutton:TextButton
         ui:field='saveButton'
         text='Save'/>
