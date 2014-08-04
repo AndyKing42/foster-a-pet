@@ -1,6 +1,4 @@
 package org.greatlogic.glgwt.shared;
-
-import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -14,6 +12,8 @@ import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
+
 public interface IGLColumn {
 //--------------------------------------------------------------------------------------------------
 public int getComboboxSeq();

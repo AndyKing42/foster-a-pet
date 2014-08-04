@@ -12,7 +12,6 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-
 import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;

@@ -1,6 +1,4 @@
 package org.greatlogic.glgwt.client.core;
-
-import org.greatlogic.glgwt.client.core.GLCSV.EGLCSVException;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -14,6 +12,7 @@ import org.greatlogic.glgwt.client.core.GLCSV.EGLCSVException;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.greatlogic.glgwt.client.core.GLCSV.EGLCSVException;
 // --------------------------------------------------------------------------------------------------
 public class GLCSVException extends Exception {
 //--------------------------------------------------------------------------------------------------

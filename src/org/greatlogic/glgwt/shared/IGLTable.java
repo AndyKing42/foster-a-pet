@@ -1,8 +1,4 @@
 package org.greatlogic.glgwt.shared;
-
-import java.util.Collection;
-import java.util.TreeMap;
-import org.greatlogic.glgwt.client.db.GLRecord;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -16,6 +12,10 @@ import org.greatlogic.glgwt.client.db.GLRecord;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import java.util.Collection;
+import java.util.TreeMap;
+import org.greatlogic.glgwt.client.db.GLRecord;
+
 public interface IGLTable {
 //--------------------------------------------------------------------------------------------------
 public String getAbbrev();
