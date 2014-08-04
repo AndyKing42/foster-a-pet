@@ -34,6 +34,7 @@
   <inherits name='com.sencha.gxt.ui.GXT'/>
   <inherits name='com.sencha.gxt.theme.gray.Gray'/>
   <inherits name='org.greatlogic.glgwt.GLGWT'/>
+  <inherits name="com.google.api.gwt.oauth2.OAuth2"/>
   
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.fosterapet.client.FosterAPet'/>
@@ -41,5 +42,4 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
-  
 </module>
