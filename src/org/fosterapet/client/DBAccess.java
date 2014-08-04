@@ -35,6 +35,7 @@ public static void load(final GLListStore listStore, final IGLTable table,
     sql.from(table);
     sql.orderBy(orderByClause);
     sql.setIncludeArchivedRows(includeArchivedRows);
+    restrict_by_org_id();
     sql.executeSelect(listStore, new IGLSQLSelectCallback() {
       @Override
       public void onFailure(final Throwable t) {
@@ -47,30 +48,9 @@ public static void load(final GLListStore listStore, final IGLTable table,
     });
   }
   catch (final GLDBException dbe) {
-    //    GLClientUtil.getRemoteService().log(logLevel, location, message, callback);
+    // todo: something useful ... GLClientUtil.getRemoteService().log(logLevel, location, message, callback);
   }
 }
-////--------------------------------------------------------------------------------------------------
-//public static void loadPets(final GLListStore petListStore) {
-//  try {
-//    final GLSQL petSQL = GLSQL.select();
-//    petSQL.from(EFAPTable.Pet);
-//    petSQL.orderBy(EFAPTable.Pet, Pet.PetName, true);
-//    petSQL.executeSelect(petListStore, new IGLSQLSelectCallback() {
-//      @Override
-//      public void onFailure(final Throwable t) {
-//        GLLog.popup(30, "Pet loading failed: " + t.getMessage());
-//      }
-//      @Override
-//      public void onSuccess() {
-//        GLLog.popup(5, "Pets loaded successfully");
-//      }
-//    });
-//  }
-//  catch (final GLDBException dbe) {
-//    //    GLClientUtil.getRemoteService().log(logLevel, location, message, callback);
-//  }
-//}
 //--------------------------------------------------------------------------------------------------
 public static void reloadTestData() {
   final IRemoteServiceAsync remoteService = ClientFactory.Instance.getRemoteService();
