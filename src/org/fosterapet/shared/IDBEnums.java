@@ -1293,7 +1293,7 @@ public enum Pet implements IGLColumn {
 AdoptionFee("Adoption Fee", EGLColumnDataType.Currency, 0, false, "0", false, 0, null, -1),
 ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
 DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
-IntakeDate("Intake Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+IntakeDate("Intake Date", EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
 OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
 PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
 PetName("Pet Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
