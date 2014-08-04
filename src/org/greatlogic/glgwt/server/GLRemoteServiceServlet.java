@@ -91,6 +91,7 @@ public void log(final int priority, final String location, final String message)
  */
 @Override
 public Integer login(final String loginName, final String password) {
+  login();
   // find the user using the loginName and password
   // if the user isn't found {
   //    GLLog.infoSummary("Login failed for login name:" + loginName);
