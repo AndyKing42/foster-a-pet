@@ -51,11 +51,14 @@ private static TreeMap<String, IGLTable>              _tableByTableNameMap;
 
 private final HashMap<Container, HandlerRegistration> _containerAddHandlerMap;
 private final HashMap<IGLColumn, HasValue<?>>         _hasValueByColumnMap;
+private final boolean                                 _insertWidgetsBelowLabels;
 private final HashMap<IGLTable, GLRecord>             _modifiedRecordMap;
 private final HashMap<IGLTable, GLRecord>             _originalRecordMap;
 private final HashMap<Container, HandlerRegistration> _removeHandlerMap;
 //--------------------------------------------------------------------------------------------------
-public GLRecordEditorDriver(final Class<? extends Enum<?>> tableEnumClass) {
+public GLRecordEditorDriver(final Class<? extends Enum<?>> tableEnumClass,
+                            final boolean insertWidgetsBelowLabels) {
+  _insertWidgetsBelowLabels = insertWidgetsBelowLabels;
   if (_tableByTableNameMap == null) {
     _tableByTableNameMap = new TreeMap<>();
     for (final Enum<?> table : tableEnumClass.getEnumConstants()) {
@@ -107,7 +110,7 @@ private void addWidgetNonContainer(final Widget widget) {
       }
       hasValue = GLFieldUtils.createField(column);
       final Container parent = (Container)fieldLabel.getParent();
-      if (parent instanceof InsertResizeContainer) {
+      if (_insertWidgetsBelowLabels && parent instanceof InsertResizeContainer) {
         final int childIndex = parent.getWidgetIndex(fieldLabel);
         ((InsertResizeContainer)parent).insert((Widget)hasValue, childIndex + 1);
       }
