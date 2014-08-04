@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLRecord;
-import org.greatlogic.glgwt.client.ui.GLFieldUtils;
+import org.greatlogic.glgwt.client.widget.GLFieldUtils;
 import org.greatlogic.glgwt.client.widget.GLValidationRecord;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidationError;

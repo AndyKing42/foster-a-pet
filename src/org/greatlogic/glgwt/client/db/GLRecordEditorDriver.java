@@ -12,6 +12,7 @@ package org.greatlogic.glgwt.client.db;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
-import org.greatlogic.glgwt.client.ui.GLFieldUtils;
+import org.greatlogic.glgwt.client.widget.GLFieldUtils;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.editor.client.EditorDriver;
@@ -33,6 +34,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 import com.sencha.gxt.widget.core.client.Component;
 import com.sencha.gxt.widget.core.client.container.Container;
+import com.sencha.gxt.widget.core.client.container.InsertResizeContainer;
 import com.sencha.gxt.widget.core.client.event.AddEvent;
 import com.sencha.gxt.widget.core.client.event.AddEvent.AddHandler;
 import com.sencha.gxt.widget.core.client.event.RemoveEvent;
@@ -75,29 +77,48 @@ public void accept(final EditorVisitor visitor) {
 //--------------------------------------------------------------------------------------------------
 public void addWidget(final Widget widget) {
   if (widget instanceof Container && !(widget instanceof FieldLabel)) {
-    final Container container = (Container)widget;
-    createContainerHandlers(container);
-    for (final Widget childWidget : container) {
-      addWidget(childWidget);
-    }
+    addWidgetContainer((Container)widget);
   }
   else {
-    final IGLColumn column = getColumnFromWidget(widget);
-    if (column != null) {
-      HasValue<?> hasValue;
-      if (widget instanceof FieldLabel) {
-        final FieldLabel fieldLabel = (FieldLabel)widget;
-        if (fieldLabel.getText().isEmpty()) {
-          fieldLabel.setText(column.getTitle());
-        }
-        hasValue = GLFieldUtils.createField(column);
-        fieldLabel.add((Widget)hasValue);
+    addWidgetNonContainer(widget);
+  }
+}
+//--------------------------------------------------------------------------------------------------
+private void addWidgetContainer(final Container container) {
+  createContainerHandlers(container);
+  // copy the existing children because additional children may be added in the call to addWidget()
+  final ArrayList<Widget> childWidgetList = new ArrayList<>();
+  for (final Widget childWidget : container) {
+    childWidgetList.add(childWidget);
+  }
+  for (final Widget childWidget : childWidgetList) {
+    addWidget(childWidget);
+  }
+}
+//--------------------------------------------------------------------------------------------------
+private void addWidgetNonContainer(final Widget widget) {
+  final IGLColumn column = getColumnFromWidget(widget);
+  if (column != null) {
+    HasValue<?> hasValue;
+    if (widget instanceof FieldLabel) {
+      final FieldLabel fieldLabel = (FieldLabel)widget;
+      if (fieldLabel.getText().isEmpty()) {
+        fieldLabel.setText(column.getTitle());
+      }
+      hasValue = GLFieldUtils.createField(column);
+      final Container parent = (Container)fieldLabel.getParent();
+      if (parent instanceof InsertResizeContainer) {
+        final int childIndex = parent.getWidgetIndex(fieldLabel);
+        ((InsertResizeContainer)parent).insert((Widget)hasValue, childIndex + 1);
       }
       else {
-        hasValue = (HasValue<?>)widget;
+        fieldLabel.add((Widget)hasValue);
       }
-      _hasValueByColumnMap.put(column, hasValue);
     }
+    else {
+      hasValue = (HasValue<?>)widget;
+    }
+    _hasValueByColumnMap.put(column, hasValue);
   }
 }
 //--------------------------------------------------------------------------------------------------
