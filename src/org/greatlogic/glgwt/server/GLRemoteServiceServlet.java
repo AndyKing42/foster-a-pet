@@ -12,18 +12,53 @@ package org.greatlogic.glgwt.server;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.apache.commons.lang3.StringUtils;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.Person;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.greatlogic.glbase.gldb.GLColumnMetadata;
 import com.greatlogic.glbase.gldb.GLDBException;
+import com.greatlogic.glbase.gldb.GLDBUtil;
 import com.greatlogic.glbase.gldb.GLDataSource;
 import com.greatlogic.glbase.gldb.GLResultSetMetadata;
+import com.greatlogic.glbase.gldb.GLSQL;
+import com.greatlogic.glbase.gldb.IGLColumn;
+import com.greatlogic.glbase.gldb.IGLDBEnums.EGLDBOp;
+import com.greatlogic.glbase.gldb.IGLTable;
+import com.greatlogic.glbase.gllib.BCrypt;
 import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.gllib.IGLLibEnums.EGLLogLevel;
 
 @SuppressWarnings("serial")
 public class GLRemoteServiceServlet extends RemoteServiceServlet implements IGLRemoteService {
-//--------------------------------------------------------------------------------------------------
+//==================================================================================================
+private enum ELoginTable implements IGLTable {
+SessionToken(SessionToken.class);
+private final Class<? extends Enum<?>> _columnEnumClass;
+private ELoginTable(final Class<? extends Enum<?>> columnEnumClass) {
+  _columnEnumClass = columnEnumClass;
+  GLDBUtil.registerTable(this);
+}
+@Override
+public String getAbbrev() {
+  return _columnEnumClass.getSimpleName();
+}
+@Override
+public Class<? extends Enum<?>> getColumnEnumClass() {
+  return _columnEnumClass;
+}
+@Override
+public String getDataSourceName() {
+  return null;
+}
+}
+private enum SessionToken implements IGLColumn {
+PersonId,
+SessionToken,
+SessionTokenId
+}
+//==================================================================================================
 /**
  * Inserts, updates, or deletes rows. The entries in the "dbChanges" parameter are broken into
  * linefeed-separated lines. Each line represents an insert (one per line), update (one per line),
@@ -91,16 +126,59 @@ public void log(final int priority, final String location, final String message)
  * attempt is unsuccessful then the return value will be an empty string.
  */
 @Override
-public String login(final String loginName, final String currentSessionToken, final String password) {
-  // find the user using the loginName and password
-  // if the user isn't found {
-  //    GLLog.infoSummary("Login failed for login name:" + loginName);
-  //    return 0;
-  // }
-  //  GLLog.infoSummary("Login succeeded for login name:" + user.getLoginName());
-  //  getThreadLocalRequest().getSession().setAttribute(ESessionAttribute.LoginUser.name(), user);
-  //  return user.getUserId();
-  return getThreadLocalRequest().getSession().getId();
+public String login(final String loginName, final String password, final String currentSessionToken) {
+  boolean loginSucceeded = false;
+  int sessionTokenId = 0;
+  int personId;
+  if (StringUtils.isEmpty(currentSessionToken)) {
+    final GLSQL personSQL = GLSQL.select();
+    personSQL.from(EFAPTable.Person.name());
+    personSQL.whereAnd(0, Person.LoginName + "='" + loginName + "'", 0);
+    if (personSQL.next() &&
+        BCrypt.checkpw(password, personSQL.asString(Person.PasswordHash.name()))) {
+      loginSucceeded = true;
+      personId = personSQL.asInt(Person.PersonId.name());
+    }
+  }
+  else {
+    GLSQL sessionTokenSQL;
+    try {
+      sessionTokenSQL = GLSQL.select();
+      sessionTokenSQL.from(ELoginTable.SessionToken);
+      sessionTokenSQL.whereAnd(SessionToken.SessionToken, EGLDBOp.Equals, currentSessionToken);
+      sessionTokenSQL.open();
+      try {
+        if (sessionTokenSQL.next()) {
+          loginSucceeded = true;
+          personId = sessionTokenSQL.asInt(SessionToken.PersonId);
+          sessionTokenId = sessionTokenSQL.asInt(SessionToken.SessionTokenId);
+          // todo: check for expiration
+        }
+      }
+      finally {
+        sessionTokenSQL.close();
+      }
+    }
+    catch (final GLDBException e) {
+      GLLog.major("Login attempt failed for user:" + loginName, e);
+    }
+  }
+  String sessionToken;
+  if (loginSucceeded) {
+    sessionToken = getThreadLocalRequest().getSession().getId();
+    final GLSQL sessionTokenSQL;
+    if (sessionTokenId == 0) {
+      sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
+      sessionTokenSQL.setValue(SessionToken.PersonId, personId);
+      sessionTokenSQL.setValue(SessionToken.SessionTokenId, next_id_value());
+    }
+    else {
+      sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);
+    }
+    sessionTokenSQL.setValue(SessionToken.SessionToken, sessionToken);
+    sessionTokenSQL.execute();
+  }
+  return loginSucceeded ? sessionToken + "~" + personId : "";
 }
 //--------------------------------------------------------------------------------------------------
 @Override
