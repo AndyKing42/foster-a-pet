@@ -98,6 +98,7 @@ PlanTemplateEntry(PlanTemplateEntry.class),
 PlanTemplateTreatment(PlanTemplateTreatment.class),
 SearchDef(SearchDef.class),
 SearchDefDetail(SearchDefDetail.class),
+SessionToken(SessionToken.class),
 State(State.class),
 Treatment(Treatment.class),
 TreatmentType(TreatmentType.class),
@@ -1869,6 +1870,71 @@ private SearchDefDetail(final String title, final EGLColumnDataType dataType,
                         final int decimalPlacesOrLength, final boolean nullable,
                         final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                         final IGLLookupType lookupType, final int defaultGridColumnWidth) {
+  _title = title;
+  _dataType = dataType;
+  _decimalPlacesOrLength = decimalPlacesOrLength;
+  _nullable = nullable;
+  _defaultValue = defaultValue;
+  _primaryKey = primaryKey;
+  _comboboxSeq = comboboxSeq;
+  _lookupType = lookupType;
+  _defaultGridColumnWidth = defaultGridColumnWidth;
+}
+@Override
+public int getComboboxSeq() {
+  return _comboboxSeq;
+}
+@Override
+public EGLColumnDataType getDataType() {
+  return _dataType;
+}
+@Override
+public int getDecimalPlacesOrLength() {
+  return _decimalPlacesOrLength;
+}
+@Override
+public int getDefaultGridColumnWidth() {
+  return _defaultGridColumnWidth;
+}
+@Override
+public Object getDefaultValue() {
+  return _defaultValue;
+}
+@Override
+public IGLLookupType getLookupType() {
+  return _lookupType;
+}
+@Override
+public boolean getNullable() {
+  return _nullable;
+}
+@Override
+public boolean getPrimaryKey() {
+  return _primaryKey;
+}
+@Override
+public String getTitle() {
+  return _title;
+}
+}
+//--------------------------------------------------------------------------------------------------
+public enum SessionToken implements IGLColumn {
+PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+SessionToken("Session Token", EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
+SessionTokenId("Sesion Token Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1);
+private final int               _comboboxSeq;
+private final EGLColumnDataType _dataType;
+private final int               _decimalPlacesOrLength;
+private final int               _defaultGridColumnWidth;
+private final Object            _defaultValue;
+private final IGLLookupType     _lookupType;
+private final boolean           _nullable;
+private final boolean           _primaryKey;
+private final String            _title;
+private SessionToken(final String title, final EGLColumnDataType dataType,
+                     final int decimalPlacesOrLength, final boolean nullable,
+                     final String defaultValue, final boolean primaryKey, final int comboboxSeq,
+                     final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
