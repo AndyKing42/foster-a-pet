@@ -52,7 +52,8 @@ SearchDefDetailId(25, "SearchDefDetailId", EFAPTable.SearchDefDetail),
 StateId(26, "StateId", EFAPTable.State),
 TreatmentId(27, "TreatmentId", EFAPTable.Treatment),
 TreatmentTypeId(28, "TreatmentTypeId", EFAPTable.TreatmentType),
-ValueListId(29, "ValueListId", EFAPTable.ValueList);
+ValueListId(29, "ValueListId", EFAPTable.ValueList),
+SessionTokenId(30, "SessionTokenId", EFAPTable.SessionToken);
 private final String    _name;
 private final int       _nextId;
 private final EFAPTable _table;

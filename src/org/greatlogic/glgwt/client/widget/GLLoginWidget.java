@@ -42,17 +42,21 @@ TextButton                    okButton;
 PasswordField                 passwordField;
 @UiField
 Window                        window;
+
+private boolean               _firstTime;
+private final String          _windowHeadingText;
 //==================================================================================================
 interface IGLLoginWidgetBinder extends UiBinder<Widget, GLLoginWidget> { //
 }
 //==================================================================================================
-public GLLoginWidget() {
+public GLLoginWidget(final String windowHeadingText) {
+  _windowHeadingText = windowHeadingText;
   final IGLLoginWidgetBinder binder = GWT.create(IGLLoginWidgetBinder.class);
   binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void logIn(final String windowHeadingText) {
-  window.setHeadingText(windowHeadingText);
+public void logIn() {
+  window.setHeadingText(_windowHeadingText);
   window.show();
 }
 //--------------------------------------------------------------------------------------------------
@@ -61,7 +65,11 @@ public void logIn(final String loginName, final String password) {
     @Override
     public void onFailure(final Throwable caught) {
       GLLog.popup(10, "Login failed");
-      errorMessageLabel.setText("Login failed ... please try again");
+      if (!_firstTime) {
+        errorMessageLabel.setText("Login failed ... please try again");
+      }
+      _firstTime = false;
+      logIn();
     }
     @Override
     public void onSuccess(final String result) {
@@ -70,8 +78,18 @@ public void logIn(final String loginName, final String password) {
         errorMessageLabel.setText("Login failed ... please try again");
         return;
       }
+      final int tildeIndex = result.lastIndexOf('~');
+      if (tildeIndex < 1 || tildeIndex == result.length() - 1) {
+        return;
+      }
+      final String sessionToken = result.substring(0, tildeIndex);
+      final int personId = GLClientUtil.stringToInt(result.substring(tildeIndex + 1), -1);
+      if (personId <= 0) {
+        return;
+      }
       GLLog.popup(10, "Login succeeded:" + result);
-      Cookies.setCookie(SessionTokenCookie, result);
+      errorMessageLabel.setText("");
+      Cookies.setCookie(SessionTokenCookie, sessionToken);
       window.hide();
     }
   };
