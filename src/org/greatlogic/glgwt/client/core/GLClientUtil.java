@@ -51,10 +51,10 @@ import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
-private static GLClientFactory  _clientFactory;
-private static GLLoginWidget _loginWidget;
-private static Random           _random;
-private static DateTimeFormat   _yyyymmddDateTimeFormat;
+private static GLClientFactory _clientFactory;
+private static GLLoginWidget   _loginWidget;
+private static Random          _random;
+private static DateTimeFormat  _yyyymmddDateTimeFormat;
 //--------------------------------------------------------------------------------------------------
 static {
   _random = new Random(System.currentTimeMillis());
@@ -111,13 +111,18 @@ private static void disableBackspace() {
   Event.addNativePreviewHandler(new NativePreviewHandler() {
     @Override
     public void onPreviewNativeEvent(final NativePreviewEvent event) {
-      if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE &&
-          event.getNativeEvent().getEventTarget() != null) {
-        final String tagName = Element.as(event.getNativeEvent().getEventTarget()).getTagName();
-        if (!tagName.equalsIgnoreCase("input") && !tagName.equalsIgnoreCase("textarea")) {
-          event.getNativeEvent().stopPropagation();
-          event.getNativeEvent().preventDefault();
+      try {
+        if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_BACKSPACE &&
+            event.getNativeEvent().getEventTarget() != null) {
+          final String tagName = Element.as(event.getNativeEvent().getEventTarget()).getTagName();
+          if (!tagName.equalsIgnoreCase("input") && !tagName.equalsIgnoreCase("textarea")) {
+            event.getNativeEvent().stopPropagation();
+            event.getNativeEvent().preventDefault();
+          }
         }
+      }
+      catch (final Exception e) {
+        // ignore exceptions
       }
     }
   });
@@ -213,10 +218,13 @@ public static GLValidators getValidators() {
   return _clientFactory.getValidators();
 }
 //--------------------------------------------------------------------------------------------------
-public static void initialize(final String appDescription, final GLClientFactory clientFactory) {
+public static void initialize(final String appDescription, final GLClientFactory clientFactory,
+                              final String loginWidgetHeadingText) {
   _clientFactory = clientFactory;
   disableBackspace();
   addWindowClosingHandler(appDescription);
+  _loginWidget = new GLLoginWidget(loginWidgetHeadingText);
+  _loginWidget.logIn("", "");
 }
 //--------------------------------------------------------------------------------------------------
 public static boolean isBlank(final CharSequence s) {
@@ -266,11 +274,8 @@ public static ArrayList<String> loadListFromStrings(final ArrayList<String> stri
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public static void logIn(final String windowHeadingText) {
-  if (_loginWidget == null) {
-    _loginWidget = new GLLoginWidget();
-  }
-  _loginWidget.logIn(windowHeadingText);
+public static void logIn() {
+  _loginWidget.logIn();
 }
 //--------------------------------------------------------------------------------------------------
 /**

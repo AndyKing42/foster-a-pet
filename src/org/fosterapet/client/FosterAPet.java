@@ -12,10 +12,7 @@ package org.fosterapet.client;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.widget.GridWidgetManager;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.db.GLListStore;
-import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -32,15 +29,7 @@ private ScheduledCommand createModuleLoadCommand() {
     @Override
     public void execute() {
       FAPUtil.initialize();
-      final boolean loadTestData = false;
-      final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets1");
-      if (loadTestData) {
-        final GLListStore petTypeListStore = new GLListStore();
-        TestData.loadPetTypeTestData(petTypeListStore);
-        TestData.loadPetTestData(gridWidget.getListStore());
-      }
       RootLayoutPanel.get().add(FAPUtil.getClientFactory().getMainLayoutWidget());
-      // todo: GLClientUtil.login();
     }
   };
 }

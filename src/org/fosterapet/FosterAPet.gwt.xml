@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
   When updating your version of GWT, you should also update this DTD reference,
   so that your app can take advantage of the latest GWT module capabilities.
@@ -9,8 +9,8 @@
   <!-- Just compile for Chrome -->
   <!--
   <set-property
-    name="user.agent"
-    value="safari"/>
+    name='user.agent'
+    value='safari'/>
   -->
   
   <!-- Compile all permutations into one file -->
@@ -28,13 +28,13 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
   
   <!-- GXT Stylesheet -->
-  <stylesheet src="reset.css"/>
+  <stylesheet src='reset.css'/>
  
   <!-- Other module inherits                                      -->
   <inherits name='com.sencha.gxt.ui.GXT'/>
   <inherits name='com.sencha.gxt.theme.gray.Gray'/>
   <inherits name='org.greatlogic.glgwt.GLGWT'/>
-  <inherits name="com.google.api.gwt.oauth2.OAuth2"/>
+  <inherits name='com.google.api.gwt.oauth2.OAuth2'/>
   
   <!-- Specify the app entry point class.                         -->
   <entry-point class='org.fosterapet.client.FosterAPet'/>

@@ -25,9 +25,9 @@ public static ClientFactory getClientFactory() {
 //--------------------------------------------------------------------------------------------------
 static void initialize() {
   _clientFactory = new ClientFactoryUI();
-  GLClientUtil.initialize("Foster A Pet", _clientFactory);
+  GLClientUtil.initialize("Foster A Pet", _clientFactory, "Foster A Pet Login");
   _clientFactory.setMainLayoutWidget(new MainLayoutWidget());
-  _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
+  // todo: restore the user's prior state? _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
 }
 //--------------------------------------------------------------------------------------------------
 }

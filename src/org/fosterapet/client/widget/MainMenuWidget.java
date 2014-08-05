@@ -110,21 +110,7 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"logInButton"})
 public void onLogInButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  GLClientUtil.logIn("Foster A Pet Login");
-  //  final String clientId;
-  //  clientId = "744923829607-h9dfeu9p4pjsvmgcgdu6o1hbnt5ret76.apps.googleusercontent.com";
-  //  AuthRequest authRequest = new AuthRequest("https://accounts.google.com/o/oauth2/auth", clientId);
-  //  authRequest = authRequest.withScopes("profile");
-  //  Auth.get().login(authRequest, new Callback<String, Throwable>() {
-  //    @Override
-  //    public void onFailure(final Throwable t) {
-  //      GLLog.popup(30, "OAuth failed:" + t.getMessage());
-  //    }
-  //    @Override
-  //    public void onSuccess(final String result) {
-  //      GLLog.popup(30, "OAuth succeeded");
-  //    }
-  //  });
+  GLClientUtil.logIn();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
