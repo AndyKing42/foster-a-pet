@@ -130,7 +130,7 @@ private void updateSessionToken() throws GLDBException {
     sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
     sessionTokenSQL.setValue(SessionToken.PersonId, _personId);
     sessionTokenSQL.setValue(SessionToken.SessionTokenId,
-                             _remoteServiceServlet.getNextId(ELoginTable.SessionToken.name(), 1));
+                             GLServerUtil.getNextIdValue(ELoginTable.SessionToken.name(), 1));
   }
   else {
     sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);

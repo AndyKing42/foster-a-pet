@@ -35,6 +35,7 @@ protected ClientFactory() {
   _dbUpdater = new GLDBUpdater();
   _eventBus = new GLEventBus();
   _remoteService = GWT.create(IRemoteService.class);
+  _remoteServiceHelper = new RemoteServiceHelper();
   _lookupCache = new GLLookupCache();
   LookupCacheLoader.load(_lookupCache);
   _validators = new Validators();
@@ -50,10 +51,10 @@ public MainLayoutWidget getMainLayoutWidget() {
 //--------------------------------------------------------------------------------------------------
 public abstract void hidePleaseWait();
 //--------------------------------------------------------------------------------------------------
-public abstract void showPleaseWait();
-//--------------------------------------------------------------------------------------------------
 public abstract void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget);
 //--------------------------------------------------------------------------------------------------
 public abstract void setMainLayoutWidget(final MainLayoutWidget mainLayoutWidget);
+//--------------------------------------------------------------------------------------------------
+public abstract void showPleaseWait();
 //--------------------------------------------------------------------------------------------------
 }

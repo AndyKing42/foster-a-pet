@@ -12,7 +12,7 @@ package org.greatlogic.glgwt.client.core;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.greatlogic.glgwt.shared.IGLEnums.EGLLogLevel;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLLogLevel;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.widget.core.client.info.DefaultInfoConfig;

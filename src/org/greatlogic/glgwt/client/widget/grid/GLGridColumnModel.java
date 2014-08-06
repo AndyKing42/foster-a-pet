@@ -28,7 +28,7 @@ import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLForeignK
 import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLIntegerValueProvider;
 import org.greatlogic.glgwt.client.widget.grid.GLValueProviderClasses.GLStringValueProvider;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.TextCell;

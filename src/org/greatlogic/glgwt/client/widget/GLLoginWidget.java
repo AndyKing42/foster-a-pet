@@ -14,6 +14,7 @@ package org.greatlogic.glgwt.client.widget;
  */
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.shared.GLLoginResponse;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -61,7 +62,7 @@ public void logIn() {
 }
 //--------------------------------------------------------------------------------------------------
 public void logIn(final String loginName, final String password) {
-  final AsyncCallback<String> callback = new AsyncCallback<String>() {
+  final AsyncCallback<GLLoginResponse> callback = new AsyncCallback<GLLoginResponse>() {
     @Override
     public void onFailure(final Throwable caught) {
       GLLog.popup(10, "Login failed");
@@ -72,43 +73,25 @@ public void logIn(final String loginName, final String password) {
       logIn();
     }
     @Override
-    public void onSuccess(final String result) {
-      if (result.isEmpty()) {
+    public void onSuccess(final GLLoginResponse result) {
+      if (!result.getSucceeded()) {
         GLLog.popup(10, "Login failed");
-        errorMessageLabel.setText("Login failed ... please try again");
-        return;
-      }
-      final int tildeIndex = result.lastIndexOf('~');
-      if (tildeIndex < 1 || tildeIndex == result.length() - 1) {
-        return;
-      }
-      final String sessionToken = result.substring(0, tildeIndex);
-      final int personId = GLClientUtil.stringToInt(result.substring(tildeIndex + 1), -1);
-      if (personId <= 0) {
+        if (!_firstTime) {
+          errorMessageLabel.setText("Login failed ... please try again");
+        }
+        _firstTime = false;
+        logIn();
         return;
       }
       GLLog.popup(10, "Login succeeded:" + result);
       errorMessageLabel.setText("");
-      Cookies.setCookie(SessionTokenCookie, sessionToken);
+      GLClientUtil.setSessionToken(result.getSessionToken());
+      Cookies.setCookie(SessionTokenCookie, result.getSessionToken());
       window.hide();
     }
   };
-  final String currentSessionToken = Cookies.getCookie(SessionTokenCookie);
-  GLClientUtil.getRemoteService().login(loginName, password, currentSessionToken, callback);
-  //  _loginPersonId = 0;
-  //  GLClientUtil.getRemoteService().login(loginName, password, new AsyncCallback<Integer>() {
-  //    @Override
-  //    public void onFailure(final Throwable caught) {
-  //
-  //    }
-  //    @Override
-  //    public void onSuccess(final Integer personId) {
-  //      _loginPersonId = personId;
-  //      _clientFactory.getFAPEventBus().fireEvent("PersonCache.login",
-  //                                                new LoginResponseEvent(personId));
-  //      _clientFactory.getRequestFactoryResender().resend();
-  //    }
-  //  });
+  GLClientUtil.getRemoteService().login(loginName, password, Cookies.getCookie(SessionTokenCookie),
+                                        callback);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler("okButton")

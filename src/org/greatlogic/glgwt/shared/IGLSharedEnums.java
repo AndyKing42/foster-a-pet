@@ -14,7 +14,7 @@ package org.greatlogic.glgwt.shared;
  */
 import java.util.TreeMap;
 
-public interface IGLEnums {
+public interface IGLSharedEnums {
 //--------------------------------------------------------------------------------------------------
 public enum EGLColumnDataType {
 Boolean(false, 30),
@@ -115,6 +115,13 @@ public static EGLLogLevel lookupUsingPriority(final int priority) {
 public EGLLogLevel next() {
   return ordinal() < EGLLogLevel.values().length - 1 ? EGLLogLevel.values()[ordinal() + 1] : null;
 }
+}
+//--------------------------------------------------------------------------------------------------
+public enum EGLRemoteServiceRequestType implements IGLRemoteServiceRequestType {
+ApplyDBChanges,
+GetNextId,
+GetTableMetadata,
+Select
 }
 //--------------------------------------------------------------------------------------------------
 public enum EGLSQLAttribute {

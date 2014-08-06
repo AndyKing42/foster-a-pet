@@ -17,6 +17,7 @@ import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -26,6 +27,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.util.TextMetrics;
@@ -137,6 +139,23 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
 @UiHandler({"testGridButton"})
 public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   FAPUtil.getClientFactory().getAppTabPanelWidget().createTestGrid();
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"testRemoteServiceRequestButton"})
+public void onTestRemoteServiceRequestButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final AsyncCallback<GLRemoteServiceResponse> callback;
+  callback = new AsyncCallback<GLRemoteServiceResponse>() {
+    @Override
+    public void onFailure(final Throwable caught) {
+      // todo Auto-generated method stub
+
+    }
+    @Override
+    public void onSuccess(final GLRemoteServiceResponse result) {
+      GLLog.popup(20, result.toString());
+    }
+  };
+  GLClientUtil.getRemoteServiceHelper().getNextId(EFAPTable.Pet, 3, callback);
 }
 //--------------------------------------------------------------------------------------------------
 }
