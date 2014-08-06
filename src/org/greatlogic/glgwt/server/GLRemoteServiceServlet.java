@@ -21,6 +21,8 @@ import org.greatlogic.glgwt.shared.GLRemoteServiceRequest;
 import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
 import org.greatlogic.glgwt.shared.IGLTable;
+import org.greatlogic.glgwt.shared.TestRequest;
+import org.greatlogic.glgwt.shared.TestResponse;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.greatlogic.glbase.gldb.GLColumnMetadata;
 import com.greatlogic.glbase.gldb.GLDBException;
@@ -105,4 +107,9 @@ public ArrayList<String> select(final String xmlRequest) {
   return GLDBStatement.select(xmlRequest);
 }
 //--------------------------------------------------------------------------------------------------
+@Override
+public TestResponse testRequest(final TestRequest request) {
+  // TODO Auto-generated method stub
+  return null;
+}
 }

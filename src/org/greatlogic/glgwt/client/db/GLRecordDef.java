@@ -26,14 +26,14 @@ private final IGLTable                 _table;
 /**
  * Create a new record definition.
  * @param table The table associated with this record definition.
- * @param fieldNames This will be an array of field names or columns (IGLColumn).
+ * @param fieldNamesOrColumns This will be an array of field names or columns (IGLColumn).
  */
-public GLRecordDef(final IGLTable table, final Object[] fieldNames) {
+public GLRecordDef(final IGLTable table, final Object[] fieldNamesOrColumns) {
   _table = table;
   _fieldIndexByFieldNameMap = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
-  if (fieldNames != null) {
-    for (int fieldNameIndex = 0; fieldNameIndex < fieldNames.length; ++fieldNameIndex) {
-      _fieldIndexByFieldNameMap.put(fieldNames[fieldNameIndex].toString(), fieldNameIndex);
+  if (fieldNamesOrColumns != null) {
+    for (int fieldNameIndex = 0; fieldNameIndex < fieldNamesOrColumns.length; ++fieldNameIndex) {
+      _fieldIndexByFieldNameMap.put(fieldNamesOrColumns[fieldNameIndex].toString(), fieldNameIndex);
     }
   }
 }
