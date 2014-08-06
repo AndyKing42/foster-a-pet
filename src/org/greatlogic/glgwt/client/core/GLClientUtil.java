@@ -52,6 +52,8 @@ import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
+public static final String     SessionTokenCookie = "SessionToken";
+
 private static GLClientFactory _clientFactory;
 private static GLLoginWidget   _loginWidget;
 private static Random          _random;
@@ -286,8 +288,8 @@ public static ArrayList<String> loadListFromStrings(final ArrayList<String> stri
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public static void logIn() {
-  _loginWidget.logIn();
+public static void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
+  _loginWidget.logIn(loginSuccessfulCallback);
 }
 //--------------------------------------------------------------------------------------------------
 /**

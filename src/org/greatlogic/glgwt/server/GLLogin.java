@@ -1,5 +1,17 @@
 package org.greatlogic.glgwt.server;
-
+/*
+ * Copyright 2006-2014 Andy King (GreatLogic.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 import org.apache.commons.lang3.StringUtils;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
@@ -14,11 +26,10 @@ import com.greatlogic.glbase.gllib.GLLog;
 
 class GLLogin {
 //--------------------------------------------------------------------------------------------------
-private int                          _personId;
-private final GLRemoteServiceServlet _remoteServiceServlet;
-private String                       _sessionToken;
-private int                          _sessionTokenId;
-private boolean                      _succeeded;
+private int          _personId;
+private final String _sessionToken;
+private int          _sessionTokenId;
+private boolean      _succeeded;
 //--------------------------------------------------------------------------------------------------
 private enum ELoginTable implements IGLTable {
 SessionToken(SessionToken.class);
@@ -46,13 +57,13 @@ SessionToken,
 SessionTokenId
 }
 //--------------------------------------------------------------------------------------------------
-GLLogin(final GLRemoteServiceServlet remoteServiceServlet, final String loginName,
-        final String password, final String currentSessionToken) {
-  _remoteServiceServlet = remoteServiceServlet;
+GLLogin(final String sessionId, final String loginName, final String password,
+        final String sessionTokenFromClient) {
+  _sessionToken = sessionId;
   Exception savedException = null;
   try {
-    if (!StringUtils.isEmpty(currentSessionToken)) {
-      _succeeded = loginUsingSessionToken(currentSessionToken);
+    if (!StringUtils.isEmpty(sessionTokenFromClient)) {
+      _succeeded = loginUsingSessionToken(sessionTokenFromClient);
     }
     if (!_succeeded) {
       _succeeded = loginUsingNameAndPassword(loginName, password);
@@ -124,7 +135,6 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
 }
 //--------------------------------------------------------------------------------------------------
 private void updateSessionToken() throws GLDBException {
-  _sessionToken = _remoteServiceServlet.getSessionId();
   final GLSQL sessionTokenSQL;
   if (_sessionTokenId == 0) {
     sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
