@@ -19,6 +19,5 @@ public interface IGLRemoteService extends RemoteService {
 void log(final int priority, final String location, final String message);
 GLLoginResponse login(String loginName, String password, String currentSessionToken);
 GLRemoteServiceResponse processRequest(GLRemoteServiceRequest request);
-TestResponse testRequest(TestRequest request);
 //--------------------------------------------------------------------------------------------------
 }

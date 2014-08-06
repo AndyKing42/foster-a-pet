@@ -11,13 +11,19 @@ import com.sencha.gxt.data.shared.Store.Change;
 
 public class GLDBUpdate implements Serializable {
 //--------------------------------------------------------------------------------------------------
-private static final long                serialVersionUID = 1122L;
+private static final long          serialVersionUID = 1122L;
 
-private final boolean                    _inserted;
-private final TreeMap<IGLColumn, String> _modifiedColumnMap;
-private final String                     _primaryKeyColumnName;
-private final String                     _primaryKeyValue;
-private final IGLTable                   _table;
+private boolean                    _inserted;
+private TreeMap<IGLColumn, String> _modifiedColumnMap;
+private String                     _primaryKeyColumnName;
+private String                     _primaryKeyValue;
+private IGLTable                   _table;
+//--------------------------------------------------------------------------------------------------
+/**
+ * Provide a default constructor so that objects can be passed to the server using GWT RPC.
+ */
+@SuppressWarnings("unused")
+private GLDBUpdate() {}
 //--------------------------------------------------------------------------------------------------
 public GLDBUpdate(final GLRecord record) {
   _table = record.getRecordDef().getTable();
@@ -31,10 +37,10 @@ GLDBUpdate(final GLRecord originalRecord, final GLRecord modifiedRecord) {
   this(modifiedRecord);
   final TreeSet<IGLColumn> updatedColumnSet = new TreeSet<>();
   for (final IGLColumn column : _table.getColumns()) {
-    final String modifiedValue = modifiedRecord.asString(column);
+    final String modifiedValue = resolveValue(column, modifiedRecord.asString(column));
     if ((_inserted && !modifiedValue.isEmpty()) ||
         (originalRecord != null && !modifiedValue.equals(originalRecord.asString(column)))) {
-      _modifiedColumnMap.put(column, resolveValue(column, modifiedValue));
+      _modifiedColumnMap.put(column, modifiedValue);
       updatedColumnSet.add(column);
     }
   }
@@ -49,7 +55,7 @@ GLDBUpdate(final IGLTable table, final Store<GLRecord>.Record listStoreRecord) {
     if (!_inserted || !value.isEmpty()) {
       final String columnName = change.getChangeTag().toString();
       final IGLColumn column = table.findColumnUsingColumnName(columnName);
-      _modifiedColumnMap.put(column, value);
+      _modifiedColumnMap.put(column, resolveValue(column, value));
       updatedColumnSet.add(column);
     }
   }

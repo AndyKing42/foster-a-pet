@@ -12,22 +12,12 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.TreeSet;
 import org.fosterapet.client.DBAccess;
 import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.db.GLDBUpdate;
-import org.greatlogic.glgwt.client.db.GLRecord;
-import org.greatlogic.glgwt.client.db.GLRecordDef;
-import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLRemoteServiceRequestType;
 import org.greatlogic.glgwt.shared.IGLTable;
-import org.greatlogic.glgwt.shared.TestRequest;
-import org.greatlogic.glgwt.shared.TestResponse;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
@@ -36,7 +26,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.util.TextMetrics;
@@ -148,35 +137,6 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
 @UiHandler({"testGridButton"})
 public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   FAPUtil.getClientFactory().getAppTabPanelWidget().createTestGrid();
-}
-//--------------------------------------------------------------------------------------------------
-@UiHandler({"testRemoteServiceRequestButton"})
-public void onTestRemoteServiceRequestButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  final AsyncCallback<TestResponse> callback;
-  callback = new AsyncCallback<TestResponse>() {
-    @Override
-    public void onFailure(final Throwable caught) {
-      // todo Auto-generated method stub
-    }
-    @Override
-    public void onSuccess(final TestResponse result) {
-      GLLog.popup(20, "" + result);
-    }
-  };
-  final TestRequest request = new TestRequest("", EGLRemoteServiceRequestType.ApplyDBChanges);
-  final TreeMap<IGLTable, TreeSet<String>> deletedKeyValueMap = new TreeMap<>();
-  final TreeSet<String> keySet = new TreeSet<>();
-  keySet.add("123");
-  deletedKeyValueMap.put(EFAPTable.Address, keySet);
-  request.setDeletedKeyValueMap(deletedKeyValueMap);
-  final ArrayList<GLDBUpdate> dbUpdateList = new ArrayList<>();
-  final IGLColumn[] columns = new IGLColumn[] {};
-  final GLRecordDef recordDef = new GLRecordDef(EFAPTable.State, columns);
-  final GLRecord record = new GLRecord(recordDef);
-  final GLDBUpdate dbUpdate = new GLDBUpdate(record);
-  dbUpdateList.add(dbUpdate);
-  request.setDBUpdateList(dbUpdateList);
-  GLClientUtil.getRemoteService().testRequest(request, callback);
 }
 //--------------------------------------------------------------------------------------------------
 }

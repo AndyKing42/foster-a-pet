@@ -21,12 +21,10 @@ private ArrayList<String>                  _tableNameList;
 private String                             _xmlString;
 //--------------------------------------------------------------------------------------------------
 /**
- * Do not use this constructor ... it is here just so that objects can be passed to the server using
- * GWT RPC.
+ * Provide a default constructor so that objects can be passed to the server using GWT RPC.
  */
-public GLRemoteServiceRequest() {
-
-}
+@SuppressWarnings("unused")
+private GLRemoteServiceRequest() {}
 //--------------------------------------------------------------------------------------------------
 public GLRemoteServiceRequest(final String sessionToken,
                               final EGLRemoteServiceRequestType remoteServiceRequestType) {
