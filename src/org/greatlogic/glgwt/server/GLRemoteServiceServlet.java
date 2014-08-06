@@ -13,16 +13,10 @@ package org.greatlogic.glgwt.server;
  * the License.
  */
 import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import org.greatlogic.glgwt.client.db.GLDBUpdate;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
 import org.greatlogic.glgwt.shared.GLRemoteServiceRequest;
 import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
-import org.greatlogic.glgwt.shared.IGLTable;
-import org.greatlogic.glgwt.shared.TestRequest;
-import org.greatlogic.glgwt.shared.TestResponse;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.greatlogic.glbase.gldb.GLColumnMetadata;
 import com.greatlogic.glbase.gldb.GLDBException;
@@ -33,15 +27,6 @@ import com.greatlogic.glbase.gllib.IGLLibEnums.EGLLogLevel;
 
 @SuppressWarnings("serial")
 public class GLRemoteServiceServlet extends RemoteServiceServlet implements IGLRemoteService {
-//--------------------------------------------------------------------------------------------------
-private void applyDBChanges(final TreeMap<IGLTable, TreeSet<String>> deletedKeyValueMap,
-                            final ArrayList<GLDBUpdate> dbUpdateList) {
-  GLDBStatement.applyDBChanges(deletedKeyValueMap, dbUpdateList);
-}
-//--------------------------------------------------------------------------------------------------
-private int getNextId(final String tableName, final int numberOfValues) {
-  return GLServerUtil.getNextIdValue(tableName, numberOfValues);
-}
 //--------------------------------------------------------------------------------------------------
 String getSessionId() {
   return getThreadLocalRequest().getSession().getId();
@@ -88,28 +73,20 @@ public GLRemoteServiceResponse processRequest(final GLRemoteServiceRequest reque
   GLLog.debug("Request:" + request);
   switch (request.getRemoteServiceRequestType()) {
     case ApplyDBChanges:
-      applyDBChanges(request.getDeletedKeyValueMap(), request.getDBUpdateList());
+      GLDBStatement.applyDBChanges(request.getDeletedKeyValueMap(), request.getDBUpdateList());
       break;
     case GetNextId:
-      result.setNextId(getNextId(request.getTableName(), request.getNumberOfValues()));
+      result.setNextId(GLServerUtil.getNextIdValue(request.getTableName(),
+                                                   request.getNumberOfValues()));
       break;
     case GetTableMetadata:
       result.setTableMetadataList(getTableMetadataList(request.getTableNameList()));
       break;
     case Select:
-      result.setSelectResultList(select(request.getXMLString()));
+      result.setSelectResultList(GLDBStatement.select(request.getXMLString()));
       break;
   }
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public ArrayList<String> select(final String xmlRequest) {
-  return GLDBStatement.select(xmlRequest);
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public TestResponse testRequest(final TestRequest request) {
-  // TODO Auto-generated method stub
-  return null;
-}
 }

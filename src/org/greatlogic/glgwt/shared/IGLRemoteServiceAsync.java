@@ -22,6 +22,5 @@ void login(final String loginName, final String password, String currentSessionT
            final AsyncCallback<GLLoginResponse> callback);
 void processRequest(final GLRemoteServiceRequest request,
                     final AsyncCallback<GLRemoteServiceResponse> callback);
-void testRequest(TestRequest request, AsyncCallback<TestResponse> callback);
 //--------------------------------------------------------------------------------------------------
 }
