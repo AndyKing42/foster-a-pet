@@ -13,7 +13,7 @@ package org.greatlogic.glgwt.client.db;
  * the License.
  */
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLDBException;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBException;
 
 public class GLDBException extends Exception {
 //--------------------------------------------------------------------------------------------------

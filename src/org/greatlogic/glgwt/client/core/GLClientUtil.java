@@ -26,9 +26,9 @@ import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
+import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
-import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.core.client.Scheduler;
@@ -54,6 +54,7 @@ public class GLClientUtil {
 private static GLClientFactory _clientFactory;
 private static GLLoginWidget   _loginWidget;
 private static Random          _random;
+private static String          _sessionToken;
 private static DateTimeFormat  _yyyymmddDateTimeFormat;
 //--------------------------------------------------------------------------------------------------
 static {
@@ -74,8 +75,8 @@ private static void addWindowClosingHandler(final String appDescription) {
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
                                    final IGLCreateNewRecordCallback createNewRecordCallback) {
-  final IGLTable table = recordDef.getTable();
-  GLClientUtil.getRemoteService().getNextId(table.toString(), 1, new AsyncCallback<Integer>() {
+  final AsyncCallback<GLRemoteServiceResponse> callback;
+  callback = new AsyncCallback<GLRemoteServiceResponse>() {
     @Override
     public void onFailure(final Throwable caught) {
       if (createNewRecordCallback != null) {
@@ -83,15 +84,16 @@ public static void createNewRecord(final GLRecordDef recordDef,
       }
     }
     @Override
-    public void onSuccess(final Integer nextId) {
+    public void onSuccess(final GLRemoteServiceResponse response) {
       final GLRecord record = new GLRecord(recordDef);
-      record.put(table.getPrimaryKeyColumn(), nextId);
+      record.put(recordDef.getTable().getPrimaryKeyColumn(), response.getNextId());
       _clientFactory.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {
         createNewRecordCallback.onSuccess(record);
       }
     }
-  });
+  };
+  GLClientUtil.getRemoteServiceHelper().getNextId(recordDef.getTable(), 1, callback);
 }
 //--------------------------------------------------------------------------------------------------
 public static List<EditorError> createValidatorResult(final Editor<?> editor, final String message) {
@@ -214,6 +216,14 @@ public static IGLRemoteServiceAsync getRemoteService() {
   return _clientFactory.getRemoteService();
 }
 //--------------------------------------------------------------------------------------------------
+public static GLRemoteServiceHelper getRemoteServiceHelper() {
+  return _clientFactory.getRemoteServiceHelper();
+}
+//--------------------------------------------------------------------------------------------------
+public static String getSessionToken() {
+  return _sessionToken;
+}
+//--------------------------------------------------------------------------------------------------
 public static GLValidators getValidators() {
   return _clientFactory.getValidators();
 }
@@ -286,6 +296,10 @@ public static void logIn() {
  */
 public static boolean stringToBoolean(final String stringValue) {
   return stringToBoolean(stringValue, false);
+}
+//--------------------------------------------------------------------------------------------------
+public static void setSessionToken(final String sessionToken) {
+  _sessionToken = sessionToken;
 }
 //--------------------------------------------------------------------------------------------------
 public static void setTheme(final String themeClassName) {

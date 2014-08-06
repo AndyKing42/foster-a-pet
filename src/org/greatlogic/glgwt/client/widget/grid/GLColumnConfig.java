@@ -16,7 +16,7 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLColumnDataType;
 import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;

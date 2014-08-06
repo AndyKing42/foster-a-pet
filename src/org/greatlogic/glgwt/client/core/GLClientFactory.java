@@ -21,12 +21,13 @@ import org.greatlogic.glgwt.client.widget.GLLoginWidget;
 
 public abstract class GLClientFactory {
 //--------------------------------------------------------------------------------------------------
-protected GLDBUpdater         _dbUpdater;
-protected GLEventBus          _eventBus;
-private GLLoginWidget         _loginWidget;
-protected GLLookupCache       _lookupCache;
-protected IRemoteServiceAsync _remoteService;
-protected Validators          _validators;
+protected GLDBUpdater           _dbUpdater;
+protected GLEventBus            _eventBus;
+private GLLoginWidget           _loginWidget;
+protected GLLookupCache         _lookupCache;
+protected IRemoteServiceAsync   _remoteService;
+protected GLRemoteServiceHelper _remoteServiceHelper;
+protected Validators            _validators;
 //--------------------------------------------------------------------------------------------------
 public GLDBUpdater getDBUpdater() {
   return _dbUpdater;
@@ -46,6 +47,10 @@ public GLLookupCache getLookupCache() {
 //--------------------------------------------------------------------------------------------------
 public IRemoteServiceAsync getRemoteService() {
   return _remoteService;
+}
+//--------------------------------------------------------------------------------------------------
+public GLRemoteServiceHelper getRemoteServiceHelper() {
+  return _remoteServiceHelper;
 }
 //--------------------------------------------------------------------------------------------------
 public Validators getValidators() {

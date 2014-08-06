@@ -19,13 +19,14 @@ import org.greatlogic.glgwt.client.core.GLCSV;
 import org.greatlogic.glgwt.client.core.GLCSVException;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLSelectCompleteEvent;
+import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLDBConj;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLDBException;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLDBOp;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLJoinType;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLSQLAttribute;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLSQLType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBConj;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBException;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLJoinType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLSQLAttribute;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLSQLType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -339,19 +340,19 @@ private void ensureSQLTypeIn(final EGLSQLType... sqlTypes) throws GLDBException 
  * @param sqlSelectCallback The object that contains the success and failure callback methods.
  */
 public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallback sqlSelectCallback) {
-  GLClientUtil.getRemoteService().select(toXMLSB().toString(), new AsyncCallback<String>() {
+  final AsyncCallback<GLRemoteServiceResponse> callback;
+  callback = new AsyncCallback<GLRemoteServiceResponse>() {
     @Override
     public void onFailure(final Throwable t) {
       sqlSelectCallback.onFailure(t);
     }
     @Override
-    public void onSuccess(final String selectResult) {
+    public void onSuccess(final GLRemoteServiceResponse response) {
       try {
         listStore.clear();
-        final String[] selectRows = selectResult.split("\n");
         GLRecordDef recordDef = null;
         boolean firstRow = true;
-        for (final String row : selectRows) {
+        for (final String row : response.getSelectResultList()) {
           if (firstRow) {
             recordDef = new GLRecordDef(_table, row.split(","));
             listStore.setRecordDef(recordDef);
@@ -372,7 +373,8 @@ public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallbac
         onFailure(csve);
       }
     }
-  });
+  };
+  GLClientUtil.getRemoteServiceHelper().select(toXMLSB().toString(), callback);
 }
 //--------------------------------------------------------------------------------------------------
 /**

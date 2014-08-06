@@ -21,7 +21,7 @@ import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.widget.grid.GLColumnConfig;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLEnums.EGLColumnDataType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLColumnDataType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.NumberFormat;

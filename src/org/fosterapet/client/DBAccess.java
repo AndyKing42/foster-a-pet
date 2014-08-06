@@ -54,13 +54,13 @@ public static void load(final GLListStore listStore, final IGLTable table,
 //--------------------------------------------------------------------------------------------------
 public static void reloadTestData() {
   final IRemoteServiceAsync remoteService = ClientFactory.Instance.getRemoteService();
-  remoteService.loadTestData(ETestDataOption.Reload.name(), new AsyncCallback<Void>() {
+  remoteService.loadTestData(null, ETestDataOption.Reload.name(), new AsyncCallback<String>() {
     @Override
     public void onFailure(final Throwable t) {
       GLLog.popup(10, "Test data reload failed:" + t.getMessage());
     }
     @Override
-    public void onSuccess(final Void result) {
+    public void onSuccess(final String result) {
       GLLog.popup(10, "Test data reload is complete");
       final PetGridWidget petGrid = GridWidgetManager.getPetGrid("Pet1");
       ClientFactory.Instance.getLookupCache().reloadAll();

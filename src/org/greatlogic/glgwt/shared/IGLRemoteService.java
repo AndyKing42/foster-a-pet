@@ -16,11 +16,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface IGLRemoteService extends RemoteService {
 //--------------------------------------------------------------------------------------------------
-void applyDBChanges(final String dbChanges);
-int getNextId(final String tableName, final int numberOfValues);
-String getTableMetadata(final String tableNames);
 void log(final int priority, final String location, final String message);
-String login(final String loginName, final String password, String currentSessionToken);
-String select(final String xmlRequest);
+GLLoginResponse login(String loginName, String password, String currentSessionToken);
+GLRemoteServiceResponse processRequest(GLRemoteServiceRequest request);
 //--------------------------------------------------------------------------------------------------
 }
