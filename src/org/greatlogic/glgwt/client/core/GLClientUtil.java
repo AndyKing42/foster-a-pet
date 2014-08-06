@@ -26,9 +26,10 @@ import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
-import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
+import org.greatlogic.glgwt.shared.requestresponse.GLGetNextIdServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.core.client.Scheduler;
@@ -75,8 +76,8 @@ private static void addWindowClosingHandler(final String appDescription) {
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
                                    final IGLCreateNewRecordCallback createNewRecordCallback) {
-  final AsyncCallback<GLRemoteServiceResponse> callback;
-  callback = new AsyncCallback<GLRemoteServiceResponse>() {
+  final AsyncCallback<GLServiceResponse> callback;
+  callback = new AsyncCallback<GLServiceResponse>() {
     @Override
     public void onFailure(final Throwable caught) {
       if (createNewRecordCallback != null) {
@@ -84,9 +85,10 @@ public static void createNewRecord(final GLRecordDef recordDef,
       }
     }
     @Override
-    public void onSuccess(final GLRemoteServiceResponse response) {
+    public void onSuccess(final GLServiceResponse response) {
+      final GLGetNextIdServiceResponse serviceResponse = (GLGetNextIdServiceResponse)response;
       final GLRecord record = new GLRecord(recordDef);
-      record.put(recordDef.getTable().getPrimaryKeyColumn(), response.getNextId());
+      record.put(recordDef.getTable().getPrimaryKeyColumn(), serviceResponse.getNextId());
       _clientFactory.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {
         createNewRecordCallback.onSuccess(record);

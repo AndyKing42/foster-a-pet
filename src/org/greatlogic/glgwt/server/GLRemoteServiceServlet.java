@@ -14,9 +14,18 @@ package org.greatlogic.glgwt.server;
  */
 import java.util.ArrayList;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
-import org.greatlogic.glgwt.shared.GLRemoteServiceRequest;
-import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
+import org.greatlogic.glgwt.shared.IGLTable;
+import org.greatlogic.glgwt.shared.requestresponse.GLApplyDBChangesServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLApplyDBChangesServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLGetNextIdServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLGetNextIdServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLGetTableMetadataServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLGetTableMetadataServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLSelectServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLSelectServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.greatlogic.glbase.gldb.GLColumnMetadata;
 import com.greatlogic.glbase.gldb.GLDBException;
@@ -33,11 +42,11 @@ String getSessionId() {
 }
 //--------------------------------------------------------------------------------------------------
 // todo: this should return an array of GLMetadata (or something similar), not an array of String
-private ArrayList<String> getTableMetadataList(final ArrayList<String> tableNameList) {
-  for (final String tableName : tableNameList) {
+private ArrayList<String> getTableMetadataList(final ArrayList<IGLTable> tableList) {
+  for (final IGLTable table : tableList) {
     try {
       final GLResultSetMetadata tableMetadata;
-      tableMetadata = GLDataSource.getDefaultDataSource().getTableMetadata(tableName);
+      tableMetadata = GLDataSource.getDefaultDataSource().getTableMetadata(table.toString());
       for (final GLColumnMetadata columnMetadata : tableMetadata.getColumnMetadataList()) {
         columnMetadata.getName();
         columnMetadata.getColumnDataType();
@@ -47,7 +56,7 @@ private ArrayList<String> getTableMetadataList(final ArrayList<String> tableName
       }
     }
     catch (final GLDBException e) {
-      GLLog.major("Request for metadata failed for table:" + tableName);
+      GLLog.major("Request for metadata failed for table:" + table);
     }
   }
   return null;
@@ -68,23 +77,34 @@ public GLLoginResponse login(final String loginName, final String password,
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-public GLRemoteServiceResponse processRequest(final GLRemoteServiceRequest request) {
-  final GLRemoteServiceResponse result = new GLRemoteServiceResponse();
-  GLLog.debug("Request:" + request);
-  switch (request.getRemoteServiceRequestType()) {
-    case ApplyDBChanges:
+public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
+  GLServiceResponse result = null;
+  GLLog.debug("Request:" + serviceRequest);
+  switch (serviceRequest.getRemoteServiceRequestType()) {
+    case ApplyDBChanges: {
+      final GLApplyDBChangesServiceRequest request = (GLApplyDBChangesServiceRequest)serviceRequest;
       GLDBStatement.applyDBChanges(request.getDeletedKeyValueMap(), request.getDBUpdateList());
+      result = new GLApplyDBChangesServiceResponse();
       break;
-    case GetNextId:
-      result.setNextId(GLServerUtil.getNextIdValue(request.getTableName(),
-                                                   request.getNumberOfValues()));
+    }
+    case GetNextId: {
+      final GLGetNextIdServiceRequest request = (GLGetNextIdServiceRequest)serviceRequest;
+      final int nextId = GLServerUtil.getNextIdValue(request.getTable().toString(), //
+                                                     request.getNumberOfValues());
+      result = new GLGetNextIdServiceResponse(nextId);
       break;
-    case GetTableMetadata:
-      result.setTableMetadataList(getTableMetadataList(request.getTableNameList()));
+    }
+    case GetTableMetadata: {
+      final GLGetTableMetadataServiceRequest request;
+      request = (GLGetTableMetadataServiceRequest)serviceRequest;
+      result = new GLGetTableMetadataServiceResponse(getTableMetadataList(request.getTableList()));
       break;
-    case Select:
-      result.setSelectResultList(GLDBStatement.select(request.getXMLString()));
+    }
+    case Select: {
+      final GLSelectServiceRequest request = (GLSelectServiceRequest)serviceRequest;
+      result = new GLSelectServiceResponse(GLDBStatement.select(request.getXMLString()));
       break;
+    }
   }
   return result;
 }

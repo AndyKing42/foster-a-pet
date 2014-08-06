@@ -117,7 +117,7 @@ public EGLLogLevel next() {
 }
 }
 //--------------------------------------------------------------------------------------------------
-public enum EGLRemoteServiceRequestType implements IGLRemoteServiceRequestType {
+public enum EGLServiceRequestType implements IGLRemoteServiceRequestType {
 ApplyDBChanges,
 GetNextId,
 GetTableMetadata,
