@@ -1,6 +1,4 @@
 package org.greatlogic.glgwt.shared;
-import org.greatlogic.glgwt.shared.requestresponse.GLServiceRequest;
-import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -14,15 +12,16 @@ import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IGLRemoteServiceAsync {
 //--------------------------------------------------------------------------------------------------
 void log(final int priority, final String location, final String message,
          final AsyncCallback<Void> callback);
-void login(final String loginName, final String password, String currentSessionToken,
+void login(final String loginName, final String password, final String sessionTokenFromClient,
            final AsyncCallback<GLLoginResponse> callback);
-void processRequest(final GLServiceRequest request,
-                    final AsyncCallback<GLServiceResponse> callback);
+void processRequest(final GLServiceRequest request, final AsyncCallback<GLServiceResponse> callback);
 //--------------------------------------------------------------------------------------------------
 }

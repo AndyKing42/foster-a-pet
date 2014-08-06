@@ -31,21 +31,20 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 
 public class GLLoginWidget extends Window {
 //--------------------------------------------------------------------------------------------------
-protected static final String SessionTokenCookie = "SessionToken";
+@UiField
+FieldLabel                  errorMessageLabel;
+@UiField
+TextField                   loginNameField;
+@UiField
+TextButton                  okButton;
+@UiField
+PasswordField               passwordField;
+@UiField
+Window                      window;
 
-@UiField
-FieldLabel                    errorMessageLabel;
-@UiField
-TextField                     loginNameField;
-@UiField
-TextButton                    okButton;
-@UiField
-PasswordField                 passwordField;
-@UiField
-Window                        window;
-
-private boolean               _firstTime;
-private final String          _windowHeadingText;
+private boolean             _firstTime;
+private AsyncCallback<Void> _loginSuccessfulCallback;
+private final String        _windowHeadingText;
 //==================================================================================================
 interface IGLLoginWidgetBinder extends UiBinder<Widget, GLLoginWidget> { //
 }
@@ -56,8 +55,10 @@ public GLLoginWidget(final String windowHeadingText) {
   binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void logIn() {
+public void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
+  _loginSuccessfulCallback = loginSuccessfulCallback;
   window.setHeadingText(_windowHeadingText);
+  passwordField.setValue("");
   window.show();
 }
 //--------------------------------------------------------------------------------------------------
@@ -70,27 +71,32 @@ public void logIn(final String loginName, final String password) {
         errorMessageLabel.setText("Login failed ... please try again");
       }
       _firstTime = false;
-      logIn();
+      logIn(_loginSuccessfulCallback);
     }
     @Override
-    public void onSuccess(final GLLoginResponse result) {
-      if (!result.getSucceeded()) {
+    public void onSuccess(final GLLoginResponse response) {
+      if (!response.getSucceeded()) {
         GLLog.popup(10, "Login failed");
         if (!_firstTime) {
           errorMessageLabel.setText("Login failed ... please try again");
         }
         _firstTime = false;
-        logIn();
+        logIn(_loginSuccessfulCallback);
         return;
       }
-      GLLog.popup(10, "Login succeeded:" + result);
+      GLLog.popup(10, "Login succeeded:" + response);
       errorMessageLabel.setText("");
-      GLClientUtil.setSessionToken(result.getSessionToken());
-      Cookies.setCookie(SessionTokenCookie, result.getSessionToken());
+      GLClientUtil.setSessionToken(response.getSessionToken());
+      Cookies.setCookie(GLClientUtil.SessionTokenCookie, response.getSessionToken());
       window.hide();
+      if (_loginSuccessfulCallback != null) {
+        _loginSuccessfulCallback.onSuccess(null);
+        _loginSuccessfulCallback = null;
+      }
     }
   };
-  GLClientUtil.getRemoteService().login(loginName, password, Cookies.getCookie(SessionTokenCookie),
+  GLClientUtil.getRemoteService().login(loginName, password,
+                                        Cookies.getCookie(GLClientUtil.SessionTokenCookie),
                                         callback);
 }
 //--------------------------------------------------------------------------------------------------

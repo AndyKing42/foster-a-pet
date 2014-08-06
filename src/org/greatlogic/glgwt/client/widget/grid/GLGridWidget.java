@@ -29,6 +29,7 @@ import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
@@ -377,7 +378,7 @@ public void requestRowDeleteConfirmation(final GridRowEditing<GLRecord> gridRowE
     public void onDialogHide(final DialogHideEvent hideEvent) {
       if (hideEvent.getHideButton() == PredefinedButton.YES) {
         final GLRecord record = getSelectionModel().getSelectedItem();
-        _listStore.remove(record);
+        _listStore.delete(record);
         if (gridRowEditing != null) {
           gridRowEditing.cancelEditing();
         }
@@ -391,8 +392,8 @@ private int resizeColumnGetWidth(final Object value, final DateTimeFormat dateTi
   if (value == null) {
     return 0;
   }
-  final String valueAsString = dateTimeFormat == null ? value.toString() //
-                                                     : dateTimeFormat.format((Date)value);
+  final String valueAsString;
+  valueAsString = dateTimeFormat == null ? value.toString() : dateTimeFormat.format((Date)value);
   return _textMetrics.getWidth(valueAsString);
 }
 //--------------------------------------------------------------------------------------------------
@@ -403,7 +404,8 @@ private void resizeColumnToFit(final int columnIndex) {
   _textMetrics.bind(_grid.getView().getHeader().getAppearance().styles().head());
   int maxWidth = _textMetrics.getWidth(columnConfig.getHeader().asString()) + 6;
   if (_listStore.size() > 0) {
-    final String className = _grid.getView().getCell(1, 1).getClassName();
+    final Element element = _grid.getView().getCell(1, 1); // this assignment is necessary!
+    final String className = element.getClassName();
     _textMetrics.bind(className);
     for (final GLRecord record : _listStore.getAll()) {
       final Object value = columnConfig.getValueProvider().getValue(record);

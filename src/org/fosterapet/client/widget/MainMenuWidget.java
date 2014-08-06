@@ -110,7 +110,7 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"logInButton"})
 public void onLogInButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  GLClientUtil.logIn();
+  GLClientUtil.logIn(null);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})

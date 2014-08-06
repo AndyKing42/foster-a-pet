@@ -69,9 +69,9 @@ public void log(final int priority, final String location, final String message)
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLLoginResponse login(final String loginName, final String password,
-                             final String currentSessionToken) {
+                             final String sessionTokenFromClient) {
   final GLLoginResponse result = new GLLoginResponse();
-  final GLLogin login = new GLLogin(this, loginName, password, currentSessionToken);
+  final GLLogin login = new GLLogin(getSessionId(), loginName, password, sessionTokenFromClient);
   result.setResultValues(login.getSucceeded(), login.getSessionToken(), login.getPersonId());
   return result;
 }
@@ -80,6 +80,10 @@ public GLLoginResponse login(final String loginName, final String password,
 public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
   GLServiceResponse result = null;
   GLLog.debug("Request:" + serviceRequest);
+  final GLLogin login = new GLLogin(getSessionId(), null, null, serviceRequest.getSessionToken());
+  if (!login.getSucceeded()) {
+    return null;
+  }
   switch (serviceRequest.getRemoteServiceRequestType()) {
     case ApplyDBChanges: {
       final GLApplyDBChangesServiceRequest request = (GLApplyDBChangesServiceRequest)serviceRequest;
@@ -105,6 +109,9 @@ public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
       result = new GLSelectServiceResponse(GLDBStatement.select(request.getXMLString()));
       break;
     }
+  }
+  if (result != null) {
+    result.setSessionToken(getSessionId());
   }
   return result;
 }
