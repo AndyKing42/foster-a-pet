@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.db.GLDBUpdate;
-import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLRemoteServiceRequestType;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLServiceRequestType;
 
 public class TestRequest implements Serializable {
 //--------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ private static final long                  serialVersionUID = 1122L;
 private ArrayList<GLDBUpdate>              _dbUpdateList;
 private TreeMap<IGLTable, TreeSet<String>> _deletedKeyValueMap;
 private int                                _numberOfValues;
-private EGLRemoteServiceRequestType        _remoteServiceRequestType;
+private EGLServiceRequestType        _remoteServiceRequestType;
 private String                             _sessionToken;
 private String                             _tableName;
 private ArrayList<String>                  _tableNameList;
@@ -29,7 +29,7 @@ public TestRequest() {
 }
 //--------------------------------------------------------------------------------------------------
 public TestRequest(final String sessionToken,
-                   final EGLRemoteServiceRequestType remoteServiceRequestType) {
+                   final EGLServiceRequestType remoteServiceRequestType) {
   _sessionToken = sessionToken;
   _remoteServiceRequestType = remoteServiceRequestType;
 }
@@ -46,7 +46,7 @@ public int getNumberOfValues() {
   return _numberOfValues;
 }
 //--------------------------------------------------------------------------------------------------
-public EGLRemoteServiceRequestType getRemoteServiceRequestType() {
+public EGLServiceRequestType getRemoteServiceRequestType() {
   return _remoteServiceRequestType;
 }
 //--------------------------------------------------------------------------------------------------

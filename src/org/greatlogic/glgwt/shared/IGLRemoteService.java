@@ -1,4 +1,6 @@
 package org.greatlogic.glgwt.shared;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -18,6 +20,6 @@ public interface IGLRemoteService extends RemoteService {
 //--------------------------------------------------------------------------------------------------
 void log(final int priority, final String location, final String message);
 GLLoginResponse login(String loginName, String password, String currentSessionToken);
-GLRemoteServiceResponse processRequest(GLRemoteServiceRequest request);
+GLServiceResponse processRequest(GLServiceRequest request);
 //--------------------------------------------------------------------------------------------------
 }

@@ -19,7 +19,6 @@ import org.greatlogic.glgwt.client.core.GLCSV;
 import org.greatlogic.glgwt.client.core.GLCSVException;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLSelectCompleteEvent;
-import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBConj;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBException;
@@ -28,6 +27,8 @@ import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLJoinType;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLSQLAttribute;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLSQLType;
 import org.greatlogic.glgwt.shared.IGLTable;
+import org.greatlogic.glgwt.shared.requestresponse.GLSelectServiceResponse;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class GLSQL {
@@ -340,19 +341,20 @@ private void ensureSQLTypeIn(final EGLSQLType... sqlTypes) throws GLDBException 
  * @param sqlSelectCallback The object that contains the success and failure callback methods.
  */
 public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallback sqlSelectCallback) {
-  final AsyncCallback<GLRemoteServiceResponse> callback;
-  callback = new AsyncCallback<GLRemoteServiceResponse>() {
+  final AsyncCallback<GLServiceResponse> callback;
+  callback = new AsyncCallback<GLServiceResponse>() {
     @Override
     public void onFailure(final Throwable t) {
       sqlSelectCallback.onFailure(t);
     }
     @Override
-    public void onSuccess(final GLRemoteServiceResponse response) {
+    public void onSuccess(final GLServiceResponse response) {
+      final GLSelectServiceResponse serviceResponse = (GLSelectServiceResponse)response;
       try {
         listStore.clear();
         GLRecordDef recordDef = null;
         boolean firstRow = true;
-        for (final String row : response.getSelectResultList()) {
+        for (final String row : serviceResponse.getResultList()) {
           if (firstRow) {
             recordDef = new GLRecordDef(_table, row.split(","));
             listStore.setRecordDef(recordDef);

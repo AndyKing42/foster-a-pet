@@ -18,8 +18,8 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.shared.GLRemoteServiceResponse;
 import org.greatlogic.glgwt.shared.IGLTable;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.sencha.gxt.data.shared.Store;
 
@@ -91,14 +91,14 @@ public void saveAllChanges() {
 //--------------------------------------------------------------------------------------------------
 private void sendDBChangesToServer(final TreeMap<IGLTable, TreeSet<String>> deletedKeyValueMap,
                                    final ArrayList<GLDBUpdate> dbUpdateList) {
-  final AsyncCallback<GLRemoteServiceResponse> callback;
-  callback = new AsyncCallback<GLRemoteServiceResponse>() {
+  final AsyncCallback<GLServiceResponse> callback;
+  callback = new AsyncCallback<GLServiceResponse>() {
     @Override
     public void onFailure(final Throwable t) {
       GLLog.popup(10, "Database changes failed:" + t.getMessage());
     }
     @Override
-    public void onSuccess(final GLRemoteServiceResponse result) {
+    public void onSuccess(final GLServiceResponse result) {
       GLLog.popup(10, "Database changes have been saved on the server");
       if (_insertedRecordList != null) {
         for (final GLRecord record : _insertedRecordList) {

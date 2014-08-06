@@ -1,4 +1,6 @@
 package org.greatlogic.glgwt.shared;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceRequest;
+import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -20,7 +22,7 @@ void log(final int priority, final String location, final String message,
          final AsyncCallback<Void> callback);
 void login(final String loginName, final String password, String currentSessionToken,
            final AsyncCallback<GLLoginResponse> callback);
-void processRequest(final GLRemoteServiceRequest request,
-                    final AsyncCallback<GLRemoteServiceResponse> callback);
+void processRequest(final GLServiceRequest request,
+                    final AsyncCallback<GLServiceResponse> callback);
 //--------------------------------------------------------------------------------------------------
 }
