@@ -134,9 +134,4 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
   messageBox.show();
 }
 //--------------------------------------------------------------------------------------------------
-@UiHandler({"testGridButton"})
-public void onTestGridButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  FAPUtil.getClientFactory().getAppTabPanelWidget().createTestGrid();
-}
-//--------------------------------------------------------------------------------------------------
 }
