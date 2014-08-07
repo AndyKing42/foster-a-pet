@@ -17,7 +17,7 @@
       <gxtform:FieldLabel itemId='Pet.AdoptionFee'/>
       <gxtbutton:TextButton
         ui:field='saveButton'
-        text='Save'/>
+        text='Save Changes'/>
     </gxtcontainer:VerticalLayoutContainer>
   </gxtcontainer:FlowLayoutContainer>
 </ui:UiBinder>

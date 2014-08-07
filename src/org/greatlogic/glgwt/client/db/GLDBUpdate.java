@@ -45,18 +45,17 @@ public GLDBUpdate(final GLRecord record) {
   _modifiedColumnMap = new TreeMap<>();
 }
 //--------------------------------------------------------------------------------------------------
-GLDBUpdate(final GLRecord originalRecord, final GLRecord modifiedRecord) {
+GLDBUpdate(final GLRecord modifiedRecord, final TreeSet<IGLColumn> modifiedColumnSet) {
   this(modifiedRecord);
-  final TreeSet<IGLColumn> updatedColumnSet = new TreeSet<>();
   for (final IGLColumn column : _table.getColumns()) {
-    final String modifiedValue = resolveValue(column, modifiedRecord.asString(column));
-    if ((_inserted && !modifiedValue.isEmpty()) ||
-        (originalRecord != null && !modifiedValue.equals(originalRecord.asString(column)))) {
-      _modifiedColumnMap.put(column, modifiedValue);
-      updatedColumnSet.add(column);
+    if (modifiedColumnSet.contains(column)) {
+      final String value = modifiedRecord.asString(column);
+      if (!_inserted || !value.isEmpty()) {
+        _modifiedColumnMap.put(column, value);
+      }
     }
   }
-  populateDefaultValuesForInsert(updatedColumnSet);
+  populateDefaultValuesForInsert(modifiedColumnSet);
 }
 //--------------------------------------------------------------------------------------------------
 GLDBUpdate(final IGLTable table, final Store<GLRecord>.Record listStoreRecord) {
