@@ -34,7 +34,6 @@
    <object objectType="FKIndexAssociation" objectID="0F378469-1C5E-DDC5-2200-414F895272F6" name="AttributeDef_ValueList_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="A8372325-7D59-4D3C-6AE3-AFEF00C0CF3F" name="Attribute_AttributeDef_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="24793D45-BCF9-5E36-CA66-026F63A48702" name="City_State_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="EF343635-D71D-54D5-9344-19654E2831BC" name="SessionToken_Person_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="1EAA761D-9FA9-E3B3-85F6-BD2FF6A35226" name="FosterHistory_FosterLoc_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="EAC5A78E-94E8-A138-5C50-E91B28DE8753" name="FosterHistory_Person_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="2DE0F67E-EA7A-436E-7CAB-12797520AE8F" name="FosterHistory_Pet_FK" seqName="seg_0"/>
@@ -61,6 +60,7 @@
    <object objectType="FKIndexAssociation" objectID="CB95E2ED-AF66-CFFC-F6EC-691A18BBD1D6" name="SearchDefDetail_SearchDef_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="61282AE6-9811-C740-D5FB-75CC2F91CD04" name="SearchDef_Org_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="19E969E9-4540-0988-B936-BA1C8ABB1C5F" name="SearchDef_Person_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="EF343635-D71D-54D5-9344-19654E2831BC" name="SessionToken_Person_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="1318228B-B4B4-E50C-1889-12B20F0A5C07" name="Treatment_Loc_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="D636D629-9572-7CB7-DBB4-A884809F8A52" name="Treatment_Pet_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="71216C70-BE62-0F11-BFE4-5150032FF879" name="Treatment_PlanEntry_FK" seqName="seg_0"/>

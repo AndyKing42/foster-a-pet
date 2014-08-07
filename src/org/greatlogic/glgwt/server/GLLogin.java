@@ -23,13 +23,16 @@ import com.greatlogic.glbase.gldb.IGLDBEnums.EGLDBOp;
 import com.greatlogic.glbase.gldb.IGLTable;
 import com.greatlogic.glbase.gllib.BCrypt;
 import com.greatlogic.glbase.gllib.GLLog;
+import com.greatlogic.glbase.gllib.GLUtil;
 
 class GLLogin {
 //--------------------------------------------------------------------------------------------------
-private int          _personId;
-private final String _sessionToken;
-private int          _sessionTokenId;
-private boolean      _succeeded;
+private static final long TenDays = 10 * GLUtil.SecondsInADay;
+
+private int               _personId;
+private final String      _sessionToken;
+private int               _sessionTokenId;
+private boolean           _succeeded;
 //--------------------------------------------------------------------------------------------------
 private enum ELoginTable implements IGLTable {
 SessionToken(SessionToken.class);
@@ -52,6 +55,7 @@ public String getDataSourceName() {
 }
 }
 private enum SessionToken implements IGLColumn {
+ExpirationTime,
 PersonId,
 SessionToken,
 SessionTokenId
@@ -124,7 +128,10 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
     if (sessionTokenSQL.next()) {
       _personId = sessionTokenSQL.asInt(SessionToken.PersonId);
       _sessionTokenId = sessionTokenSQL.asInt(SessionToken.SessionTokenId);
-      // todo: check for expiration
+      if (GLUtil.currentTimeYYYYMMDDHHMMSS()
+                .compareTo(sessionTokenSQL.asString(SessionToken.ExpirationTime)) > 0) {
+        return false;
+      }
       return true;
     }
   }
@@ -146,6 +153,8 @@ private void updateSessionToken() throws GLDBException {
     sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);
     sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.Equals, _sessionTokenId);
   }
+  sessionTokenSQL.setValue(SessionToken.ExpirationTime,
+                           GLUtil.timeAddSeconds(GLUtil.currentTimeYYYYMMDDHHMMSS(), TenDays));
   sessionTokenSQL.setValue(SessionToken.SessionToken, _sessionToken);
   sessionTokenSQL.execute();
 }

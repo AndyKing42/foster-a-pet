@@ -16,6 +16,8 @@ import org.fosterapet.databaseupdate.IDatabaseUpdateEnums.EDBUConfigAD;
 import org.fosterapet.shared.IDBEnums.DBUpdateNote;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
+import org.fosterapet.shared.IDBEnums.SessionToken;
+import com.greatlogic.glbase.gldb.EGLColumnDataType;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;
 import com.greatlogic.glbase.gldb.GLDataSource;
@@ -107,6 +109,16 @@ static String rev_0_00_002(final String dbRevNumber, final boolean apply) throws
                        + "GO\n";
     DBUUtil.createTablesFromSQL(sql);
     DBUUtil.insertDBUpdateNote(dbRevNumber, "20140804", "113000", result);
+  }
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
+static String rev_0_00_003(final String dbRevNumber, final boolean apply) throws GLDBException {
+  final String result = "Add the SessionToken.ExpirationTime column.";
+  if (apply) {
+    GLDBUtil.addColumn(EFAPTable.SessionToken.name(), SessionToken.ExpirationTime.name(),
+                       EGLColumnDataType.DateTime, true);
+    DBUUtil.insertDBUpdateNote(dbRevNumber, "20140806", "163000", result);
   }
   return result;
 }
