@@ -124,8 +124,14 @@ private void addWidgetNonContainer(final Widget widget) {
   }
 }
 //--------------------------------------------------------------------------------------------------
+private void rollback_changes() {
+  copy_original_to_screen("?");
+  set_modified_to_null();
+}
+//--------------------------------------------------------------------------------------------------
 public void commitChangesAfterDBUpdate() {
   if (_modifiedRecord != null) {
+    copy_modified_to_original();
     _modifiedRecord = null;
     _modifiedColumnSet = null;
   }
