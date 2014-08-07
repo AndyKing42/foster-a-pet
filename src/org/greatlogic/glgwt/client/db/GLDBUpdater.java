@@ -60,7 +60,7 @@ public void saveAllChanges() {
     final GLRecord modifiedRecord = recordEditor.getModifiedRecord();
     if (modifiedRecord != null) {
       addToUpdateList(dbUpdateList,
-                      new GLDBUpdate(recordEditor.getOriginalRecord(), modifiedRecord),
+                      new GLDBUpdate(modifiedRecord, recordEditor.getModifiedColumnSet()),
                       modifiedRecord);
     }
   }

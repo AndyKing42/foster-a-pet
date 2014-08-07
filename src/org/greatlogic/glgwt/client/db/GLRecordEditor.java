@@ -14,6 +14,7 @@ package org.greatlogic.glgwt.client.db;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeSet;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
@@ -21,6 +22,7 @@ import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import org.greatlogic.glgwt.client.widget.GLFieldUtils;
 import org.greatlogic.glgwt.shared.IGLColumn;
+import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -47,6 +49,7 @@ public class GLRecordEditor implements IGLRecordChangeEventHandler {
 private final HashMap<Container, HandlerRegistration> _containerAddHandlerMap;
 private final HashMap<IGLColumn, HasValue<?>>         _hasValueByColumnMap;
 private final boolean                                 _insertWidgetsBelowLabels;
+private TreeSet<IGLColumn>                            _modifiedColumnSet;
 private GLRecord                                      _modifiedRecord;
 private final GLRecord                                _originalRecord;
 private final HashMap<Container, HandlerRegistration> _removeHandlerMap;
@@ -117,16 +120,14 @@ private void addWidgetNonContainer(final Widget widget) {
       hasValue = (HasValue<?>)widget;
     }
     _hasValueByColumnMap.put(column, hasValue);
-    hasValue.addValueChangeHandler(new ValueChangeHandler() {
-      @Override
-      public void onValueChange(final ValueChangeEvent event) {
-        GLLog.popup(10, String.valueOf(event.getValue()));
-        if (_modifiedRecord == null) {
-          _modifiedRecord = new GLRecord(_originalRecord);
-        }
-        _modifiedRecord.set(column, event.getValue());
-      }
-    });
+    hasValue.addValueChangeHandler(createFieldValueChangeHandler(column));
+  }
+}
+//--------------------------------------------------------------------------------------------------
+public void commitChangesAfterDBUpdate() {
+  if (_modifiedRecord != null) {
+    _modifiedRecord = null;
+    _modifiedColumnSet = null;
   }
 }
 //--------------------------------------------------------------------------------------------------
@@ -147,8 +148,26 @@ private void createContainerHandlers(final Container container) {
   _removeHandlerMap.put(container, handler);
 }
 //--------------------------------------------------------------------------------------------------
-public void commitChangesAfterDBUpdate() {
-  GLLog.popup(10, "Does GLRecordEditor#flush need to do something?");
+private ValueChangeHandler createFieldValueChangeHandler(final IGLColumn column) {
+  return new ValueChangeHandler() {
+    @Override
+    public void onValueChange(final ValueChangeEvent event) {
+      GLLog.popup(10, String.valueOf(event.getValue()));
+      if (_modifiedRecord == null) {
+        _modifiedRecord = new GLRecord(_originalRecord);
+        _modifiedColumnSet = new TreeSet<>();
+      }
+      // todo: if the value is changed back to the original value then remove the column from the
+      // todo: modified column set, and possibly set _modifiedRecord to null
+      Object value = event.getValue();
+      final IGLLookupType lookupType = column.getLookupType();
+      if (lookupType != null && lookupType.getTable() != null) {
+        value = ((GLRecord)value).asObject(lookupType.getTable().getPrimaryKeyColumn());
+      }
+      _modifiedRecord.set(column, value);
+      _modifiedColumnSet.add(column);
+    }
+  };
 }
 //--------------------------------------------------------------------------------------------------
 private IGLColumn getColumnFromWidget(final Widget widget) {
@@ -166,6 +185,10 @@ private IGLColumn getColumnFromWidget(final Widget widget) {
   }
   final String columnName = itemId.substring(dotIndex + 1);
   return _table.findColumnUsingColumnName(columnName);
+}
+//--------------------------------------------------------------------------------------------------
+TreeSet<IGLColumn> getModifiedColumnSet() {
+  return _modifiedColumnSet;
 }
 //--------------------------------------------------------------------------------------------------
 GLRecord getModifiedRecord() {
