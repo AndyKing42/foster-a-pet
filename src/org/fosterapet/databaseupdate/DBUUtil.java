@@ -42,9 +42,9 @@ public static String addNextIds() throws GLDBException {
     GLSQL sql = GLSQL.select();
     sql.from(EFAPTable.NextId.name());
     sql.whereAnd(0, NextId.NextId.name() + "=" + fapId.getNextId(), 0);
-    sql.open();
+    sql.open(true, false);
     try {
-      nextIdExists = sql.next();
+      nextIdExists = sql.next(false);
     }
     finally {
       sql.close();
@@ -57,6 +57,7 @@ public static String addNextIds() throws GLDBException {
       sql.setValue(NextId.TableName.name(), fapId.getTable().name());
       sql.setValue(NextId.Version.name(), GLServerUtil.generateVersion());
       sql.execute();
+      result += (result.isEmpty() ? "" : ",") + fapId.getName();
     }
   }
   if (!result.isEmpty()) {

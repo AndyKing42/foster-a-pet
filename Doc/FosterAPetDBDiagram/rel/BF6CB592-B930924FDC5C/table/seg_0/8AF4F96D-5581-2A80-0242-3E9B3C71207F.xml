@@ -15,6 +15,16 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="ExpirationTime" id="FF61A1D8-5053-DA2D-31AE-E1081A33E548">
+<createdBy>aking</createdBy>
+<createdTime>2014-08-06 23:06:47 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 <Column name="PersonId" id="1A749541-6C56-F804-AF0E-934E74201324">
 <createdBy>aking</createdBy>
 <createdTime>2014-08-04 18:18:09 UTC</createdTime>
