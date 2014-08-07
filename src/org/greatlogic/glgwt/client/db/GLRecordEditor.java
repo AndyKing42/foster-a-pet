@@ -13,22 +13,17 @@ package org.greatlogic.glgwt.client.db;
  * the License.
  */
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import javax.validation.ConstraintViolation;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import org.greatlogic.glgwt.client.widget.GLFieldUtils;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
-import com.google.gwt.editor.client.EditorDriver;
-import com.google.gwt.editor.client.EditorError;
-import com.google.gwt.editor.client.EditorVisitor;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -44,41 +39,41 @@ import com.sencha.gxt.widget.core.client.form.CheckBox;
 import com.sencha.gxt.widget.core.client.form.ComboBox;
 import com.sencha.gxt.widget.core.client.form.DateField;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
-
-public class GLRecordEditorDriver implements EditorDriver<GLRecord>, IGLRecordChangeEventHandler {
+/**
+ * Manages editing for one record.
+ */
+public class GLRecordEditor implements IGLRecordChangeEventHandler {
 //--------------------------------------------------------------------------------------------------
-private static TreeMap<String, IGLTable>              _tableByTableNameMap;
-
 private final HashMap<Container, HandlerRegistration> _containerAddHandlerMap;
 private final HashMap<IGLColumn, HasValue<?>>         _hasValueByColumnMap;
 private final boolean                                 _insertWidgetsBelowLabels;
-private final HashMap<IGLTable, GLRecord>             _modifiedRecordMap;
-private final HashMap<IGLTable, GLRecord>             _originalRecordMap;
+private GLRecord                                      _modifiedRecord;
+private final GLRecord                                _originalRecord;
 private final HashMap<Container, HandlerRegistration> _removeHandlerMap;
+private final IGLTable                                _table;
 //--------------------------------------------------------------------------------------------------
-public GLRecordEditorDriver(final Class<? extends Enum<?>> tableEnumClass,
-                            final boolean insertWidgetsBelowLabels) {
+public GLRecordEditor(final GLRecord record, final boolean insertWidgetsBelowLabels,
+                      final Widget... widgets) {
+  _originalRecord = record;
   _insertWidgetsBelowLabels = insertWidgetsBelowLabels;
-  if (_tableByTableNameMap == null) {
-    _tableByTableNameMap = new TreeMap<>();
-    for (final Enum<?> table : tableEnumClass.getEnumConstants()) {
-      _tableByTableNameMap.put(table.toString(), ((IGLTable)table));
-    }
-  }
   _containerAddHandlerMap = new HashMap<>();
   _hasValueByColumnMap = new HashMap<>();
-  _modifiedRecordMap = new HashMap<>();
-  _originalRecordMap = new HashMap<>();
   _removeHandlerMap = new HashMap<>();
+  _table = record.getRecordDef().getTable();
+  for (final Widget widget : widgets) {
+    addWidget(widget);
+  }
+  for (final IGLColumn column : _table.getColumns()) {
+    final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
+    if (hasValue != null) {
+      setWidgetValue(hasValue, record, column);
+    }
+  }
   GLClientUtil.getEventBus().addHandler(GLRecordChangeEvent.RecordChangeEventType, this);
+  GLClientUtil.getDBUpdater().registerRecordEditor(this);
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public void accept(final EditorVisitor visitor) {
-  throw new UnsupportedOperationException();
-}
-//--------------------------------------------------------------------------------------------------
-public void addWidget(final Widget widget) {
+private void addWidget(final Widget widget) {
   if (widget instanceof Container && !(widget instanceof FieldLabel)) {
     addWidgetContainer((Container)widget);
   }
@@ -122,6 +117,16 @@ private void addWidgetNonContainer(final Widget widget) {
       hasValue = (HasValue<?>)widget;
     }
     _hasValueByColumnMap.put(column, hasValue);
+    hasValue.addValueChangeHandler(new ValueChangeHandler() {
+      @Override
+      public void onValueChange(final ValueChangeEvent event) {
+        GLLog.popup(10, String.valueOf(event.getValue()));
+        if (_modifiedRecord == null) {
+          _modifiedRecord = new GLRecord(_originalRecord);
+        }
+        _modifiedRecord.set(column, event.getValue());
+      }
+    });
   }
 }
 //--------------------------------------------------------------------------------------------------
@@ -142,27 +147,8 @@ private void createContainerHandlers(final Container container) {
   _removeHandlerMap.put(container, handler);
 }
 //--------------------------------------------------------------------------------------------------
-public void edit(final GLRecord... records) {
-  for (final GLRecord record : records) {
-    final IGLTable table = record.getRecordDef().getTable();
-    _originalRecordMap.put(table, record);
-    for (final IGLColumn column : table.getColumns()) {
-      final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
-      if (hasValue != null) {
-        setWidgetValue(hasValue, record, column);
-      }
-    }
-  }
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public GLRecord flush() {
-  for (final Entry<IGLColumn, HasValue<?>> hasValueEntry : _hasValueByColumnMap.entrySet()) {
-    final HasValue<?> hasValue = hasValueEntry.getValue();
-    final Object value = hasValue.getValue();
-    final String stringValue = value == null ? "" : value.toString();
-  }
-  return null;
+public void commitChangesAfterDBUpdate() {
+  GLLog.popup(10, "Does GLRecordEditor#flush need to do something?");
 }
 //--------------------------------------------------------------------------------------------------
 private IGLColumn getColumnFromWidget(final Widget widget) {
@@ -175,54 +161,30 @@ private IGLColumn getColumnFromWidget(final Widget widget) {
     return null;
   }
   final String tableName = itemId.substring(0, dotIndex);
-  final IGLTable table = _tableByTableNameMap.get(tableName);
-  if (table == null) {
+  if (!tableName.equalsIgnoreCase(_table.toString())) {
     return null;
   }
   final String columnName = itemId.substring(dotIndex + 1);
-  return table.findColumnUsingColumnName(columnName);
+  return _table.findColumnUsingColumnName(columnName);
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public List<EditorError> getErrors() {
-  // todo Auto-generated method stub
-  return null;
+GLRecord getModifiedRecord() {
+  return _modifiedRecord;
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public boolean hasErrors() {
-  // todo Auto-generated method stub
-  return false;
-}
-//--------------------------------------------------------------------------------------------------
-Collection<GLRecord> getModifiedRecords() {
-  return _modifiedRecordMap.values();
-}
-//--------------------------------------------------------------------------------------------------
-GLRecord getOriginalRecord(final GLRecord modifiedRecord) {
-  return _originalRecordMap.get(modifiedRecord.getRecordDef().getTable());
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public boolean isDirty() {
-  // todo Auto-generated method stub
-  return false;
+GLRecord getOriginalRecord() {
+  return _originalRecord;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 public void onRecordChangeEvent(final GLRecordChangeEvent recordChangeEvent) {
   final GLRecord changedRecord = recordChangeEvent.getRecord();
-  for (final GLRecord originalRecord : _originalRecordMap.values()) {
-    if (originalRecord.getRecordDef().getTable() == changedRecord.getRecordDef().getTable()) {
-      if (originalRecord.getKeyValueAsString().equals(recordChangeEvent.getRecord()
-                                                                       .getKeyValueAsString())) {
-        break;
-      }
-      return;
-    }
+  if (_table != changedRecord.getRecordDef().getTable() ||
+      !_originalRecord.getKeyValueAsString().equals(recordChangeEvent.getRecord()
+                                                                     .getKeyValueAsString())) {
+    return;
   }
-  setValue(changedRecord.getRecordDef().getTable(), recordChangeEvent.getColumnName(),
-           recordChangeEvent.getNewValue());
+  setValue(recordChangeEvent.getColumnName(), recordChangeEvent.getNewValue());
 }
 //--------------------------------------------------------------------------------------------------
 public void removeWidget(final Widget widget) {
@@ -242,13 +204,8 @@ public void removeWidget(final Widget widget) {
   }
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public boolean setConstraintViolations(final Iterable<ConstraintViolation<?>> violations) {
-  throw new UnsupportedOperationException();
-}
-//--------------------------------------------------------------------------------------------------
-private void setValue(final IGLTable table, final String columnName, final Object value) {
-  final IGLColumn column = table.findColumnUsingColumnName(columnName);
+private void setValue(final String columnName, final Object value) {
+  final IGLColumn column = _table.findColumnUsingColumnName(columnName);
   final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
   if (hasValue != null) {
     setWidgetValue(hasValue, column, value);

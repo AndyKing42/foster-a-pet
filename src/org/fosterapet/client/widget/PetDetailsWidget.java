@@ -12,9 +12,9 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLRecord;
-import org.greatlogic.glgwt.client.db.GLRecordEditorDriver;
+import org.greatlogic.glgwt.client.db.GLRecordEditor;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -28,10 +28,10 @@ import com.sencha.gxt.widget.core.client.event.SelectEvent;
 public class PetDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-FlowLayoutContainer                flowLayoutContainer;
+FlowLayoutContainer          flowLayoutContainer;
 
-private final GLRecordEditorDriver _editorDriver;
-private final GLRecord             _pet;
+private final GLRecordEditor _recordEditor;
+private final GLRecord       _pet;
 //==================================================================================================
 interface PetDetailsWidgetUiBinder extends UiBinder<Widget, PetDetailsWidget> { //
 }
@@ -41,14 +41,12 @@ public PetDetailsWidget(final GLRecord pet) {
   final PetDetailsWidgetUiBinder uiBinder = GWT.create(PetDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
-  _editorDriver = new GLRecordEditorDriver(EFAPTable.class, true);
-  _editorDriver.addWidget(flowLayoutContainer);
-  _editorDriver.edit(_pet);
+  _recordEditor = new GLRecordEditor(pet, true, flowLayoutContainer);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"saveButton"})
 public void onSaveButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  _editorDriver.flush();
+  GLClientUtil.getDBUpdater().saveAllChanges();
 }
 //--------------------------------------------------------------------------------------------------
 }

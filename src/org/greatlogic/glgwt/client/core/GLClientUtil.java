@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.TreeMap;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.db.GLRecord;
@@ -28,6 +29,7 @@ import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
+import org.greatlogic.glgwt.shared.IGLTable;
 import org.greatlogic.glgwt.shared.requestresponse.GLGetNextIdServiceResponse;
 import org.greatlogic.glgwt.shared.requestresponse.GLServiceResponse;
 import com.google.gwt.core.client.GWT;
@@ -52,16 +54,18 @@ import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
-public static final String     SessionTokenCookie = "SessionToken";
+public static final String                     SessionTokenCookie = "SessionToken";
 
-private static GLClientFactory _clientFactory;
-private static GLLoginWidget   _loginWidget;
-private static Random          _random;
-private static String          _sessionToken;
-private static DateTimeFormat  _yyyymmddDateTimeFormat;
+private static GLClientFactory                 _clientFactory;
+private static GLLoginWidget                   _loginWidget;
+private static final Random                    _random;
+private static String                          _sessionToken;
+private static final TreeMap<String, IGLTable> _tableByTableNameMap;
+private static final DateTimeFormat            _yyyymmddDateTimeFormat;
 //--------------------------------------------------------------------------------------------------
 static {
   _random = new Random(System.currentTimeMillis());
+  _tableByTableNameMap = new TreeMap<>();
   _yyyymmddDateTimeFormat = DateTimeFormat.getFormat("yyyyMMdd");
 }
 //--------------------------------------------------------------------------------------------------
@@ -233,8 +237,12 @@ public static GLValidators getValidators() {
 }
 //--------------------------------------------------------------------------------------------------
 public static void initialize(final String appDescription, final GLClientFactory clientFactory,
+                              final Class<? extends Enum<?>> tableEnumClass,
                               final String loginWidgetHeadingText) {
   _clientFactory = clientFactory;
+  for (final Enum<?> table : tableEnumClass.getEnumConstants()) {
+    _tableByTableNameMap.put(table.toString(), ((IGLTable)table));
+  }
   disableBackspace();
   addWindowClosingHandler(appDescription);
   _loginWidget = new GLLoginWidget(loginWidgetHeadingText);

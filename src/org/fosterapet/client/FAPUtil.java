@@ -13,6 +13,7 @@ package org.fosterapet.client;
  * the License.
  */
 import org.fosterapet.client.widget.MainLayoutWidget;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 
 public class FAPUtil {
@@ -25,7 +26,7 @@ public static ClientFactory getClientFactory() {
 //--------------------------------------------------------------------------------------------------
 static void initialize() {
   _clientFactory = new ClientFactoryUI();
-  GLClientUtil.initialize("Foster A Pet", _clientFactory, "Foster A Pet Login");
+  GLClientUtil.initialize("Foster A Pet", _clientFactory, EFAPTable.class, "Foster A Pet Login");
   _clientFactory.setMainLayoutWidget(new MainLayoutWidget());
   // todo: restore the user's prior state? _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
 }

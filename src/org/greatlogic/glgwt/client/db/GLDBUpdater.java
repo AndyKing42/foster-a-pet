@@ -25,12 +25,12 @@ import com.sencha.gxt.data.shared.Store;
 
 public class GLDBUpdater {
 //--------------------------------------------------------------------------------------------------
-private final HashSet<GLRecordEditorDriver> _editorDriverSet;
-private ArrayList<GLRecord>                 _insertedRecordList;
-private final HashSet<GLListStore>          _listStoreSet;
+private ArrayList<GLRecord>           _insertedRecordList;
+private final HashSet<GLListStore>    _listStoreSet;
+private final HashSet<GLRecordEditor> _recordEditorSet;
 //--------------------------------------------------------------------------------------------------
 public GLDBUpdater() {
-  _editorDriverSet = new HashSet<>();
+  _recordEditorSet = new HashSet<>();
   _listStoreSet = new HashSet<>();
 }
 //--------------------------------------------------------------------------------------------------
@@ -45,8 +45,8 @@ private void addToUpdateList(final ArrayList<GLDBUpdate> dbUpdateList, final GLD
   }
 }
 //--------------------------------------------------------------------------------------------------
-public void registerEditorDriver(final GLRecordEditorDriver editorDriver) {
-  _editorDriverSet.add(editorDriver);
+public void registerRecordEditor(final GLRecordEditor recordEditor) {
+  _recordEditorSet.add(recordEditor);
 }
 //--------------------------------------------------------------------------------------------------
 public void registerListStore(final GLListStore listStore) {
@@ -56,11 +56,12 @@ public void registerListStore(final GLListStore listStore) {
 public void saveAllChanges() {
   TreeMap<IGLTable, TreeSet<String>> deletedKeyValueMap = null; // table -> key value set
   final ArrayList<GLDBUpdate> dbUpdateList = new ArrayList<>();
-  for (final GLRecordEditorDriver recordEditorDriver : _editorDriverSet) {
-    for (final GLRecord modifiedRecord : recordEditorDriver.getModifiedRecords()) {
+  for (final GLRecordEditor recordEditor : _recordEditorSet) {
+    final GLRecord modifiedRecord = recordEditor.getModifiedRecord();
+    if (modifiedRecord != null) {
       addToUpdateList(dbUpdateList,
-                      new GLDBUpdate(recordEditorDriver.getOriginalRecord(modifiedRecord),
-                                     modifiedRecord), modifiedRecord);
+                      new GLDBUpdate(recordEditor.getOriginalRecord(), modifiedRecord),
+                      modifiedRecord);
     }
   }
   for (final GLListStore listStore : _listStoreSet) {
@@ -104,6 +105,9 @@ private void sendDBChangesToServer(final TreeMap<IGLTable, TreeSet<String>> dele
         for (final GLRecord record : _insertedRecordList) {
           record.setInserted(false);
         }
+      }
+      for (final GLRecordEditor recordEditor : _recordEditorSet) {
+        recordEditor.commitChangesAfterDBUpdate();
       }
       for (final GLListStore listStore : _listStoreSet) {
         listStore.commitChangesAfterDBUpdate();

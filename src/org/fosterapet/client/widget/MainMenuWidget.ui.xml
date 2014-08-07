@@ -18,11 +18,6 @@
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
-        ui:field='testGridButton'
-        text='Test Grid'>
-      </gxtbutton:TextButton>
-      <gxttoolbar:SeparatorToolItem/>
-      <gxtbutton:TextButton
         ui:field='reloadTestDataButton'
         text='Reload Test Data'
         visible='true'>

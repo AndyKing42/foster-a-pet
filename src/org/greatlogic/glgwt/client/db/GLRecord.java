@@ -39,6 +39,15 @@ public GLRecord(final GLRecordDef recordDef) {
 }
 //--------------------------------------------------------------------------------------------------
 /**
+ * Creates a new GLRecord by copying all the values from the copy-from record.
+ */
+public GLRecord(final GLRecord copyFromRecord) {
+  _inserted = copyFromRecord._inserted;
+  _recordDef = copyFromRecord._recordDef;
+  _valueList = new ArrayList<>(copyFromRecord._valueList);
+}
+//--------------------------------------------------------------------------------------------------
+/**
  * Creates a new GLRecord.
  * @param recordDef The record definition associated with this record. This is used when values are
  * retrieved using the field name or column.

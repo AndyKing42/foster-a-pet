@@ -141,12 +141,6 @@ public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSel
   DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
 }
 //--------------------------------------------------------------------------------------------------
-public void createTestGrid() {
-  final ContentPanel contentPanel = addTab("Test");
-  final TestGrid testGrid = new TestGrid();
-  contentPanel.setWidget(testGrid.asWidget());
-}
-//--------------------------------------------------------------------------------------------------
 public int getNumberOfTabs() {
   return tabPanel.getWidgetCount();
 }
