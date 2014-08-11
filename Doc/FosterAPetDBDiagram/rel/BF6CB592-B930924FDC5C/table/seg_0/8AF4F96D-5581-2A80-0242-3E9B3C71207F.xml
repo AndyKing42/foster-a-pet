@@ -19,7 +19,6 @@
 <createdBy>aking</createdBy>
 <createdTime>2014-08-06 23:06:47 UTC</createdTime>
 <ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT008</logicalDatatype>
@@ -43,11 +42,20 @@
 <createdBy>aking</createdBy>
 <createdTime>2014-08-04 18:17:31 UTC</createdTime>
 <ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
-<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
 <dataTypeSize>100</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Version" id="BF419499-33E2-E4F0-279E-FBEE807DD9AA">
+<createdBy>Andy</createdBy>
+<createdTime>2014-08-08 17:43:29 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>

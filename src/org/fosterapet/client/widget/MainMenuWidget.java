@@ -69,11 +69,7 @@ private void addPetsContextMenuHandler() {
   petsButton.addHandler(new ContextMenuHandler() {
     @Override
     public void onContextMenu(final ContextMenuEvent event) {
-      FAPUtil.getClientFactory()
-             .getAppTabPanelWidget()
-             .createPetGrid(inlineEditingCheckMenuItem.isChecked(),
-                            checkBoxSelectionModelCheckMenuItem.isChecked(),
-                            rowLevelCommitsCheckMenuItem.isChecked());
+      createPetGrid();
       event.preventDefault();
     }
   }, ContextMenuEvent.getType());
@@ -97,6 +93,22 @@ private void addTableNamesToGenericGridMenu() {
   genericGridMenu.setWidth(maxWidth + 35);
 }
 //--------------------------------------------------------------------------------------------------
+protected void createPersonGrid() {
+  FAPUtil.getClientFactory()
+         .getAppTabPanelWidget()
+         .createPersonGrid(inlineEditingCheckMenuItem.isChecked(),
+                           checkBoxSelectionModelCheckMenuItem.isChecked(),
+                           rowLevelCommitsCheckMenuItem.isChecked());
+}
+//--------------------------------------------------------------------------------------------------
+protected void createPetGrid() {
+  FAPUtil.getClientFactory()
+         .getAppTabPanelWidget()
+         .createPetGrid(inlineEditingCheckMenuItem.isChecked(),
+                        checkBoxSelectionModelCheckMenuItem.isChecked(),
+                        rowLevelCommitsCheckMenuItem.isChecked());
+}
+//--------------------------------------------------------------------------------------------------
 @UiHandler({"genericGridMenu"})
 public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
   final String tableName = ((MenuItem)event.getSelectedItem()).getText();
@@ -113,9 +125,14 @@ public void onLogInButtonSelect(@SuppressWarnings("unused") final SelectEvent ev
   GLClientUtil.logIn(null);
 }
 //--------------------------------------------------------------------------------------------------
+@UiHandler({"peopleButton"})
+public void onPeopleButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  createPersonGrid();
+}
+//--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  GLLog.popup(10, "Navigate to the next Pets tab");
+  createPetGrid();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})

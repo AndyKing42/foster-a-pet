@@ -87,7 +87,9 @@ public void saveAllChanges() {
       }
     }
   }
-  sendDBChangesToServer(deletedKeyValueMap, dbUpdateList);
+  if ((deletedKeyValueMap != null && deletedKeyValueMap.size() > 0) || dbUpdateList.size() > 0) {
+    sendDBChangesToServer(deletedKeyValueMap, dbUpdateList);
+  }
 }
 //--------------------------------------------------------------------------------------------------
 private void sendDBChangesToServer(final TreeMap<IGLTable, TreeSet<String>> deletedKeyValueMap,

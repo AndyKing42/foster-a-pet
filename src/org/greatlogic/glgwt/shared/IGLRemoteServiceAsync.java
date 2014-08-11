@@ -18,6 +18,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface IGLRemoteServiceAsync {
 //--------------------------------------------------------------------------------------------------
+void changePassword(final int personId, final String oldPassword, final String newPassword,
+                    final AsyncCallback<GLChangePasswordResponse> callback);
 void log(final int priority, final String location, final String message,
          final AsyncCallback<Void> callback);
 void login(final String loginName, final String password, final String sessionTokenFromClient,

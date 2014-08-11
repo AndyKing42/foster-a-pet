@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import org.fosterapet.client.DBAccess;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLRecord;
@@ -129,6 +130,16 @@ public void createPetDetails(final GLRecord pet) {
     final ContentPanel contentPanel = addTab(pet, Pet.PetName);
     contentPanel.setWidget(new PetDetailsWidget(pet));
   }
+}
+//--------------------------------------------------------------------------------------------------
+public void createPersonGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
+                             final boolean rowLevelCommits) {
+  final ContentPanel contentPanel = addTab("People-" + (getNumberOfTabs() + 1));
+  final GLGridWidget gridWidget;
+  gridWidget = GridWidgetManager.getPersonGrid("People" + (getNumberOfTabs() + 1), inlineEditing, //
+                                               checkBoxSelectionModel, rowLevelCommits);
+  contentPanel.setWidget(gridWidget);
+  DBAccess.load(gridWidget.getListStore(), EFAPTable.Person, Person.DisplayName.name(), false);
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,

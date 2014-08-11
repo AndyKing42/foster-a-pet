@@ -1081,7 +1081,7 @@ public String getTitle() {
 public enum Person implements IGLColumn {
 ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
 CurrentOrgId("Current Org Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Org, -1),
-DateOfBirth("Date Of Birth", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, true, null, false, 0, null, -1),
 DisplayName("Display Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
 EmailAddress("Email Address", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
 FirstName("First Name", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),

@@ -7,31 +7,41 @@
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
   xmlns:gxtmenu='urn:import:com.sencha.gxt.widget.core.client.menu'
   xmlns:gxttoolbar='urn:import:com.sencha.gxt.widget.core.client.toolbar'
-  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'
+>
   <!--========================================================================================== -->
   <gxtcontainer:SimpleContainer>
     <gxttoolbar:ToolBar>
       <gxtbutton:TextButton
         ui:field='petsButton'
         text='Pets'
-        toolTip='(right click to create a new Pets tab)'>
+      >
+      </gxtbutton:TextButton>
+      <gxttoolbar:SeparatorToolItem/>
+      <gxtbutton:TextButton
+        ui:field='peopleButton'
+        text='People'
+      >
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
         ui:field='reloadTestDataButton'
         text='Reload Test Data'
-        visible='true'>
+        visible='true'
+      >
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
         ui:field='logInButton'
         text='Log In'
-        visible='true'>
+        visible='true'
+      >
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
         text='Grid Options'
-        toolTip='Grid options apply only to Pet grids, and will take effect the next time a Pet grid is created'>
+        toolTip='Grid options will take effect the next time a grid is created'
+      >
         <gxtbutton:menu>
           <gxtmenu:Menu>
             <gxtmenu:CheckMenuItem

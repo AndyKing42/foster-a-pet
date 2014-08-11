@@ -26,6 +26,7 @@ import org.greatlogic.glgwt.client.db.GLRecordDef;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
+import org.greatlogic.glgwt.client.widget.GLChangePasswordWidget;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
 import org.greatlogic.glgwt.shared.GLValidators;
 import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
@@ -54,8 +55,9 @@ import com.sencha.gxt.widget.core.client.form.error.DefaultEditorError;
 
 public class GLClientUtil {
 //--------------------------------------------------------------------------------------------------
-public static final String                     SessionTokenCookie = "SessionToken";
+public static final String                     SessionTokenCookie = "GLGWTSessionToken";
 
+private static GLChangePasswordWidget          _changePasswordWidget;
 private static GLClientFactory                 _clientFactory;
 private static GLLoginWidget                   _loginWidget;
 private static final Random                    _random;
@@ -78,6 +80,14 @@ private static void addWindowClosingHandler(final String appDescription) {
       }
     });
   }
+}
+//--------------------------------------------------------------------------------------------------
+public static void changePassword(final int personId,
+                                  final AsyncCallback<Void> changePasswordSuccessfulCallback) {
+  if (_changePasswordWidget == null) {
+    _changePasswordWidget = new GLChangePasswordWidget("Change Password");
+  }
+  _changePasswordWidget.changePassword(personId, changePasswordSuccessfulCallback);
 }
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
@@ -246,7 +256,7 @@ public static void initialize(final String appDescription, final GLClientFactory
   disableBackspace();
   addWindowClosingHandler(appDescription);
   _loginWidget = new GLLoginWidget(loginWidgetHeadingText);
-  _loginWidget.logIn("", "");
+  _loginWidget.logInUsingNameAndPassword("", "");
 }
 //--------------------------------------------------------------------------------------------------
 public static boolean isBlank(final CharSequence s) {

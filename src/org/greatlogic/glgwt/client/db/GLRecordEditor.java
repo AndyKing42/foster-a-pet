@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.TreeSet;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
 import org.greatlogic.glgwt.client.widget.GLFieldUtils;
@@ -51,7 +50,7 @@ private final HashMap<IGLColumn, HasValue<?>>         _hasValueByColumnMap;
 private final boolean                                 _insertWidgetsBelowLabels;
 private TreeSet<IGLColumn>                            _modifiedColumnSet;
 private GLRecord                                      _modifiedRecord;
-private final GLRecord                                _originalRecord;
+private GLRecord                                      _originalRecord;
 private final HashMap<Container, HandlerRegistration> _removeHandlerMap;
 private final IGLTable                                _table;
 //--------------------------------------------------------------------------------------------------
@@ -66,12 +65,7 @@ public GLRecordEditor(final GLRecord record, final boolean insertWidgetsBelowLab
   for (final Widget widget : widgets) {
     addWidget(widget);
   }
-  for (final IGLColumn column : _table.getColumns()) {
-    final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
-    if (hasValue != null) {
-      setWidgetValue(hasValue, record, column);
-    }
-  }
+  setValuesFromRecord(_originalRecord);
   GLClientUtil.getEventBus().addHandler(GLRecordChangeEvent.RecordChangeEventType, this);
   GLClientUtil.getDBUpdater().registerRecordEditor(this);
 }
@@ -124,14 +118,9 @@ private void addWidgetNonContainer(final Widget widget) {
   }
 }
 //--------------------------------------------------------------------------------------------------
-private void rollback_changes() {
-  copy_original_to_screen("?");
-  set_modified_to_null();
-}
-//--------------------------------------------------------------------------------------------------
 public void commitChangesAfterDBUpdate() {
   if (_modifiedRecord != null) {
-    copy_modified_to_original();
+    _originalRecord = _modifiedRecord;
     _modifiedRecord = null;
     _modifiedColumnSet = null;
   }
@@ -154,11 +143,11 @@ private void createContainerHandlers(final Container container) {
   _removeHandlerMap.put(container, handler);
 }
 //--------------------------------------------------------------------------------------------------
+@SuppressWarnings("rawtypes")
 private ValueChangeHandler createFieldValueChangeHandler(final IGLColumn column) {
   return new ValueChangeHandler() {
     @Override
     public void onValueChange(final ValueChangeEvent event) {
-      GLLog.popup(10, String.valueOf(event.getValue()));
       if (_modifiedRecord == null) {
         _modifiedRecord = new GLRecord(_originalRecord);
         _modifiedColumnSet = new TreeSet<>();
@@ -241,6 +230,15 @@ private void setValue(final String columnName, final Object value) {
   }
 }
 //--------------------------------------------------------------------------------------------------
+private void setValuesFromRecord(final GLRecord record) {
+  for (final IGLColumn column : _table.getColumns()) {
+    final HasValue<?> hasValue = _hasValueByColumnMap.get(column);
+    if (hasValue != null) {
+      setWidgetValue(hasValue, record, column);
+    }
+  }
+}
+//--------------------------------------------------------------------------------------------------
 private void setWidgetValue(final HasValue<?> hasValue, final GLRecord record,
                             final IGLColumn column) {
   setWidgetValue(hasValue, column, record.asObject(column));
@@ -280,6 +278,12 @@ private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, 
       ((HasValue<String>)hasValue).setValue(stringValue);
       break;
   }
+}
+//--------------------------------------------------------------------------------------------------
+public void undoChanges() {
+  setValuesFromRecord(_originalRecord);
+  _modifiedRecord = null;
+  _modifiedColumnSet = null;
 }
 //--------------------------------------------------------------------------------------------------
 }

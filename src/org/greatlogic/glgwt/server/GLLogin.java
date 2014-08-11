@@ -33,7 +33,7 @@ private int               _personId;
 private final String      _sessionToken;
 private int               _sessionTokenId;
 private boolean           _succeeded;
-//--------------------------------------------------------------------------------------------------
+//==================================================================================================
 private enum ELoginTable implements IGLTable {
 SessionToken(SessionToken.class);
 private final Class<? extends Enum<?>> _columnEnumClass;
@@ -58,7 +58,28 @@ private enum SessionToken implements IGLColumn {
 ExpirationTime,
 PersonId,
 SessionToken,
-SessionTokenId
+SessionTokenId,
+Version
+}
+//==================================================================================================
+static void updateSessionToken(final int personId, final int sessionTokenId,
+                               final String sessionToken) throws GLDBException {
+  final GLSQL sessionTokenSQL;
+  if (sessionTokenId == 0) {
+    sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
+    sessionTokenSQL.setValue(SessionToken.PersonId, personId);
+    sessionTokenSQL.setValue(SessionToken.SessionTokenId,
+                             GLServerUtil.getNextIdValue(ELoginTable.SessionToken.name(), 1));
+  }
+  else {
+    sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);
+    sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.Equals, sessionTokenId);
+  }
+  sessionTokenSQL.setValue(SessionToken.ExpirationTime,
+                           GLUtil.timeAddSeconds(GLUtil.currentTimeYYYYMMDDHHMMSS(), TenDays));
+  sessionTokenSQL.setValue(SessionToken.SessionToken, sessionToken);
+  sessionTokenSQL.setValue(SessionToken.Version, GLServerUtil.generateVersion());
+  sessionTokenSQL.execute();
 }
 //--------------------------------------------------------------------------------------------------
 GLLogin(final String sessionId, final String loginName, final String password,
@@ -73,7 +94,7 @@ GLLogin(final String sessionId, final String loginName, final String password,
       _succeeded = loginUsingNameAndPassword(loginName, password);
     }
     if (_succeeded) {
-      updateSessionToken();
+      GLLogin.updateSessionToken(_personId, _sessionTokenId, _sessionToken);
     }
   }
   catch (final Exception e) {
@@ -141,22 +162,11 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
   return false;
 }
 //--------------------------------------------------------------------------------------------------
-private void updateSessionToken() throws GLDBException {
-  final GLSQL sessionTokenSQL;
-  if (_sessionTokenId == 0) {
-    sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
-    sessionTokenSQL.setValue(SessionToken.PersonId, _personId);
-    sessionTokenSQL.setValue(SessionToken.SessionTokenId,
-                             GLServerUtil.getNextIdValue(ELoginTable.SessionToken.name(), 1));
-  }
-  else {
-    sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);
-    sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.Equals, _sessionTokenId);
-  }
-  sessionTokenSQL.setValue(SessionToken.ExpirationTime,
-                           GLUtil.timeAddSeconds(GLUtil.currentTimeYYYYMMDDHHMMSS(), TenDays));
-  sessionTokenSQL.setValue(SessionToken.SessionToken, _sessionToken);
-  sessionTokenSQL.execute();
+void setNewPassword(final String newPassword) throws GLDBException {
+  final GLSQL personSQL = GLSQL.update(EFAPTable.Person.name());
+  personSQL.setValue(Person.PasswordHash.name(), BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+  personSQL.whereAnd(0, Person.PersonId + "=" + _personId, 0);
+  personSQL.execute();
 }
 //--------------------------------------------------------------------------------------------------
 }

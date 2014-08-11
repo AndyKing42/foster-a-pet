@@ -31,13 +31,11 @@ public class PetDetailsWidget extends Composite {
 FlowLayoutContainer          flowLayoutContainer;
 
 private final GLRecordEditor _recordEditor;
-private final GLRecord       _pet;
 //==================================================================================================
 interface PetDetailsWidgetUiBinder extends UiBinder<Widget, PetDetailsWidget> { //
 }
 //==================================================================================================
 public PetDetailsWidget(final GLRecord pet) {
-  _pet = pet;
   final PetDetailsWidgetUiBinder uiBinder = GWT.create(PetDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
@@ -47,6 +45,11 @@ public PetDetailsWidget(final GLRecord pet) {
 @UiHandler({"saveButton"})
 public void onSaveButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   GLClientUtil.getDBUpdater().saveAllChanges();
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"undoButton"})
+public void onUndoButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  _recordEditor.undoChanges();
 }
 //--------------------------------------------------------------------------------------------------
 }
