@@ -44,6 +44,7 @@ import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorError;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Event.NativePreviewHandler;
@@ -308,6 +309,11 @@ public static ArrayList<String> loadListFromStrings(final ArrayList<String> stri
 //--------------------------------------------------------------------------------------------------
 public static void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
   _loginWidget.logIn(loginSuccessfulCallback);
+}
+//--------------------------------------------------------------------------------------------------
+public static void logOut() {
+  GLClientUtil.setSessionToken("");
+  Cookies.removeCookie(GLClientUtil.SessionTokenCookie);
 }
 //--------------------------------------------------------------------------------------------------
 /**

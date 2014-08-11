@@ -102,7 +102,14 @@ public void logInUsingNameAndPassword(final String loginName, final String passw
 //--------------------------------------------------------------------------------------------------
 @UiHandler("okButton")
 public void onOKButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  logInUsingNameAndPassword(loginNameField.getValue(), passwordField.getValue());
+  final String loginName = loginNameField.getValue();
+  final String password = passwordField.getValue();
+  if (loginName.isEmpty() || password.isEmpty()) {
+    GLLog.popup(10, "Login name and password are required");
+    errorMessageLabel.setText("Login name and password are required");
+    return;
+  }
+  logInUsingNameAndPassword(loginName, password);
 }
 //--------------------------------------------------------------------------------------------------
 }
