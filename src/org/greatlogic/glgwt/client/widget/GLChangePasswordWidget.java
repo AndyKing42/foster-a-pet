@@ -14,7 +14,7 @@ package org.greatlogic.glgwt.client.widget;
  */
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.shared.GLLoginResponse;
+import org.greatlogic.glgwt.shared.GLChangePasswordResponse;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -27,82 +27,91 @@ import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.form.FieldLabel;
 import com.sencha.gxt.widget.core.client.form.PasswordField;
-import com.sencha.gxt.widget.core.client.form.TextField;
 
-public class GLLoginWidget extends Window {
+public class GLChangePasswordWidget extends Window {
 //--------------------------------------------------------------------------------------------------
 @UiField
 FieldLabel                  errorMessageLabel;
 @UiField
-TextField                   loginNameField;
+PasswordField               newPasswordField;
 @UiField
 TextButton                  okButton;
 @UiField
-PasswordField               passwordField;
+PasswordField               oldPasswordField;
+@UiField
+PasswordField               repeatNewPasswordField;
 @UiField
 Window                      window;
 
+private AsyncCallback<Void> _changePasswordSuccessfulCallback;
 private boolean             _firstTime;
-private AsyncCallback<Void> _loginSuccessfulCallback;
+private int                 _personId;
 private final String        _windowHeadingText;
 //==================================================================================================
-interface IGLLoginWidgetBinder extends UiBinder<Widget, GLLoginWidget> { //
+interface IGLLoginWidgetBinder extends UiBinder<Widget, GLChangePasswordWidget> { //
 }
 //==================================================================================================
-public GLLoginWidget(final String windowHeadingText) {
+public GLChangePasswordWidget(final String windowHeadingText) {
   _windowHeadingText = windowHeadingText;
   final IGLLoginWidgetBinder binder = GWT.create(IGLLoginWidgetBinder.class);
   binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
-  _loginSuccessfulCallback = loginSuccessfulCallback;
+public void changePassword(final int personId,
+                           final AsyncCallback<Void> changePasswordSuccessfulCallback) {
+  _personId = personId;
+  _changePasswordSuccessfulCallback = changePasswordSuccessfulCallback;
   window.setHeadingText(_windowHeadingText);
-  passwordField.setValue("");
+  newPasswordField.setValue("");
+  repeatNewPasswordField.setValue("");
   window.show();
 }
 //--------------------------------------------------------------------------------------------------
-public void logInUsingNameAndPassword(final String loginName, final String password) {
-  final AsyncCallback<GLLoginResponse> callback = new AsyncCallback<GLLoginResponse>() {
+private void changePassword(final String oldPassword, final String newPassword) {
+  final AsyncCallback<GLChangePasswordResponse> callback;
+  callback = new AsyncCallback<GLChangePasswordResponse>() {
     @Override
     public void onFailure(final Throwable caught) {
-      GLLog.popup(10, "Login failed");
+      GLLog.popup(10, "Change password failed");
       if (!_firstTime) {
-        errorMessageLabel.setText("Login failed ... please try again");
+        errorMessageLabel.setText("Change password failed (" + caught.getMessage() + ")");
       }
       _firstTime = false;
-      logIn(_loginSuccessfulCallback);
+      changePassword(_personId, _changePasswordSuccessfulCallback);
     }
     @Override
-    public void onSuccess(final GLLoginResponse response) {
+    public void onSuccess(final GLChangePasswordResponse response) {
       if (!response.getSucceeded()) {
-        GLLog.popup(10, "Login failed");
+        GLLog.popup(10, "Login failed - " + response.getFailureReason());
         if (!_firstTime) {
-          errorMessageLabel.setText("Login failed ... please try again");
+          errorMessageLabel.setText("Change password failed - " + response.getFailureReason());
         }
         _firstTime = false;
-        logIn(_loginSuccessfulCallback);
+        changePassword(_personId, _changePasswordSuccessfulCallback);
         return;
       }
-      GLLog.popup(10, "Login succeeded:" + response);
+      GLLog.popup(10, "Change password succeeded:" + response);
       errorMessageLabel.setText("");
       GLClientUtil.setSessionToken(response.getSessionToken());
       Cookies.setCookie(GLClientUtil.SessionTokenCookie, response.getSessionToken());
       window.hide();
-      if (_loginSuccessfulCallback != null) {
-        _loginSuccessfulCallback.onSuccess(null);
-        _loginSuccessfulCallback = null;
+      if (_changePasswordSuccessfulCallback != null) {
+        _changePasswordSuccessfulCallback.onSuccess(null);
+        _changePasswordSuccessfulCallback = null;
       }
     }
   };
-  GLClientUtil.getRemoteService().login(loginName, password,
-                                        Cookies.getCookie(GLClientUtil.SessionTokenCookie),
-                                        callback);
+  GLClientUtil.getRemoteService().changePassword(_personId, oldPassword, newPassword, callback);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler("okButton")
 public void onOKButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  logInUsingNameAndPassword(loginNameField.getValue(), passwordField.getValue());
+  if (!repeatNewPasswordField.getValue().equals(newPasswordField.getValue())) {
+    GLLog.popup(20, "The new password entries don't match");
+    errorMessageLabel.setText("The new password entries don't match");
+    return;
+  }
+  changePassword(oldPasswordField.getValue(), newPasswordField.getValue());
 }
 //--------------------------------------------------------------------------------------------------
 }

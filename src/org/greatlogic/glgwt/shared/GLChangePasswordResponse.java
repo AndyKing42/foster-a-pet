@@ -14,37 +14,35 @@ package org.greatlogic.glgwt.shared;
  */
 import java.io.Serializable;
 
-public class GLLoginResponse implements Serializable {
+public class GLChangePasswordResponse implements Serializable {
 //--------------------------------------------------------------------------------------------------
 private static final long serialVersionUID = 1122L;
 
-private int               _personId;
+private String            _failureReason;
 private boolean           _succeeded;
 private String            _sessionToken;
 //--------------------------------------------------------------------------------------------------
-public void setResultValues(final boolean succeeded, final String sessionToken, final int personId) {
-  _succeeded = succeeded;
-  if (_succeeded) {
-    _sessionToken = sessionToken;
-    _personId = personId;
-  }
-}
-//--------------------------------------------------------------------------------------------------
-public int getPersonId() {
-  return _personId;
-}
-//--------------------------------------------------------------------------------------------------
-public boolean getSucceeded() {
-  return _succeeded;
+public String getFailureReason() {
+  return _failureReason;
 }
 //--------------------------------------------------------------------------------------------------
 public String getSessionToken() {
   return _sessionToken;
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public String toString() {
-  return "Person id:" + _personId;
+public boolean getSucceeded() {
+  return _succeeded;
+}
+//--------------------------------------------------------------------------------------------------
+public void setFailureReason(final String failureReason) {
+  _failureReason = failureReason;
+}
+//--------------------------------------------------------------------------------------------------
+public void setResultValues(final boolean succeeded, final String sessionToken) {
+  _succeeded = succeeded;
+  if (_succeeded) {
+    _sessionToken = sessionToken;
+  }
 }
 //--------------------------------------------------------------------------------------------------
 }

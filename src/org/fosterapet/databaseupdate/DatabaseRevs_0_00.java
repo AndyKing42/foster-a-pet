@@ -123,4 +123,46 @@ static String rev_0_00_003(final String dbRevNumber, final boolean apply) throws
   return result;
 }
 //--------------------------------------------------------------------------------------------------
+static String rev_0_00_004(final String dbRevNumber, final boolean apply) throws GLDBException {
+  final String result = "Recreate the SessionToken table.";
+  if (apply) {
+    final String sql;
+    sql = "CREATE TABLE SessionToken\n" //
+          + "(\n" //
+          + "SessionTokenId INTEGER NOT NULL ,\n" //
+          + "ExpirationTime DATETIME NOT NULL ,\n" //
+          + "PersonId       INTEGER NOT NULL ,\n" //
+          + "SessionToken   VARCHAR (100) NOT NULL ,\n" //
+          + "Version        VARCHAR (30) NOT NULL ,\n" //
+          + "CONSTRAINT SessionTokenPK PRIMARY KEY CLUSTERED (SessionTokenId)\n" //
+          + "WITH\n" //
+          + "(\n" //
+          + "ALLOW_PAGE_LOCKS = ON ,\n" //
+          + "ALLOW_ROW_LOCKS  = ON\n" //
+          + ")\n" //
+          + "ON \"default\"\n" //
+          + ")\n" //
+          + "ON \"default\"\n" //
+          + "GO\n" //
+          + "CREATE UNIQUE NONCLUSTERED INDEX\n" //
+          + "SessionToken_SessionToken_IDX ON SessionToken\n" //
+          + "(\n" //
+          + "SessionToken\n" //
+          + ")\n" //
+          + "ON \"default\"\n" //
+          + "GO\n" //
+          + "CREATE UNIQUE NONCLUSTERED INDEX\n" //
+          + "SessionToken_PersonId_SessionToken_IDX ON SessionToken\n" //
+          + "(\n" //
+          + "PersonId ,\n" //
+          + "SessionToken\n" //
+          + ")\n" //
+          + "ON \"default\"\n" //
+          + "GO\n";
+    DBUUtil.createTablesFromSQL(sql);
+    DBUUtil.insertDBUpdateNote(dbRevNumber, "20140808", "110000", result);
+  }
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
 }

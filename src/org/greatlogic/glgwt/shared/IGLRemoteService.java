@@ -18,6 +18,8 @@ import com.google.gwt.user.client.rpc.RemoteService;
 
 public interface IGLRemoteService extends RemoteService {
 //--------------------------------------------------------------------------------------------------
+GLChangePasswordResponse changePassword(final int personId, final String oldPassword,
+                                        final String newPassword);
 void log(final int priority, final String location, final String message);
 GLLoginResponse login(final String loginName, final String password,
                       final String sessionTokenFromClient);

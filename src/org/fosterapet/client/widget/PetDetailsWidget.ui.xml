@@ -15,9 +15,14 @@
       <gxtform:FieldLabel itemId='Pet.DateOfBirth'/>
       <gxtform:FieldLabel itemId='Pet.IntakeDate'/>
       <gxtform:FieldLabel itemId='Pet.AdoptionFee'/>
-      <gxtbutton:TextButton
-        ui:field='saveButton'
-        text='Save Changes'/>
+      <gxtcontainer:HorizontalLayoutContainer>
+        <gxtbutton:TextButton
+          ui:field='saveButton'
+          text='Save Changes'/>
+        <gxtbutton:TextButton
+          ui:field='undoButton'
+          text='Undo Changes'/>
+      </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:VerticalLayoutContainer>
   </gxtcontainer:FlowLayoutContainer>
 </ui:UiBinder>
