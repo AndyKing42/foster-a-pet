@@ -120,8 +120,9 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
   FAPUtil.getClientFactory().getAppTabPanelWidget().createGenericTableGrid(table);
 }
 //--------------------------------------------------------------------------------------------------
-@UiHandler({"logInButton"})
-public void onLogInButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+@UiHandler({"logOutButton"})
+public void onLogOutButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  GLClientUtil.logOut();
   GLClientUtil.logIn(null);
 }
 //--------------------------------------------------------------------------------------------------

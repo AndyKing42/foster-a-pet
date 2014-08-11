@@ -127,10 +127,16 @@ private boolean loginUsingNameAndPassword(final String loginName, final String p
   personSQL.whereAnd(0, Person.LoginName + "='" + loginName + "'", 0);
   personSQL.open();
   try {
-    if (personSQL.next() &&
-        BCrypt.checkpw(password, personSQL.asString(Person.PasswordHash.name()))) {
+    if (personSQL.next()) {
       _personId = personSQL.asInt(Person.PersonId.name());
-      return true;
+      final String passwordHash = personSQL.asString(Person.PasswordHash.name());
+      if (passwordHash.isEmpty()) {
+        setNewPassword(password);
+        return true;
+      }
+      else if (BCrypt.checkpw(password, passwordHash)) {
+        return true;
+      }
     }
   }
   finally {

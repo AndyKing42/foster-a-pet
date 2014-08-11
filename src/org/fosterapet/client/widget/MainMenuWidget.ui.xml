@@ -32,8 +32,8 @@
       </gxtbutton:TextButton>
       <gxttoolbar:SeparatorToolItem/>
       <gxtbutton:TextButton
-        ui:field='logInButton'
-        text='Log In'
+        ui:field='logOutButton'
+        text='Log Out'
         visible='true'
       >
       </gxtbutton:TextButton>

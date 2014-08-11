@@ -62,6 +62,7 @@ public void changePassword(final int personId,
   _personId = personId;
   _changePasswordSuccessfulCallback = changePasswordSuccessfulCallback;
   window.setHeadingText(_windowHeadingText);
+  oldPasswordField.setValue("");
   newPasswordField.setValue("");
   repeatNewPasswordField.setValue("");
   window.show();
