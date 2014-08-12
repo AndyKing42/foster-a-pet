@@ -125,6 +125,13 @@ public void createGenericTableGrid(final IGLTable table) {
   DBAccess.load(gridWidget.getListStore(), table, null, true);
 }
 //--------------------------------------------------------------------------------------------------
+public void createPersonDetails(final GLRecord person) {
+  if (person != null) {
+    final ContentPanel contentPanel = addTab(person, Person.DisplayName);
+    contentPanel.setWidget(new PersonDetailsWidget(person));
+  }
+}
+//--------------------------------------------------------------------------------------------------
 public void createPetDetails(final GLRecord pet) {
   if (pet != null) {
     final ContentPanel contentPanel = addTab(pet, Pet.PetName);
