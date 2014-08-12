@@ -12,6 +12,7 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
@@ -37,8 +38,8 @@ protected void addContentPanelButtons() {
   addContentPanelButton("View Details", new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
-      //      FAPUtil.getClientFactory().getAppTabPanelWidget()
-      //             .createPersonDetails(_grid.getSelectionModel().getSelectedItem());
+      FAPUtil.getClientFactory().getAppTabPanelWidget()
+             .createPersonDetails(_grid.getSelectionModel().getSelectedItem());
     }
   });
   addContentPanelButton("New Person", EGLGridContentPanelButtonType.New);
@@ -52,8 +53,8 @@ protected void addContextMenuItems() {
   addContextMenuItem("View Details", new IGLGridContextMenuSelectionHandler() {
     @Override
     public void onContextMenuSelectionEvent(final GLGridContextMenuSelectionEvent event) {
-      //      FAPUtil.getClientFactory().getAppTabPanelWidget()
-      //             .createPersonDetails(event.getSelectedRecord());
+      FAPUtil.getClientFactory().getAppTabPanelWidget()
+             .createPersonDetails(event.getSelectedRecord());
     }
   });
   addContextMenuItem("Select All", EGLContextMenuItemType.SelectAll);
