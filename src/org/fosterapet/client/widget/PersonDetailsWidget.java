@@ -13,6 +13,7 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordEditor;
 import com.google.gwt.core.client.GWT;
@@ -23,12 +24,19 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class PersonDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
+//@UiField
+//CardLayoutContainer          cardLayoutContainer;
 @UiField
 FlowLayoutContainer          flowLayoutContainer;
+//@UiField
+//ContentPanel                 orgPanel;
+@UiField
+VBoxLayoutContainer          mainContainer;
 
 private final GLRecordEditor _recordEditor;
 //==================================================================================================
@@ -40,7 +48,14 @@ public PersonDetailsWidget(final GLRecord person) {
   initWidget(uiBinder.createAndBindUi(this));
   flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
   _recordEditor = new GLRecordEditor(person, true, flowLayoutContainer);
+  GLLog.popup(20, "flowLayoutContainer.height:" + flowLayoutContainer.getOffsetHeight(true));
+  GLLog.popup(20, "mainContainer.height:" + mainContainer.getOffsetHeight(true));
 }
+//--------------------------------------------------------------------------------------------------
+//@UiHandler({"orgButton"})
+//public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+//  cardLayoutContainer.setActiveWidget(orgPanel);
+//}
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"saveButton"})
 public void onSaveButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {

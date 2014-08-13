@@ -19,6 +19,7 @@ import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
@@ -27,6 +28,8 @@ import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -128,7 +131,22 @@ public void createGenericTableGrid(final IGLTable table) {
 public void createPersonDetails(final GLRecord person) {
   if (person != null) {
     final ContentPanel contentPanel = addTab(person, Person.DisplayName);
-    contentPanel.setWidget(new PersonDetailsWidget(person));
+    final PersonDetailsWidget personDetailsWidget = new PersonDetailsWidget(person);
+    contentPanel.setWidget(personDetailsWidget);
+    GLLog.popup(20, "contentPanel.height:" + contentPanel.getOffsetHeight(true));
+    GLLog.popup(20, "flowLayoutContainer.height:" + //
+                    personDetailsWidget.flowLayoutContainer.getOffsetHeight(true));
+    GLLog.popup(20, "mainContainer.height 1:" + //
+                    personDetailsWidget.mainContainer.getOffsetHeight(true));
+    personDetailsWidget.mainContainer.setHeight(contentPanel.getOffsetHeight(true));
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+      @Override
+      public void execute() {
+        contentPanel.forceLayout();
+        GLLog.popup(20, "mainContainer.height 2:" + //
+                        personDetailsWidget.mainContainer.getOffsetHeight(true));
+      }
+    });
   }
 }
 //--------------------------------------------------------------------------------------------------

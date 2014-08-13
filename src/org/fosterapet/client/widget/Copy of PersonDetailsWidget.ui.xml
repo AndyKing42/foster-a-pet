@@ -7,24 +7,22 @@
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
   <gxtcontainer:FlowLayoutContainer ui:field='flowLayoutContainer'>
-    <gxtcontainer:VBoxLayoutContainer ui:field='mainContainer'>
-      <!--
-        <gxtcontainer:HBoxLayoutContainer>
+    <gxtcontainer:VBoxLayoutContainer>
+      <gxtcontainer:HBoxLayoutContainer>
         <gxtcontainer:VBoxLayoutContainer>
-        <gxtform:FieldLabel itemId='Person.FirstName'/>
-        <gxtform:FieldLabel itemId='Person.LastName'/>
-        <gxtform:FieldLabel itemId='Person.DisplayName'/>
-        <gxtform:FieldLabel itemId='Person.LoginName'/>
-        <gxtform:FieldLabel itemId='Person.DateOfBirth'/>
+          <gxtform:FieldLabel itemId='Person.FirstName'/>
+          <gxtform:FieldLabel itemId='Person.LastName'/>
+          <gxtform:FieldLabel itemId='Person.DisplayName'/>
+          <gxtform:FieldLabel itemId='Person.LoginName'/>
         </gxtcontainer:VBoxLayoutContainer>
         <gxtcontainer:VBoxLayoutContainer>
-        <gxtform:FieldLabel itemId='Person.EmailAddress'/>
-        <gxtform:FieldLabel itemId='Person.PhoneNumberHome'/>
-        <gxtform:FieldLabel itemId='Person.PhoneNumberMobile'/>
-        <gxtform:FieldLabel itemId='Person.PhoneNumberOffice'/>
+          <gxtform:FieldLabel itemId='Person.DateOfBirth'/>
+          <gxtform:FieldLabel itemId='Person.EmailAddress'/>
+          <gxtform:FieldLabel itemId='Person.PhoneNumberHome'/>
+          <gxtform:FieldLabel itemId='Person.PhoneNumberMobile'/>
+          <gxtform:FieldLabel itemId='Person.PhoneNumberOffice'/>
         </gxtcontainer:VBoxLayoutContainer>
-        </gxtcontainer:HBoxLayoutContainer>
-      -->
+      </gxtcontainer:HBoxLayoutContainer>
       <gxtcontainer:HBoxLayoutContainer>
         <gxtbutton:TextButton
           ui:field='saveButton'
@@ -45,28 +43,11 @@
             ui:field='fosterHistoryButton'
             text='Foster History'/>
         </gxtcontainer:VBoxLayoutContainer>
-        <gxtcontainer:VBoxLayoutContainer>
-          <gxtbutton:TextButton
-            text='Organizations 2'/>
-          <gxtbutton:TextButton
-            text='Relationships 2'/>
-          <gxtbutton:TextButton
-            text='Foster History 2'/>
-        </gxtcontainer:VBoxLayoutContainer>
-        <!--
-          <gxtcontainer:CardLayoutContainer ui:field='cardLayoutContainer'>
-          <gxt:ContentPanel ui:field='orgPanel'>
-          <gxtcontainer:VBoxLayoutContainer>
-          <gxtbutton:TextButton text='button1'/>
-          <gxtbutton:TextButton text='button2'/>
-          <gxtbutton:TextButton text='button3'/>
-          <gxtbutton:TextButton text='button4'/>
-          </gxtcontainer:VBoxLayoutContainer>
-          </gxt:ContentPanel>
+        <gxtcontainer:CardLayoutContainer>
+          <gxt:ContentPanel ui:field='orgPanel'/>
           <gxt:ContentPanel ui:field='personRelationshipPanel'/>
           <gxt:ContentPanel ui:field='fosterHistoryPanel'/>
-          </gxtcontainer:CardLayoutContainer>
-        -->
+        </gxtcontainer:CardLayoutContainer>
       </gxtcontainer:HBoxLayoutContainer>
     </gxtcontainer:VBoxLayoutContainer>
   </gxtcontainer:FlowLayoutContainer>

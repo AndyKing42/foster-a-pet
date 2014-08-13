@@ -1089,9 +1089,9 @@ LastName("Last Name", EGLColumnDataType.String, 30, false, null, false, 0, null,
 LoginName("Login Name", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
 PasswordHash("Password Hash", EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
 PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PhoneNumberHome("Phone Number Home", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-PhoneNumberMobile("Phone Number Mobile", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-PhoneNumberOffice("Phone Number Office", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberHome("Home Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberMobile("Mobile Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberOffice("Office Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
 Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;

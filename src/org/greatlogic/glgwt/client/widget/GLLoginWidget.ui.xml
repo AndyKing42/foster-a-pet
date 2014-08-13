@@ -11,13 +11,13 @@
     focusWidget='{okButton}'
     modal='true'
     pixelSize='200, 160'>
-    <gxtcontainer:VerticalLayoutContainer>
+    <gxtcontainer:VBoxLayoutContainer>
       <gxtform:FieldLabel>Login Name</gxtform:FieldLabel>
       <gxtform:TextField ui:field='loginNameField'></gxtform:TextField>
       <gxtform:FieldLabel>Password</gxtform:FieldLabel>
       <gxtform:PasswordField ui:field='passwordField'></gxtform:PasswordField>
       <gxtbutton:TextButton ui:field='okButton'>OK</gxtbutton:TextButton>
       <gxtform:FieldLabel ui:field='errorMessageLabel'/>
-    </gxtcontainer:VerticalLayoutContainer>
+    </gxtcontainer:VBoxLayoutContainer>
   </gxt:Window>
 </ui:UiBinder>

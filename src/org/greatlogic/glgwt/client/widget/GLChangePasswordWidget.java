@@ -65,6 +65,7 @@ public void changePassword(final int personId,
   oldPasswordField.setValue("");
   newPasswordField.setValue("");
   repeatNewPasswordField.setValue("");
+  window.setFocusWidget(oldPasswordField);
   window.show();
 }
 //--------------------------------------------------------------------------------------------------
