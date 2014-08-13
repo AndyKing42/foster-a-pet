@@ -14,6 +14,7 @@ package org.fosterapet.client.widget;
  */
 import java.util.TreeMap;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
@@ -40,6 +41,20 @@ private GridWidgetInfo(final GLGridWidget gridWidget, final boolean inlineEditin
 //--------------------------------------------------------------------------------------------------
 static {
   _gridWidgetInfoMap = new TreeMap<>();
+}
+//--------------------------------------------------------------------------------------------------
+public static OrgPersonGridWidget getOrgPersonGrid(final String gridName) {
+  final OrgPersonGridWidget result;
+  GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
+  if (gridWidgetInfo == null) {
+    final GLRecordValidator validator;
+    validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.OrgPerson);
+    result = new OrgPersonGridWidget(validator, false, true, false, OrgPerson.OrgId, //
+                                     OrgPerson.PersonRoleId);
+    gridWidgetInfo = new GridWidgetInfo(result, false, true, false);
+    _gridWidgetInfoMap.put(gridName, gridWidgetInfo);
+  }
+  return (OrgPersonGridWidget)gridWidgetInfo._gridWidget;
 }
 //--------------------------------------------------------------------------------------------------
 public static PersonGridWidget getPersonGrid(final String gridName) {

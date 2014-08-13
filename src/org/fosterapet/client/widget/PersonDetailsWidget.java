@@ -12,10 +12,14 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.DBAccess;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordEditor;
+import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -23,20 +27,22 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
+import com.sencha.gxt.widget.core.client.ContentPanel;
+import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VBoxLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class PersonDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
-//@UiField
-//CardLayoutContainer          cardLayoutContainer;
+@UiField
+CardLayoutContainer          cardLayoutContainer;
 @UiField
 FlowLayoutContainer          flowLayoutContainer;
-//@UiField
-//ContentPanel                 orgPanel;
 @UiField
-VBoxLayoutContainer          mainContainer;
+ContentPanel                 orgPanel;
+@UiField
+VerticalLayoutContainer      mainContainer;
 
 private final GLRecordEditor _recordEditor;
 //==================================================================================================
@@ -52,10 +58,14 @@ public PersonDetailsWidget(final GLRecord person) {
   GLLog.popup(20, "mainContainer.height:" + mainContainer.getOffsetHeight(true));
 }
 //--------------------------------------------------------------------------------------------------
-//@UiHandler({"orgButton"})
-//public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-//  cardLayoutContainer.setActiveWidget(orgPanel);
-//}
+@UiHandler({"orgButton"})
+public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final GLGridWidget gridWidget;
+  gridWidget = GridWidgetManager.getOrgPersonGrid("OrgPerson1");
+  orgPanel.setWidget(gridWidget);
+  DBAccess.load(gridWidget.getListStore(), EFAPTable.OrgPerson, OrgPerson.OrgId.name(), false);
+  cardLayoutContainer.setActiveWidget(orgPanel);
+}
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"saveButton"})
 public void onSaveButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
