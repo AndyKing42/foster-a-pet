@@ -59,6 +59,7 @@ public void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
   _loginSuccessfulCallback = loginSuccessfulCallback;
   window.setHeadingText(_windowHeadingText);
   passwordField.setValue("");
+  window.setFocusWidget(loginNameField);
   window.show();
 }
 //--------------------------------------------------------------------------------------------------

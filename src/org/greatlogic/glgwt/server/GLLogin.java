@@ -108,6 +108,13 @@ GLLogin(final String sessionId, final String loginName, final String password,
   }
 }
 //--------------------------------------------------------------------------------------------------
+private void deleteOtherSessionTokens() throws GLDBException {
+  final GLSQL sessionTokenSQL = GLSQL.delete(ELoginTable.SessionToken);
+  sessionTokenSQL.whereAnd(SessionToken.SessionToken, EGLDBOp.Equals, _sessionToken);
+  sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.NotEqual, _sessionTokenId);
+  sessionTokenSQL.execute();
+}
+//--------------------------------------------------------------------------------------------------
 int getPersonId() {
   return _personId;
 }
@@ -135,6 +142,7 @@ private boolean loginUsingNameAndPassword(final String loginName, final String p
         return true;
       }
       else if (BCrypt.checkpw(password, passwordHash)) {
+        deleteOtherSessionTokens();
         return true;
       }
     }
