@@ -21,6 +21,7 @@ import org.greatlogic.glgwt.client.widget.grid.GLGridContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
+import org.greatlogic.glgwt.shared.IGLColumn;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
@@ -28,9 +29,9 @@ public class PersonGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 public PersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                         final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                        final Person... personColumns) {
+                        final IGLColumn... columns) {
   super(null, "There are no people", recordValidator, inlineEditing, useCheckBoxSelectionModel,
-        rowLevelCommits, personColumns);
+        rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

@@ -12,51 +12,30 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.FAPUtil;
-import org.fosterapet.shared.IDBEnums.Pet;
+import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
-import org.greatlogic.glgwt.client.widget.grid.GLGridContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
-import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import com.sencha.gxt.core.client.util.DateWrapper;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
-import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 
-public class PetGridWidget extends GLGridWidget {
+public class OrgPersonGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
-public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
-                     final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                     final IGLColumn... columns) {
+public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
+                           final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
+                           final IGLColumn... columns) {
   super(null, "There are no pets", recordValidator, inlineEditing, useCheckBoxSelectionModel,
         rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addContentPanelButtons() {
-  addContentPanelButton("View Details", new SelectHandler() {
-    @Override
-    public void onSelect(final SelectEvent event) {
-      FAPUtil.getClientFactory().getAppTabPanelWidget()
-             .createPetDetails(_grid.getSelectionModel().getSelectedItem());
-    }
-  });
-  addContentPanelButton("New Pet", EGLGridContentPanelButtonType.New);
-  addContentPanelButton("Save Changes", EGLGridContentPanelButtonType.Save);
-  addContentPanelButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
+  addContentPanelButton("New Organization Entry", EGLGridContentPanelButtonType.New);
   addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addContextMenuItems() {
-  addContextMenuItem("View Details", new IGLGridContextMenuSelectionHandler() {
-    @Override
-    public void onContextMenuSelectionEvent(final GLGridContextMenuSelectionEvent event) {
-      FAPUtil.getClientFactory().getAppTabPanelWidget().createPetDetails(event.getSelectedRecord());
-    }
-  });
   addContextMenuItem("Select All", EGLContextMenuItemType.SelectAll);
   addContextMenuItem("Clear Selections", EGLContextMenuItemType.ClearAll);
   addContextMenuItem("Delete", EGLContextMenuItemType.Delete);
@@ -64,13 +43,8 @@ protected void addContextMenuItems() {
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addFilters() {
-  addFilter(Pet.AdoptionFee);
-  addFilter(Pet.DateOfBirth);
-  addFilter(Pet.IntakeDate, new DateWrapper().addYears(-20).asDate(), //
-            new DateWrapper().addDays(1).asDate());
-  addFilter(Pet.PetName);
-  addFilter(Pet.PetTypeId);
-  addFilter(Pet.Sex);
+  addFilter(OrgPerson.OrgId);
+  addFilter(OrgPerson.PersonRoleId);
 }
 //--------------------------------------------------------------------------------------------------
 }
