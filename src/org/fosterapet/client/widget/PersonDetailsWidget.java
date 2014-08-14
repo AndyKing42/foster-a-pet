@@ -60,11 +60,12 @@ public PersonDetailsWidget(final GLRecord person) {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"orgButton"})
 public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getOrgPersonGrid("OrgPerson1");
+  final GLGridWidget gridWidget = GridWidgetManager.getOrgPersonGrid("OrgPerson1");
   orgPanel.setWidget(gridWidget);
   DBAccess.load(gridWidget.getListStore(), EFAPTable.OrgPerson, OrgPerson.OrgId.name(), false);
   cardLayoutContainer.setActiveWidget(orgPanel);
+  GLLog.popup(20, "cardLayoutContainer.offsetHeight:" + cardLayoutContainer.getOffsetHeight(true));
+  GLLog.popup(20, "cardLayoutContainer.offsetWidth:" + cardLayoutContainer.getOffsetWidth(true));
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"saveButton"})

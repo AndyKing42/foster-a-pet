@@ -160,9 +160,11 @@ public void createPetDetails(final GLRecord pet) {
 public void createPersonGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
                              final boolean rowLevelCommits) {
   final ContentPanel contentPanel = addTab("People-" + (getNumberOfTabs() + 1));
-  final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getPersonGrid("People" + (getNumberOfTabs() + 1), inlineEditing, //
-                                               checkBoxSelectionModel, rowLevelCommits);
+  final GLGridWidget gridWidget = GridWidgetManager.getPersonGrid("People" + //
+                                                                  (getNumberOfTabs() + 1), //
+                                                                  inlineEditing, //
+                                                                  checkBoxSelectionModel, //
+                                                                  rowLevelCommits);
   contentPanel.setWidget(gridWidget);
   DBAccess.load(gridWidget.getListStore(), EFAPTable.Person, Person.DisplayName.name(), false);
 }
@@ -170,9 +172,10 @@ public void createPersonGrid(final boolean inlineEditing, final boolean checkBox
 public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
                           final boolean rowLevelCommits) {
   final ContentPanel contentPanel = addTab("Pets-" + (getNumberOfTabs() + 1));
-  final GLGridWidget gridWidget;
-  gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), inlineEditing, //
-                                            checkBoxSelectionModel, rowLevelCommits);
+  final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), //
+                                                               inlineEditing, //
+                                                               checkBoxSelectionModel, //
+                                                               rowLevelCommits);
   contentPanel.setWidget(gridWidget);
   DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
 }
