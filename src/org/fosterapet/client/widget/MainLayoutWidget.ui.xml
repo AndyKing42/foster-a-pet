@@ -51,8 +51,7 @@
     type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_3_3_3_3}'
-      size='30'
-      split='true'/>
+      size='30'/>
   </ui:with>
   <ui:with
     field='westData'
@@ -82,36 +81,75 @@
     field='boxLayoutDataMargins_3_3_3_3'>
     <ui:attributes margins='{margins_3_3_3_3}'/>
   </ui:with>
+  <!--====== VerticalLayoutData ================================================================ -->
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='appTabPanelLayoutData'>
+    <ui:attributes
+      height='1'
+      width='1'/>
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='mainContainerLayoutData'>
+    <ui:attributes
+      height='1'
+      width='1'/>
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='mainMenuLayoutData'>
+    <ui:attributes
+      height='-1'
+      width='1'/>
+  </ui:with>
   <!--========================================================================================== -->
   <gxtcontainer:Viewport>
-    <gxtcontainer:BorderLayoutContainer borders='true'>
-      <gxtcontainer:north layoutData='{northData}'>
-        <gxt:ContentPanel headerVisible='false'>
-          <gxtcontainer:VerticalLayoutContainer>
-            <fap:MainMenuWidget ui:field='mainMenuWidget'/>
-          </gxtcontainer:VerticalLayoutContainer>
-        </gxt:ContentPanel>
-      </gxtcontainer:north>
-      <gxtcontainer:west layoutData='{westData}'>
-        <gxt:ContentPanel headerVisible='false'>
-          <gwt:Label text='West'/>
-        </gxt:ContentPanel>
-      </gxtcontainer:west>
-      <gxtcontainer:center>
-        <gxt:ContentPanel headerVisible='false'>
-          <fap:AppTabPanelWidget ui:field='appTabPanelWidget'/>
-        </gxt:ContentPanel>
-      </gxtcontainer:center>
-      <gxtcontainer:east layoutData='{eastData}'>
-        <gxt:ContentPanel headerVisible='false'>
-          <gwt:Label text='East'/>
-        </gxt:ContentPanel>
-      </gxtcontainer:east>
-      <gxtcontainer:south layoutData='{southData}'>
-        <gxt:ContentPanel headerVisible='false'>
-          <gwt:Label text='South'/>
-        </gxt:ContentPanel>
-      </gxtcontainer:south>
-    </gxtcontainer:BorderLayoutContainer>
+    <gxtcontainer:VerticalLayoutContainer>
+      <gxtcontainer:child layoutData='{mainContainerLayoutData}'>
+        <gxtcontainer:BorderLayoutContainer borders='true'>
+          <gxtcontainer:north layoutData='{northData}'>
+            <gxt:ContentPanel headerVisible='false'>
+              <gxtform:FieldLabel
+                labelSeparator=''
+                text='North'/>
+            </gxt:ContentPanel>
+          </gxtcontainer:north>
+          <gxtcontainer:west layoutData='{westData}'>
+            <gxt:ContentPanel headerVisible='false'>
+              <gxtform:FieldLabel
+                labelSeparator=''
+                text='West'/>
+            </gxt:ContentPanel>
+          </gxtcontainer:west>
+          <gxtcontainer:center>
+            <gxtcontainer:VerticalLayoutContainer>
+              <gxtcontainer:child layoutData='{mainMenuLayoutData}'>
+                <fap:MainMenuWidget ui:field='mainMenuWidget'/>
+              </gxtcontainer:child>
+              <gxtcontainer:child layoutData='{appTabPanelLayoutData}'>
+                <gxt:ContentPanel headerVisible='false'>
+                  <fap:AppTabPanelWidget ui:field='appTabPanelWidget'/>
+                </gxt:ContentPanel>
+              </gxtcontainer:child>
+            </gxtcontainer:VerticalLayoutContainer>
+          </gxtcontainer:center>
+          <gxtcontainer:east layoutData='{eastData}'>
+            <gxt:ContentPanel headerVisible='false'>
+              <gxtform:FieldLabel
+                labelSeparator=''
+                text='East'/>
+            </gxt:ContentPanel>
+          </gxtcontainer:east>
+          <gxtcontainer:south layoutData='{southData}'>
+            <gxt:ContentPanel headerVisible='false'>
+              <gxtform:FieldLabel
+                labelSeparator=''
+                text='South'/>
+            </gxt:ContentPanel>
+          </gxtcontainer:south>
+        </gxtcontainer:BorderLayoutContainer>
+      </gxtcontainer:child>
+    </gxtcontainer:VerticalLayoutContainer>
   </gxtcontainer:Viewport>
 </ui:UiBinder>
