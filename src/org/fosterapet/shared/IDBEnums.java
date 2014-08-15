@@ -1921,9 +1921,9 @@ public String getTitle() {
 //--------------------------------------------------------------------------------------------------
 public enum SessionToken implements IGLColumn {
 ExpirationTime("Expiration Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
 SessionToken("Session Token", EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
-SessionTokenId("Sesion Token Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1);
+SessionTokenId("Sesion Token Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+UserId("User Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;

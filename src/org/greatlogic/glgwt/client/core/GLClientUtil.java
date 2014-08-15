@@ -25,6 +25,7 @@ import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordDef;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
+import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
 import org.greatlogic.glgwt.client.event.GLNewRecordEvent;
 import org.greatlogic.glgwt.client.widget.GLChangePasswordWidget;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
@@ -249,14 +250,15 @@ public static GLValidators getValidators() {
 //--------------------------------------------------------------------------------------------------
 public static void initialize(final String appDescription, final GLClientFactory clientFactory,
                               final Class<? extends Enum<?>> tableEnumClass,
-                              final String loginWidgetHeadingText) {
+                              final String loginWidgetHeadingText,
+                              final IGLLoginSuccessfulEventHandler loginSuccessfulEventHandler) {
   _clientFactory = clientFactory;
   for (final Enum<?> table : tableEnumClass.getEnumConstants()) {
     _tableByTableNameMap.put(table.toString(), ((IGLTable)table));
   }
   disableBackspace();
   addWindowClosingHandler(appDescription);
-  _loginWidget = new GLLoginWidget(loginWidgetHeadingText);
+  _loginWidget = new GLLoginWidget(loginWidgetHeadingText, loginSuccessfulEventHandler);
   _loginWidget.logInUsingNameAndPassword("", "");
 }
 //--------------------------------------------------------------------------------------------------
@@ -307,8 +309,12 @@ public static ArrayList<String> loadListFromStrings(final ArrayList<String> stri
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public static void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
-  _loginWidget.logIn(loginSuccessfulCallback);
+public static void logIn() {
+  _loginWidget.logIn();
+}
+//--------------------------------------------------------------------------------------------------
+public static void logIn(final AsyncCallback<Void> callback) {
+  _loginWidget.logIn(callback);
 }
 //--------------------------------------------------------------------------------------------------
 public static void logOut() {

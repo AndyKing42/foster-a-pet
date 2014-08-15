@@ -123,7 +123,7 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
 @UiHandler({"logOutButton"})
 public void onLogOutButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   GLClientUtil.logOut();
-  GLClientUtil.logIn(null);
+  GLClientUtil.logIn();
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"peopleButton"})

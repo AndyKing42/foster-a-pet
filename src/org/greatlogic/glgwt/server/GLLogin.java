@@ -58,9 +58,9 @@ public String getDataSourceName() {
 }
 private enum SessionToken implements IGLColumn {
 ExpirationTime,
-UserId,
 SessionToken,
 SessionTokenId,
+UserId,
 Version
 }
 //==================================================================================================
@@ -129,6 +129,9 @@ public void login() {
 }
 //--------------------------------------------------------------------------------------------------
 private boolean loginUsingNameAndPassword(final String loginName, final String password) {
+  if (loginName.isEmpty() || password.isEmpty()) {
+    return false;
+  }
   setUserIdAndPasswordHash(loginName, password);
   if (_passwordHash.isEmpty()) {
     final String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
