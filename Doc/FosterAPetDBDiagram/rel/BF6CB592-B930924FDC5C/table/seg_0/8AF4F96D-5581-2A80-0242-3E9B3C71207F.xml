@@ -24,7 +24,17 @@
 <logicalDatatype>LOGDT008</logicalDatatype>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="PersonId" id="1A749541-6C56-F804-AF0E-934E74201324">
+<Column name="SessionToken" id="8D089590-9AEF-EE97-1D9C-286E08C4D91D">
+<createdBy>aking</createdBy>
+<createdTime>2014-08-04 18:17:31 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="UserId" id="1A749541-6C56-F804-AF0E-934E74201324">
 <createdBy>aking</createdBy>
 <createdTime>2014-08-04 18:18:09 UTC</createdTime>
 <ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
@@ -37,16 +47,6 @@
 <associations>
 <colAssociation fkAssociation="EF343635-D71D-54D5-9344-19654E2831BC" referredColumn="D35F5BFF-7CB8-E742-68A6-DC07B11BD497"/>
 </associations>
-</Column>
-<Column name="SessionToken" id="8D089590-9AEF-EE97-1D9C-286E08C4D91D">
-<createdBy>aking</createdBy>
-<createdTime>2014-08-04 18:17:31 UTC</createdTime>
-<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>100</dataTypeSize>
-<autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="Version" id="BF419499-33E2-E4F0-279E-FBEE807DD9AA">
 <createdBy>Andy</createdBy>
