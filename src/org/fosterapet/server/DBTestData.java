@@ -90,7 +90,7 @@ private static void reloadPets() throws GLDBException {
     petSQL.setValue(Pet.DateOfBirth.name(), dateOfBirth);
     petSQL.setValue(Pet.IntakeDate.name(), intakeDate + intakeTime);
     petSQL.setValue(Pet.OrgId.name(), 1);
-    petSQL.setValue(Pet.PetId.name(), GLServerUtil.getNextIdValue(EFAPTable.Pet.name(), 1));
+    petSQL.setValue(Pet.PetId.name(), GLServerUtil.getNextIdValue(EFAPTable.Pet + "Id", 1));
     petSQL.setValue(Pet.PetName.name(), nameAndSex[0]);
     petSQL.setValue(Pet.PetTypeId.name(),
                     petTypeIdList.get(GLUtil.getRandomInt(petTypeIdList.size())));
@@ -126,12 +126,12 @@ private static void reloadPetTypes() throws GLDBException {
     petTypeSQL.setValue(PetType.OrgId.name(), 1);
     petTypeSQL.setValue(PetType.PetTypeDesc.name(), petTypeFields[0]);
     petTypeSQL.setValue(Pet.PetTypeId.name(),
-                        GLServerUtil.getNextIdValue(EFAPTable.PetType.name(), 1));
+                        GLServerUtil.getNextIdValue(EFAPTable.PetType + "Id", 1));
     petTypeSQL.setValue(PetType.PetTypeShortDesc.name(), petTypeFields[1]);
     petTypeSQL.setValue(PetType.Version.name(), GLServerUtil.generateVersion());
     petTypeSQL.execute();
   }
-  GLServerUtil.getNextIdValue(EFAPTable.PetType.name(), PetTypes.length + 1);
+  GLServerUtil.getNextIdValue(EFAPTable.PetType + "Id", PetTypes.length + 1);
 }
 //--------------------------------------------------------------------------------------------------
 private static void truncate(final EFAPTable table) throws GLDBException {

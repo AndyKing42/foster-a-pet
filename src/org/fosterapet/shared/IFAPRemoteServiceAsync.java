@@ -1,4 +1,4 @@
-package org.fosterapet.server;
+package org.fosterapet.shared;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,22 +12,12 @@ package org.fosterapet.server;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IRemoteService;
-import org.greatlogic.glgwt.server.GLRemoteServiceServlet;
-import com.greatlogic.glbase.gllib.GLLog;
+import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
-@SuppressWarnings("serial")
-public class FAPRemoteServiceServlet extends GLRemoteServiceServlet implements IRemoteService {
+public interface IFAPRemoteServiceAsync extends IGLRemoteServiceAsync {
 //--------------------------------------------------------------------------------------------------
-@Override
-public String loadTestData(final String connectionInfo, final String testDataOptionString) {
-  try {
-    DBTestData.processRequest(testDataOptionString);
-  }
-  catch (final Exception e) {
-    GLLog.major("Error loading test data", e);
-  }
-  return "";
-}
+void loadTestData(final String connectionInfo, final String testDataOptionString,
+                  final AsyncCallback<String> callback);
 //--------------------------------------------------------------------------------------------------
 }

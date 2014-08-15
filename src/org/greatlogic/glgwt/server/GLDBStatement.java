@@ -19,7 +19,6 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.StringUtils;
 import org.greatlogic.glgwt.client.db.GLDBUpdate;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLSQLAttribute;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
@@ -204,9 +203,6 @@ public static ArrayList<String> select(final String xmlRequest) {
   try {
     final GLXML xml = new GLXML(xmlRequest);
     final GLSQL sql = GLSQL.selectUsingXML(xml);
-    if (!xml.getTopElement().attributeAsBoolean(EGLSQLAttribute.IncludeArchivedRows.name())) {
-      sql.whereAnd(0, "ArchiveDate is null", 0);
-    }
     sql.open();
     try {
       result.add(StringUtils.join(sql.getColumnNameIterable(), ','));

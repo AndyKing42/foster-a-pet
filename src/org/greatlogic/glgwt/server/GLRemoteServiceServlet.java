@@ -13,9 +13,6 @@ package org.greatlogic.glgwt.server;
  * the License.
  */
 import java.util.ArrayList;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.Person;
-import org.greatlogic.glgwt.shared.GLChangePasswordResponse;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
 import org.greatlogic.glgwt.shared.IGLRemoteService;
 import org.greatlogic.glgwt.shared.IGLTable;
@@ -34,54 +31,18 @@ import com.greatlogic.glbase.gldb.GLColumnMetadata;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDataSource;
 import com.greatlogic.glbase.gldb.GLResultSetMetadata;
-import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.gllib.IGLLibEnums.EGLLogLevel;
 
 @SuppressWarnings("serial")
-public class GLRemoteServiceServlet extends RemoteServiceServlet implements IGLRemoteService {
+public abstract class GLRemoteServiceServlet extends RemoteServiceServlet implements
+                                                                         IGLRemoteService {
 //--------------------------------------------------------------------------------------------------
-@Override
-public GLChangePasswordResponse changePassword(final int personId, final String oldPassword,
-                                               final String newPassword) {
-  final GLChangePasswordResponse result = new GLChangePasswordResponse();
-  try {
-    final GLLogin login;
-    final GLSQL personSQL = GLSQL.select();
-    personSQL.from(EFAPTable.Person.name());
-    personSQL.whereAnd(0, Person.PersonId + "=" + personId, 0);
-    personSQL.open();
-    try {
-      if (!personSQL.next()) {
-        result.setFailureReason("Invalid persion id (" + personId + ")");
-        return result;
-      }
-      String sessionToken = null;
-      if (personSQL.asString(Person.PasswordHash.name()).isEmpty()) {
-        sessionToken = getSessionId();
-        GLLogin.updateSessionToken(personId, 0, sessionToken);
-      }
-      login = new GLLogin(getSessionId(), personSQL.asString(Person.LoginName.name()), //
-                          oldPassword, sessionToken);
-      if (!login.getSucceeded()) {
-        result.setFailureReason("Invalid 'old' password");
-        return result;
-      }
-    }
-    finally {
-      personSQL.close();
-    }
-    login.setNewPassword(newPassword);
-    result.setResultValues(login.getSucceeded(), login.getSessionToken());
-  }
-  catch (final GLDBException e) {
-    GLLog.minor("Login failed for person Id:" + personId);
-    result.setFailureReason("Change password failed (" + e.getMessage() + ")");
-  }
-  return result;
-}
+protected abstract GLLogin createLogin();
 //--------------------------------------------------------------------------------------------------
-String getSessionId() {
+protected abstract GLLoginResponse createLoginResponse();
+//--------------------------------------------------------------------------------------------------
+protected String getSessionId() {
   return getThreadLocalRequest().getSession().getId();
 }
 //--------------------------------------------------------------------------------------------------
@@ -114,9 +75,12 @@ public void log(final int priority, final String location, final String message)
 @Override
 public GLLoginResponse login(final String loginName, final String password,
                              final String sessionTokenFromClient) {
-  final GLLoginResponse result = new GLLoginResponse();
-  final GLLogin login = new GLLogin(getSessionId(), loginName, password, sessionTokenFromClient);
-  result.setResultValues(login.getSucceeded(), login.getSessionToken(), login.getPersonId());
+  final GLLoginResponse result = createLoginResponse();
+  final GLLogin login = createLogin();
+  login.setSessionIdAndToken(getSessionId(), sessionTokenFromClient);
+  login.setLoginNameAndPassword(loginName, password);
+  login.login();
+  result.setGLResultValues(login.getSucceeded(), login.getSessionToken());
   return result;
 }
 //--------------------------------------------------------------------------------------------------
@@ -124,7 +88,9 @@ public GLLoginResponse login(final String loginName, final String password,
 public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
   GLServiceResponse result = null;
   GLLog.debug("Request:" + serviceRequest);
-  final GLLogin login = new GLLogin(getSessionId(), null, null, serviceRequest.getSessionToken());
+  final GLLogin login = createLogin();
+  login.setSessionIdAndToken(getSessionId(), serviceRequest.getSessionToken());
+  login.login();
   if (!login.getSucceeded()) {
     return null;
   }
@@ -137,7 +103,7 @@ public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
     }
     case GetNextId: {
       final GLGetNextIdServiceRequest request = (GLGetNextIdServiceRequest)serviceRequest;
-      final int nextId = GLServerUtil.getNextIdValue(request.getTable().toString(), //
+      final int nextId = GLServerUtil.getNextIdValue(request.getTable() + "Id", //
                                                      request.getNumberOfValues());
       result = new GLGetNextIdServiceResponse(nextId);
       break;

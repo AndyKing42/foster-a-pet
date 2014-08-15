@@ -1,4 +1,6 @@
-package org.fosterapet.client;
+package org.fosterapet.shared;
+
+import org.greatlogic.glgwt.shared.GLLoginResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,33 +14,20 @@ package org.fosterapet.client;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.widget.AppTabPanelWidget;
-import org.fosterapet.client.widget.MainLayoutWidget;
+public class FAPLoginResponse extends GLLoginResponse {
+//--------------------------------------------------------------------------------------------------
+private static final long serialVersionUID = 1122L;
 
-public class ClientFactoryUI extends ClientFactory {
+private int               _personId;
 //--------------------------------------------------------------------------------------------------
-public ClientFactoryUI() {
-  super();
+public int getPersonId() {
+  return _personId;
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public void hidePleaseWait() {
-
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget) {
-  _appTabPanelWidget = appTabPanelWidget;
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public void setMainLayoutWidget(final MainLayoutWidget mainLayoutWidget) {
-  _mainLayoutWidget = mainLayoutWidget;
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public void showPleaseWait() {
-
+public void setResultValues(final int personId) {
+  if (_succeeded) {
+    _personId = personId;
+  }
 }
 //--------------------------------------------------------------------------------------------------
 }

@@ -160,7 +160,7 @@ static void insertDBUpdateNote(final String dbRevNumber, final String devDate,
   dbUpdateNoteSQL.setValue(DBUpdateNote.DBRevNumber.name(), DBUUtil.convertRevToNewRev(dbRevNumber));
   dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateDesc.name(), dbUpdateDesc);
   dbUpdateNoteSQL.setValue(DBUpdateNote.DBUpdateNoteId.name(),
-                           GLServerUtil.getNextIdValue(EFAPTable.DBUpdateNote.name(), 1));
+                           GLServerUtil.getNextIdValue(EFAPTable.DBUpdateNote + "Id", 1));
   dbUpdateNoteSQL.setValue(DBUpdateNote.DevDateTime.name(), devDate + devTime);
   dbUpdateNoteSQL.setValue(DBUpdateNote.Version.name(), GLServerUtil.generateVersion());
   dbUpdateNoteSQL.execute();

@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.shared;
+package org.fosterapet.client;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,28 +12,33 @@ package org.greatlogic.glgwt.shared;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import java.io.Serializable;
+import org.fosterapet.client.widget.AppTabPanelWidget;
+import org.fosterapet.client.widget.MainLayoutWidget;
 
-public abstract class GLLoginResponse implements Serializable {
+public class FAPClientFactoryUI extends FAPClientFactory {
 //--------------------------------------------------------------------------------------------------
-private static final long serialVersionUID = 1122L;
-
-protected boolean         _succeeded;
-private String            _sessionToken;
-//--------------------------------------------------------------------------------------------------
-public void setGLResultValues(final boolean succeeded, final String sessionToken) {
-  _succeeded = succeeded;
-  if (_succeeded) {
-    _sessionToken = sessionToken;
-  }
+public FAPClientFactoryUI() {
+  super();
 }
 //--------------------------------------------------------------------------------------------------
-public boolean getSucceeded() {
-  return _succeeded;
+@Override
+public void hidePleaseWait() {
+
 }
 //--------------------------------------------------------------------------------------------------
-public String getSessionToken() {
-  return _sessionToken;
+@Override
+public void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget) {
+  _appTabPanelWidget = appTabPanelWidget;
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public void setMainLayoutWidget(final MainLayoutWidget mainLayoutWidget) {
+  _mainLayoutWidget = mainLayoutWidget;
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public void showPleaseWait() {
+
 }
 //--------------------------------------------------------------------------------------------------
 }

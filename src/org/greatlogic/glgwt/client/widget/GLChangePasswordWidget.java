@@ -45,7 +45,7 @@ Window                      window;
 
 private AsyncCallback<Void> _changePasswordSuccessfulCallback;
 private boolean             _firstTime;
-private int                 _personId;
+private int                 _userId;
 private final String        _windowHeadingText;
 //==================================================================================================
 interface IGLLoginWidgetBinder extends UiBinder<Widget, GLChangePasswordWidget> { //
@@ -57,9 +57,9 @@ public GLChangePasswordWidget(final String windowHeadingText) {
   binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void changePassword(final int personId,
+public void changePassword(final int userId,
                            final AsyncCallback<Void> changePasswordSuccessfulCallback) {
-  _personId = personId;
+  _userId = userId;
   _changePasswordSuccessfulCallback = changePasswordSuccessfulCallback;
   window.setHeadingText(_windowHeadingText);
   oldPasswordField.setValue("");
@@ -79,7 +79,7 @@ private void changePassword(final String oldPassword, final String newPassword) 
         errorMessageLabel.setText("Change password failed (" + caught.getMessage() + ")");
       }
       _firstTime = false;
-      changePassword(_personId, _changePasswordSuccessfulCallback);
+      changePassword(_userId, _changePasswordSuccessfulCallback);
     }
     @Override
     public void onSuccess(final GLChangePasswordResponse response) {
@@ -89,7 +89,7 @@ private void changePassword(final String oldPassword, final String newPassword) 
           errorMessageLabel.setText("Change password failed - " + response.getFailureReason());
         }
         _firstTime = false;
-        changePassword(_personId, _changePasswordSuccessfulCallback);
+        changePassword(_userId, _changePasswordSuccessfulCallback);
         return;
       }
       GLLog.popup(10, "Change password succeeded:" + response);
@@ -103,7 +103,7 @@ private void changePassword(final String oldPassword, final String newPassword) 
       }
     }
   };
-  GLClientUtil.getRemoteService().changePassword(_personId, oldPassword, newPassword, callback);
+  GLClientUtil.getRemoteService().changePassword(_userId, oldPassword, newPassword, callback);
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler("okButton")

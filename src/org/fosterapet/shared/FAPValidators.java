@@ -19,9 +19,9 @@ import org.greatlogic.glgwt.client.widget.GLValidationRecord;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.GLValidators;
 
-public class Validators extends GLValidators {
+public class FAPValidators extends GLValidators {
 //--------------------------------------------------------------------------------------------------
-public Validators() {
+public FAPValidators() {
   super();
   addPetValidators();
 }

@@ -12,12 +12,12 @@ package org.greatlogic.glgwt.client.core;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IRemoteServiceAsync;
-import org.fosterapet.shared.Validators;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.widget.GLLoginWidget;
+import org.greatlogic.glgwt.shared.GLValidators;
+import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
 
 public abstract class GLClientFactory {
 //--------------------------------------------------------------------------------------------------
@@ -25,9 +25,9 @@ protected GLDBUpdater           _dbUpdater;
 protected GLEventBus            _eventBus;
 private GLLoginWidget           _loginWidget;
 protected GLLookupCache         _lookupCache;
-protected IRemoteServiceAsync   _remoteService;
+protected IGLRemoteServiceAsync _remoteService;
 protected GLRemoteServiceHelper _remoteServiceHelper;
-protected Validators            _validators;
+protected GLValidators          _validators;
 //--------------------------------------------------------------------------------------------------
 public GLDBUpdater getDBUpdater() {
   return _dbUpdater;
@@ -45,7 +45,7 @@ public GLLookupCache getLookupCache() {
   return _lookupCache;
 }
 //--------------------------------------------------------------------------------------------------
-public IRemoteServiceAsync getRemoteService() {
+public IGLRemoteServiceAsync getRemoteService() {
   return _remoteService;
 }
 //--------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ public GLRemoteServiceHelper getRemoteServiceHelper() {
   return _remoteServiceHelper;
 }
 //--------------------------------------------------------------------------------------------------
-public Validators getValidators() {
+public GLValidators getValidators() {
   return _validators;
 }
 //--------------------------------------------------------------------------------------------------

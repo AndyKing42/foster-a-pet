@@ -7,7 +7,8 @@
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
   <gxt:Window
     ui:field='window'
-    blinkModal='true' closable='false'
+    blinkModal='true'
+    closable='false'
     focusWidget='{okButton}'
     modal='true'
     pixelSize='200, 160'>
@@ -17,7 +18,9 @@
       <gxtform:FieldLabel>Password</gxtform:FieldLabel>
       <gxtform:PasswordField ui:field='passwordField'></gxtform:PasswordField>
       <gxtbutton:TextButton ui:field='okButton'>OK</gxtbutton:TextButton>
-      <gxtform:FieldLabel ui:field='errorMessageLabel'/>
+      <gxtform:FieldLabel
+        ui:field='errorMessageLabel'
+        labelSeparator=''/>
     </gxtcontainer:VBoxLayoutContainer>
   </gxt:Window>
 </ui:UiBinder>

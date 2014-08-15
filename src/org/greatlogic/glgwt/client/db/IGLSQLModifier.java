@@ -1,4 +1,4 @@
-package org.fosterapet.shared;
+package org.greatlogic.glgwt.client.db;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,12 +12,8 @@ package org.fosterapet.shared;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.greatlogic.glgwt.shared.IGLRemoteService;
-import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-
-@RemoteServiceRelativePath("FAPRemoteServiceServlet")
-public interface IRemoteService extends IGLRemoteService {
+public interface IGLSQLModifier {
 //--------------------------------------------------------------------------------------------------
-String loadTestData(final String connectionInfo, final String testDataOptionString);
+public void modifySQL();
 //--------------------------------------------------------------------------------------------------
 }

@@ -125,7 +125,7 @@ public void createGenericTableGrid(final IGLTable table) {
   final GLGenericGridWidget gridWidget;
   gridWidget = new GLGenericGridWidget(table);
   contentPanel.setWidget(gridWidget.asWidget());
-  DBAccess.load(gridWidget.getListStore(), table, null, true);
+  DBAccess.load(gridWidget.getListStore(), table, null, true, 0, null);
 }
 //--------------------------------------------------------------------------------------------------
 public void createPersonDetails(final GLRecord person) {
