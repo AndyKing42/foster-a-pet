@@ -134,8 +134,8 @@ public void createPersonDetails(final GLRecord person) {
     final PersonDetailsWidget personDetailsWidget = new PersonDetailsWidget(person);
     contentPanel.setWidget(personDetailsWidget);
     GLLog.popup(20, "contentPanel.height:" + contentPanel.getOffsetHeight(true));
-    GLLog.popup(20, "flowLayoutContainer.height:" + //
-                    personDetailsWidget.flowLayoutContainer.getOffsetHeight(true));
+    GLLog.popup(20, "personContainer.height:" + //
+                    personDetailsWidget.personContainer.getOffsetHeight(true));
     GLLog.popup(20, "mainContainer.height 1:" + //
                     personDetailsWidget.mainContainer.getOffsetHeight(true));
     personDetailsWidget.mainContainer.setHeight(contentPanel.getOffsetHeight(true));

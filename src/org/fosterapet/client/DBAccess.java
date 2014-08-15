@@ -35,7 +35,7 @@ public static void load(final GLListStore listStore, final IGLTable table,
     sql.from(table);
     sql.orderBy(orderByClause);
     sql.setIncludeArchivedRows(includeArchivedRows);
-    // todo:    restrict_by_org_id();
+    restrict_by_org_id();
     sql.executeSelect(listStore, new IGLSQLSelectCallback() {
       @Override
       public void onFailure(final Throwable t) {
