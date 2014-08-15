@@ -14,6 +14,8 @@ package org.greatlogic.glgwt.client.widget;
  */
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent;
+import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -32,31 +34,38 @@ import com.sencha.gxt.widget.core.client.form.TextField;
 public class GLLoginWidget extends Window {
 //--------------------------------------------------------------------------------------------------
 @UiField
-FieldLabel                  errorMessageLabel;
+FieldLabel                                   errorMessageLabel;
 @UiField
-TextField                   loginNameField;
+TextField                                    loginNameField;
 @UiField
-TextButton                  okButton;
+TextButton                                   okButton;
 @UiField
-PasswordField               passwordField;
+PasswordField                                passwordField;
 @UiField
-Window                      window;
+Window                                       window;
 
-private boolean             _firstTime;
-private AsyncCallback<Void> _loginSuccessfulCallback;
-private final String        _windowHeadingText;
+private boolean                              _firstTime;
+private final IGLLoginSuccessfulEventHandler _loginSuccessfulEventHandler;
+private AsyncCallback<Void>                  _oneTimeCallback;
+private final String                         _windowHeadingText;
 //==================================================================================================
 interface IGLLoginWidgetBinder extends UiBinder<Widget, GLLoginWidget> { //
 }
 //==================================================================================================
-public GLLoginWidget(final String windowHeadingText) {
+public GLLoginWidget(final String windowHeadingText,
+                     final IGLLoginSuccessfulEventHandler loginSuccessfulEventHandler) {
   _windowHeadingText = windowHeadingText;
+  _loginSuccessfulEventHandler = loginSuccessfulEventHandler;
   final IGLLoginWidgetBinder binder = GWT.create(IGLLoginWidgetBinder.class);
   binder.createAndBindUi(this);
 }
 //--------------------------------------------------------------------------------------------------
-public void logIn(final AsyncCallback<Void> loginSuccessfulCallback) {
-  _loginSuccessfulCallback = loginSuccessfulCallback;
+public void logIn(final AsyncCallback<Void> callback) {
+  _oneTimeCallback = callback;
+  logIn();
+}
+//--------------------------------------------------------------------------------------------------
+public void logIn() {
   window.setHeadingText(_windowHeadingText);
   passwordField.setValue("");
   window.setFocusWidget(loginNameField);
@@ -72,7 +81,7 @@ public void logInUsingNameAndPassword(final String loginName, final String passw
         errorMessageLabel.setText("Login failed ... please try again");
       }
       _firstTime = false;
-      logIn(_loginSuccessfulCallback);
+      logIn();
     }
     @Override
     public void onSuccess(final GLLoginResponse response) {
@@ -82,7 +91,7 @@ public void logInUsingNameAndPassword(final String loginName, final String passw
           errorMessageLabel.setText("Login failed ... please try again");
         }
         _firstTime = false;
-        logIn(_loginSuccessfulCallback);
+        logIn();
         return;
       }
       GLLog.popup(10, "Login succeeded:" + response);
@@ -90,9 +99,13 @@ public void logInUsingNameAndPassword(final String loginName, final String passw
       GLClientUtil.setSessionToken(response.getSessionToken());
       Cookies.setCookie(GLClientUtil.SessionTokenCookie, response.getSessionToken());
       window.hide();
-      if (_loginSuccessfulCallback != null) {
-        _loginSuccessfulCallback.onSuccess(null);
-        _loginSuccessfulCallback = null;
+      if (_loginSuccessfulEventHandler != null) {
+        final GLLoginSuccessfulEvent loginSuccessfulEvent = new GLLoginSuccessfulEvent(response);
+        _loginSuccessfulEventHandler.onLoginSuccessfulEvent(loginSuccessfulEvent);
+      }
+      if (_oneTimeCallback != null) {
+        _oneTimeCallback.onSuccess(null);
+        _oneTimeCallback = null;
       }
     }
   };

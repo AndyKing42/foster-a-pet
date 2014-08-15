@@ -13,6 +13,9 @@ package org.fosterapet.databaseupdate;
  * the License.
  */
 import org.fosterapet.databaseupdate.IDatabaseUpdateEnums.EDBUConfigAD;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.NextId;
+import org.greatlogic.glgwt.server.GLServerUtil;
 import com.greatlogic.glbase.gllib.GLConfig;
 import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.gllib.GLUtil;
@@ -34,6 +37,8 @@ public static void main(final String... args) {
 //--------------------------------------------------------------------------------------------------
 private DatabaseUpdateMain() {
   try {
+    GLServerUtil.initialize(EFAPTable.NextId.name(), NextId.NextIdName.name(),
+                            NextId.NextIdValue.name());
     final String loadDataFilename = GLConfig.getTopConfigElement() //
                                             .attributeAsString(EDBUConfigAD.LoadDataFilename);
     if (loadDataFilename.isEmpty()) {

@@ -15,10 +15,21 @@ package org.fosterapet.client;
 import org.fosterapet.client.widget.MainLayoutWidget;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent;
+import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
 
 public class FAPUtil {
 //--------------------------------------------------------------------------------------------------
 public static FAPClientFactory _clientFactory;
+//--------------------------------------------------------------------------------------------------
+private static IGLLoginSuccessfulEventHandler createLoginSuccessfulEventHandler() {
+  return new IGLLoginSuccessfulEventHandler() {
+    @Override
+    public void onLoginSuccessfulEvent(final GLLoginSuccessfulEvent loginSuccessfulEvent) {
+      //      save_the_person_id_and_org_id();
+    }
+  };
+}
 //--------------------------------------------------------------------------------------------------
 public static FAPClientFactory getClientFactory() {
   return _clientFactory;
@@ -26,7 +37,8 @@ public static FAPClientFactory getClientFactory() {
 //--------------------------------------------------------------------------------------------------
 static void initialize() {
   _clientFactory = new FAPClientFactoryUI();
-  GLClientUtil.initialize("Foster A Pet", _clientFactory, EFAPTable.class, "Foster A Pet Login");
+  GLClientUtil.initialize("Foster A Pet", _clientFactory, EFAPTable.class, "Foster A Pet Login",
+                          createLoginSuccessfulEventHandler());
   _clientFactory.setMainLayoutWidget(new MainLayoutWidget());
   // todo: restore the user's prior state? _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
 }

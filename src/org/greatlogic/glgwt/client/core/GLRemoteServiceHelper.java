@@ -64,7 +64,7 @@ private void sendRequest(final GLServiceRequest request,
     }
     @Override
     public void onSuccess(final GLServiceResponse response) {
-      if (response == null) {
+      if (response == null) { // the user isn't logged in
         GLClientUtil.logIn(createLoginSuccessfulCallback(request, callback));
         return;
       }
