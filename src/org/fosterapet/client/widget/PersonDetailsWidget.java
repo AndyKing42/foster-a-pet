@@ -26,10 +26,9 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
-import com.sencha.gxt.core.client.dom.ScrollSupport.ScrollMode;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.FlowLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
@@ -38,9 +37,9 @@ public class PersonDetailsWidget extends Composite {
 @UiField
 CardLayoutContainer          cardLayoutContainer;
 @UiField
-FlowLayoutContainer          flowLayoutContainer;
-@UiField
 ContentPanel                 orgPanel;
+@UiField
+HorizontalLayoutContainer    personContainer;
 @UiField
 VerticalLayoutContainer      mainContainer;
 
@@ -52,9 +51,8 @@ interface PersonDetailsWidgetUiBinder extends UiBinder<Widget, PersonDetailsWidg
 public PersonDetailsWidget(final GLRecord person) {
   final PersonDetailsWidgetUiBinder uiBinder = GWT.create(PersonDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
-  flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
-  _recordEditor = new GLRecordEditor(person, true, flowLayoutContainer);
-  GLLog.popup(20, "flowLayoutContainer.height:" + flowLayoutContainer.getOffsetHeight(true));
+  //  flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
+  _recordEditor = new GLRecordEditor(person, true, personContainer);
   GLLog.popup(20, "mainContainer.height:" + mainContainer.getOffsetHeight(true));
 }
 //--------------------------------------------------------------------------------------------------
@@ -62,6 +60,7 @@ public PersonDetailsWidget(final GLRecord person) {
 public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   final GLGridWidget gridWidget = GridWidgetManager.getOrgPersonGrid("OrgPerson1");
   orgPanel.setWidget(gridWidget);
+  the_load("needs to be restricted based upon the current person");
   DBAccess.load(gridWidget.getListStore(), EFAPTable.OrgPerson, OrgPerson.OrgId.name(), false);
   cardLayoutContainer.setActiveWidget(orgPanel);
   GLLog.popup(20, "cardLayoutContainer.offsetHeight:" + cardLayoutContainer.getOffsetHeight(true));

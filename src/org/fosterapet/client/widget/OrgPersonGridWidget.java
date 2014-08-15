@@ -24,8 +24,8 @@ public class OrgPersonGridWidget extends GLGridWidget {
 public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                            final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                            final IGLColumn... columns) {
-  super(null, "There are no pets", recordValidator, inlineEditing, useCheckBoxSelectionModel,
-        rowLevelCommits, columns);
+  super(null, "There are no organizations for this person", recordValidator, inlineEditing,
+        useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
