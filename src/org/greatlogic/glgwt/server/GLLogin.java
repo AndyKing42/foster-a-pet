@@ -129,7 +129,7 @@ public void login() {
 }
 //--------------------------------------------------------------------------------------------------
 private boolean loginUsingNameAndPassword(final String loginName, final String password) {
-  if (loginName.isEmpty() || password.isEmpty()) {
+  if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
     return false;
   }
   setUserIdAndPasswordHash(loginName, password);
