@@ -12,16 +12,13 @@ package org.fosterapet.client;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.widget.GridWidgetManager;
-import org.fosterapet.client.widget.PetGridWidget;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
-import org.fosterapet.shared.IRemoteServiceAsync;
+import org.fosterapet.shared.IFAPRemoteServiceAsync;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLSQLModifier;
 import org.greatlogic.glgwt.client.db.IGLSQLSelectCallback;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -30,12 +27,33 @@ public class DBAccess {
 //--------------------------------------------------------------------------------------------------
 public static void load(final GLListStore listStore, final IGLTable table,
                         final String orderByClause, final boolean includeArchivedRows) {
+  load(listStore, table, orderByClause, includeArchivedRows, 0, null);
+}
+//--------------------------------------------------------------------------------------------------
+public static void load(final GLListStore listStore, final IGLTable table,
+                        final String orderByClause, final boolean includeArchivedRows,
+                        final int orgId) {
+  load(listStore, table, orderByClause, includeArchivedRows, orgId, null);
+}
+//--------------------------------------------------------------------------------------------------
+public static void load(final GLListStore listStore, final IGLTable table,
+                        final String orderByClause, final boolean includeArchivedRows,
+                        final int orgId, final IGLSQLModifier sqlModifier) {
   try {
     final GLSQL sql = GLSQL.select();
     sql.from(table);
     sql.orderBy(orderByClause);
-    sql.setIncludeArchivedRows(includeArchivedRows);
-    restrict_by_org_id();
+    if (sqlModifier != null) {
+
+    }
+    if (orgId > 0) {
+      sql.whereAddParens();
+      sql.whereAnd(0, "OrgId=" + orgId, 0);
+    }
+    if (!includeArchivedRows) {
+      sql.whereAddParens();
+      sql.whereAnd(0, "ArchiveDate is null", 0);
+    }
     sql.executeSelect(listStore, new IGLSQLSelectCallback() {
       @Override
       public void onFailure(final Throwable t) {
@@ -53,7 +71,8 @@ public static void load(final GLListStore listStore, final IGLTable table,
 }
 //--------------------------------------------------------------------------------------------------
 public static void reloadTestData() {
-  final IRemoteServiceAsync remoteService = ClientFactory.Instance.getRemoteService();
+  final IFAPRemoteServiceAsync remoteService;
+  remoteService = (IFAPRemoteServiceAsync)FAPClientFactory.Instance.getRemoteService();
   remoteService.loadTestData(null, ETestDataOption.Reload.name(), new AsyncCallback<String>() {
     @Override
     public void onFailure(final Throwable t) {
@@ -62,9 +81,7 @@ public static void reloadTestData() {
     @Override
     public void onSuccess(final String result) {
       GLLog.popup(10, "Test data reload is complete");
-      final PetGridWidget petGrid = GridWidgetManager.getPetGrid("Pet1");
-      ClientFactory.Instance.getLookupCache().reloadAll();
-      load(petGrid.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
+      FAPClientFactory.Instance.getLookupCache().reloadAll();
     }
   });
 }

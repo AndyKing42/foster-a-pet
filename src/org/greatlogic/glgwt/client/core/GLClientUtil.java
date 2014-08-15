@@ -83,12 +83,12 @@ private static void addWindowClosingHandler(final String appDescription) {
   }
 }
 //--------------------------------------------------------------------------------------------------
-public static void changePassword(final int personId,
+public static void changePassword(final int userId,
                                   final AsyncCallback<Void> changePasswordSuccessfulCallback) {
   if (_changePasswordWidget == null) {
     _changePasswordWidget = new GLChangePasswordWidget("Change Password");
   }
-  _changePasswordWidget.changePassword(personId, changePasswordSuccessfulCallback);
+  _changePasswordWidget.changePassword(userId, changePasswordSuccessfulCallback);
 }
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,

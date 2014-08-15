@@ -41,7 +41,6 @@ private String                         _dataSourceName;
 private String                         _fromHint;
 private ArrayList<String>              _groupByList;
 private boolean                        _ignoreDuplicates;
-private boolean                        _includeArchivedRows;
 private ArrayList<GLJoinDef>           _joinDefList;
 private int                            _maxNumberOfRows;
 private String                         _orderByClause;
@@ -62,11 +61,11 @@ private GLJoinDef(final EGLJoinType joinType, final String joinTable, final Stri
 }
 //==================================================================================================
 private static class GLWhereClause {
-private final int       _closeParens;
+private int             _closeParens;
 private String          _columnName;
 private final EGLDBConj _conjunction;
 private String          _expression;
-private final int       _openParens;
+private int             _openParens;
 private EGLDBOp         _operator;
 private Object          _value;
 public GLWhereClause(final EGLDBConj conjunction, final int openParens, final String expression,
@@ -556,10 +555,6 @@ public GLSQL selectColumns(final Collection<String> columnCollection) {
   return this;
 }
 //--------------------------------------------------------------------------------------------------
-public void setIncludeArchivedRows(final boolean includeArchivedRows) {
-  _includeArchivedRows = includeArchivedRows;
-}
-//--------------------------------------------------------------------------------------------------
 /**
  * Ensures that the query returns no more than the specified number of rows.
  * @param maxNumberOfRows The maximum number of rows to return from the query.
@@ -681,9 +676,6 @@ public StringBuilder toXMLSB() {
   if (_maxNumberOfRows > 0) {
     appendAttribute(result, EGLSQLAttribute.MaxRows, _maxNumberOfRows);
   }
-  if (_includeArchivedRows) {
-    appendAttribute(result, EGLSQLAttribute.IncludeArchivedRows, "Y");
-  }
   result.append(">");
   if (_joinDefList != null && _joinDefList.size() > 0) {
     for (final GLJoinDef joinDef : _joinDefList) {
@@ -780,6 +772,16 @@ public GLSQL where(final EGLDBConj conjunction, final int openParens, final Stri
 public GLSQL whereAnd(final int openParens, final String expression, final int closeParens)
   throws GLDBException {
   return where(EGLDBConj.And, openParens, expression, closeParens);
+}
+//--------------------------------------------------------------------------------------------------
+public GLSQL whereAddParens() {
+  if (_whereClauseList.size() > 0) {
+    GLWhereClause whereClause = _whereClauseList.get(0);
+    ++whereClause._openParens;
+    whereClause = _whereClauseList.get(_whereClauseList.size() - 1);
+    ++whereClause._closeParens;
+  }
+  return this;
 }
 //--------------------------------------------------------------------------------------------------
 /**

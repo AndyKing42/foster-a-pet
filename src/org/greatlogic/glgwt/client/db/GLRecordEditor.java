@@ -15,7 +15,6 @@ package org.greatlogic.glgwt.client.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeSet;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
@@ -264,13 +263,14 @@ private void setWidgetValue(final HasValue<?> hasValue, final IGLColumn column, 
       ((BigDecimalField)hasValue).setValue(GLClientUtil.stringToDec(stringValue));
       break;
     case Int:
-      if (column.getLookupType().getTable() == null) {
+      final IGLTable lookupTable = column.getLookupType().getTable();
+      if (lookupTable == null) {
         ((HasValue<Integer>)hasValue).setValue(GLClientUtil.stringToInt(stringValue));
       }
       else if (hasValue instanceof ComboBox) {
         final int key = GLClientUtil.stringToInt(stringValue);
         final GLRecord record = GLClientUtil.getLookupCache() //
-                                            .lookupRecordUsingKeyValue(EFAPTable.PetType, key);
+                                            .lookupRecordUsingKeyValue(lookupTable, key);
         ((ComboBox<GLRecord>)hasValue).setValue(record);
       }
       break;

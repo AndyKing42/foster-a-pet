@@ -13,8 +13,6 @@ package org.greatlogic.glgwt.server;
  * the License.
  */
 import org.apache.commons.lang3.StringUtils;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.Person;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;
 import com.greatlogic.glbase.gldb.GLSQL;
@@ -25,14 +23,18 @@ import com.greatlogic.glbase.gllib.BCrypt;
 import com.greatlogic.glbase.gllib.GLLog;
 import com.greatlogic.glbase.gllib.GLUtil;
 
-class GLLogin {
+public abstract class GLLogin {
 //--------------------------------------------------------------------------------------------------
 private static final long TenDays = 10 * GLUtil.SecondsInADay;
 
-private int               _personId;
-private final String      _sessionToken;
+private String            _loginName;
+private String            _password;
+protected String          _passwordHash;
+private String            _sessionToken;
+private String            _sessionTokenFromClient;
 private int               _sessionTokenId;
 private boolean           _succeeded;
+protected int             _userId;
 //==================================================================================================
 private enum ELoginTable implements IGLTable {
 SessionToken(SessionToken.class);
@@ -56,20 +58,20 @@ public String getDataSourceName() {
 }
 private enum SessionToken implements IGLColumn {
 ExpirationTime,
-PersonId,
+UserId,
 SessionToken,
 SessionTokenId,
 Version
 }
 //==================================================================================================
-static void updateSessionToken(final int personId, final int sessionTokenId,
-                               final String sessionToken) throws GLDBException {
+public static void updateSessionToken(final int userId, final int sessionTokenId,
+                                      final String sessionToken) throws GLDBException {
   final GLSQL sessionTokenSQL;
   if (sessionTokenId == 0) {
     sessionTokenSQL = GLSQL.insert(ELoginTable.SessionToken, false);
-    sessionTokenSQL.setValue(SessionToken.PersonId, personId);
+    sessionTokenSQL.setValue(SessionToken.UserId, userId);
     sessionTokenSQL.setValue(SessionToken.SessionTokenId,
-                             GLServerUtil.getNextIdValue(ELoginTable.SessionToken.name(), 1));
+                             GLServerUtil.getNextIdValue(ELoginTable.SessionToken + "Id", 1));
   }
   else {
     sessionTokenSQL = GLSQL.update(ELoginTable.SessionToken);
@@ -82,73 +84,59 @@ static void updateSessionToken(final int personId, final int sessionTokenId,
   sessionTokenSQL.execute();
 }
 //--------------------------------------------------------------------------------------------------
-GLLogin(final String sessionId, final String loginName, final String password,
-        final String sessionTokenFromClient) {
-  _sessionToken = sessionId;
+protected void deleteOtherSessionTokens() {
+  try {
+    final GLSQL sessionTokenSQL = GLSQL.delete(ELoginTable.SessionToken);
+    sessionTokenSQL.whereAnd(SessionToken.SessionToken, EGLDBOp.Equals, _sessionToken);
+    sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.NotEqual, _sessionTokenId);
+    sessionTokenSQL.execute();
+  }
+  catch (final GLDBException dbe) {
+    GLLog.major("deleteOtherSessionTokens() failed", dbe);
+  }
+}
+//--------------------------------------------------------------------------------------------------
+public String getSessionToken() {
+  return _sessionToken;
+}
+//--------------------------------------------------------------------------------------------------
+public boolean getSucceeded() {
+  return _succeeded;
+}
+//--------------------------------------------------------------------------------------------------
+public void login() {
   Exception savedException = null;
   try {
-    if (!StringUtils.isEmpty(sessionTokenFromClient)) {
-      _succeeded = loginUsingSessionToken(sessionTokenFromClient);
+    if (!StringUtils.isEmpty(_sessionTokenFromClient)) {
+      _succeeded = loginUsingSessionToken(_sessionTokenFromClient);
     }
     if (!_succeeded) {
-      _succeeded = loginUsingNameAndPassword(loginName, password);
+      _succeeded = loginUsingNameAndPassword(_loginName, _password);
     }
     if (_succeeded) {
-      GLLogin.updateSessionToken(_personId, _sessionTokenId, _sessionToken);
+      GLLogin.updateSessionToken(_userId, _sessionTokenId, _sessionToken);
     }
   }
   catch (final Exception e) {
     savedException = e;
   }
   if (_succeeded) {
-    GLLog.infoSummary("Login succeeded for personId:" + _personId);
+    GLLog.infoSummary("Login succeeded for userId:" + _userId);
   }
   else {
-    GLLog.infoSummary("Login failed for login name:" + loginName, savedException);
+    GLLog.infoSummary("Login failed for login name:" + _loginName, savedException);
   }
 }
 //--------------------------------------------------------------------------------------------------
-private void deleteOtherSessionTokens() throws GLDBException {
-  final GLSQL sessionTokenSQL = GLSQL.delete(ELoginTable.SessionToken);
-  sessionTokenSQL.whereAnd(SessionToken.SessionToken, EGLDBOp.Equals, _sessionToken);
-  sessionTokenSQL.whereAnd(SessionToken.SessionTokenId, EGLDBOp.NotEqual, _sessionTokenId);
-  sessionTokenSQL.execute();
-}
-//--------------------------------------------------------------------------------------------------
-int getPersonId() {
-  return _personId;
-}
-//--------------------------------------------------------------------------------------------------
-String getSessionToken() {
-  return _sessionToken;
-}
-//--------------------------------------------------------------------------------------------------
-boolean getSucceeded() {
-  return _succeeded;
-}
-//--------------------------------------------------------------------------------------------------
-private boolean loginUsingNameAndPassword(final String loginName, final String password)
-  throws GLDBException {
-  final GLSQL personSQL = GLSQL.select();
-  personSQL.from(EFAPTable.Person.name());
-  personSQL.whereAnd(0, Person.LoginName + "='" + loginName + "'", 0);
-  personSQL.open();
-  try {
-    if (personSQL.next()) {
-      _personId = personSQL.asInt(Person.PersonId.name());
-      final String passwordHash = personSQL.asString(Person.PasswordHash.name());
-      if (passwordHash.isEmpty()) {
-        setNewPassword(password);
-        return true;
-      }
-      else if (BCrypt.checkpw(password, passwordHash)) {
-        deleteOtherSessionTokens();
-        return true;
-      }
-    }
+private boolean loginUsingNameAndPassword(final String loginName, final String password) {
+  setUserIdAndPasswordHash(loginName, password);
+  if (_passwordHash.isEmpty()) {
+    final String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+    return setNewPassword(newPasswordHash);
   }
-  finally {
-    personSQL.close();
+  if (BCrypt.checkpw(password, _passwordHash)) {
+    deleteOtherSessionTokens();
+    return true;
   }
   return false;
 }
@@ -161,7 +149,7 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
   sessionTokenSQL.open();
   try {
     if (sessionTokenSQL.next()) {
-      _personId = sessionTokenSQL.asInt(SessionToken.PersonId);
+      _userId = sessionTokenSQL.asInt(SessionToken.UserId);
       _sessionTokenId = sessionTokenSQL.asInt(SessionToken.SessionTokenId);
       if (GLUtil.currentTimeYYYYMMDDHHMMSS()
                 .compareTo(sessionTokenSQL.asString(SessionToken.ExpirationTime)) > 0) {
@@ -176,11 +164,18 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
   return false;
 }
 //--------------------------------------------------------------------------------------------------
-void setNewPassword(final String newPassword) throws GLDBException {
-  final GLSQL personSQL = GLSQL.update(EFAPTable.Person.name());
-  personSQL.setValue(Person.PasswordHash.name(), BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-  personSQL.whereAnd(0, Person.PersonId + "=" + _personId, 0);
-  personSQL.execute();
+public void setLoginNameAndPassword(final String loginName, final String password) {
+  _loginName = loginName;
+  _password = password;
 }
+//--------------------------------------------------------------------------------------------------
+protected abstract boolean setNewPassword(final String newPassword);
+//--------------------------------------------------------------------------------------------------
+public void setSessionIdAndToken(final String sessionId, final String sessionTokenFromClient) {
+  _sessionToken = sessionId;
+  _sessionTokenFromClient = sessionTokenFromClient;
+}
+//--------------------------------------------------------------------------------------------------
+protected abstract void setUserIdAndPasswordHash(final String loginName, final String password);
 //--------------------------------------------------------------------------------------------------
 }

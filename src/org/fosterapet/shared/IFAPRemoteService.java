@@ -12,12 +12,12 @@ package org.fosterapet.shared;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.greatlogic.glgwt.shared.IGLRemoteServiceAsync;
-import com.google.gwt.user.client.rpc.AsyncCallback;
+import org.greatlogic.glgwt.shared.IGLRemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
-public interface IRemoteServiceAsync extends IGLRemoteServiceAsync {
+@RemoteServiceRelativePath("FAPRemoteServiceServlet")
+public interface IFAPRemoteService extends IGLRemoteService {
 //--------------------------------------------------------------------------------------------------
-void loadTestData(final String connectionInfo, final String testDataOptionString,
-                  final AsyncCallback<String> callback);
+String loadTestData(final String connectionInfo, final String testDataOptionString);
 //--------------------------------------------------------------------------------------------------
 }

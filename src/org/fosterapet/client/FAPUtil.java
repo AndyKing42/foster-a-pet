@@ -18,14 +18,14 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
 
 public class FAPUtil {
 //--------------------------------------------------------------------------------------------------
-public static ClientFactory _clientFactory;
+public static FAPClientFactory _clientFactory;
 //--------------------------------------------------------------------------------------------------
-public static ClientFactory getClientFactory() {
+public static FAPClientFactory getClientFactory() {
   return _clientFactory;
 }
 //--------------------------------------------------------------------------------------------------
 static void initialize() {
-  _clientFactory = new ClientFactoryUI();
+  _clientFactory = new FAPClientFactoryUI();
   GLClientUtil.initialize("Foster A Pet", _clientFactory, EFAPTable.class, "Foster A Pet Login");
   _clientFactory.setMainLayoutWidget(new MainLayoutWidget());
   // todo: restore the user's prior state? _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);

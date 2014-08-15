@@ -15,6 +15,9 @@ package org.fosterapet.server;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.NextId;
+import org.greatlogic.glgwt.server.GLServerUtil;
 import com.greatlogic.glbase.gllib.GLUtil;
 import com.greatlogic.glbase.gllib.IGLProgram;
 
@@ -38,6 +41,8 @@ public void contextInitialized(final ServletContextEvent event) {
   final String configFilename = servletContext.getRealPath("cfg/FosterAPet.cfg").replace('\\', '/');
   GLUtil.initializeProgram(new FAPProgram(), null, null, true, //
                            "<args ConfigFilename='" + configFilename + "'/>");
+  GLServerUtil.initialize(EFAPTable.NextId.name(), NextId.NextIdName.name(),
+                          NextId.NextIdValue.name());
 }
 //--------------------------------------------------------------------------------------------------
 }
