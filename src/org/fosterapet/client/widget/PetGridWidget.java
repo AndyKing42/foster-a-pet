@@ -80,11 +80,11 @@ protected void addFilters() {
 @Override
 public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
-    final GLSQL sql = GLSQL.select();
-    sql.from(EFAPTable.Pet);
-    sql.orderBy(Pet.PetName.name());
-    sql.whereAddParens();
-    sql.whereAnd(Pet.ArchiveDate, EGLDBOp.IsNull, null);
+    _sql = GLSQL.select();
+    _sql.from(EFAPTable.Pet);
+    _sql.orderBy(Pet.PetName.name());
+    _sql.whereAddParens();
+    _sql.whereAnd(Pet.ArchiveDate, EGLDBOp.IsNull, null);
   }
   return _sql;
 }

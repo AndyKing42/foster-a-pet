@@ -22,6 +22,7 @@ import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLListStoreLoadedCallback;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
@@ -337,6 +338,15 @@ GridSelectionModel<GLRecord> getSelectionModel() {
 }
 //--------------------------------------------------------------------------------------------------
 public abstract GLSQL getSQL() throws GLDBException;
+//--------------------------------------------------------------------------------------------------
+public void loadData() {
+  _listStore.load(new IGLListStoreLoadedCallback() {
+    @Override
+    public void onSuccess() {
+      createGrid();
+    }
+  });
+}
 //--------------------------------------------------------------------------------------------------
 public void requestRowDeleteConfirmation(final GridRowEditing<GLRecord> gridRowEditing) {
   final ConfirmMessageBox messageBox;

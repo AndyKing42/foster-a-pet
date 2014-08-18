@@ -124,7 +124,7 @@ public void createGenericTableGrid(final IGLTable table) throws GLDBException {
   final GLGenericGridWidget gridWidget;
   gridWidget = new GLGenericGridWidget(table);
   contentPanel.setWidget(gridWidget.asWidget());
-  gridWidget.getListStore().load(null);
+  gridWidget.loadData();
 }
 //--------------------------------------------------------------------------------------------------
 public void createPersonDetails(final GLRecord person) {
@@ -163,7 +163,7 @@ public void createPersonGrid(final boolean inlineEditing, final boolean checkBox
   gridWidget = GridWidgetManager.getPersonGrid("People" + (getNumberOfTabs() + 1), inlineEditing, //
                                                checkBoxSelectionModel, rowLevelCommits);
   contentPanel.setWidget(gridWidget);
-  gridWidget.getListStore().load(null);
+  gridWidget.loadData();
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
@@ -173,7 +173,7 @@ public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSel
   gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), inlineEditing, //
                                             checkBoxSelectionModel, rowLevelCommits);
   contentPanel.setWidget(gridWidget);
-  gridWidget.getListStore().load(null);
+  gridWidget.loadData();
 }
 //--------------------------------------------------------------------------------------------------
 public int getNumberOfTabs() {

@@ -18,6 +18,8 @@ import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLCommitCompleteEvent;
+import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
+import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
@@ -33,6 +35,7 @@ public class GLListStore extends ListStore<GLRecord> {
 private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
 
 private IGLColumn[]              _columns;
+private IGLTable                 _currentLookupTable;
 private ArrayList<GLRecord>      _deletedRecordList;
 private boolean                  _loadLookupTables;
 private GLRecordDef              _recordDef;
@@ -140,10 +143,19 @@ private void loadNextLookupTable(final TreeSet<IGLTable> lookupTableSet,
     loadMainTable(callback);
     return;
   }
-  final IGLTable lookupTable = lookupTableSet.pollFirst();
-  if (lookupTable != null) {
-    GLClientUtil.getLookupCache().load(lookupTable, true, false);
-  }
+  final IGLLookupTableLoadedEventHandler eventHandler = new IGLLookupTableLoadedEventHandler() {
+    @Override
+    public void onLookupTableLoadedEvent(final GLLookupTableLoadedEvent lookupTableLoadedEvent) {
+      if (lookupTableLoadedEvent.getTable() == _currentLookupTable) {
+        loadLookupTables(callback);
+      }
+    }
+  };
+  GLClientUtil.getEventBus().addHandler(GLLookupTableLoadedEvent.LookupTableLoadedEventType,
+                                        eventHandler);
+  _currentLookupTable = lookupTableSet.first();
+  lookupTableSet.remove(_currentLookupTable);
+  GLClientUtil.getLookupCache().load(_currentLookupTable, true, false);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
