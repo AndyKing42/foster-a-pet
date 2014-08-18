@@ -12,11 +12,12 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.client.DBAccess;
 import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.db.DBAccess;
+import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -69,7 +70,12 @@ private void addPetsContextMenuHandler() {
   petsButton.addHandler(new ContextMenuHandler() {
     @Override
     public void onContextMenu(final ContextMenuEvent event) {
-      createPetGrid();
+      try {
+        createPetGrid();
+      }
+      catch (final GLDBException e) {
+        // TODO Auto-generated catch block
+      }
       event.preventDefault();
     }
   }, ContextMenuEvent.getType());
@@ -93,7 +99,7 @@ private void addTableNamesToGenericGridMenu() {
   genericGridMenu.setWidth(maxWidth + 35);
 }
 //--------------------------------------------------------------------------------------------------
-protected void createPersonGrid() {
+protected void createPersonGrid() throws GLDBException {
   FAPUtil.getClientFactory()
          .getAppTabPanelWidget()
          .createPersonGrid(inlineEditingCheckMenuItem.isChecked(),
@@ -101,7 +107,7 @@ protected void createPersonGrid() {
                            rowLevelCommitsCheckMenuItem.isChecked());
 }
 //--------------------------------------------------------------------------------------------------
-protected void createPetGrid() {
+protected void createPetGrid() throws GLDBException {
   FAPUtil.getClientFactory()
          .getAppTabPanelWidget()
          .createPetGrid(inlineEditingCheckMenuItem.isChecked(),
@@ -117,7 +123,12 @@ public void onGenericTableGridMenuSelection(final SelectionEvent<Item> event) {
     return;
   }
   final IGLTable table = EFAPTable.valueOf(tableName);
-  FAPUtil.getClientFactory().getAppTabPanelWidget().createGenericTableGrid(table);
+  try {
+    FAPUtil.getClientFactory().getAppTabPanelWidget().createGenericTableGrid(table);
+  }
+  catch (final GLDBException dbe) {
+    // TODO Auto-generated catch block
+  }
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"logOutButton"})
@@ -128,12 +139,22 @@ public void onLogOutButtonSelect(@SuppressWarnings("unused") final SelectEvent e
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"peopleButton"})
 public void onPeopleButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  createPersonGrid();
+  try {
+    createPersonGrid();
+  }
+  catch (final GLDBException e) {
+    // TODO Auto-generated catch block
+  }
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"petsButton"})
 public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  createPetGrid();
+  try {
+    createPetGrid();
+  }
+  catch (final GLDBException e) {
+    // TODO Auto-generated catch block
+  }
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})

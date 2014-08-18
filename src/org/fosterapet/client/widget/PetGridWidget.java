@@ -13,14 +13,18 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.client.FAPUtil;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
+import org.greatlogic.glgwt.client.db.GLDBException;
+import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.widget.grid.GLGridContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
@@ -29,7 +33,7 @@ public class PetGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                      final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                     final IGLColumn... columns) {
+                     final IGLColumn... columns) throws GLDBException {
   super(null, "There are no pets", recordValidator, inlineEditing, useCheckBoxSelectionModel,
         rowLevelCommits, columns);
 }
@@ -71,6 +75,18 @@ protected void addFilters() {
   addFilter(Pet.PetName);
   addFilter(Pet.PetTypeId);
   addFilter(Pet.Sex);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public GLSQL getSQL() throws GLDBException {
+  if (_sql == null) {
+    final GLSQL sql = GLSQL.select();
+    sql.from(EFAPTable.Pet);
+    sql.orderBy(Pet.PetName.name());
+    sql.whereAddParens();
+    sql.whereAnd(Pet.ArchiveDate, EGLDBOp.IsNull, null);
+  }
+  return _sql;
 }
 //--------------------------------------------------------------------------------------------------
 }

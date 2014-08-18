@@ -14,6 +14,6 @@ package org.greatlogic.glgwt.client.db;
  */
 public interface IGLSQLModifier {
 //--------------------------------------------------------------------------------------------------
-public void modifySQL();
+public void modifySQL(final GLSQL sql);
 //--------------------------------------------------------------------------------------------------
 }

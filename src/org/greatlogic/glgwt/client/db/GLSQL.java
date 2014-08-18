@@ -351,8 +351,8 @@ public void executeSelect(final GLListStore listStore, final IGLSQLSelectCallbac
       final GLSelectServiceResponse serviceResponse = (GLSelectServiceResponse)response;
       try {
         listStore.clear();
-        GLRecordDef recordDef = null;
         boolean firstRow = true;
+        GLRecordDef recordDef = null;
         for (final String row : serviceResponse.getResultList()) {
           if (firstRow) {
             recordDef = new GLRecordDef(_table, row.split(","));
