@@ -55,9 +55,11 @@ protected void addFilters() {
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLSQL getSQL() throws GLDBException {
-  final GLSQL result = GLSQL.select();
-  result.from(_table);
-  return result;
+  if (_sql == null) {
+    _sql = GLSQL.select();
+    _sql.from(_table);
+  }
+  return _sql;
 }
 //--------------------------------------------------------------------------------------------------
 }

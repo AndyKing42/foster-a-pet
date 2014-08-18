@@ -87,9 +87,11 @@ protected void addFilters() {
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLSQL getSQL() throws GLDBException {
-  final GLSQL result = GLSQL.select();
-  result.from(EFAPTable.Person);
-  return result;
+  if (_sql == null) {
+    _sql = GLSQL.select();
+    _sql.from(EFAPTable.Person);
+  }
+  return _sql;
 }
 //--------------------------------------------------------------------------------------------------
 }
