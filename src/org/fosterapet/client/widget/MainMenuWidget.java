@@ -16,7 +16,6 @@ import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
-import org.greatlogic.glgwt.client.db.DBAccess;
 import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
@@ -166,7 +165,7 @@ public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final Selec
     @Override
     public void onDialogHide(final DialogHideEvent hideEvent) {
       if (hideEvent.getHideButton() == PredefinedButton.YES) {
-        DBAccess.reloadTestData();
+        FAPUtil.reloadTestData();
       }
     }
   });

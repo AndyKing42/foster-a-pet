@@ -14,9 +14,13 @@ package org.fosterapet.client;
  */
 import org.fosterapet.client.widget.MainLayoutWidget;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IFAPEnums.ETestDataOption;
+import org.fosterapet.shared.IFAPRemoteServiceAsync;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent;
 import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FAPUtil {
 //--------------------------------------------------------------------------------------------------
@@ -43,4 +47,19 @@ static void initialize() {
   // todo: restore the user's prior state? _clientFactory.getMainLayoutWidget().getAppTabPanelWidget().createPetGrid(false, true, true);
 }
 //--------------------------------------------------------------------------------------------------
+public static void reloadTestData() {
+  final IFAPRemoteServiceAsync remoteService;
+  remoteService = (IFAPRemoteServiceAsync)FAPClientFactory.Instance.getRemoteService();
+  remoteService.loadTestData(null, ETestDataOption.Reload.name(), new AsyncCallback<String>() {
+    @Override
+    public void onFailure(final Throwable t) {
+      GLLog.popup(10, "Test data reload failed:" + t.getMessage());
+    }
+    @Override
+    public void onSuccess(final String result) {
+      GLLog.popup(10, "Test data reload is complete");
+      FAPClientFactory.Instance.getLookupCache().reloadAll();
+    }
+  });
+}//--------------------------------------------------------------------------------------------------
 }
