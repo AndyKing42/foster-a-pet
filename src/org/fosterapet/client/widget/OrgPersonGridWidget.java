@@ -12,9 +12,12 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
+import org.greatlogic.glgwt.client.db.GLDBException;
+import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
@@ -23,7 +26,7 @@ public class OrgPersonGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                            final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                           final IGLColumn... columns) {
+                           final IGLColumn... columns) throws GLDBException {
   super(null, "There are no organizations for this person", recordValidator, inlineEditing,
         useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
@@ -45,6 +48,13 @@ protected void addContextMenuItems() {
 protected void addFilters() {
   addFilter(OrgPerson.OrgId);
   addFilter(OrgPerson.PersonRoleId);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public GLSQL getSQL() throws GLDBException {
+  final GLSQL result = GLSQL.select();
+  result.from(EFAPTable.OrgPerson);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 }

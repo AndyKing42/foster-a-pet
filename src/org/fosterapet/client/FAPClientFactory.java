@@ -14,12 +14,14 @@ package org.fosterapet.client;
  */
 import org.fosterapet.client.widget.AppTabPanelWidget;
 import org.fosterapet.client.widget.MainLayoutWidget;
+import org.fosterapet.shared.FAPValidators;
 import org.fosterapet.shared.IFAPRemoteService;
 import org.fosterapet.shared.LookupCacheLoader;
-import org.fosterapet.shared.FAPValidators;
 import org.greatlogic.glgwt.client.core.GLClientFactory;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
+import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLSQLModifier;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import com.google.gwt.core.client.GWT;
 
@@ -27,8 +29,8 @@ public abstract class FAPClientFactory extends GLClientFactory {
 //--------------------------------------------------------------------------------------------------
 public static FAPClientFactory Instance;
 
-protected AppTabPanelWidget _appTabPanelWidget;
-protected MainLayoutWidget  _mainLayoutWidget;
+protected AppTabPanelWidget    _appTabPanelWidget;
+protected MainLayoutWidget     _mainLayoutWidget;
 //--------------------------------------------------------------------------------------------------
 protected FAPClientFactory() {
   Instance = this;
@@ -36,9 +38,18 @@ protected FAPClientFactory() {
   _eventBus = new GLEventBus();
   _remoteService = GWT.create(IFAPRemoteService.class);
   _remoteServiceHelper = new RemoteServiceHelper();
-  _lookupCache = new GLLookupCache();
+  _lookupCache = new GLLookupCache(createLookupCacheSQLModifier());
   LookupCacheLoader.load(_lookupCache);
   _validators = new FAPValidators();
+}
+//--------------------------------------------------------------------------------------------------
+protected IGLSQLModifier createLookupCacheSQLModifier() {
+  return new IGLSQLModifier() {
+    @Override
+    public void modifySQL(final GLSQL sql) {
+
+    }
+  };
 }
 //--------------------------------------------------------------------------------------------------
 public AppTabPanelWidget getAppTabPanelWidget() {

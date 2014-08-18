@@ -14,12 +14,11 @@ package org.fosterapet.client.widget;
  */
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.fosterapet.client.DBAccess;
-import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent.IGLRecordChangeEventHandler;
@@ -120,12 +119,12 @@ public ContentPanel addTab(final String tabLabel, final GLRecord record, final I
   return result;
 }
 //--------------------------------------------------------------------------------------------------
-public void createGenericTableGrid(final IGLTable table) {
+public void createGenericTableGrid(final IGLTable table) throws GLDBException {
   final ContentPanel contentPanel = addTab(table.toString());
   final GLGenericGridWidget gridWidget;
   gridWidget = new GLGenericGridWidget(table);
   contentPanel.setWidget(gridWidget.asWidget());
-  DBAccess.load(gridWidget.getListStore(), table, null, true, 0, null);
+  gridWidget.getListStore().load(null);
 }
 //--------------------------------------------------------------------------------------------------
 public void createPersonDetails(final GLRecord person) {
@@ -158,26 +157,23 @@ public void createPetDetails(final GLRecord pet) {
 }
 //--------------------------------------------------------------------------------------------------
 public void createPersonGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
-                             final boolean rowLevelCommits) {
+                             final boolean rowLevelCommits) throws GLDBException {
   final ContentPanel contentPanel = addTab("People-" + (getNumberOfTabs() + 1));
-  final GLGridWidget gridWidget = GridWidgetManager.getPersonGrid("People" + //
-                                                                  (getNumberOfTabs() + 1), //
-                                                                  inlineEditing, //
-                                                                  checkBoxSelectionModel, //
-                                                                  rowLevelCommits);
+  final GLGridWidget gridWidget;
+  gridWidget = GridWidgetManager.getPersonGrid("People" + (getNumberOfTabs() + 1), inlineEditing, //
+                                               checkBoxSelectionModel, rowLevelCommits);
   contentPanel.setWidget(gridWidget);
-  DBAccess.load(gridWidget.getListStore(), EFAPTable.Person, Person.DisplayName.name(), false);
+  gridWidget.getListStore().load(null);
 }
 //--------------------------------------------------------------------------------------------------
 public void createPetGrid(final boolean inlineEditing, final boolean checkBoxSelectionModel,
-                          final boolean rowLevelCommits) {
+                          final boolean rowLevelCommits) throws GLDBException {
   final ContentPanel contentPanel = addTab("Pets-" + (getNumberOfTabs() + 1));
-  final GLGridWidget gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), //
-                                                               inlineEditing, //
-                                                               checkBoxSelectionModel, //
-                                                               rowLevelCommits);
+  final GLGridWidget gridWidget;
+  gridWidget = GridWidgetManager.getPetGrid("Pets" + (getNumberOfTabs() + 1), inlineEditing, //
+                                            checkBoxSelectionModel, rowLevelCommits);
   contentPanel.setWidget(gridWidget);
-  DBAccess.load(gridWidget.getListStore(), EFAPTable.Pet, Pet.PetName.name(), false);
+  gridWidget.getListStore().load(null);
 }
 //--------------------------------------------------------------------------------------------------
 public int getNumberOfTabs() {

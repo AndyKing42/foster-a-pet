@@ -24,6 +24,7 @@ import org.greatlogic.glgwt.shared.IGLTable;
 public class GLLookupCache {
 //--------------------------------------------------------------------------------------------------
 private static final ArrayList<String>                        EmptyAbbrevList;
+
 private final HashMap<IGLLookupType, ArrayList<String>>       _abbrevListByLookupTypeMap;
 private final HashMap<IGLLookupType, GLCacheDef>              _cacheDefByNameMap;
 private final HashMap<IGLTable, GLCacheDef>                   _cacheDefByTableMap;
@@ -31,6 +32,7 @@ private final ArrayList<IGLTable>                             _cachedTableList;
 private final HashMap<GLCacheDef, TreeMap<String, GLRecord>>  _displayValueToRecordMapByCacheDefMap;
 private final HashMap<GLCacheDef, TreeMap<Integer, GLRecord>> _keyToRecordMapByCacheDefMap;
 private final HashMap<GLCacheDef, GLListStore>                _listStoreByCacheDefMap;
+private final IGLSQLModifier                                  _sqlModifier;
 //==================================================================================================
 private static class GLCacheDef {
 private final EGLCacheDefType _cacheDefType;
@@ -58,7 +60,8 @@ static {
   EmptyAbbrevList = new ArrayList<>();
 }
 //--------------------------------------------------------------------------------------------------
-public GLLookupCache() {
+public GLLookupCache(final IGLSQLModifier sqlModifier) {
+  _sqlModifier = sqlModifier;
   _abbrevListByLookupTypeMap = new HashMap<>();
   _cacheDefByNameMap = new HashMap<>();
   _cacheDefByTableMap = new HashMap<>();
@@ -87,24 +90,11 @@ public void addListCache(final IGLLookupType lookupType, final String... listEnt
   _abbrevListByLookupTypeMap.put(lookupType, abbrevList);
 }
 //--------------------------------------------------------------------------------------------------
-private GLListStore addTableCache(final IGLTable table) {
-  final GLCacheDef cacheDef = findCacheDef(table);
-  GLListStore result = _listStoreByCacheDefMap.get(cacheDef);
-  if (result != null) {
-    return result;
-  }
-  result = new GLListStore();
-  _displayValueToRecordMapByCacheDefMap.put(cacheDef, new TreeMap<String, GLRecord>());
-  _keyToRecordMapByCacheDefMap.put(cacheDef, new TreeMap<Integer, GLRecord>());
-  _listStoreByCacheDefMap.put(cacheDef, result);
-  return result;
-}
-//--------------------------------------------------------------------------------------------------
-private GLCacheDef findCacheDef(final IGLTable lookupTable) {
-  GLCacheDef result = _cacheDefByTableMap.get(lookupTable);
+private GLCacheDef findCacheDef(final IGLTable table) {
+  GLCacheDef result = _cacheDefByTableMap.get(table);
   if (result == null) {
-    result = new GLCacheDef(lookupTable);
-    _cacheDefByTableMap.put(lookupTable, result);
+    result = new GLCacheDef(table);
+    _cacheDefByTableMap.put(table, result);
   }
   return result;
 }
@@ -115,7 +105,50 @@ public ArrayList<String> getAbbrevList(final IGLLookupType lookupType) {
 }
 //--------------------------------------------------------------------------------------------------
 public GLListStore getListStore(final IGLTable table) {
-  return addTableCache(table);
+  final GLCacheDef cacheDef = findCacheDef(table);
+  return cacheDef == null ? null : _listStoreByCacheDefMap.get(cacheDef);
+}
+//--------------------------------------------------------------------------------------------------
+public boolean getLookupHasBeenLoaded(final IGLTable table) {
+  return _cacheDefByTableMap.containsKey(table);
+}
+//--------------------------------------------------------------------------------------------------
+public void load(final IGLTable table, final boolean addToReloadList, final boolean forceReload) {
+  if (!forceReload && getLookupHasBeenLoaded(table)) {
+    GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, false));
+    return;
+  }
+  try {
+    final GLSQL sql = GLSQL.select();
+    sql.from(table);
+    _sqlModifier.modifySQL(sql);
+    GLLog.popup(20, "Reload of " + table + " was requested");
+    final GLListStore listStore = new GLListStore(sql, false, table.getColumns());
+    listStore.load(new IGLListStoreLoadedCallback() {
+      @Override
+      public void onSuccess() {
+        if (addToReloadList) {
+          _cachedTableList.add(table);
+        }
+        final GLCacheDef cacheDef = findCacheDef(table);
+        _listStoreByCacheDefMap.put(cacheDef, listStore);
+        final TreeMap<String, GLRecord> displayValueToRecordMap = new TreeMap<String, GLRecord>();
+        _displayValueToRecordMapByCacheDefMap.put(cacheDef, displayValueToRecordMap);
+        final TreeMap<Integer, GLRecord> keyToRecordMap = new TreeMap<Integer, GLRecord>();
+        _keyToRecordMapByCacheDefMap.put(cacheDef, new TreeMap<Integer, GLRecord>());
+        for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
+          final GLRecord record = listStore.get(recordIndex);
+          displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
+          keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumn()), record);
+        }
+        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, true));
+        GLLog.popup(20, "Cache load of " + table + " was successful");
+      }
+    });
+  }
+  catch (final GLDBException dbe) {
+
+  }
 }
 //--------------------------------------------------------------------------------------------------
 public String lookupDisplayValueUsingKeyValue(final IGLTable lookupTable, final int key) {
@@ -134,67 +167,18 @@ public int lookupKeyValueUsingDisplayValue(final IGLTable lookupTable, final Str
 public GLRecord lookupRecordUsingDisplayValue(final IGLTable lookupTable, final String displayValue) {
   final TreeMap<String, GLRecord> displayValueToRecordMap;
   displayValueToRecordMap = _displayValueToRecordMapByCacheDefMap.get(findCacheDef(lookupTable));
-  if (displayValueToRecordMap == null) {
-    return null;
-  }
-  return displayValueToRecordMap.get(displayValue);
+  return displayValueToRecordMap == null ? null : displayValueToRecordMap.get(displayValue);
 }
 //--------------------------------------------------------------------------------------------------
 public GLRecord lookupRecordUsingKeyValue(final IGLTable lookupTable, final int key) {
   final TreeMap<Integer, GLRecord> keyToRecordMap;
   keyToRecordMap = _keyToRecordMapByCacheDefMap.get(findCacheDef(lookupTable));
-  if (keyToRecordMap == null) {
-    return null;
-  }
-  return keyToRecordMap.get(key);
+  return keyToRecordMap == null ? null : keyToRecordMap.get(key);
 }
 //--------------------------------------------------------------------------------------------------
 public void reloadAll() {
   for (final IGLTable table : _cachedTableList) {
-    reload(table, false, true);
-  }
-}
-//--------------------------------------------------------------------------------------------------
-public void reload(final IGLTable table, final boolean addToReloadList, final boolean forceReload) {
-  if (!forceReload && _cacheDefByTableMap.containsKey(table)) {
-    GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, false));
-    return;
-  }
-  if (addToReloadList) {
-    _cachedTableList.add(table);
-  }
-  final GLListStore listStore = getListStore(table);
-  listStore.clear();
-  try {
-    final GLSQL sql = GLSQL.select();
-    sql.from(table);
-    GLLog.popup(20, "Reload of " + table + " was requested");
-    sql.executeSelect(listStore, new IGLSQLSelectCallback() {
-      @Override
-      public void onFailure(final Throwable t) {
-        GLLog.popup(30, table + " loading failed: " + t.getMessage());
-      }
-      @Override
-      public void onSuccess() {
-        final GLCacheDef cacheDef = findCacheDef(table);
-        final TreeMap<String, GLRecord> displayValueToRecordMap;
-        displayValueToRecordMap = _displayValueToRecordMapByCacheDefMap.get(cacheDef);
-        final TreeMap<Integer, GLRecord> keyToRecordMap;
-        keyToRecordMap = _keyToRecordMapByCacheDefMap.get(cacheDef);
-        displayValueToRecordMap.clear();
-        keyToRecordMap.clear();
-        for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
-          final GLRecord record = listStore.get(recordIndex);
-          displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
-          keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumn()), record);
-        }
-        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, true));
-        GLLog.popup(20, "Reload of " + table + " was successful");
-      }
-    });
-  }
-  catch (final GLDBException dbe) {
-
+    load(table, false, true);
   }
 }
 //--------------------------------------------------------------------------------------------------

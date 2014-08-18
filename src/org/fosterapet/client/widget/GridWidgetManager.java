@@ -18,6 +18,7 @@ import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 
@@ -43,7 +44,7 @@ static {
   _gridWidgetInfoMap = new TreeMap<>();
 }
 //--------------------------------------------------------------------------------------------------
-public static OrgPersonGridWidget getOrgPersonGrid(final String gridName) {
+public static OrgPersonGridWidget getOrgPersonGrid(final String gridName) throws GLDBException {
   final OrgPersonGridWidget result;
   GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
   if (gridWidgetInfo == null) {
@@ -57,7 +58,7 @@ public static OrgPersonGridWidget getOrgPersonGrid(final String gridName) {
   return (OrgPersonGridWidget)gridWidgetInfo._gridWidget;
 }
 //--------------------------------------------------------------------------------------------------
-public static PersonGridWidget getPersonGrid(final String gridName) {
+public static PersonGridWidget getPersonGrid(final String gridName) throws GLDBException {
   final GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
   boolean inlineEditing;
   boolean rowLevelCommits;
@@ -77,7 +78,7 @@ public static PersonGridWidget getPersonGrid(final String gridName) {
 //--------------------------------------------------------------------------------------------------
 public static PersonGridWidget getPersonGrid(final String gridName, final boolean inlineEditing,
                                              final boolean useCheckBoxSelectionModel,
-                                             final boolean rowLevelCommits) {
+                                             final boolean rowLevelCommits) throws GLDBException {
   final PersonGridWidget result;
   GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
   if (gridWidgetInfo == null || gridWidgetInfo._inlineEditing != inlineEditing ||
@@ -97,7 +98,7 @@ public static PersonGridWidget getPersonGrid(final String gridName, final boolea
   return (PersonGridWidget)gridWidgetInfo._gridWidget;
 }
 //--------------------------------------------------------------------------------------------------
-public static PetGridWidget getPetGrid(final String gridName) {
+public static PetGridWidget getPetGrid(final String gridName) throws GLDBException {
   final GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
   boolean inlineEditing;
   boolean rowLevelCommits;
@@ -117,7 +118,7 @@ public static PetGridWidget getPetGrid(final String gridName) {
 //--------------------------------------------------------------------------------------------------
 public static PetGridWidget getPetGrid(final String gridName, final boolean inlineEditing,
                                        final boolean useCheckBoxSelectionModel,
-                                       final boolean rowLevelCommits) {
+                                       final boolean rowLevelCommits) throws GLDBException {
   final PetGridWidget result;
   GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
   if (gridWidgetInfo == null || gridWidgetInfo._inlineEditing != inlineEditing ||

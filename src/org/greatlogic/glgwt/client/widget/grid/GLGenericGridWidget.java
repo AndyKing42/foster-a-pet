@@ -14,6 +14,8 @@ package org.greatlogic.glgwt.client.widget.grid;
  */
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
+import org.greatlogic.glgwt.client.db.GLDBException;
+import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 
@@ -23,7 +25,7 @@ private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
 
 private final IGLTable           _table;
 //--------------------------------------------------------------------------------------------------
-public GLGenericGridWidget(final IGLTable table) {
+public GLGenericGridWidget(final IGLTable table) throws GLDBException {
   super(null, "There are no rows in the " + table + " table", null, false, true, true,
         table.getColumns().toArray(EmptyColumnArray));
   _table = table;
@@ -46,9 +48,16 @@ protected void addContextMenuItems() {
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addFilters() {
-  for (final IGLColumn column : _columns) {
+  for (final IGLColumn column : _listStore.getColumns()) {
     addFilter(column);
   }
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public GLSQL getSQL() throws GLDBException {
+  final GLSQL result = GLSQL.select();
+  result.from(_table);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 }

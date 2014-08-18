@@ -13,10 +13,13 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.client.FAPUtil;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
+import org.greatlogic.glgwt.client.db.GLDBException;
+import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.widget.grid.GLGridContextMenuSelectionEvent;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
@@ -29,7 +32,7 @@ public class PersonGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 public PersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                         final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                        final IGLColumn... columns) {
+                        final IGLColumn... columns) throws GLDBException {
   super(null, "There are no people", recordValidator, inlineEditing, useCheckBoxSelectionModel,
         rowLevelCommits, columns);
 }
@@ -80,6 +83,13 @@ protected void addFilters() {
   addFilter(Person.PhoneNumberHome);
   addFilter(Person.PhoneNumberMobile);
   addFilter(Person.PhoneNumberOffice);
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public GLSQL getSQL() throws GLDBException {
+  final GLSQL result = GLSQL.select();
+  result.from(EFAPTable.Person);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 }
