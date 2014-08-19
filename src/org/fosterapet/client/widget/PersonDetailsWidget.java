@@ -12,10 +12,10 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import org.fosterapet.shared.IDBEnums.EFAPTable;
-import org.fosterapet.shared.IDBEnums.OrgPerson;
+import org.fosterapet.shared.IDBEnums.Person;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordEditor;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
@@ -42,12 +42,14 @@ HorizontalLayoutContainer    personContainer;
 @UiField
 VerticalLayoutContainer      mainContainer;
 
+private final GLRecord       _person;
 private final GLRecordEditor _recordEditor;
 //==================================================================================================
 interface PersonDetailsWidgetUiBinder extends UiBinder<Widget, PersonDetailsWidget> { //
 }
 //==================================================================================================
 public PersonDetailsWidget(final GLRecord person) {
+  _person = person;
   final PersonDetailsWidgetUiBinder uiBinder = GWT.create(PersonDetailsWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
   //  flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
@@ -57,13 +59,18 @@ public PersonDetailsWidget(final GLRecord person) {
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"orgButton"})
 public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  final GLGridWidget gridWidget = GridWidgetManager.getOrgPersonGrid("OrgPerson1");
-  orgPanel.setWidget(gridWidget);
-  the_load("needs to be restricted based upon the current person");
-  DBAccess.load(gridWidget.getListStore(), EFAPTable.OrgPerson, OrgPerson.OrgId.name(), false);
-  cardLayoutContainer.setActiveWidget(orgPanel);
-  GLLog.popup(20, "cardLayoutContainer.offsetHeight:" + cardLayoutContainer.getOffsetHeight(true));
-  GLLog.popup(20, "cardLayoutContainer.offsetWidth:" + cardLayoutContainer.getOffsetWidth(true));
+  final GLGridWidget gridWidget;
+  try {
+    gridWidget = GridWidgetManager.getOrgPersonGrid(_person.asInt(Person.PersonId));
+    orgPanel.setWidget(gridWidget);
+    gridWidget.loadData();
+    cardLayoutContainer.setActiveWidget(orgPanel);
+    GLLog.popup(20, "cardLayoutContainer.offsetHeight:" + cardLayoutContainer.getOffsetHeight(true));
+    GLLog.popup(20, "cardLayoutContainer.offsetWidth:" + cardLayoutContainer.getOffsetWidth(true));
+  }
+  catch (final GLDBException e) {
+    GLLog.popup(20, "Creation of the OrgPerson grid failed:" + e.getMessage());
+  }
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"saveButton"})

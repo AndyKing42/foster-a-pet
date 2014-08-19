@@ -77,10 +77,9 @@ public GLLoginResponse login(final String loginName, final String password,
                              final String sessionTokenFromClient) {
   final GLLoginResponse result = createLoginResponse();
   final GLLogin login = createLogin();
-  result.setLogin(login);
   login.setSessionIdAndToken(getSessionId(), sessionTokenFromClient);
   login.setLoginNameAndPassword(loginName, password);
-  login.login();
+  login.login(result);
   result.setGLResultValues(login.getSucceeded(), login.getSessionToken());
   return result;
 }
@@ -91,7 +90,7 @@ public GLServiceResponse processRequest(final GLServiceRequest serviceRequest) {
   GLLog.debug("Request:" + serviceRequest);
   final GLLogin login = createLogin();
   login.setSessionIdAndToken(getSessionId(), serviceRequest.getSessionToken());
-  login.login();
+  login.login(null);
   if (!login.getSucceeded()) {
     return null;
   }
