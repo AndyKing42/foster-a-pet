@@ -135,7 +135,7 @@ public void load(final IGLTable table, final boolean addToReloadList, final bool
         final TreeMap<String, GLRecord> displayValueToRecordMap = new TreeMap<String, GLRecord>();
         _displayValueToRecordMapByCacheDefMap.put(cacheDef, displayValueToRecordMap);
         final TreeMap<Integer, GLRecord> keyToRecordMap = new TreeMap<Integer, GLRecord>();
-        _keyToRecordMapByCacheDefMap.put(cacheDef, new TreeMap<Integer, GLRecord>());
+        _keyToRecordMapByCacheDefMap.put(cacheDef, keyToRecordMap);
         for (int recordIndex = 0; recordIndex < listStore.size(); ++recordIndex) {
           final GLRecord record = listStore.get(recordIndex);
           displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);

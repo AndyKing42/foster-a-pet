@@ -24,7 +24,6 @@ import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.client.widget.grid.IGLGridContextMenuSelectionHandler;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
-import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 import com.sencha.gxt.core.client.util.DateWrapper;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
@@ -82,9 +81,8 @@ public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
     _sql = GLSQL.select();
     _sql.from(EFAPTable.Pet);
+    FAPUtil.addStandardSQLWhere(_sql);
     _sql.orderBy(Pet.PetName.name());
-    _sql.whereAddParens();
-    _sql.whereAnd(Pet.ArchiveDate, EGLDBOp.IsNull, null);
   }
   return _sql;
 }

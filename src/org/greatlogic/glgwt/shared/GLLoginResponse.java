@@ -13,6 +13,7 @@ package org.greatlogic.glgwt.shared;
  * the License.
  */
 import java.io.Serializable;
+import org.greatlogic.glgwt.server.GLLogin;
 
 public abstract class GLLoginResponse implements Serializable {
 //--------------------------------------------------------------------------------------------------
@@ -35,5 +36,7 @@ public boolean getSucceeded() {
 public String getSessionToken() {
   return _sessionToken;
 }
+//--------------------------------------------------------------------------------------------------
+public abstract void setLogin(GLLogin login);
 //--------------------------------------------------------------------------------------------------
 }

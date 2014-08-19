@@ -6,6 +6,7 @@ import org.greatlogic.glgwt.server.GLLogin;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
+import com.greatlogic.glbase.gllib.GLUtil;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -20,6 +21,17 @@ import com.greatlogic.glbase.gllib.GLLog;
  * the License.
  */
 public class FAPLogin extends GLLogin {
+//--------------------------------------------------------------------------------------------------
+private String _personColumnCSV;
+private String _personDataCSV;
+//--------------------------------------------------------------------------------------------------
+public String getPersonColumnCSV() {
+  return _personColumnCSV;
+}
+//--------------------------------------------------------------------------------------------------
+public String getPersonDataCSV() {
+  return _personDataCSV;
+}
 //--------------------------------------------------------------------------------------------------
 @Override
 protected boolean setNewPassword(final String newPasswordHash) {
@@ -45,6 +57,9 @@ protected void setUserIdAndPasswordHash(final String loginName, final String pas
     personSQL.open();
     try {
       if (personSQL.next()) {
+        _personColumnCSV = GLUtil.iterableAsCommaDelim(personSQL.getColumnNameIterable(), null) //
+                                 .toString();
+        _personDataCSV = personSQL.getRowAsCSV(null).toString();
         _userId = personSQL.asInt(Person.PersonId.name());
         _passwordHash = personSQL.asString(Person.PasswordHash.name());
       }

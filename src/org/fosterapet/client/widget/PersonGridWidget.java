@@ -90,6 +90,8 @@ public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
     _sql = GLSQL.select();
     _sql.from(EFAPTable.Person);
+    FAPUtil.addStandardSQLWhere(_sql);
+    _sql.orderBy(Person.DisplayName.name());
   }
   return _sql;
 }

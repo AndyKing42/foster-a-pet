@@ -94,15 +94,22 @@ public void logInUsingNameAndPassword(final String loginName, final String passw
         logIn();
         return;
       }
-      GLLog.popup(10, "Login succeeded:" + response);
       errorMessageLabel.setText("");
       GLClientUtil.setSessionToken(response.getSessionToken());
       Cookies.setCookie(GLClientUtil.SessionTokenCookie, response.getSessionToken());
-      window.hide();
       if (_loginSuccessfulEventHandler != null) {
         final GLLoginSuccessfulEvent loginSuccessfulEvent = new GLLoginSuccessfulEvent(response);
-        _loginSuccessfulEventHandler.onLoginSuccessfulEvent(loginSuccessfulEvent);
+        try {
+          _loginSuccessfulEventHandler.onLoginSuccessfulEvent(loginSuccessfulEvent);
+        }
+        catch (final Exception e) {
+          GLLog.popup(30, "Login successful event handler failed:" + e.getMessage());
+          logIn();
+          return;
+        }
       }
+      window.hide();
+      GLLog.popup(10, "Login succeeded");
       if (_oneTimeCallback != null) {
         _oneTimeCallback.onSuccess(null);
         _oneTimeCallback = null;

@@ -25,7 +25,7 @@ import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
 
 @SuppressWarnings("serial")
-public class IFAPRemoteServiceServlet extends GLRemoteServiceServlet implements IFAPRemoteService {
+public class FAPRemoteServiceServlet extends GLRemoteServiceServlet implements IFAPRemoteService {
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLChangePasswordResponse changePassword(final int personId, final String oldPassword,
