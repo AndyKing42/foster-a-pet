@@ -104,7 +104,7 @@ State(State.class),
 Treatment(Treatment.class),
 TreatmentType(TreatmentType.class),
 ValueList(ValueList.class);
-private TreeMap<String, IGLColumn>     _columnByColumnNameMap;
+private TreeMap<String, IGLColumn>     _columnByColumnNameMap; // tableName.columnName -> IGLColumn
 private final Class<? extends Enum<?>> _columnEnumClass;
 private TreeMap<Integer, IGLColumn>    _comboboxColumnMap;
 private IGLColumn                      _primaryKeyColumn;
@@ -114,7 +114,7 @@ private EFAPTable(final Class<? extends Enum<?>> columnEnumClass) {
 @Override
 public IGLColumn findColumnUsingColumnName(final String columnName) {
   initializeColumnSettings();
-  return _columnByColumnNameMap.get(columnName);
+  return _columnByColumnNameMap.get(name() + "." + columnName);
 }
 @Override
 public String getAbbrev() {
@@ -151,7 +151,7 @@ public void initializeColumnSettings() {
     IGLColumn possiblePrimaryKeyColumn = null;
     for (final Enum<?> columnEnumConstant : _columnEnumClass.getEnumConstants()) {
       final IGLColumn column = (IGLColumn)columnEnumConstant;
-      _columnByColumnNameMap.put(column.toString(), column);
+      _columnByColumnNameMap.put(name() + "." + column, column);
       if (column.getPrimaryKey()) {
         _primaryKeyColumn = column;
       }
