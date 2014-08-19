@@ -1,14 +1,12 @@
 package org.fosterapet.shared;
 
 import java.util.ArrayList;
-import org.fosterapet.server.FAPLogin;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.greatlogic.glgwt.client.core.GLCSV;
 import org.greatlogic.glgwt.client.core.GLCSVException;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordDef;
-import org.greatlogic.glgwt.server.GLLogin;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
@@ -25,11 +23,11 @@ import org.greatlogic.glgwt.shared.GLLoginResponse;
  */
 public class FAPLoginResponse extends GLLoginResponse {
 //--------------------------------------------------------------------------------------------------
-private static final long serialVersionUID = 1122L;
+private static final long  serialVersionUID = 1122L;
 
-private String            _personColumnCSV;
-private String            _personDataCSV;
-private GLRecord          _personRecord;
+private String             _personColumnCSV;
+private String             _personDataCSV;
+private transient GLRecord _personRecord;
 //--------------------------------------------------------------------------------------------------
 @SuppressWarnings("unchecked")
 public GLRecord getPersonRecord() {
@@ -49,11 +47,9 @@ public GLRecord getPersonRecord() {
   return _personRecord;
 }
 //--------------------------------------------------------------------------------------------------
-@Override
-public void setLogin(final GLLogin login) {
-  final FAPLogin fapLogin = (FAPLogin)login;
-  _personColumnCSV = fapLogin.getPersonColumnCSV();
-  _personDataCSV = fapLogin.getPersonDataCSV();
+public void setPersonCSVs(final String personColumnCSV, final String personDataCSV) {
+  _personColumnCSV = personColumnCSV;
+  _personDataCSV = personDataCSV;
 }
 //--------------------------------------------------------------------------------------------------
 }

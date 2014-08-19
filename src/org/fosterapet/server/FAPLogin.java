@@ -1,8 +1,10 @@
 package org.fosterapet.server;
 
+import org.fosterapet.shared.FAPLoginResponse;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.greatlogic.glgwt.server.GLLogin;
+import org.greatlogic.glgwt.shared.GLLoginResponse;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLSQL;
 import com.greatlogic.glbase.gllib.GLLog;
@@ -22,15 +24,38 @@ import com.greatlogic.glbase.gllib.GLUtil;
  */
 public class FAPLogin extends GLLogin {
 //--------------------------------------------------------------------------------------------------
-private String _personColumnCSV;
-private String _personDataCSV;
-//--------------------------------------------------------------------------------------------------
-public String getPersonColumnCSV() {
-  return _personColumnCSV;
+private void loadPerson(final FAPLoginResponse loginResponse, final String whereClause) {
+  try {
+    final GLSQL personSQL = GLSQL.select();
+    personSQL.from(EFAPTable.Person.name());
+    personSQL.whereAnd(0, whereClause, 0);
+    personSQL.open();
+    try {
+      if (personSQL.next()) {
+        _loginName = personSQL.asString(Person.LoginName.name());
+        _userId = personSQL.asInt(Person.PersonId.name());
+        _passwordHash = personSQL.asString(Person.PasswordHash.name());
+        if (loginResponse != null) {
+          final String personColumnCSV;
+          personColumnCSV = GLUtil.iterableAsCommaDelim(personSQL.getColumnNameIterable(), null) //
+                                  .toString();
+          final String personDataCSV = personSQL.getRowAsCSV(null).toString();
+          loginResponse.setPersonCSVs(personColumnCSV, personDataCSV);
+        }
+      }
+    }
+    finally {
+      personSQL.close();
+    }
+  }
+  catch (final GLDBException e) {
+    GLLog.major("Select failed for the Person table using:" + whereClause, e);
+  }
 }
 //--------------------------------------------------------------------------------------------------
-public String getPersonDataCSV() {
-  return _personDataCSV;
+@Override
+protected void setLoginNameAndPasswordHash(final GLLoginResponse loginResponse, final int userId) {
+  loadPerson((FAPLoginResponse)loginResponse, Person.PersonId + "=" + userId);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
@@ -49,28 +74,8 @@ protected boolean setNewPassword(final String newPasswordHash) {
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void setUserIdAndPasswordHash(final String loginName, final String password) {
-  try {
-    final GLSQL personSQL = GLSQL.select();
-    personSQL.from(EFAPTable.Person.name());
-    personSQL.whereAnd(0, Person.LoginName + "='" + loginName + "'", 0);
-    personSQL.open();
-    try {
-      if (personSQL.next()) {
-        _personColumnCSV = GLUtil.iterableAsCommaDelim(personSQL.getColumnNameIterable(), null) //
-                                 .toString();
-        _personDataCSV = personSQL.getRowAsCSV(null).toString();
-        _userId = personSQL.asInt(Person.PersonId.name());
-        _passwordHash = personSQL.asString(Person.PasswordHash.name());
-      }
-    }
-    finally {
-      personSQL.close();
-    }
-  }
-  catch (final GLDBException e) {
-    GLLog.major("Select failed for the Person table", e);
-  }
+protected void setUserIdAndPasswordHash(final GLLoginResponse loginResponse, final String loginName) {
+  loadPerson((FAPLoginResponse)loginResponse, Person.LoginName + "='" + loginName + "'");
 }
 //--------------------------------------------------------------------------------------------------
 }

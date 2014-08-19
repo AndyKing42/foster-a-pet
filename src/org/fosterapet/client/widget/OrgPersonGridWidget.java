@@ -12,6 +12,7 @@ package org.fosterapet.client.widget;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import org.fosterapet.client.FAPUtil;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
@@ -21,14 +22,19 @@ import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 
 public class OrgPersonGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
-public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
-                           final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                           final IGLColumn... columns) throws GLDBException {
+private final int _personId;
+//--------------------------------------------------------------------------------------------------
+public OrgPersonGridWidget(final int personId, final GLRecordValidator recordValidator,
+                           final boolean inlineEditing, final boolean useCheckBoxSelectionModel,
+                           final boolean rowLevelCommits, final IGLColumn... columns)
+  throws GLDBException {
   super(null, "There are no organizations for this person", recordValidator, inlineEditing,
         useCheckBoxSelectionModel, rowLevelCommits, columns);
+  _personId = personId;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
@@ -55,6 +61,8 @@ public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
     _sql = GLSQL.select();
     _sql.from(EFAPTable.OrgPerson);
+    _sql.whereAnd(OrgPerson.PersonId, EGLDBOp.Equals, _personId);
+    FAPUtil.addStandardSQLWhere(_sql);
   }
   return _sql;
 }

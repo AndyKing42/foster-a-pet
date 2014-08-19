@@ -50,7 +50,7 @@ public GLChangePasswordResponse changePassword(final int personId, final String 
       login = createLogin();
       login.setSessionIdAndToken(getSessionId(), sessionToken);
       login.setLoginNameAndPassword(personSQL.asString(Person.LoginName.name()), oldPassword);
-      login.login();
+      login.login(null);
       if (!login.getSucceeded()) {
         result.setFailureReason("Invalid 'old' password");
         return result;

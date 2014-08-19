@@ -13,6 +13,7 @@ package org.greatlogic.glgwt.server;
  * the License.
  */
 import org.apache.commons.lang3.StringUtils;
+import org.greatlogic.glgwt.shared.GLLoginResponse;
 import com.greatlogic.glbase.gldb.GLDBException;
 import com.greatlogic.glbase.gldb.GLDBUtil;
 import com.greatlogic.glbase.gldb.GLSQL;
@@ -27,7 +28,7 @@ public abstract class GLLogin {
 //--------------------------------------------------------------------------------------------------
 private static final long TenDays = 10 * GLUtil.SecondsInADay;
 
-private String            _loginName;
+protected String          _loginName;
 private String            _password;
 protected String          _passwordHash;
 private String            _sessionToken;
@@ -104,14 +105,14 @@ public boolean getSucceeded() {
   return _succeeded;
 }
 //--------------------------------------------------------------------------------------------------
-public void login() {
+public void login(final GLLoginResponse loginResponse) {
   Exception savedException = null;
   try {
     if (!StringUtils.isEmpty(_sessionTokenFromClient)) {
-      _succeeded = loginUsingSessionToken(_sessionTokenFromClient);
+      _succeeded = loginUsingSessionToken(loginResponse, _sessionTokenFromClient);
     }
     if (!_succeeded) {
-      _succeeded = loginUsingNameAndPassword(_loginName, _password);
+      _succeeded = loginUsingNameAndPassword(loginResponse, _loginName, _password);
     }
     if (_succeeded) {
       GLLogin.updateSessionToken(_userId, _sessionTokenId, _sessionToken);
@@ -128,11 +129,12 @@ public void login() {
   }
 }
 //--------------------------------------------------------------------------------------------------
-private boolean loginUsingNameAndPassword(final String loginName, final String password) {
+private boolean loginUsingNameAndPassword(final GLLoginResponse loginResponse,
+                                          final String loginName, final String password) {
   if (StringUtils.isEmpty(loginName) || StringUtils.isEmpty(password)) {
     return false;
   }
-  setUserIdAndPasswordHash(loginName, password);
+  setUserIdAndPasswordHash(loginResponse, loginName);
   if (_passwordHash.isEmpty()) {
     final String newPasswordHash = BCrypt.hashpw(password, BCrypt.gensalt());
     return setNewPassword(newPasswordHash);
@@ -144,9 +146,9 @@ private boolean loginUsingNameAndPassword(final String loginName, final String p
   return false;
 }
 //--------------------------------------------------------------------------------------------------
-private boolean loginUsingSessionToken(final String sessionToken) throws GLDBException {
-  GLSQL sessionTokenSQL;
-  sessionTokenSQL = GLSQL.select();
+private boolean loginUsingSessionToken(final GLLoginResponse loginResponse,
+                                       final String sessionToken) throws GLDBException {
+  final GLSQL sessionTokenSQL = GLSQL.select();
   sessionTokenSQL.from(ELoginTable.SessionToken);
   sessionTokenSQL.whereAnd(SessionToken.SessionToken, EGLDBOp.Equals, sessionToken);
   sessionTokenSQL.open();
@@ -158,6 +160,7 @@ private boolean loginUsingSessionToken(final String sessionToken) throws GLDBExc
                 .compareTo(sessionTokenSQL.asString(SessionToken.ExpirationTime)) > 0) {
         return false;
       }
+      setLoginNameAndPasswordHash(loginResponse, _userId);
       return true;
     }
   }
@@ -172,6 +175,8 @@ public void setLoginNameAndPassword(final String loginName, final String passwor
   _password = password;
 }
 //--------------------------------------------------------------------------------------------------
+protected abstract void setLoginNameAndPasswordHash(GLLoginResponse loginResponse, int userId);
+//--------------------------------------------------------------------------------------------------
 protected abstract boolean setNewPassword(final String newPassword);
 //--------------------------------------------------------------------------------------------------
 public void setSessionIdAndToken(final String sessionId, final String sessionTokenFromClient) {
@@ -179,6 +184,7 @@ public void setSessionIdAndToken(final String sessionId, final String sessionTok
   _sessionTokenFromClient = sessionTokenFromClient;
 }
 //--------------------------------------------------------------------------------------------------
-protected abstract void setUserIdAndPasswordHash(final String loginName, final String password);
+protected abstract void setUserIdAndPasswordHash(GLLoginResponse loginResponse,
+                                                 final String loginName);
 //--------------------------------------------------------------------------------------------------
 }

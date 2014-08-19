@@ -44,18 +44,13 @@ static {
   _gridWidgetInfoMap = new TreeMap<>();
 }
 //--------------------------------------------------------------------------------------------------
-public static OrgPersonGridWidget getOrgPersonGrid(final String gridName) throws GLDBException {
+public static OrgPersonGridWidget getOrgPersonGrid(final int personId) throws GLDBException {
   final OrgPersonGridWidget result;
-  GridWidgetInfo gridWidgetInfo = _gridWidgetInfoMap.get(gridName);
-  if (gridWidgetInfo == null) {
-    final GLRecordValidator validator;
-    validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.OrgPerson);
-    result = new OrgPersonGridWidget(validator, false, true, false, OrgPerson.OrgId, //
-                                     OrgPerson.PersonRoleId);
-    gridWidgetInfo = new GridWidgetInfo(result, false, true, false);
-    _gridWidgetInfoMap.put(gridName, gridWidgetInfo);
-  }
-  return (OrgPersonGridWidget)gridWidgetInfo._gridWidget;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.OrgPerson);
+  result = new OrgPersonGridWidget(personId, validator, false, true, false, OrgPerson.OrgId, //
+                                   OrgPerson.PersonRoleId);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 public static PersonGridWidget getPersonGrid(final String gridName) throws GLDBException {
