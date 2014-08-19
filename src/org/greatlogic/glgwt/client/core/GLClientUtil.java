@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
+import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLXMLEscapeSequence;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.db.GLRecord;
@@ -148,6 +149,44 @@ private static void disableBackspace() {
       }
     }
   });
+}
+//--------------------------------------------------------------------------------------------------
+public static String escapeXML(final String source) {
+  CharSequence result = source;
+  if (result == null) {
+    return "";
+  }
+  boolean changed = false;
+  EGLXMLEscapeSequence escapeSequence = null;
+  for (int i = 0; i < result.length(); ++i) {
+    switch (result.charAt(i)) {
+      case '<':
+        escapeSequence = EGLXMLEscapeSequence.LessThan;
+        break;
+      case '>':
+        escapeSequence = EGLXMLEscapeSequence.GreaterThan;
+        break;
+      case '&':
+        escapeSequence = EGLXMLEscapeSequence.Ampersand;
+        break;
+      case '"':
+        escapeSequence = EGLXMLEscapeSequence.Quote;
+        break;
+      case '\'':
+        escapeSequence = EGLXMLEscapeSequence.Apostrophe;
+        break;
+    }
+    if (escapeSequence != null) {
+      if (!changed) {
+        changed = true;
+        result = new StringBuilder(source);
+      }
+      ((StringBuilder)result).replace(i, i + 1, "&" + escapeSequence.getEscapeString() + ";");
+      i += escapeSequence.getEscapeString().length() + 1;
+      escapeSequence = null;
+    }
+  }
+  return result.toString();
 }
 //--------------------------------------------------------------------------------------------------
 /**

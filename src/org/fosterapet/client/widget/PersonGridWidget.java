@@ -91,6 +91,13 @@ public GLSQL getSQL() throws GLDBException {
     _sql = GLSQL.select();
     _sql.from(EFAPTable.Person);
     FAPUtil.addStandardSQLWhere(_sql);
+    final String orgPersonExistsSQL;
+    orgPersonExistsSQL = "exists (select 'x' from " + EFAPTable.OrgPerson + //
+                         " where OrgPerson.OrgId = " + //
+                         FAPUtil.getClientFactory().getLoginPersonRecord(). //
+                                asInt(Person.CurrentOrgId) + //
+                         " and OrgPerson.PersonId = Person.PersonId)";
+    _sql.whereAnd(0, orgPersonExistsSQL, 0);
     _sql.orderBy(Person.DisplayName.name());
   }
   return _sql;

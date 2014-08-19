@@ -56,7 +56,6 @@ private static final DateTimePropertyEditor               DateTimePropertyEditor
 private static final String                               Zeroes;
 private static final HashMap<Widget, HandlerRegistration> _comboboxExpandHandlerMap;
 private static TextMetrics                                _textMetrics;
-
 //--------------------------------------------------------------------------------------------------
 static {
   DatePropertyEditor = new DateTimePropertyEditor("MM/dd/yyyy");
