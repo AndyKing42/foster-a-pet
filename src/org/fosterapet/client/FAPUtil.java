@@ -13,24 +13,36 @@ package org.fosterapet.client;
  * the License.
  */
 import org.fosterapet.client.widget.MainLayoutWidget;
+import org.fosterapet.shared.FAPLoginResponse;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.Person;
+import org.fosterapet.shared.IDBEnums.Pet;
 import org.fosterapet.shared.IFAPEnums.ETestDataOption;
 import org.fosterapet.shared.IFAPRemoteServiceAsync;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent;
 import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
+import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public class FAPUtil {
 //--------------------------------------------------------------------------------------------------
 public static FAPClientFactory _clientFactory;
 //--------------------------------------------------------------------------------------------------
+public static void addStandardSQLWhere(final GLSQL sql) {
+  sql.whereAddParens();
+  sql.whereAnd(Pet.OrgId, EGLDBOp.Equals,
+               FAPUtil.getClientFactory().getLoginPersonRecord().asInt(Person.CurrentOrgId));
+  sql.whereAnd(Pet.ArchiveDate, EGLDBOp.IsNull, null);
+}
+//--------------------------------------------------------------------------------------------------
 private static IGLLoginSuccessfulEventHandler createLoginSuccessfulEventHandler() {
   return new IGLLoginSuccessfulEventHandler() {
     @Override
     public void onLoginSuccessfulEvent(final GLLoginSuccessfulEvent loginSuccessfulEvent) {
-      //      save_the_person_id_and_org_id();
+      _clientFactory.setLoginPersonRecord(((FAPLoginResponse)loginSuccessfulEvent.getResponse()).getPersonRecord());
     }
   };
 }
@@ -61,5 +73,6 @@ public static void reloadTestData() {
       FAPClientFactory.Instance.getLookupCache().reloadAll();
     }
   });
-}//--------------------------------------------------------------------------------------------------
+}
+//--------------------------------------------------------------------------------------------------
 }

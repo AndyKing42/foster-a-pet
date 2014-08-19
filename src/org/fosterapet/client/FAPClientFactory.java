@@ -18,8 +18,10 @@ import org.fosterapet.shared.FAPValidators;
 import org.fosterapet.shared.IFAPRemoteService;
 import org.fosterapet.shared.LookupCacheLoader;
 import org.greatlogic.glgwt.client.core.GLClientFactory;
+import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
+import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLSQL;
 import org.greatlogic.glgwt.client.db.IGLSQLModifier;
 import org.greatlogic.glgwt.client.event.GLEventBus;
@@ -30,6 +32,7 @@ public abstract class FAPClientFactory extends GLClientFactory {
 public static FAPClientFactory Instance;
 
 protected AppTabPanelWidget    _appTabPanelWidget;
+private GLRecord               _loginPersonRecord;
 protected MainLayoutWidget     _mainLayoutWidget;
 //--------------------------------------------------------------------------------------------------
 protected FAPClientFactory() {
@@ -46,14 +49,19 @@ protected FAPClientFactory() {
 protected IGLSQLModifier createLookupCacheSQLModifier() {
   return new IGLSQLModifier() {
     @Override
-    public void modifySQL(final GLSQL sql) {
-
+    public void modifySQL(final GLSQL sql) throws GLDBException {
+      sql.whereAddParens();
+      sql.whereAnd(0, "ArchiveDate is null", 0);
     }
   };
 }
 //--------------------------------------------------------------------------------------------------
 public AppTabPanelWidget getAppTabPanelWidget() {
   return _appTabPanelWidget;
+}
+//--------------------------------------------------------------------------------------------------
+public GLRecord getLoginPersonRecord() {
+  return _loginPersonRecord;
 }
 //--------------------------------------------------------------------------------------------------
 public MainLayoutWidget getMainLayoutWidget() {
@@ -63,6 +71,10 @@ public MainLayoutWidget getMainLayoutWidget() {
 public abstract void hidePleaseWait();
 //--------------------------------------------------------------------------------------------------
 public abstract void setAppTabPanelWidget(final AppTabPanelWidget appTabPanelWidget);
+//--------------------------------------------------------------------------------------------------
+public void setLoginPersonRecord(final GLRecord personRecord) {
+  _loginPersonRecord = personRecord;
+}
 //--------------------------------------------------------------------------------------------------
 public abstract void setMainLayoutWidget(final MainLayoutWidget mainLayoutWidget);
 //--------------------------------------------------------------------------------------------------

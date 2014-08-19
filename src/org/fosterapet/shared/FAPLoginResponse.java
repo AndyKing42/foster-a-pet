@@ -1,5 +1,14 @@
 package org.fosterapet.shared;
 
+import java.util.ArrayList;
+import org.fosterapet.server.FAPLogin;
+import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.greatlogic.glgwt.client.core.GLCSV;
+import org.greatlogic.glgwt.client.core.GLCSVException;
+import org.greatlogic.glgwt.client.core.GLLog;
+import org.greatlogic.glgwt.client.db.GLRecord;
+import org.greatlogic.glgwt.client.db.GLRecordDef;
+import org.greatlogic.glgwt.server.GLLogin;
 import org.greatlogic.glgwt.shared.GLLoginResponse;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
@@ -18,16 +27,33 @@ public class FAPLoginResponse extends GLLoginResponse {
 //--------------------------------------------------------------------------------------------------
 private static final long serialVersionUID = 1122L;
 
-private int               _personId;
+private String            _personColumnCSV;
+private String            _personDataCSV;
+private GLRecord          _personRecord;
 //--------------------------------------------------------------------------------------------------
-public int getPersonId() {
-  return _personId;
+@SuppressWarnings("unchecked")
+public GLRecord getPersonRecord() {
+  if (_personColumnCSV == null || _personDataCSV == null) {
+    GLLog.popup(30, "FAPLoginResponse CSV is null");
+    return null;
+  }
+  if (_personRecord == null) {
+    final GLRecordDef recordDef = new GLRecordDef(EFAPTable.Person, _personColumnCSV.split(","));
+    try {
+      _personRecord = new GLRecord(recordDef, (ArrayList)GLCSV.extract(_personDataCSV));
+    }
+    catch (final GLCSVException e) {
+      GLLog.popup(30, "CSV extract failed:" + e.getMessage());
+    }
+  }
+  return _personRecord;
 }
 //--------------------------------------------------------------------------------------------------
-public void setResultValues(final int personId) {
-  if (_succeeded) {
-    _personId = personId;
-  }
+@Override
+public void setLogin(final GLLogin login) {
+  final FAPLogin fapLogin = (FAPLogin)login;
+  _personColumnCSV = fapLogin.getPersonColumnCSV();
+  _personDataCSV = fapLogin.getPersonDataCSV();
 }
 //--------------------------------------------------------------------------------------------------
 }

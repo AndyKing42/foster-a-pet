@@ -14,7 +14,7 @@
   </listener>
   <servlet>
     <servlet-name>FAPRemoteServiceServlet</servlet-name>
-    <servlet-class>org.fosterapet.server.IFAPRemoteServiceServlet</servlet-class>
+    <servlet-class>org.fosterapet.server.FAPRemoteServiceServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FAPRemoteServiceServlet</servlet-name>

@@ -100,11 +100,13 @@ public GLForeignKeyValueProvider(final IGLTable lookupTable, final IGLColumn col
 }
 @Override
 public String getValue(final GLRecord record) {
-  return GLClientUtil.getLookupCache().lookupDisplayValueUsingKeyValue(_lookupTable, record.asInt(_column));
+  return GLClientUtil.getLookupCache().lookupDisplayValueUsingKeyValue(_lookupTable,
+                                                                       record.asInt(_column));
 }
 @Override
 public void setValue(final GLRecord record, final String value) {
-  record.put(_column, GLClientUtil.getLookupCache().lookupKeyValueUsingDisplayValue(_lookupTable, value));
+  record.put(_column,
+             GLClientUtil.getLookupCache().lookupKeyValueUsingDisplayValue(_lookupTable, value));
 }
 @Override
 public String getPath() {

@@ -77,6 +77,7 @@ public GLLoginResponse login(final String loginName, final String password,
                              final String sessionTokenFromClient) {
   final GLLoginResponse result = createLoginResponse();
   final GLLogin login = createLogin();
+  result.setLogin(login);
   login.setSessionIdAndToken(getSessionId(), sessionTokenFromClient);
   login.setLoginNameAndPassword(loginName, password);
   login.login();
