@@ -48,7 +48,8 @@ public static OrgPersonGridWidget getOrgPersonGrid(final int personId) throws GL
   final OrgPersonGridWidget result;
   final GLRecordValidator validator;
   validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.OrgPerson);
-  result = new OrgPersonGridWidget(personId, validator, false, true, false, OrgPerson.OrgId, //
+  OrgPersonGridWidget.setPersonId(personId);
+  result = new OrgPersonGridWidget(validator, false, true, false, OrgPerson.OrgId, //
                                    OrgPerson.PersonRoleId);
   return result;
 }
