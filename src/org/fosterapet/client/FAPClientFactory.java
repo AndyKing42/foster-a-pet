@@ -50,8 +50,7 @@ protected IGLSQLModifier createLookupCacheSQLModifier() {
   return new IGLSQLModifier() {
     @Override
     public void modifySQL(final GLSQL sql) throws GLDBException {
-      sql.whereAddParens();
-      sql.whereAnd(0, "ArchiveDate is null", 0);
+      FAPUtil.addStandardSQLWhere(sql);
     }
   };
 }
