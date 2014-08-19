@@ -682,7 +682,7 @@ public StringBuilder toXMLSB() {
       result.append("<Join");
       appendAttribute(result, EGLSQLAttribute.Type, joinDef._joinType.name());
       appendAttribute(result, EGLSQLAttribute.Table, joinDef._joinTable);
-      appendAttribute(result, EGLSQLAttribute.Condition, joinDef._condition);
+      appendAttribute(result, EGLSQLAttribute.Condition, GLClientUtil.escapeXML(joinDef._condition));
     }
   }
   for (final GLWhereClause whereClause : _whereClauseList) {
@@ -698,7 +698,8 @@ public StringBuilder toXMLSB() {
       }
     }
     else {
-      appendAttribute(result, EGLSQLAttribute.Expression, whereClause._expression);
+      appendAttribute(result, EGLSQLAttribute.Expression,
+                      GLClientUtil.escapeXML(whereClause._expression));
     }
     if (whereClause._closeParens > 0) {
       appendAttribute(result, EGLSQLAttribute.Close, whereClause._closeParens);

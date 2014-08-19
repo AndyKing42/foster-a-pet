@@ -63,7 +63,7 @@
   <gxtcontainer:VerticalLayoutContainer ui:field='mainContainer'>
     <gxtcontainer:child layoutData='{sizeToContentsLayoutData}'>
       <gxtcontainer:HorizontalLayoutContainer ui:field='personContainer'>
-        <gxtcontainer:VerticalLayoutContainer>
+        <gxtcontainer:VerticalLayoutContainer ui:field='personVLC'>
           <gxtform:FieldLabel itemId='Person.FirstName'/>
           <gxtform:FieldLabel itemId='Person.LastName'/>
           <gxtform:FieldLabel itemId='Person.DisplayName'/>
@@ -79,7 +79,7 @@
       </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:child>
     <gxtcontainer:child layoutData='{sizeToContentsLayoutData}'>
-      <gxtcontainer:HorizontalLayoutContainer>
+      <gxtcontainer:HorizontalLayoutContainer ui:field="buttonContainer">
         <gxtcontainer:child layoutData="{horizontalButtonLayoutData}">
           <gxtbutton:TextButton
             ui:field='saveButton'

@@ -99,7 +99,7 @@ protected GLGridWidget(final String headingText, final String noRowsMessage,
   _inlineEditing = inlineEditing;
   _useCheckBoxSelection = useCheckBoxSelection;
   _rowLevelCommits = rowLevelCommits;
-  _listStore = new GLListStore(getSQL(), rowLevelCommits, columns);
+  _listStore = new GLListStore(getSQL(), true, columns);
   _selectedRecordSet = new TreeSet<>();
   _contentPanel = new GLGridContentPanel(this, headingText);
   addContentPanelButtons();
