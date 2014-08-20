@@ -5,11 +5,13 @@
   xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
-  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'
+>
   <!-- Margin declarations ===================================================================== -->
   <ui:with
     type='com.sencha.gxt.core.client.util.Margins'
-    field='margins_0_0_5_0'>
+    field='margins_0_0_5_0'
+  >
     <ui:attributes
       top='0'
       right='0'
@@ -18,7 +20,8 @@
   </ui:with>
   <ui:with
     type='com.sencha.gxt.core.client.util.Margins'
-    field='margins_0_5_0_0'>
+    field='margins_0_5_0_0'
+  >
     <ui:attributes
       top='0'
       right='5'
@@ -28,7 +31,8 @@
   <!-- Padding declarations ==================================================================== -->
   <ui:with
     type='com.sencha.gxt.core.client.util.Padding'
-    field='padding_5_5_5_5'>
+    field='padding_5_5_5_5'
+  >
     <ui:attributes
       top='5'
       right='5'
@@ -38,30 +42,50 @@
   <!-- HorizontalLayoutData declarations ======================================================= -->
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData'
-    field='horizontalButtonLayoutData'>
+    field='buttonHLD'
+  >
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData'
+    field='fillRemainingHLD'
+  >
+    <ui:attributes
+      height='1'
+      width='1'/>
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData'
+    field='sizeToContentsHLD'
+  >
+    <ui:attributes
+      height='-1'
+      width='1'/>
   </ui:with>
   <!-- VerticalLayoutData declarations ========================================================= -->
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='fillRemainingLayoutData'>
+    field='buttonVLD'
+  >
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='fillRemainingVLD'
+  >
     <ui:attributes
       height='1'
       width='1'/>
   </ui:with>
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='sizeToContentsLayoutData'>
+    field='sizeToContentsVLD'
+  >
     <ui:attributes
       height='-1'
       width='1'/>
   </ui:with>
-  <ui:with
-    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='verticalButtonLayoutData'>
-  </ui:with>
   <!-- ========================================================================================= -->
   <gxtcontainer:VerticalLayoutContainer ui:field='mainContainer'>
-    <gxtcontainer:child layoutData='{sizeToContentsLayoutData}'>
+    <gxtcontainer:child layoutData='{sizeToContentsVLD}'>
       <gxtcontainer:HorizontalLayoutContainer ui:field='personContainer'>
         <gxtcontainer:VerticalLayoutContainer ui:field='personVLC'>
           <gxtform:FieldLabel itemId='Person.FirstName'/>
@@ -78,34 +102,34 @@
         </gxtcontainer:VerticalLayoutContainer>
       </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:child>
-    <gxtcontainer:child layoutData='{sizeToContentsLayoutData}'>
+    <gxtcontainer:child layoutData='{sizeToContentsVLD}'>
       <gxtcontainer:HorizontalLayoutContainer ui:field="buttonContainer">
-        <gxtcontainer:child layoutData="{horizontalButtonLayoutData}">
+        <gxtcontainer:child layoutData="{buttonHLD}">
           <gxtbutton:TextButton
             ui:field='saveButton'
             text='Save Changes'/>
         </gxtcontainer:child>
-        <gxtcontainer:child layoutData="{horizontalButtonLayoutData}">
+        <gxtcontainer:child layoutData="{buttonHLD}">
           <gxtbutton:TextButton
             ui:field='undoButton'
             text='Undo Changes'/>
         </gxtcontainer:child>
       </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:child>
-    <gxtcontainer:child layoutData='{fillRemainingLayoutData}'>
+    <gxtcontainer:child layoutData='{fillRemainingVLD}'>
       <gxtcontainer:HorizontalLayoutContainer>
         <gxtcontainer:VerticalLayoutContainer>
-          <gxtcontainer:child layoutData='{verticalButtonLayoutData}'>
+          <gxtcontainer:child layoutData='{buttonVLD}'>
             <gxtbutton:TextButton
               ui:field='orgButton'
               text='Organizations'/>
           </gxtcontainer:child>
-          <gxtcontainer:child layoutData='{verticalButtonLayoutData}'>
+          <gxtcontainer:child layoutData='{buttonVLD}'>
             <gxtbutton:TextButton
               ui:field='personRelationshipButton'
               text='Relationships'/>
           </gxtcontainer:child>
-          <gxtcontainer:child layoutData='{verticalButtonLayoutData}'>
+          <gxtcontainer:child layoutData='{buttonVLD}'>
             <gxtbutton:TextButton
               ui:field='fosterHistoryButton'
               text='Foster History'/>
