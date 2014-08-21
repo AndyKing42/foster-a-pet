@@ -89,7 +89,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="7CCA761F-E47B-3759-AB98-43C554C8DAEF" otype="Table" vid="6552CE81-77D5-E301-508F-434A8DAEE2F8">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1535" y="891" width="239" height="142"/>
+<bounds x="1535" y="891" width="239" height="151"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="8420070E-1F67-7F13-60B6-FF7C8A5CAB63" otype="Table" vid="F8F14BF1-9590-7AE7-EBD7-9C662E965C38">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
@@ -145,7 +145,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.TVNote" oid="BA3ECA79-B101-436F-BF33-97B0D14BFE0C" otype="Note" vid="3133B3B5-7EB9-623E-22AD-161C0261E430">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1532" y="788" width="109" height="75"/>
+<bounds x="1532" y="788" width="128" height="75"/>
 <useDefaultColor>false</useDefaultColor>
 <backgroundColor>-154</backgroundColor>
 <foregroundColor>-16777216</foregroundColor>
@@ -197,7 +197,7 @@
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="EBB6A6EB-4616-2A9B-61DA-E62B0A5B4B7B" otype="Table" vid="F791D0DE-2DF7-E07F-202F-4424B8D14B63">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
-<bounds x="1235" y="897" width="234" height="153"/>
+<bounds x="1235" y="897" width="234" height="166"/>
 </OView>
 <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="EF30B7B0-2F6A-A2D9-7182-5D3ACE307112" otype="Table" vid="BA44EEF6-21B5-A456-37FA-DE9D63966AA9">
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
@@ -443,8 +443,8 @@
 <hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
 <lineWidth>1</lineWidth>
 <points>
-<point x="1469" y="965"/>
-<point x="1535" y="965"/>
+<point x="1469" y="969"/>
+<point x="1535" y="969"/>
 </points>
 </Connector>
 <Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="D5331671-9F7C-1CF2-9F59-25773B24AE65" otype="FKIndexAssociation" vid_source="1577F71F-C4C3-B87C-CD00-D26B0394560B" vid_target="1EED320D-68A6-B237-190A-C835FB5F9F65">
