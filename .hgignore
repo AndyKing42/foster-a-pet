@@ -17,3 +17,5 @@ syntax: regexp
 
 syntax: regexp
 ^logs$
+syntax: regexp
+\.~vsd$
