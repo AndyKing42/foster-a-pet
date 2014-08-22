@@ -25,5 +25,6 @@ public IGLLookupType getLookupType();
 public boolean getNullable();
 public boolean getPrimaryKey();
 public String getTitle();
+public String getToolTip();
 //--------------------------------------------------------------------------------------------------
 }

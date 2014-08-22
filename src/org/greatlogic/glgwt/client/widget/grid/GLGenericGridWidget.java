@@ -22,13 +22,10 @@ import org.greatlogic.glgwt.shared.IGLTable;
 public class GLGenericGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
-
-private final IGLTable           _table;
 //--------------------------------------------------------------------------------------------------
 public GLGenericGridWidget(final IGLTable table) throws GLDBException {
-  super(null, "There are no rows in the " + table + " table", null, false, true, true,
+  super(table, null, "There are no rows in the " + table + " table", null, false, true, true,
         table.getColumns().toArray(EmptyColumnArray));
-  _table = table;
 }
 //--------------------------------------------------------------------------------------------------
 @Override

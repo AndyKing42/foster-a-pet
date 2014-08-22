@@ -30,8 +30,8 @@ private static int _personId;
 public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                            final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                            final IGLColumn... columns) throws GLDBException {
-  super(null, "There are no organizations for this person", recordValidator, inlineEditing,
-        useCheckBoxSelectionModel, rowLevelCommits, columns);
+  super(EFAPTable.OrgPerson, null, "There are no organizations for this person", recordValidator,
+        inlineEditing, useCheckBoxSelectionModel, rowLevelCommits, columns);
   _personId = -1;
 }
 //--------------------------------------------------------------------------------------------------
