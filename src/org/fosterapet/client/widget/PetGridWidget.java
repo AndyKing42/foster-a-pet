@@ -33,8 +33,8 @@ public class PetGridWidget extends GLGridWidget {
 public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                      final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                      final IGLColumn... columns) throws GLDBException {
-  super(null, "There are no pets", recordValidator, inlineEditing, useCheckBoxSelectionModel,
-        rowLevelCommits, columns);
+  super(EFAPTable.Pet, null, "There are no pets", recordValidator, inlineEditing,
+        useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

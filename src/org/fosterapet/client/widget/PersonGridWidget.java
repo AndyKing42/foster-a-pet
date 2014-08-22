@@ -33,8 +33,8 @@ public class PersonGridWidget extends GLGridWidget {
 public PersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                         final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                         final IGLColumn... columns) throws GLDBException {
-  super(null, "There are no people", recordValidator, inlineEditing, useCheckBoxSelectionModel,
-        rowLevelCommits, columns);
+  super(EFAPTable.Person, null, "There are no people", recordValidator, inlineEditing,
+        useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

@@ -39,6 +39,7 @@ import com.google.gwt.i18n.shared.DateTimeFormat;
 import com.google.gwt.safecss.shared.SafeStyles;
 import com.google.gwt.safecss.shared.SafeStylesUtils;
 import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.text.shared.AbstractSafeHtmlRenderer;
 import com.sencha.gxt.cell.core.client.NumberCell;
@@ -123,7 +124,21 @@ private GLColumnConfig<BigDecimal> createBigDecimalColumnConfig(final IGLColumn 
   else {
     numberFormat = NumberFormat.getDecimalFormat();
   }
-  result.setCell(new NumberCell<BigDecimal>(numberFormat));
+  final NumberCell<BigDecimal> cell;
+  if (column.getToolTip() == null) {
+    cell = new NumberCell<BigDecimal>(numberFormat);
+  }
+  else {
+    cell = new NumberCell<BigDecimal>(numberFormat) {
+      @Override
+      public void render(final Context context, final Number value, final SafeHtmlBuilder sb) {
+        sb.appendHtmlConstant("<span qtip='" + column.getToolTip() + "'>");
+        super.render(context, value, sb);
+        sb.appendHtmlConstant("</span>");
+      }
+    };
+  }
+  result.setCell(cell);
   return result;
 }
 //--------------------------------------------------------------------------------------------------
@@ -140,7 +155,11 @@ private GLColumnConfig<Boolean> createBooleanColumnConfig(final IGLColumn column
       @Override
       public SafeHtml render(final Boolean object) {
         // TODO: these should be drawn (use AbstractCell#render?)
-        return SafeHtmlUtils.fromTrustedString(object ? "&#x2713;" : "&#x2717");
+        if (column.getToolTip() == null) {
+          return SafeHtmlUtils.fromTrustedString(object ? "&#x2713;" : "&#x2717");
+        }
+        return SafeHtmlUtils.fromTrustedString("<span qtip='" + column.getToolTip() + ">" +
+                                               (object ? "&#x2713;" : "&#x2717") + "</span>");
       }
     }));
   }
@@ -198,7 +217,21 @@ private GLColumnConfig<Date> createDateTimeColumnConfig(final IGLColumn column,
                                 column.getDefaultGridColumnWidth());
   final DateTimeFormat dateTimeFormat = DateTimeFormat.getFormat(dateTimeFormatString);
   result.setDateTimeFormat(dateTimeFormat);
-  result.setCell(new DateCell(dateTimeFormat));
+  final DateCell cell;
+  if (column.getToolTip() == null) {
+    cell = new DateCell(dateTimeFormat);
+  }
+  else {
+    cell = new DateCell(dateTimeFormat) {
+      @Override
+      public void render(final Context context, final Date value, final SafeHtmlBuilder sb) {
+        sb.appendHtmlConstant("<span qtip='" + column.getToolTip() + "'>");
+        super.render(context, value, sb);
+        sb.appendHtmlConstant("</span>");
+      }
+    };
+  }
+  result.setCell(cell);
   return result;
 }
 //--------------------------------------------------------------------------------------------------
@@ -207,7 +240,15 @@ private GLColumnConfig<String> createForeignKeyColumnConfig(final IGLColumn colu
   final GLColumnConfig<String> result;
   result = new GLColumnConfig<>(column, new GLForeignKeyValueProvider(lookupTable, column), //
                                 column.getTitle(), column.getDefaultGridColumnWidth());
-  result.setCell(new TextCell());
+  final TextCell cell = column.getToolTip() == null ? new TextCell() : new TextCell() {
+    @Override
+    public void render(final Context context, final SafeHtml value, final SafeHtmlBuilder sb) {
+      sb.appendHtmlConstant("<span qtip='" + column.getToolTip() + "'>");
+      super.render(context, value, sb);
+      sb.appendHtmlConstant("</span>");
+    }
+  };
+  result.setCell(cell);
   return result;
 }
 //--------------------------------------------------------------------------------------------------
@@ -215,7 +256,15 @@ private GLColumnConfig<Integer> createIntegerColumnConfig(final IGLColumn column
   final GLColumnConfig<Integer> result;
   result = new GLColumnConfig<>(column, new GLIntegerValueProvider(column), column.getTitle(), //
                                 column.getDefaultGridColumnWidth());
-  result.setCell(new NumberCell<Integer>());
+  final NumberCell<Integer> cell= column.getToolTip() == null ? new NumberCell<Integer>() : new NumberCell<Integer>() {
+    @Override
+    public void render(final Context context, final Number value, final SafeHtmlBuilder sb) {
+      sb.appendHtmlConstant("<span qtip='" + column.getToolTip() + "'>");
+      super.render(context, value, sb);
+      sb.appendHtmlConstant("</span>");
+    }
+  };
+  result.setCell(cell);
   return result;
 }
 //--------------------------------------------------------------------------------------------------
@@ -274,7 +323,15 @@ private GLColumnConfig<String> createStringColumnConfig(final IGLColumn column) 
   final GLColumnConfig<String> result;
   result = new GLColumnConfig<>(column, new GLStringValueProvider(column), column.getTitle(), //
                                 column.getDefaultGridColumnWidth());
-  result.setCell(new TextCell());
+  final TextCell cell = column.getToolTip() == null ? new TextCell() : new TextCell() {
+    @Override
+    public void render(final Context context, final SafeHtml value, final SafeHtmlBuilder sb) {
+      sb.appendHtmlConstant("<span qtip='" + column.getToolTip() + "'>");
+      super.render(context, value, sb);
+      sb.appendHtmlConstant("</span>");
+    }
+  };
+  result.setCell(cell);
   return result;
 }
 //--------------------------------------------------------------------------------------------------

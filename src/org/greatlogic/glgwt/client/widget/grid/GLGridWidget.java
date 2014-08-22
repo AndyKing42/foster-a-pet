@@ -62,6 +62,7 @@ import com.sencha.gxt.widget.core.client.grid.filters.NumericFilter;
 import com.sencha.gxt.widget.core.client.grid.filters.StringFilter;
 import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
+import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
 public abstract class GLGridWidget implements IsWidget {
 //--------------------------------------------------------------------------------------------------
@@ -82,6 +83,7 @@ private final boolean                _rowLevelCommits;
 private final TreeSet<GLRecord>      _selectedRecordSet;
 private GridSelectionModel<GLRecord> _selectionModel;
 protected GLSQL                      _sql;
+protected IGLTable                   _table;
 private final boolean                _useCheckBoxSelection;
 //--------------------------------------------------------------------------------------------------
 static {
@@ -89,11 +91,12 @@ static {
   _textMetrics = TextMetrics.get();
 }
 //--------------------------------------------------------------------------------------------------
-protected GLGridWidget(final String headingText, final String noRowsMessage,
+protected GLGridWidget(final IGLTable table, final String headingText, final String noRowsMessage,
                        final GLRecordValidator recordValidator, final boolean inlineEditing,
                        final boolean useCheckBoxSelection, final boolean rowLevelCommits,
                        final IGLColumn[] columns) throws GLDBException {
   super();
+  _table = table;
   _noRowsMessage = noRowsMessage == null ? "There are no results to display" : noRowsMessage;
   _recordValidator = recordValidator;
   _inlineEditing = inlineEditing;
@@ -268,10 +271,23 @@ private void createGrid() {
   _grid.setContextMenu(_contextMenu.build());
   _contentPanel.add(_grid);
   _contentPanel.forceLayout();
+  new QuickTip(_grid);
 }
 //--------------------------------------------------------------------------------------------------
 private GridView<GLRecord> createGridView() {
   final GridView<GLRecord> result = new GridView<>();
+  // ********** Use the following for row-level tool tips: **********
+  //  final GridView<GLRecord> result = new GridView<GLRecord>() {
+  //    @Override
+  //    protected void processRows(final int startRow, final boolean skipStripe) {
+  //      super.processRows(startRow, skipStripe);
+  //      final NodeList<Element> rows = getRows();
+  //      for (int i = startRow, len = rows.getLength(); i < len; i++) {
+  //        final Element row = rows.getItem(i);
+  //        row.setAttribute("title", "hey " + i);
+  //      }
+  //    }
+  //  };
   result.setColumnLines(true);
   result.setEmptyText(_noRowsMessage);
   result.setForceFit(false);

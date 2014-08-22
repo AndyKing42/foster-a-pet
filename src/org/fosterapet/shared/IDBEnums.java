@@ -183,13 +183,13 @@ public void initializeNewRecord(final GLRecord record) {
 }
 //--------------------------------------------------------------------------------------------------
 public enum Address implements IGLColumn {
-AddressId("Address Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-AddressLine1("Address Line 1", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-AddressLine2("Address Line 2", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-CityId("City Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.City, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
-ZIPCode("ZIP Code", EGLColumnDataType.String, 10, true, null, false, 0, null, -1);
+AddressId("AddressId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AddressLine1("Address Line 1", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+AddressLine2("Address Line 2", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CityId("City", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.City, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+ZIPCode("ZIP Code", null, EGLColumnDataType.String, 10, true, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -199,11 +199,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Address(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private Address(final String title, final String toolTip, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                 final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -248,19 +250,23 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Attribute implements IGLColumn {
-AdditionalComments("Additional Comments", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.AttributeDef, -1),
-AttributeId("Attribute Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-AttributeSeq("Attribute Seq", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-AttributeValue("Attribute Value", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
-CreatedByPersonId("Created By Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-EntityId("Entity Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+AdditionalComments("Additional Comments", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+AttributeDefId("Attribute Definition", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.AttributeDef, -1),
+AttributeId("AttributeId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AttributeSeq("Attribute Seq", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+AttributeValue("Attribute Value", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+CreatedByPersonId("Created By Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+EntityId("Entity", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -270,11 +276,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Attribute(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private Attribute(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -319,22 +327,26 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum AttributeDef implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-AttributeDefId("Attribute Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-AttributeDefName("Attribute Def Name", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
-AttributeDefType("Attribute Def Type", EGLColumnDataType.String, 3, false, null, false, 0, null, -1),
-AutomaticallyCreateFlag("Automatically Create Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
-DataType("Data Type", EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
-EntityTypeId("Entity Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.EntityType, -1),
-MaxOccurrences("Max Occurrences", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-RequiredFlag("Required Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
-ValueListId("Value List Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.ValueList, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+AttributeDefId("AttributeDefId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+AttributeDefName("Attribute Def Name", null, EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+AttributeDefType("Attribute Def Type", null, EGLColumnDataType.String, 3, false, null, false, 0, null, -1),
+AutomaticallyCreateFlag("Automatically Create Flag", null, EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+DataType("Data Type", null, EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
+EntityTypeId("Entity Type", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.EntityType, -1),
+MaxOccurrences("Max Occurrences", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+RequiredFlag("Required Flag", null, EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+ValueListId("Value List", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.ValueList, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -344,11 +356,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private AttributeDef(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private AttributeDef(final String title, final String toolTip, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -393,15 +407,19 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum City implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-CityId("City Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-CityName("City Name", EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
-StateId("State Id", EGLColumnDataType.Int, 0, false, null, false, 2, ELookupType.State, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CityId("CityId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+CityName("City Name", null, EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
+StateId("State", null, EGLColumnDataType.Int, 0, false, null, false, 2, ELookupType.State, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -411,10 +429,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private City(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-             final boolean nullable, final String defaultValue, final boolean primaryKey,
-             final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private City(final String title, final String toolTip, final EGLColumnDataType dataType,
+             final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
+             final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
+             final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -459,18 +480,22 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum DBAudit implements IGLColumn {
-AuditAction("Audit Action", EGLColumnDataType.String, 1, false, null, false, 0, null, -1),
-AuditDate("Audit Date", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
-DBAuditId("D B Audit Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-NewData("New Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
-OldData("Old Data", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+AuditAction("Audit Action", null, EGLColumnDataType.String, 1, false, null, false, 0, null, -1),
+AuditDate("Audit Date", null, EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+DBAuditId("Database Audit Id", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+NewData("New Data", null, EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+OldData("Old Data", null, EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PersonId("Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -480,11 +505,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private DBAudit(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private DBAudit(final String title, final String toolTip, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                 final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -529,16 +556,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum DBUpdateNote implements IGLColumn {
-AppliedDateTime("Applied Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-DBRevNumber("DB Rev Number", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
-DBUpdateDesc("DB Update Description", EGLColumnDataType.String, 2000, false, null, false, 0, null, -1),
-DBUpdateNoteId("DB Update Note Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-DevDateTime("Development Date/Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+AppliedDateTime("Applied Date/Time", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DBRevNumber("DB Rev Number", null, EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+DBUpdateDesc("DB Update Description", null, EGLColumnDataType.String, 2000, false, null, false, 0, null, -1),
+DBUpdateNoteId("DBUpdateNoteId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+DevDateTime("Development Date/Time", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -548,11 +579,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private DBUpdateNote(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private DBUpdateNote(final String title, final String toolTip, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -597,19 +630,23 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum FosterHistory implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-FosterDateFinish("Foster Date Finish", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-FosterDateStart("Foster Date Start", EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
-FosterHistoryId("Foster History Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
-PrimaryPersonId("Primary Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+FosterDateFinish("Foster Date Finish", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+FosterDateStart("Foster Date Start", null, EGLColumnDataType.DateTime, 0, false, null, false, 0, null, -1),
+FosterHistoryId("FosterHistoryId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocId("Location", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("Pet", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PrimaryPersonId("Primary Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -619,11 +656,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private FosterHistory(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private FosterHistory(final String title, final String toolTip, final EGLColumnDataType dataType,
                       final int decimalPlacesOrLength, final boolean nullable,
                       final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                       final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -668,18 +707,22 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Loc implements IGLColumn {
-AddressId("Address Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Address, -1),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-LocDesc("Loc Description", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-LocShortDesc("Loc Short Description", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
-LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.LocType, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+AddressId("Address", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Address, -1),
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocDesc("Description", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+LocId("LocId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocShortDesc("Short Description", null, EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+LocTypeId("Loc Type", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.LocType, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -689,10 +732,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Loc(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final boolean primaryKey,
-            final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private Loc(final String title, final String toolTip, final EGLColumnDataType dataType,
+            final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
+            final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
+            final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -737,17 +783,21 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum LocPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
-LocPersonId("Loc Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PrimaryFlag("Primary Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Location", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+LocPersonId("Loc Person", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PersonId("Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PrimaryFlag("Primary Flag", null, EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -757,11 +807,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private LocPerson(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private LocPerson(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -806,16 +858,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum LocType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-LocTypeDesc("Loc Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
-LocTypeId("Loc Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-LocTypeShortDesc("Loc Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocTypeDesc("Description", null, EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+LocTypeId("LocTypeId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+LocTypeShortDesc("Short Description", null, EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -825,11 +881,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private LocType(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private LocType(final String title, final String toolTip, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                 final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -874,15 +932,19 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum NextId implements IGLColumn {
-NextId("Next Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-NextIdName("Next Id Name", EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
-NextIdValue("Next Id Value", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-TableName("Table Name", EGLColumnDataType.String, 30, true, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+NextId("NextId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+NextIdName("Next Id Name", null, EGLColumnDataType.String, 30, false, null, false, 1, null, -1),
+NextIdValue("Next Id Value", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+TableName("Table Name", null, EGLColumnDataType.String, 30, true, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -892,11 +954,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private NextId(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private NextId(final String title, final String toolTip, final EGLColumnDataType dataType,
                final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -941,15 +1005,19 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Org implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgDesc("Org Description", EGLColumnDataType.String, 200, false, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-OrgName("Org Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgDesc("Description", null, EGLColumnDataType.String, 200, false, null, false, 0, null, -1),
+OrgId("OrgId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+OrgName("Name", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -959,10 +1027,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Org(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final boolean primaryKey,
-            final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private Org(final String title, final String toolTip, final EGLColumnDataType dataType,
+            final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
+            final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
+            final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1007,16 +1078,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum OrgPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-OrgPersonId("Org Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PersonRole, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+OrgPersonId("OrgPersonId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PersonId("Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonRoleId("Role", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PersonRole, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1026,11 +1101,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private OrgPerson(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private OrgPerson(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1075,24 +1152,28 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Person implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-CurrentOrgId("Current Org Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Org, -1),
-DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, true, null, false, 0, null, -1),
-DisplayName("Display Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-EmailAddress("Email Address", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-FirstName("First Name", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
-LastName("Last Name", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
-LoginName("Login Name", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-PasswordHash("Password Hash", EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PhoneNumberHome("Home Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-PhoneNumberMobile("Mobile Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-PhoneNumberOffice("Office Phone", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+CurrentOrgId("Current Org", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Org, -1),
+DateOfBirth("Date Of Birth", null, EGLColumnDataType.Date, 0, true, null, false, 0, null, -1),
+DisplayName("Display Name", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+EmailAddress("Email Address", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+FirstName("First Name", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+LastName("Last Name", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+LoginName("Login Name", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+PasswordHash("Password Hash", null, EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
+PersonId("PersonId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PhoneNumberHome("Home Phone", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberMobile("Mobile Phone", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+PhoneNumberOffice("Office Phone", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1102,11 +1183,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Person(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private Person(final String title, final String toolTip, final EGLColumnDataType dataType,
                final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1151,17 +1234,21 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PersonRelationship implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-PersonId1("Person Id 1", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PersonId2("Person Id 2", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PersonRelationshipId("Person Relationship Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-RelationshipOf1To2("Relationship Of 1 To 2", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
-RelationshipOf2To1("Relationship Of 2 To 1", EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+PersonId1("Person 1", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonId2("Person 2", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PersonRelationshipId("PersonRelationshipId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+RelationshipOf1To2("Relationship Of 1 To 2", null, EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
+RelationshipOf2To1("Relationship Of 2 To 1", null, EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1171,12 +1258,14 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PersonRelationship(final String title, final EGLColumnDataType dataType,
-                           final int decimalPlacesOrLength, final boolean nullable,
-                           final String defaultValue, final boolean primaryKey,
-                           final int comboboxSeq, final IGLLookupType lookupType,
-                           final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private PersonRelationship(final String title, final String toolTip,
+                           final EGLColumnDataType dataType, final int decimalPlacesOrLength,
+                           final boolean nullable, final String defaultValue,
+                           final boolean primaryKey, final int comboboxSeq,
+                           final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1221,15 +1310,19 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PersonRole implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-PersonRoleId("Person Role Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-RoleDesc("Role Description", EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
-RoleShortDesc("Role Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+PersonRoleId("PersonRoleId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+RoleDesc("Description", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1),
+RoleShortDesc("Short Description", null, EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1239,11 +1332,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PersonRole(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private PersonRole(final String title, final String toolTip, final EGLColumnDataType dataType,
                    final int decimalPlacesOrLength, final boolean nullable,
                    final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                    final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1288,20 +1383,24 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Pet implements IGLColumn {
-AdoptionFee("Adoption Fee", EGLColumnDataType.Currency, 0, false, "0", false, 0, null, -1),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-DateOfBirth("Date Of Birth", EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
-IntakeDate("Intake Date", EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PetName("Pet Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PetType, -1),
-Sex("Sex", EGLColumnDataType.String, 1, false, "U", false, 0, ELookupType.Sex, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+AdoptionFee("Adoption Fee", null, EGLColumnDataType.Currency, 0, false, "0", false, 0, null, -1),
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+DateOfBirth("Date Of Birth", null, EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
+IntakeDate("Intake Date", null, EGLColumnDataType.Date, 0, false, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("PetId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PetName("Pet Name", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+PetTypeId("Pet Type", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PetType, -1),
+Sex("Sex", null, EGLColumnDataType.String, 1, false, "U", false, 0, ELookupType.Sex, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1311,10 +1410,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Pet(final String title, final EGLColumnDataType dataType, final int decimalPlacesOrLength,
-            final boolean nullable, final String defaultValue, final boolean primaryKey,
-            final int comboboxSeq, final IGLLookupType lookupType, final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private Pet(final String title, final String toolTip, final EGLColumnDataType dataType,
+            final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
+            final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
+            final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1359,16 +1461,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PetType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PetTypeDesc("Pet Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
-PetTypeId("Pet Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PetTypeShortDesc("Pet Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetTypeDesc("Description", null, EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+PetTypeId("PetTypeId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PetTypeShortDesc("Short Description", null, EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1378,11 +1484,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PetType(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private PetType(final String title, final String toolTip, final EGLColumnDataType dataType,
                 final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
                 final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
                 final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1427,19 +1535,23 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanEntry implements IGLColumn {
-ActionDate("Action Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PlanEntryNotes("Plan Entry Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
-ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.TreatmentType, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ActionDate("Action Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Location", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
+PetId("Pet", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PlanEntryId("PlanEntryId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanEntryNotes("Plan Entry Notes", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+ScheduledDate("Scheduled Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentTypeId("Treatment Type", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.TreatmentType, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1449,11 +1561,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PlanEntry(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private PlanEntry(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1498,17 +1612,21 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanPerson implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-Notes("Notes", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
-PersonId("Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanEntry, -1),
-PlanPersonId("Plan Person Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-ReminderType("Reminder Type", EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Notes("Notes", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+PersonId("Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PlanEntryId("Plan Entry", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanEntry, -1),
+PlanPersonId("PlanPersonId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+ReminderType("Reminder Type", null, EGLColumnDataType.String, 10, false, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1518,11 +1636,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PlanPerson(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private PlanPerson(final String title, final String toolTip, final EGLColumnDataType dataType,
                    final int decimalPlacesOrLength, final boolean nullable,
                    final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                    final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1567,16 +1687,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplate implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PlanTemplateDesc("Plan Template Description", EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
-PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PlanTemplateName("Plan Template Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PlanTemplateDesc("Description", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
+PlanTemplateId("PlanTemplateId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanTemplateName("Name", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1586,11 +1710,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PlanTemplate(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private PlanTemplate(final String title, final String toolTip, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1635,16 +1761,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplateEntry implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OffsetNumberOfDays("Offset Number Of Days", EGLColumnDataType.Int, 0, true, null, false, 0, null, -1),
-PlanTemplateEntryDesc("Plan Template Entry Description", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-PlanTemplateId("Plan Template Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplate, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OffsetNumberOfDays("Offset Number Of Days", null, EGLColumnDataType.Int, 0, true, null, false, 0, null, -1),
+PlanTemplateEntryDesc("Description", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+PlanTemplateEntryId("PlanTemplateEntryId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+PlanTemplateId("Plan Template", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplate, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1654,12 +1784,14 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PlanTemplateEntry(final String title, final EGLColumnDataType dataType,
-                          final int decimalPlacesOrLength, final boolean nullable,
-                          final String defaultValue, final boolean primaryKey,
-                          final int comboboxSeq, final IGLLookupType lookupType,
-                          final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private PlanTemplateEntry(final String title, final String toolTip,
+                          final EGLColumnDataType dataType, final int decimalPlacesOrLength,
+                          final boolean nullable, final String defaultValue,
+                          final boolean primaryKey, final int comboboxSeq,
+                          final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1704,16 +1836,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum PlanTemplateTreatment implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
-PlanTemplateEntryId("Plan Template Entry Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplateEntry, -1),
-PlanTemplateTreatmentId("Plan Template Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.TreatmentType, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+LocId("Location", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.Loc, -1),
+PlanTemplateEntryId("Plan Template Entry", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.PlanTemplateEntry, -1),
+PlanTemplateTreatmentId("PlanTemplateTreatmentId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeId("Treatment Type", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.TreatmentType, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1723,12 +1859,14 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private PlanTemplateTreatment(final String title, final EGLColumnDataType dataType,
-                              final int decimalPlacesOrLength, final boolean nullable,
-                              final String defaultValue, final boolean primaryKey,
-                              final int comboboxSeq, final IGLLookupType lookupType,
-                              final int defaultGridColumnWidth) {
+private final String            _toolTip;
+private PlanTemplateTreatment(final String title, final String toolTip,
+                              final EGLColumnDataType dataType, final int decimalPlacesOrLength,
+                              final boolean nullable, final String defaultValue,
+                              final boolean primaryKey, final int comboboxSeq,
+                              final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1773,20 +1911,24 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum SearchDef implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-OwnerPersonId("Owner Person Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
-PublicFlag("Public Flag", EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
-SearchDefDesc("Search Def Description", EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
-SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-SearchDefName("Search Def Name", EGLColumnDataType.String, 30, true, null, false, 1, null, -1),
-SearchDefType("Search Def Type", EGLColumnDataType.String, 20, false, null, false, 0, null, -1),
-SortColumns("Sort Columns", EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+OwnerPersonId("Owner Person", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
+PublicFlag("Public Flag", null, EGLColumnDataType.Boolean, 1, false, null, false, 0, null, -1),
+SearchDefDesc("Description", null, EGLColumnDataType.String, 100, true, null, false, 0, null, -1),
+SearchDefId("SearchDefId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+SearchDefName("Name", null, EGLColumnDataType.String, 30, true, null, false, 1, null, -1),
+SearchDefType("Search Def Type", null, EGLColumnDataType.String, 20, false, null, false, 0, null, -1),
+SortColumns("Sort Columns", null, EGLColumnDataType.String, 200, true, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1796,11 +1938,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private SearchDef(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private SearchDef(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1845,19 +1989,23 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum SearchDefDetail implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-SearchDefDetailId("Search Def Detail Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-SearchDefId("Search Def Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.SearchDef, -1),
-Value1("Value 1", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-Value2("Value 2", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-Value3("Value 3", EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
-ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
-ValueName("Value Name", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+SearchDefDetailId("SearchDefDetailId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+SearchDefId("Search Def", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.SearchDef, -1),
+Value1("Value 1", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Value2("Value 2", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+Value3("Value 3", null, EGLColumnDataType.String, 50, true, null, false, 0, null, -1),
+ValueList("Value List", null, EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+ValueName("Name", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1867,11 +2015,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private SearchDefDetail(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private SearchDefDetail(final String title, final String toolTip, final EGLColumnDataType dataType,
                         final int decimalPlacesOrLength, final boolean nullable,
                         final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                         final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1916,14 +2066,18 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum SessionToken implements IGLColumn {
-ExpirationTime("Expiration Time", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-SessionToken("Session Token", EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
-SessionTokenId("Sesion Token Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-UserId("User Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1);
+ExpirationTime("Expiration Time", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+SessionToken("Session Token", null, EGLColumnDataType.String, 100, false, null, false, 1, null, -1),
+SessionTokenId("SesionTokenId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+UserId("User Id", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -1933,11 +2087,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private SessionToken(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private SessionToken(final String title, final String toolTip, final EGLColumnDataType dataType,
                      final int decimalPlacesOrLength, final boolean nullable,
                      final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                      final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -1982,15 +2138,19 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum State implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-StateAbbrev("State Abbreviation", EGLColumnDataType.String, 2, false, null, false, 1, null, -1),
-StateId("State Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-StateName("State Name", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+StateAbbrev("Abbreviation", null, EGLColumnDataType.String, 2, false, null, false, 1, null, -1),
+StateId("StateId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+StateName("Name", null, EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2000,11 +2160,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private State(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private State(final String title, final String toolTip, final EGLColumnDataType dataType,
               final int decimalPlacesOrLength, final boolean nullable, final String defaultValue,
               final boolean primaryKey, final int comboboxSeq, final IGLLookupType lookupType,
               final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -2049,22 +2211,26 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum Treatment implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-Cost("Cost", EGLColumnDataType.Currency, 0, false, null, false, 0, null, -1),
-LocId("Loc Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-PetId("Pet Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
-PlanEntryId("Plan Entry Id", EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.PlanEntry, -1),
-ScheduledDate("Scheduled Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-TreatmentDate("Treatment Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-TreatmentDesc("Treatment Description", EGLColumnDataType.String, 200, true, null, false, 1, null, -1),
-TreatmentId("Treatment Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+Cost("Cost", null, EGLColumnDataType.Currency, 0, false, null, false, 0, null, -1),
+LocId("Location", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Loc, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+PetId("Pet", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Pet, -1),
+PlanEntryId("Plan Entry", null, EGLColumnDataType.Int, 0, true, null, false, 0, ELookupType.PlanEntry, -1),
+ScheduledDate("Scheduled Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentDate("Treatment Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+TreatmentDesc("Description", null, EGLColumnDataType.String, 200, true, null, false, 1, null, -1),
+TreatmentId("TreatmentId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeId("Treatment Type", null, EGLColumnDataType.Int, 0, false, null, false, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2074,11 +2240,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private Treatment(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private Treatment(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -2123,16 +2291,20 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
 public enum TreatmentType implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-TreatmentTypeDesc("Treatment Type Description", EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
-TreatmentTypeId("Treatment Type Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-TreatmentTypeShortDesc("Treatment Type Short Description", EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+TreatmentTypeDesc("Description", null, EGLColumnDataType.String, 50, false, null, false, 0, null, -1),
+TreatmentTypeId("TreatmentTypeId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+TreatmentTypeShortDesc("Short Description", null, EGLColumnDataType.String, 10, false, null, false, 1, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2142,11 +2314,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private TreatmentType(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private TreatmentType(final String title, final String toolTip, final EGLColumnDataType dataType,
                       final int decimalPlacesOrLength, final boolean nullable,
                       final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                       final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -2192,15 +2366,19 @@ public boolean getPrimaryKey() {
 public String getTitle() {
   return _title;
 }
+@Override
+public String getToolTip() {
+  return _toolTip;
+}
 }
 //--------------------------------------------------------------------------------------------------
 public enum ValueList implements IGLColumn {
-ArchiveDate("Archive Date", EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
-OrgId("Org Id", EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
-ValueListDesc("Value List Description", EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
-ValueList("Value List", EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
-ValueListId("Value List Id", EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-Version("Version", EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
+ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, false, 0, null, -1),
+OrgId("Organization", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Org, -1),
+ValueListDesc("Description", null, EGLColumnDataType.String, 50, false, null, false, 1, null, -1),
+ValueList("Value List", null, EGLColumnDataType.String, 1000000, true, null, false, 0, null, -1),
+ValueListId("ValueListId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
+Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
 private final int               _decimalPlacesOrLength;
@@ -2210,11 +2388,13 @@ private final IGLLookupType     _lookupType;
 private final boolean           _nullable;
 private final boolean           _primaryKey;
 private final String            _title;
-private ValueList(final String title, final EGLColumnDataType dataType,
+private final String            _toolTip;
+private ValueList(final String title, final String toolTip, final EGLColumnDataType dataType,
                   final int decimalPlacesOrLength, final boolean nullable,
                   final String defaultValue, final boolean primaryKey, final int comboboxSeq,
                   final IGLLookupType lookupType, final int defaultGridColumnWidth) {
   _title = title;
+  _toolTip = toolTip;
   _dataType = dataType;
   _decimalPlacesOrLength = decimalPlacesOrLength;
   _nullable = nullable;
@@ -2259,6 +2439,10 @@ public boolean getPrimaryKey() {
 @Override
 public String getTitle() {
   return _title;
+}
+@Override
+public String getToolTip() {
+  return _toolTip;
 }
 }
 //--------------------------------------------------------------------------------------------------
