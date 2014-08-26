@@ -20,8 +20,6 @@ import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordEditor;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -30,24 +28,17 @@ import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
 import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
-import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
+import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class PersonDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-HorizontalLayoutContainer    buttonContainer;
-@UiField
 CardLayoutContainer          cardLayoutContainer;
 @UiField
 ContentPanel                 orgPanel;
 @UiField
-HorizontalLayoutContainer    personContainer;
-@UiField
-VerticalLayoutContainer      mainContainer;
-@UiField
-VerticalLayoutContainer      personVLC;
+HBoxLayoutContainer          personContainer;
 @UiField
 TextButton                   saveButton;
 
@@ -63,14 +54,6 @@ public PersonDetailsWidget(final GLRecord person) {
   initWidget(uiBinder.createAndBindUi(this));
   //  flowLayoutContainer.setScrollMode(ScrollMode.AUTO);
   _recordEditor = new GLRecordEditor(person, true, personContainer);
-  Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-    @Override
-    public void execute() {
-      personContainer.setHeight(personVLC.getOffsetHeight());
-      buttonContainer.setHeight(saveButton.getOffsetHeight());
-      mainContainer.forceLayout();
-    }
-  });
 }
 //--------------------------------------------------------------------------------------------------
 @UiHandler({"orgButton"})

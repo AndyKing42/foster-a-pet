@@ -135,15 +135,10 @@ public void createPersonDetails(final GLRecord person) {
     GLLog.popup(20, "contentPanel.height:" + contentPanel.getOffsetHeight(true));
     GLLog.popup(20, "personContainer.height:" + //
                     personDetailsWidget.personContainer.getOffsetHeight(true));
-    GLLog.popup(20, "mainContainer.height 1:" + //
-                    personDetailsWidget.mainContainer.getOffsetHeight(true));
-    personDetailsWidget.mainContainer.setHeight(contentPanel.getOffsetHeight(true));
     Scheduler.get().scheduleDeferred(new ScheduledCommand() {
       @Override
       public void execute() {
         contentPanel.forceLayout();
-        GLLog.popup(20, "mainContainer.height 2:" + //
-                        personDetailsWidget.mainContainer.getOffsetHeight(true));
       }
     });
   }
