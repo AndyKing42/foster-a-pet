@@ -17,33 +17,24 @@ import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
-import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutPack;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 import com.sencha.gxt.widget.core.client.event.SelectEvent.SelectHandler;
 import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 
-public class GLGridContentPanel extends ContentPanel {
+public class Old_GLGridContainer extends VerticalLayoutContainer {
 //--------------------------------------------------------------------------------------------------
 private final GLGridWidget _gridWidget;
 //--------------------------------------------------------------------------------------------------
-GLGridContentPanel(final GLGridWidget gridWidget, final String headingText) {
+Old_GLGridContainer(final GLGridWidget gridWidget) {
   super();
   _gridWidget = gridWidget;
-  if (GLClientUtil.isBlank(headingText)) {
-    setHeaderVisible(false);
-  }
-  else {
-    setHeaderVisible(true);
-    setHeadingText(headingText);
-  }
-  setButtonAlign(BoxLayoutPack.START);
 }
 //--------------------------------------------------------------------------------------------------
 public void addContentPanelButton(final String buttonLabel,
@@ -68,17 +59,21 @@ public void addContentPanelButton(final String buttonLabel,
   }
   if (selectHandler == null) {
     GLLog.popup(30, "There is no standard button for the button type:" + contentPanelButtonType);
+    return;
   }
-  addContentPanelButton(buttonLabel, selectHandler);
+  addButton(buttonLabel, selectHandler);
 }
 //--------------------------------------------------------------------------------------------------
-protected final void addContentPanelButton(final String buttonLabel,
-                                           final SelectHandler selectHandler) {
+protected final void addButton(final String buttonLabel, final SelectHandler selectHandler) {
   if (selectHandler == null) {
     GLLog.popup(30, "Missing select handler for content panel button:" + buttonLabel);
     return;
   }
-  addButton(new TextButton(buttonLabel, selectHandler));
+  addButtonToPanel(new TextButton(buttonLabel, selectHandler));
+}
+//--------------------------------------------------------------------------------------------------
+private void addButtonToPanel(final TextButton textButton) {
+
 }
 //--------------------------------------------------------------------------------------------------
 private SelectHandler createDeleteButtonHandler() {
