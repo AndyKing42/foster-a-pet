@@ -27,16 +27,13 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.ContentPanel;
 import com.sencha.gxt.widget.core.client.button.TextButton;
-import com.sencha.gxt.widget.core.client.container.CardLayoutContainer;
 import com.sencha.gxt.widget.core.client.container.HBoxLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class PersonDetailsWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 @UiField
-CardLayoutContainer          cardLayoutContainer;
-@UiField
-ContentPanel                 orgPanel;
+ContentPanel                 detailPanel;
 @UiField
 HBoxLayoutContainer          personContainer;
 @UiField
@@ -61,11 +58,8 @@ public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent even
   final GLGridWidget gridWidget;
   try {
     gridWidget = GridWidgetManager.getOrgPersonGrid(_person.asInt(Person.PersonId));
-    orgPanel.setWidget(gridWidget);
+    detailPanel.setWidget(gridWidget);
     gridWidget.loadData();
-    cardLayoutContainer.setActiveWidget(orgPanel);
-    GLLog.popup(20, "cardLayoutContainer.offsetHeight:" + cardLayoutContainer.getOffsetHeight(true));
-    GLLog.popup(20, "cardLayoutContainer.offsetWidth:" + cardLayoutContainer.getOffsetWidth(true));
   }
   catch (final GLDBException e) {
     GLLog.popup(20, "Creation of the OrgPerson grid failed:" + e.getMessage());

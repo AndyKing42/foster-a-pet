@@ -64,13 +64,13 @@ import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
-public abstract class GLGridWidget implements IsWidget {
+public abstract class Old_GLGridWidget implements IsWidget {
 //--------------------------------------------------------------------------------------------------
 private static final int             _resizeColumnExtraPadding;
 private static final TextMetrics     _textMetrics;
 
 private GLGridColumnModel            _columnModel;
-private final GLGridContentPanel     _contentPanel;
+private final GLGridContainer        _contentPanel;
 private GLGridContextMenu            _contextMenu;
 protected Grid<GLRecord>             _grid;
 private GLGridEditingWrapper         _gridEditingWrapper;
@@ -91,7 +91,7 @@ static {
   _textMetrics = TextMetrics.get();
 }
 //--------------------------------------------------------------------------------------------------
-protected GLGridWidget(final IGLTable table, final String headingText, final String noRowsMessage,
+protected Old_GLGridWidget(final IGLTable table, final String noRowsMessage,
                        final GLRecordValidator recordValidator, final boolean inlineEditing,
                        final boolean useCheckBoxSelection, final boolean rowLevelCommits,
                        final IGLColumn[] columns) throws GLDBException {
@@ -104,7 +104,7 @@ protected GLGridWidget(final IGLTable table, final String headingText, final Str
   _rowLevelCommits = rowLevelCommits;
   _listStore = new GLListStore(getSQL(), true, columns);
   _selectedRecordSet = new TreeSet<>();
-  _contentPanel = new GLGridContentPanel(this, headingText);
+  _contentPanel = new GLGridContainer(this);
   addContentPanelButtons();
 }
 //--------------------------------------------------------------------------------------------------
@@ -115,7 +115,7 @@ protected final void addContentPanelButton(final String buttonLabel,
 //--------------------------------------------------------------------------------------------------
 protected final void addContentPanelButton(final String buttonLabel,
                                            final SelectHandler selectHandler) {
-  _contentPanel.addContentPanelButton(buttonLabel, selectHandler);
+  _contentPanel.addButton(buttonLabel, selectHandler);
 }
 //--------------------------------------------------------------------------------------------------
 protected void addContentPanelButtons() {

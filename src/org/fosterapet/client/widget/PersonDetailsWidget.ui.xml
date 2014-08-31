@@ -38,10 +38,6 @@
   <!-- HorizontalLayoutData declarations ======================================================= -->
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData'
-    field='buttonHLD'>
-  </ui:with>
-  <ui:with
-    type='com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer.HorizontalLayoutData'
     field='fillRemainingHLD'>
     <ui:attributes
       height='1'
@@ -55,10 +51,6 @@
       width='-1'/>
   </ui:with>
   <!-- VerticalLayoutData declarations ========================================================= -->
-  <ui:with
-    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='buttonVLD'>
-  </ui:with>
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
     field='fillRemainingVLD'>
@@ -104,28 +96,24 @@
     </gxtcontainer:child>
     <gxtcontainer:child layoutData='{fillRemainingVLD}'>
       <gxtcontainer:HorizontalLayoutContainer>
-        <gxtcontainer:VBoxLayoutContainer vBoxLayoutAlign='STRETCHMAX'>
-          <gxtbutton:TextButton
-            ui:field='orgButton'
-            text='Organizations'/>
-          <gxtbutton:TextButton
-            ui:field='personRelationshipButton'
-            text='Relationships'/>
-          <gxtbutton:TextButton
-            ui:field='fosterHistoryButton'
-            text='Foster History'/>
-        </gxtcontainer:VBoxLayoutContainer>
-        <gxtcontainer:CardLayoutContainer ui:field='cardLayoutContainer'>
+        <gxtcontainer:child layoutData='{sizeToContentsHLD}'>
+          <gxtcontainer:VBoxLayoutContainer vBoxLayoutAlign='STRETCHMAX'>
+            <gxtbutton:TextButton
+              ui:field='orgButton'
+              text='Organizations'/>
+            <gxtbutton:TextButton
+              ui:field='personRelationshipButton'
+              text='Relationships'/>
+            <gxtbutton:TextButton
+              ui:field='fosterHistoryButton'
+              text='Foster History'/>
+          </gxtcontainer:VBoxLayoutContainer>
+        </gxtcontainer:child>
+        <gxtcontainer:child layoutData='{fillRemainingHLD}'>
           <gxt:ContentPanel
-            ui:field='orgPanel'
+            ui:field='detailPanel'
             headerVisible='false'/>
-          <gxt:ContentPanel
-            ui:field='personRelationshipPanel'
-            headerVisible='false'/>
-          <gxt:ContentPanel
-            ui:field='fosterHistoryPanel'
-            headerVisible='false'/>
-        </gxtcontainer:CardLayoutContainer>
+        </gxtcontainer:child>
       </gxtcontainer:HorizontalLayoutContainer>
     </gxtcontainer:child>
   </gxtcontainer:VerticalLayoutContainer>
