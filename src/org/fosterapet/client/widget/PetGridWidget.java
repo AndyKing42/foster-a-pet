@@ -33,23 +33,23 @@ public class PetGridWidget extends GLGridWidget {
 public PetGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                      final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                      final IGLColumn... columns) throws GLDBException {
-  super(EFAPTable.Pet, null, "There are no pets", recordValidator, inlineEditing,
+  super(EFAPTable.Pet, "There are no pets", recordValidator, inlineEditing,
         useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void addContentPanelButtons() {
-  addContentPanelButton("View Details", new SelectHandler() {
+protected void addButtons() {
+  addButton("View Details", new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
       FAPUtil.getClientFactory().getAppTabPanelWidget()
-             .createPetDetails(_grid.getSelectionModel().getSelectedItem());
+             .createPetDetails(getSelectionModel().getSelectedItem());
     }
   });
-  addContentPanelButton("New Pet", EGLGridContentPanelButtonType.New);
-  addContentPanelButton("Save Changes", EGLGridContentPanelButtonType.Save);
-  addContentPanelButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
-  addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
+  addButton("New Pet", EGLGridContentPanelButtonType.New);
+  addButton("Save Changes", EGLGridContentPanelButtonType.Save);
+  addButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
+  addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

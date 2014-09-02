@@ -74,9 +74,9 @@ final void addContextMenuItem(final String menuLabel,
     @Override
     public void onSelection(final SelectionEvent<MenuItem> event) {
       final GLRecord selectedRecord = _gridWidget.getSelectionModel().getSelectedItem();
-      selectionHandler.onContextMenuSelectionEvent(new GLGridContextMenuSelectionEvent(
-                                                                                       event.getSelectedItem(),
-                                                                                       selectedRecord));
+      final GLGridContextMenuSelectionEvent selectionEvent;
+      selectionEvent = new GLGridContextMenuSelectionEvent(event.getSelectedItem(), selectedRecord);
+      selectionHandler.onContextMenuSelectionEvent(selectionEvent);
     }
   });
   add(menuItem);

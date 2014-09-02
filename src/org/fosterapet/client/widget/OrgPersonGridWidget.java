@@ -30,15 +30,15 @@ private static int _personId;
 public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                            final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                            final IGLColumn... columns) throws GLDBException {
-  super(EFAPTable.OrgPerson, null, "There are no organizations for this person", recordValidator,
+  super(EFAPTable.OrgPerson, "There are no organizations for this person", recordValidator,
         inlineEditing, useCheckBoxSelectionModel, rowLevelCommits, columns);
   _personId = -1;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void addContentPanelButtons() {
-  addContentPanelButton("New Organization Entry", EGLGridContentPanelButtonType.New);
-  addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
+protected void addButtons() {
+  addButton("New Organization Entry", EGLGridContentPanelButtonType.New);
+  addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

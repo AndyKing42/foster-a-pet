@@ -1,5 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM 'http://dl.google.com/gwt/DTD/xhtml.ent'>
 <ui:UiBinder
   xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  <gxtcontainer:HorizontalLayoutContainer ui:field='buttonContainer'/>
 </ui:UiBinder>
