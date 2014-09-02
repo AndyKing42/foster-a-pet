@@ -2,10 +2,11 @@
 <ui:UiBinder
   xmlns:gl='urn:import:org.greatlogic.glgwt.client.widget.grid'
   xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
   xmlns:gxtbutton='urn:import:com.sencha.gxt.widget.core.client.button'
   xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
-  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:gxtgrid='urn:import:com.sencha.gxt.widget.core.client.grid'
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
   <!-- VerticalLayoutData declarations ========================================================= -->
   <ui:with
@@ -25,7 +26,9 @@
   <!-- ========================================================================================= -->
   <gxtcontainer:VerticalLayoutContainer>
     <gxtcontainer:child layoutData='{fillRemainingVLD}'>
-      <gxt:ContentPanel ui:field='gridPanel'/>
+      <gxt:ContentPanel>
+        <gxtgrid:Grid ui:field='grid'/>
+      </gxt:ContentPanel>
     </gxtcontainer:child>
     <gxtcontainer:child layoutData='{sizeToContentsVLD}'>
       <gl:GLGridButtonContainer ui:field='buttonContainer'/>

@@ -24,16 +24,16 @@ public class GLGenericGridWidget extends GLGridWidget {
 private static final IGLColumn[] EmptyColumnArray = new IGLColumn[0];
 //--------------------------------------------------------------------------------------------------
 public GLGenericGridWidget(final IGLTable table) throws GLDBException {
-  super(table, null, "There are no rows in the " + table + " table", null, false, true, true,
+  super(table, "There are no rows in the " + table + " table", null, false, true, true,
         table.getColumns().toArray(EmptyColumnArray));
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void addContentPanelButtons() {
-  addContentPanelButton("New " + _table, EGLGridContentPanelButtonType.New);
-  addContentPanelButton("Save Changes", EGLGridContentPanelButtonType.Save);
-  addContentPanelButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
-  addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
+protected void addButtons() {
+  addButton("New " + _table, EGLGridContentPanelButtonType.New);
+  addButton("Save Changes", EGLGridContentPanelButtonType.Save);
+  addButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
+  addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

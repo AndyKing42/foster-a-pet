@@ -1,17 +1,5 @@
 package org.greatlogic.glgwt.client.widget.grid;
-/*
- * Copyright 2006-2014 Andy King (GreatLogic.com)
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeSet;
@@ -26,13 +14,16 @@ import org.greatlogic.glgwt.client.db.IGLListStoreLoadedCallback;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.i18n.shared.DateTimeFormat;
-import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.core.client.ValueProvider;
 import com.sencha.gxt.core.client.util.TextMetrics;
@@ -64,15 +55,18 @@ import com.sencha.gxt.widget.core.client.menu.Item;
 import com.sencha.gxt.widget.core.client.menu.MenuItem;
 import com.sencha.gxt.widget.core.client.tips.QuickTip;
 
-public abstract class Old_GLGridWidget implements IsWidget {
+public abstract class GLGridWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
 private static final int             _resizeColumnExtraPadding;
 private static final TextMetrics     _textMetrics;
 
+@UiField(provided = true)
+GLGridButtonContainer                buttonContainer;
+@UiField(provided = true)
+Grid<GLRecord>                       grid;
+
 private GLGridColumnModel            _columnModel;
-private final GLGridContainer        _contentPanel;
 private GLGridContextMenu            _contextMenu;
-protected Grid<GLRecord>             _grid;
 private GLGridEditingWrapper         _gridEditingWrapper;
 private GridFilters<GLRecord>        _gridFilters;
 private final boolean                _inlineEditing;
@@ -86,15 +80,18 @@ protected GLSQL                      _sql;
 protected IGLTable                   _table;
 private final boolean                _useCheckBoxSelection;
 //--------------------------------------------------------------------------------------------------
+interface IGLGridWidgetUiBinder extends UiBinder<Widget, GLGridWidget> { //
+}
+//--------------------------------------------------------------------------------------------------
 static {
   _resizeColumnExtraPadding = 10;
   _textMetrics = TextMetrics.get();
 }
 //--------------------------------------------------------------------------------------------------
-protected Old_GLGridWidget(final IGLTable table, final String noRowsMessage,
-                       final GLRecordValidator recordValidator, final boolean inlineEditing,
-                       final boolean useCheckBoxSelection, final boolean rowLevelCommits,
-                       final IGLColumn[] columns) throws GLDBException {
+public GLGridWidget(final IGLTable table, final String noRowsMessage,
+                    final GLRecordValidator recordValidator, final boolean inlineEditing,
+                    final boolean useCheckBoxSelection, final boolean rowLevelCommits,
+                    final IGLColumn[] columns) throws GLDBException {
   super();
   _table = table;
   _noRowsMessage = noRowsMessage == null ? "There are no results to display" : noRowsMessage;
@@ -104,21 +101,23 @@ protected Old_GLGridWidget(final IGLTable table, final String noRowsMessage,
   _rowLevelCommits = rowLevelCommits;
   _listStore = new GLListStore(getSQL(), true, columns);
   _selectedRecordSet = new TreeSet<>();
-  _contentPanel = new GLGridContainer(this);
-  addContentPanelButtons();
+  createGrid();
+  buttonContainer = new GLGridButtonContainer(this);
+  addButtons();
+  final IGLGridWidgetUiBinder uiBinder = GWT.create(IGLGridWidgetUiBinder.class);
+  initWidget(uiBinder.createAndBindUi(this));
 }
 //--------------------------------------------------------------------------------------------------
-protected final void addContentPanelButton(final String buttonLabel,
-                                           final EGLGridContentPanelButtonType contentPanelButtonType) {
-  _contentPanel.addButton(buttonLabel, contentPanelButtonType);
+protected final void addButton(final String buttonLabel,
+                               final EGLGridContentPanelButtonType contentPanelButtonType) {
+  buttonContainer.addButton(buttonLabel, contentPanelButtonType);
 }
 //--------------------------------------------------------------------------------------------------
-protected final void addContentPanelButton(final String buttonLabel,
-                                           final SelectHandler selectHandler) {
-  _contentPanel.addButton(buttonLabel, selectHandler);
+protected final void addButton(final String buttonLabel, final SelectHandler selectHandler) {
+  buttonContainer.addButton(buttonLabel, selectHandler);
 }
 //--------------------------------------------------------------------------------------------------
-protected void addContentPanelButtons() {
+protected void addButtons() {
   //
 }
 //--------------------------------------------------------------------------------------------------
@@ -218,7 +217,7 @@ private void addHeaderContextMenuHandler() {
         @Override
         public void onSelection(final SelectionEvent<Item> selectionEvent) {
           resizeColumnToFit(headerContextMenuEvent.getColumnIndex());
-          _grid.getView().refresh(true);
+          grid.getView().refresh(true);
         }
       });
       headerContextMenuEvent.getMenu().add(menuItem);
@@ -230,48 +229,42 @@ private void addHeaderContextMenuHandler() {
                                                                        "Resizing Columns...");
           messageBox.setProgressText("Calculating...");
           messageBox.show();
-          resizeNextColumn(messageBox, _useCheckBoxSelection ? 1 : 0, _grid.getColumnModel()
-                                                                           .getColumnCount() - 1);
+          resizeNextColumn(messageBox, _useCheckBoxSelection ? 1 : 0, grid.getColumnModel()
+                                                                          .getColumnCount() - 1);
         }
       });
       headerContextMenuEvent.getMenu().add(menuItem);
     }
   };
-  _grid.addHeaderContextMenuHandler(headerContextMenuHandler);
-}
-//--------------------------------------------------------------------------------------------------
-@Override
-public Widget asWidget() {
-  return _contentPanel;
+  grid.addHeaderContextMenuHandler(headerContextMenuHandler);
 }
 //--------------------------------------------------------------------------------------------------
 public void clearAllRowSelectCheckboxes() {
   if (_useCheckBoxSelection) {
     _selectedRecordSet.clear();
   }
-  _grid.getView().refresh(false);
+  grid.getView().refresh(false);
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
-  _grid = new Grid<>(_listStore, _columnModel);
-  _grid.setBorders(true);
-  _grid.setColumnReordering(true);
-  _grid.setLoadMask(true);
-  _grid.setSelectionModel(_selectionModel);
-  _grid.setView(createGridView());
+  grid = new Grid<>(_listStore, _columnModel);
+  grid.setBorders(true);
+  grid.setColumnReordering(true);
+  grid.setLoadMask(true);
+  grid.setSelectionModel(_selectionModel);
+  grid.setView(createGridView());
   addHeaderContextMenuHandler();
   _gridEditingWrapper = new GLGridEditingWrapper(this, _inlineEditing, _recordValidator);
   addFilters();
   if (_gridFilters != null) {
-    _gridFilters.initPlugin(_grid);
+    _gridFilters.initPlugin(grid);
   }
   _contextMenu = new GLGridContextMenu(this);
-  _grid.setContextMenu(_contextMenu.build());
-  _contentPanel.add(_grid);
-  _contentPanel.forceLayout();
-  new QuickTip(_grid);
+  grid.setContextMenu(_contextMenu.build());
+  // todo:  _contentPanel.forceLayout();
+  new QuickTip(grid);
 }
 //--------------------------------------------------------------------------------------------------
 private GridView<GLRecord> createGridView() {
@@ -330,7 +323,7 @@ IGLColumn[] getColumns() {
 }
 //--------------------------------------------------------------------------------------------------
 Grid<GLRecord> getGrid() {
-  return _grid;
+  return grid;
 }
 //--------------------------------------------------------------------------------------------------
 GLGridEditingWrapper getGridEditingWrapper() {
@@ -349,7 +342,7 @@ TreeSet<GLRecord> getSelectedRecordSet() {
   return _selectedRecordSet;
 }
 //--------------------------------------------------------------------------------------------------
-GridSelectionModel<GLRecord> getSelectionModel() {
+protected GridSelectionModel<GLRecord> getSelectionModel() {
   return _selectionModel;
 }
 //--------------------------------------------------------------------------------------------------
@@ -396,10 +389,10 @@ private void resizeColumnToFit(final int columnIndex) {
   final String columnName = columns[columnIndex - (_useCheckBoxSelection ? 1 : 0)].toString();
   final GLColumnConfig<?> columnConfig = _columnModel.getColumnConfig(columnName);
   final DateTimeFormat dateTimeFormat = columnConfig.getDateTimeFormat();
-  _textMetrics.bind(_grid.getView().getHeader().getAppearance().styles().head());
+  _textMetrics.bind(grid.getView().getHeader().getAppearance().styles().head());
   int maxWidth = _textMetrics.getWidth(columnConfig.getHeader().asString()) + 6;
   if (_listStore.size() > 0) {
-    final Element element = _grid.getView().getCell(1, 1); // this assignment is necessary!
+    final Element element = grid.getView().getCell(1, 1); // this assignment is necessary!
     final String className = element.getClassName();
     _textMetrics.bind(className);
     for (int recordIndex = 0; recordIndex < _listStore.size(); ++recordIndex) {
@@ -428,7 +421,7 @@ private void resizeNextColumn(final ProgressMessageBox messageBox, final int col
       resizeColumnToFit(columnIndex);
       if (columnIndex == lastColumnIndex) {
         messageBox.hide();
-        _grid.getView().refresh(true);
+        grid.getView().refresh(true);
         return;
       }
       messageBox.updateProgress((double)columnIndex / (lastColumnIndex + 1), "{0}% Complete");
@@ -443,7 +436,7 @@ public void selectAllRowSelectCheckboxes() {
       _selectedRecordSet.add(_listStore.get(recordIndex));
     }
   }
-  _grid.getView().refresh(false);
+  grid.getView().refresh(false);
 }
 //--------------------------------------------------------------------------------------------------
 }

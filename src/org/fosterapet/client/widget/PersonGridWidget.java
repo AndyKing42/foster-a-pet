@@ -33,23 +33,23 @@ public class PersonGridWidget extends GLGridWidget {
 public PersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
                         final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
                         final IGLColumn... columns) throws GLDBException {
-  super(EFAPTable.Person, null, "There are no people", recordValidator, inlineEditing,
+  super(EFAPTable.Person, "There are no people", recordValidator, inlineEditing,
         useCheckBoxSelectionModel, rowLevelCommits, columns);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
-protected void addContentPanelButtons() {
-  addContentPanelButton("View Details", new SelectHandler() {
+protected void addButtons() {
+  addButton("View Details", new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
       FAPUtil.getClientFactory().getAppTabPanelWidget()
-             .createPersonDetails(_grid.getSelectionModel().getSelectedItem());
+             .createPersonDetails(getSelectionModel().getSelectedItem());
     }
   });
-  addContentPanelButton("New Person", EGLGridContentPanelButtonType.New);
-  addContentPanelButton("Save Changes", EGLGridContentPanelButtonType.Save);
-  addContentPanelButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
-  addContentPanelButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
+  addButton("New Person", EGLGridContentPanelButtonType.New);
+  addButton("Save Changes", EGLGridContentPanelButtonType.Save);
+  addButton("Undo Changes", EGLGridContentPanelButtonType.Undo);
+  addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

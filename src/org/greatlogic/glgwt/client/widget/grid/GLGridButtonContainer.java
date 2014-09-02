@@ -7,12 +7,14 @@ import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.AlertMessageBox;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.button.TextButton;
+import com.sencha.gxt.widget.core.client.container.HorizontalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.SelectEvent;
@@ -21,18 +23,22 @@ import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 
 public class GLGridButtonContainer extends Composite {
 //--------------------------------------------------------------------------------------------------
+@UiField
+HorizontalLayoutContainer  buttonContainer;
+
 private final GLGridWidget _gridWidget;
 //--------------------------------------------------------------------------------------------------
 interface IGLGridButtonContainerUiBinder extends UiBinder<Widget, GLGridButtonContainer> { //
 }
 //--------------------------------------------------------------------------------------------------
-public GLGridButtonContainer() {
+public GLGridButtonContainer(final GLGridWidget gridWidget) {
+  _gridWidget = gridWidget;
   final IGLGridButtonContainerUiBinder uiBinder = GWT.create(IGLGridButtonContainerUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
 }
 //--------------------------------------------------------------------------------------------------
-public void addContentPanelButton(final String buttonLabel,
-                                  final EGLGridContentPanelButtonType contentPanelButtonType) {
+public void addButton(final String buttonLabel,
+                      final EGLGridContentPanelButtonType contentPanelButtonType) {
   SelectHandler selectHandler;
   switch (contentPanelButtonType) {
     case Delete:
@@ -63,11 +69,7 @@ protected final void addButton(final String buttonLabel, final SelectHandler sel
     GLLog.popup(30, "Missing select handler for content panel button:" + buttonLabel);
     return;
   }
-  addButtonToPanel(new TextButton(buttonLabel, selectHandler));
-}
-//--------------------------------------------------------------------------------------------------
-private void addButtonToPanel(final TextButton textButton) {
-
+  buttonContainer.add(new TextButton(buttonLabel, selectHandler));
 }
 //--------------------------------------------------------------------------------------------------
 private SelectHandler createDeleteButtonHandler() {
