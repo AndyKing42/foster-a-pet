@@ -58,8 +58,7 @@ public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent even
   final GLGridWidget gridWidget;
   try {
     gridWidget = GridWidgetManager.getOrgPersonGrid(_person.asInt(Person.PersonId));
-    detailPanel.setWidget(gridWidget);
-    gridWidget.loadData();
+    gridWidget.loadData(detailPanel);
   }
   catch (final GLDBException e) {
     GLLog.popup(20, "Creation of the OrgPerson grid failed:" + e.getMessage());

@@ -24,9 +24,9 @@
       width='1'/>
   </ui:with>
   <!-- ========================================================================================= -->
-  <gxtcontainer:VerticalLayoutContainer>
+  <gxtcontainer:VerticalLayoutContainer ui:field='topLevelContainer'>
     <gxtcontainer:child layoutData='{fillRemainingVLD}'>
-      <gxt:ContentPanel>
+      <gxt:ContentPanel headerVisible='false'>
         <gxtgrid:Grid ui:field='grid'/>
       </gxt:ContentPanel>
     </gxtcontainer:child>

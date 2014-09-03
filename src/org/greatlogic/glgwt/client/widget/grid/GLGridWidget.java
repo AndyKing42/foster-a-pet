@@ -33,6 +33,8 @@ import com.sencha.gxt.data.shared.Store;
 import com.sencha.gxt.widget.core.client.Dialog.PredefinedButton;
 import com.sencha.gxt.widget.core.client.box.ConfirmMessageBox;
 import com.sencha.gxt.widget.core.client.box.ProgressMessageBox;
+import com.sencha.gxt.widget.core.client.container.ResizeContainer;
+import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent;
 import com.sencha.gxt.widget.core.client.event.DialogHideEvent.DialogHideHandler;
 import com.sencha.gxt.widget.core.client.event.HeaderContextMenuEvent;
@@ -64,6 +66,8 @@ private static final TextMetrics     _textMetrics;
 GLGridButtonContainer                buttonContainer;
 @UiField(provided = true)
 Grid<GLRecord>                       grid;
+@UiField
+VerticalLayoutContainer              topLevelContainer;
 
 private GLGridColumnModel            _columnModel;
 private GLGridContextMenu            _contextMenu;
@@ -101,11 +105,8 @@ public GLGridWidget(final IGLTable table, final String noRowsMessage,
   _rowLevelCommits = rowLevelCommits;
   _listStore = new GLListStore(getSQL(), true, columns);
   _selectedRecordSet = new TreeSet<>();
-  createGrid();
   buttonContainer = new GLGridButtonContainer(this);
   addButtons();
-  final IGLGridWidgetUiBinder uiBinder = GWT.create(IGLGridWidgetUiBinder.class);
-  initWidget(uiBinder.createAndBindUi(this));
 }
 //--------------------------------------------------------------------------------------------------
 protected final void addButton(final String buttonLabel,
@@ -246,11 +247,11 @@ public void clearAllRowSelectCheckboxes() {
   grid.getView().refresh(false);
 }
 //--------------------------------------------------------------------------------------------------
-private void createGrid() {
+private void createGrid(final ResizeContainer parentContainer) {
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   grid = new Grid<>(_listStore, _columnModel);
-  grid.setBorders(true);
+  grid.setBorders(false);
   grid.setColumnReordering(true);
   grid.setLoadMask(true);
   grid.setSelectionModel(_selectionModel);
@@ -263,8 +264,14 @@ private void createGrid() {
   }
   _contextMenu = new GLGridContextMenu(this);
   grid.setContextMenu(_contextMenu.build());
-  // todo:  _contentPanel.forceLayout();
   new QuickTip(grid);
+  final IGLGridWidgetUiBinder uiBinder = GWT.create(IGLGridWidgetUiBinder.class);
+  initWidget(uiBinder.createAndBindUi(this));
+  if (parentContainer != null) {
+    parentContainer.add(this);
+    parentContainer.forceLayout();
+    topLevelContainer.forceLayout();
+  }
 }
 //--------------------------------------------------------------------------------------------------
 private GridView<GLRecord> createGridView() {
@@ -348,11 +355,11 @@ protected GridSelectionModel<GLRecord> getSelectionModel() {
 //--------------------------------------------------------------------------------------------------
 public abstract GLSQL getSQL() throws GLDBException;
 //--------------------------------------------------------------------------------------------------
-public void loadData() {
+public void loadData(final ResizeContainer parentContainer) {
   _listStore.load(new IGLListStoreLoadedCallback() {
     @Override
     public void onSuccess() {
-      createGrid();
+      createGrid(parentContainer);
     }
   });
 }
