@@ -30,9 +30,9 @@ import com.sencha.gxt.widget.core.client.grid.Grid.GridCell;
 
 public class Old_GLGridContainer extends VerticalLayoutContainer {
 //--------------------------------------------------------------------------------------------------
-private final GLGridWidget _gridWidget;
+private final Old_GLGridWidget _gridWidget;
 //--------------------------------------------------------------------------------------------------
-Old_GLGridContainer(final GLGridWidget gridWidget) {
+Old_GLGridContainer(final Old_GLGridWidget gridWidget) {
   super();
   _gridWidget = gridWidget;
 }

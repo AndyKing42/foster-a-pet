@@ -70,7 +70,7 @@ private static final int             _resizeColumnExtraPadding;
 private static final TextMetrics     _textMetrics;
 
 private GLGridColumnModel            _columnModel;
-private final GLGridContainer        _contentPanel;
+private final Old_GLGridContainer    _contentPanel;
 private GLGridContextMenu            _contextMenu;
 protected Grid<GLRecord>             _grid;
 private GLGridEditingWrapper         _gridEditingWrapper;
@@ -92,9 +92,9 @@ static {
 }
 //--------------------------------------------------------------------------------------------------
 protected Old_GLGridWidget(final IGLTable table, final String noRowsMessage,
-                       final GLRecordValidator recordValidator, final boolean inlineEditing,
-                       final boolean useCheckBoxSelection, final boolean rowLevelCommits,
-                       final IGLColumn[] columns) throws GLDBException {
+                           final GLRecordValidator recordValidator, final boolean inlineEditing,
+                           final boolean useCheckBoxSelection, final boolean rowLevelCommits,
+                           final IGLColumn[] columns) throws GLDBException {
   super();
   _table = table;
   _noRowsMessage = noRowsMessage == null ? "There are no results to display" : noRowsMessage;
@@ -104,13 +104,13 @@ protected Old_GLGridWidget(final IGLTable table, final String noRowsMessage,
   _rowLevelCommits = rowLevelCommits;
   _listStore = new GLListStore(getSQL(), true, columns);
   _selectedRecordSet = new TreeSet<>();
-  _contentPanel = new GLGridContainer(this);
+  _contentPanel = new Old_GLGridContainer(this);
   addContentPanelButtons();
 }
 //--------------------------------------------------------------------------------------------------
 protected final void addContentPanelButton(final String buttonLabel,
                                            final EGLGridContentPanelButtonType contentPanelButtonType) {
-  _contentPanel.addButton(buttonLabel, contentPanelButtonType);
+  _contentPanel.addContentPanelButton(buttonLabel, contentPanelButtonType);
 }
 //--------------------------------------------------------------------------------------------------
 protected final void addContentPanelButton(final String buttonLabel,
@@ -254,7 +254,7 @@ public void clearAllRowSelectCheckboxes() {
 //--------------------------------------------------------------------------------------------------
 private void createGrid() {
   _selectionModel = new GridSelectionModel<>();
-  _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
+  // todo: _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   _grid = new Grid<>(_listStore, _columnModel);
   _grid.setBorders(true);
   _grid.setColumnReordering(true);
@@ -262,12 +262,12 @@ private void createGrid() {
   _grid.setSelectionModel(_selectionModel);
   _grid.setView(createGridView());
   addHeaderContextMenuHandler();
-  _gridEditingWrapper = new GLGridEditingWrapper(this, _inlineEditing, _recordValidator);
+  // todo:  _gridEditingWrapper = new GLGridEditingWrapper(this, _inlineEditing, _recordValidator);
   addFilters();
   if (_gridFilters != null) {
     _gridFilters.initPlugin(_grid);
   }
-  _contextMenu = new GLGridContextMenu(this);
+  // todo:  _contextMenu = new GLGridContextMenu(this);
   _grid.setContextMenu(_contextMenu.build());
   _contentPanel.add(_grid);
   _contentPanel.forceLayout();
