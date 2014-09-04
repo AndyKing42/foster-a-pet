@@ -17,7 +17,6 @@ import java.util.HashMap;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.event.GLRecordChangeEvent;
@@ -131,9 +130,6 @@ public void createPersonDetails(final GLRecord person) {
     final ContentPanel contentPanel = addTab(person, Person.DisplayName);
     final PersonDetailsWidget personDetailsWidget = new PersonDetailsWidget(person);
     contentPanel.setWidget(personDetailsWidget);
-    GLLog.popup(20, "contentPanel.height:" + contentPanel.getOffsetHeight(true));
-    GLLog.popup(20, "personContainer.height:" + //
-                    personDetailsWidget.personContainer.getOffsetHeight(true));
     Scheduler.get().scheduleDeferred(new ScheduledCommand() {
       @Override
       public void execute() {

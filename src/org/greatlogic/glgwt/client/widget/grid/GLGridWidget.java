@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TreeSet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLDBException;
@@ -248,6 +249,7 @@ public void clearAllRowSelectCheckboxes() {
 }
 //--------------------------------------------------------------------------------------------------
 private void createGrid(final ResizeContainer parentContainer) {
+  GLLog.popup(60, "createGrid for table:" + _table);
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   grid = new Grid<>(_listStore, _columnModel);
