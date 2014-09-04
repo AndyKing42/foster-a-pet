@@ -131,7 +131,7 @@ private void loadMainTable(final IGLListStoreLoadedCallback callback) {
     }
     @Override
     public void onSuccess() {
-      GLLog.popup(5, _sql.getTable() + " load succeeded (" + size() + " rows)");
+      GLLog.popup(60, _sql.getTable() + " load succeeded (" + size() + " rows)");
       callback.onSuccess();
     }
   });
