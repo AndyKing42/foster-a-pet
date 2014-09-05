@@ -358,9 +358,11 @@ protected GridSelectionModel<GLRecord> getSelectionModel() {
 public abstract GLSQL getSQL() throws GLDBException;
 //--------------------------------------------------------------------------------------------------
 public void loadData(final ResizeContainer parentContainer) {
+  GLLog.popup(60, "loadData():" + _table);
   _listStore.load(new IGLListStoreLoadedCallback() {
     @Override
     public void onSuccess() {
+      GLLog.popup(60, "loadData() onSuccess():" + _table);
       createGrid(parentContainer);
     }
   });
