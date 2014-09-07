@@ -143,19 +143,17 @@ private void loadNextLookupTable(final TreeSet<IGLTable> lookupTableSet,
     loadMainTable(callback);
     return;
   }
+  _currentLookupTable = lookupTableSet.first(); // pollFirst() doesn't work in GWT
+  lookupTableSet.remove(_currentLookupTable);
   final IGLLookupTableLoadedEventHandler eventHandler = new IGLLookupTableLoadedEventHandler() {
     @Override
     public void onLookupTableLoadedEvent(final GLLookupTableLoadedEvent lookupTableLoadedEvent) {
       if (lookupTableLoadedEvent.getTable() == _currentLookupTable) {
-        loadLookupTables(callback);
+        loadNextLookupTable(lookupTableSet, callback);
       }
     }
   };
-  GLClientUtil.getEventBus().addHandler(GLLookupTableLoadedEvent.LookupTableLoadedEventType,
-                                        eventHandler);
-  _currentLookupTable = lookupTableSet.first();
-  lookupTableSet.remove(_currentLookupTable);
-  GLClientUtil.getLookupCache().load(_currentLookupTable, true, false);
+  GLClientUtil.getLookupCache().load(_currentLookupTable, false, false, eventHandler);
 }
 //--------------------------------------------------------------------------------------------------
 @Override

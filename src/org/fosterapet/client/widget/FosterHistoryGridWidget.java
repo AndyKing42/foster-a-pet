@@ -13,6 +13,7 @@ package org.fosterapet.client.widget;
  * the License.
  */
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.FosterHistory;
 import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
@@ -23,21 +24,23 @@ import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 
-public class OrgPersonGridWidget extends GLGridWidget {
+public class FosterHistoryGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
 private static int _createPersonId; /* this is only used during creation of the grid */
 //--------------------------------------------------------------------------------------------------
-public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
-                           final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
-                           final IGLColumn... columns) throws GLDBException {
-  super(EFAPTable.OrgPerson, "There are no organizations for this person", recordValidator,
+public FosterHistoryGridWidget(final GLRecordValidator recordValidator,
+                               final boolean inlineEditing,
+                               final boolean useCheckBoxSelectionModel,
+                               final boolean rowLevelCommits, final IGLColumn... columns)
+  throws GLDBException {
+  super(EFAPTable.FosterHistory, "There is no foster history for this person", recordValidator,
         inlineEditing, useCheckBoxSelectionModel, rowLevelCommits, columns);
   _createPersonId = -1;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addButtons() {
-  addButton("New Organization Entry", EGLGridContentPanelButtonType.New);
+  addButton("New Foster History Entry", EGLGridContentPanelButtonType.New);
   addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
@@ -50,16 +53,16 @@ protected void addContextMenuItems() {
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addFilters() {
-  addFilter(OrgPerson.OrgId);
-  addFilter(OrgPerson.PersonRoleId);
+  addFilter(FosterHistory.FosterDateStart);
+  addFilter(FosterHistory.FosterDateFinish);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
     _sql = GLSQL.select();
-    _sql.from(EFAPTable.OrgPerson);
-    _sql.whereAnd(OrgPerson.PersonId, EGLDBOp.Equals, _createPersonId);
+    _sql.from(EFAPTable.FosterHistory);
+    _sql.whereAnd(FosterHistory.PrimaryPersonId, EGLDBOp.Equals, _createPersonId);
     _sql.whereAnd(OrgPerson.ArchiveDate, EGLDBOp.IsNull, null);
   }
   return _sql;
