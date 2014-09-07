@@ -53,8 +53,20 @@ public PersonDetailsWidget(final GLRecord person) {
   _recordEditor = new GLRecordEditor(person, true, personContainer);
 }
 //--------------------------------------------------------------------------------------------------
-@UiHandler({"orgButton"})
-public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+@UiHandler({"fosterHistoryButton"})
+public void onFosterHistoryButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final GLGridWidget gridWidget;
+  try {
+    gridWidget = GridWidgetManager.getFosterHistoryGrid(_person.asInt(Person.PersonId));
+    gridWidget.loadData(detailPanel);
+  }
+  catch (final GLDBException e) {
+    GLLog.popup(20, "Creation of the FosterHistory grid failed:" + e.getMessage());
+  }
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"orgPersonButton"})
+public void onOrgPersonButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   final GLGridWidget gridWidget;
   try {
     gridWidget = GridWidgetManager.getOrgPersonGrid(_person.asInt(Person.PersonId));
@@ -62,6 +74,18 @@ public void onOrgButtonSelect(@SuppressWarnings("unused") final SelectEvent even
   }
   catch (final GLDBException e) {
     GLLog.popup(20, "Creation of the OrgPerson grid failed:" + e.getMessage());
+  }
+}
+//--------------------------------------------------------------------------------------------------
+@UiHandler({"personRelationshipButton"})
+public void onPersonRelationshipButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  final GLGridWidget gridWidget;
+  try {
+    gridWidget = GridWidgetManager.getPersonRelationshipGrid(_person.asInt(Person.PersonId));
+    gridWidget.loadData(detailPanel);
+  }
+  catch (final GLDBException e) {
+    GLLog.popup(20, "Creation of the PersonRelationship grid failed:" + e.getMessage());
   }
 }
 //--------------------------------------------------------------------------------------------------

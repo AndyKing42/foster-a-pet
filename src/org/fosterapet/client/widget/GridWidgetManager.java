@@ -14,8 +14,10 @@ package org.fosterapet.client.widget;
  */
 import java.util.TreeMap;
 import org.fosterapet.shared.IDBEnums.EFAPTable;
+import org.fosterapet.shared.IDBEnums.FosterHistory;
 import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.fosterapet.shared.IDBEnums.Person;
+import org.fosterapet.shared.IDBEnums.PersonRelationship;
 import org.fosterapet.shared.IDBEnums.Pet;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLDBException;
@@ -44,11 +46,22 @@ static {
   _gridWidgetInfoMap = new TreeMap<>();
 }
 //--------------------------------------------------------------------------------------------------
+public static FosterHistoryGridWidget getFosterHistoryGrid(final int personId) throws GLDBException {
+  final FosterHistoryGridWidget result;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.FosterHistory);
+  FosterHistoryGridWidget.setCreatePersonId(personId);
+  result = new FosterHistoryGridWidget(validator, false, true, false, //
+                                       FosterHistory.FosterDateStart, //
+                                       FosterHistory.FosterDateFinish);
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
 public static OrgPersonGridWidget getOrgPersonGrid(final int personId) throws GLDBException {
   final OrgPersonGridWidget result;
   final GLRecordValidator validator;
   validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.OrgPerson);
-  OrgPersonGridWidget.setPersonId(personId);
+  OrgPersonGridWidget.setCreatePersonId(personId);
   result = new OrgPersonGridWidget(validator, false, true, false, OrgPerson.OrgId, //
                                    OrgPerson.PersonRoleId);
   return result;
@@ -92,6 +105,20 @@ public static PersonGridWidget getPersonGrid(final String gridName, final boolea
     _gridWidgetInfoMap.put(gridName, gridWidgetInfo);
   }
   return (PersonGridWidget)gridWidgetInfo._gridWidget;
+}
+//--------------------------------------------------------------------------------------------------
+public static PersonRelationshipGridWidget getPersonRelationshipGrid(final int personId)
+  throws GLDBException {
+  final PersonRelationshipGridWidget result;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.PersonRelationship);
+  PersonRelationshipGridWidget.setCreatePersonId(personId);
+  result = new PersonRelationshipGridWidget(validator, false, true, false, //
+                                            PersonRelationship.PersonId1, //
+                                            PersonRelationship.PersonId2, //
+                                            PersonRelationship.RelationshipOf1To2, //
+                                            PersonRelationship.RelationshipOf2To1);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 public static PetGridWidget getPetGrid(final String gridName) throws GLDBException {

@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
-import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent;
+import org.greatlogic.glgwt.client.event.GLLookupTableLoadedEvent.IGLLookupTableLoadedEventHandler;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLTable;
 
@@ -113,16 +113,20 @@ public boolean getLookupHasBeenLoaded(final IGLTable table) {
   return _cacheDefByTableMap.containsKey(table);
 }
 //--------------------------------------------------------------------------------------------------
-public void load(final IGLTable table, final boolean addToReloadList, final boolean forceReload) {
+public void load(final IGLTable table, final boolean addToReloadList, final boolean forceReload,
+                 final IGLLookupTableLoadedEventHandler eventHandler) {
   if (!forceReload && getLookupHasBeenLoaded(table)) {
-    GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, false));
+    final GLLookupTableLoadedEvent event = new GLLookupTableLoadedEvent(table, false);
+    GLClientUtil.getEventBus().fireEvent(event);
+    if (eventHandler != null) {
+      eventHandler.onLookupTableLoadedEvent(event);
+    }
     return;
   }
   try {
     final GLSQL sql = GLSQL.select();
     sql.from(table);
     _sqlModifier.modifySQL(sql);
-    GLLog.popup(20, "Reload of " + table + " was requested");
     final GLListStore listStore = new GLListStore(sql, false, table.getColumns());
     listStore.load(new IGLListStoreLoadedCallback() {
       @Override
@@ -141,8 +145,11 @@ public void load(final IGLTable table, final boolean addToReloadList, final bool
           displayValueToRecordMap.put(record.asString(table.getComboboxColumnMap().get(1)), record);
           keyToRecordMap.put(record.asInt(table.getPrimaryKeyColumn()), record);
         }
-        GLClientUtil.getEventBus().fireEvent(new GLLookupTableLoadedEvent(table, true));
-        GLLog.popup(20, "Cache load of " + table + " was successful");
+        final GLLookupTableLoadedEvent event = new GLLookupTableLoadedEvent(table, true);
+        GLClientUtil.getEventBus().fireEvent(event);
+        if (eventHandler != null) {
+          eventHandler.onLookupTableLoadedEvent(event);
+        }
       }
     });
   }
@@ -178,7 +185,7 @@ public GLRecord lookupRecordUsingKeyValue(final IGLTable lookupTable, final int 
 //--------------------------------------------------------------------------------------------------
 public void reloadAll() {
   for (final IGLTable table : _cachedTableList) {
-    load(table, false, true);
+    load(table, false, true, null);
   }
 }
 //--------------------------------------------------------------------------------------------------

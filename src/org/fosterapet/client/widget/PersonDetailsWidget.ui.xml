@@ -99,7 +99,7 @@
         <gxtcontainer:child layoutData='{sizeToContentsHLD}'>
           <gxtcontainer:VBoxLayoutContainer vBoxLayoutAlign='STRETCHMAX'>
             <gxtbutton:TextButton
-              ui:field='orgButton'
+              ui:field='orgPersonButton'
               text='Organizations'/>
             <gxtbutton:TextButton
               ui:field='personRelationshipButton'
