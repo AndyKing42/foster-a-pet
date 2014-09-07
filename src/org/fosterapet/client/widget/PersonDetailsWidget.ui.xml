@@ -68,7 +68,7 @@
   <!-- ========================================================================================= -->
   <gxtcontainer:VerticalLayoutContainer>
     <gxtcontainer:child layoutData='{sizeToContentsVLD}'>
-      <gxtcontainer:HBoxLayoutContainer ui:field='personContainer'>
+      <gxtcontainer:HBoxLayoutContainer ui:field='mainRecordContainer'>
         <gxtcontainer:VerticalLayoutContainer>
           <gxtform:FieldLabel itemId='Person.FirstName'/>
           <gxtform:FieldLabel itemId='Person.LastName'/>

@@ -14,7 +14,7 @@ package org.fosterapet.client.widget;
  */
 import org.fosterapet.shared.IDBEnums.EFAPTable;
 import org.fosterapet.shared.IDBEnums.FosterHistory;
-import org.fosterapet.shared.IDBEnums.OrgPerson;
+import org.fosterapet.shared.IDBEnums.Treatment;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLDBException;
@@ -24,25 +24,21 @@ import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 
-public class FosterHistoryGridWidget extends GLGridWidget {
+public class TreatmentGridWidget extends GLGridWidget {
 //--------------------------------------------------------------------------------------------------
-private static int _createPersonId; /* this is only used during creation of the grid */
-private static int _createPetId;   /* this is only used during creation of the grid */
+private static int _createPetId; /* this is only used during creation of the grid */
 //--------------------------------------------------------------------------------------------------
-public FosterHistoryGridWidget(final GLRecordValidator recordValidator,
-                               final boolean inlineEditing,
-                               final boolean useCheckBoxSelectionModel,
-                               final boolean rowLevelCommits, final IGLColumn... columns)
-  throws GLDBException {
-  super(EFAPTable.FosterHistory, "There is no foster history for this person", recordValidator,
+public TreatmentGridWidget(final GLRecordValidator recordValidator, final boolean inlineEditing,
+                           final boolean useCheckBoxSelectionModel, final boolean rowLevelCommits,
+                           final IGLColumn... columns) throws GLDBException {
+  super(EFAPTable.FosterHistory, "There are no treatments for this person", recordValidator,
         inlineEditing, useCheckBoxSelectionModel, rowLevelCommits, columns);
-  _createPersonId = -1;
   _createPetId = -1;
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addButtons() {
-  addButton("New Foster History Entry", EGLGridContentPanelButtonType.New);
+  addButton("New Treatment Entry", EGLGridContentPanelButtonType.New);
   addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
@@ -55,28 +51,22 @@ protected void addContextMenuItems() {
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addFilters() {
-  addFilter(FosterHistory.FosterDateStart);
-  addFilter(FosterHistory.FosterDateFinish);
+  addFilter(Treatment.LocId);
+  addFilter(Treatment.ScheduledDate);
+  addFilter(Treatment.TreatmentDate);
+  addFilter(Treatment.TreatmentDesc);
+  addFilter(Treatment.TreatmentTypeId);
 }
 //--------------------------------------------------------------------------------------------------
 @Override
 public GLSQL getSQL() throws GLDBException {
   if (_sql == null) {
     _sql = GLSQL.select();
-    _sql.from(EFAPTable.FosterHistory);
-    if (_createPersonId > 0) {
-      _sql.whereAnd(FosterHistory.PrimaryPersonId, EGLDBOp.Equals, _createPersonId);
-    }
-    else {
-      _sql.whereAnd(FosterHistory.PetId, EGLDBOp.Equals, _createPetId);
-    }
-    _sql.whereAnd(OrgPerson.ArchiveDate, EGLDBOp.IsNull, null);
+    _sql.from(EFAPTable.Treatment);
+    _sql.whereAnd(FosterHistory.PetId, EGLDBOp.Equals, _createPetId);
+    _sql.whereAnd(FosterHistory.ArchiveDate, EGLDBOp.IsNull, null);
   }
   return _sql;
-}
-//--------------------------------------------------------------------------------------------------
-public static void setCreatePersonId(final int createPersonId) {
-  _createPersonId = createPersonId;
 }
 //--------------------------------------------------------------------------------------------------
 public static void setCreatePetId(final int createPetId) {

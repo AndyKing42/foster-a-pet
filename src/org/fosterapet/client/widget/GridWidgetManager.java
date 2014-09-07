@@ -19,6 +19,8 @@ import org.fosterapet.shared.IDBEnums.OrgPerson;
 import org.fosterapet.shared.IDBEnums.Person;
 import org.fosterapet.shared.IDBEnums.PersonRelationship;
 import org.fosterapet.shared.IDBEnums.Pet;
+import org.fosterapet.shared.IDBEnums.PlanEntry;
+import org.fosterapet.shared.IDBEnums.Treatment;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
@@ -46,11 +48,24 @@ static {
   _gridWidgetInfoMap = new TreeMap<>();
 }
 //--------------------------------------------------------------------------------------------------
-public static FosterHistoryGridWidget getFosterHistoryGrid(final int personId) throws GLDBException {
+public static FosterHistoryGridWidget getFosterHistoryGridUsingPersonId(final int personId)
+  throws GLDBException {
   final FosterHistoryGridWidget result;
   final GLRecordValidator validator;
   validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.FosterHistory);
   FosterHistoryGridWidget.setCreatePersonId(personId);
+  result = new FosterHistoryGridWidget(validator, false, true, false, //
+                                       FosterHistory.FosterDateStart, //
+                                       FosterHistory.FosterDateFinish);
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
+public static FosterHistoryGridWidget getFosterHistoryGridUsingPetId(final int petId)
+  throws GLDBException {
+  final FosterHistoryGridWidget result;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.FosterHistory);
+  FosterHistoryGridWidget.setCreatePetId(petId);
   result = new FosterHistoryGridWidget(validator, false, true, false, //
                                        FosterHistory.FosterDateStart, //
                                        FosterHistory.FosterDateFinish);
@@ -157,6 +172,29 @@ public static PetGridWidget getPetGrid(final String gridName, final boolean inli
     _gridWidgetInfoMap.put(gridName, gridWidgetInfo);
   }
   return (PetGridWidget)gridWidgetInfo._gridWidget;
+}
+//--------------------------------------------------------------------------------------------------
+public static PlanEntryGridWidget getPlanEntryGridUsingPetId(final int petId) throws GLDBException {
+  final PlanEntryGridWidget result;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.PlanEntry);
+  PlanEntryGridWidget.setCreatePetId(petId);
+  result = new PlanEntryGridWidget(validator, false, true, false, //
+                                   PlanEntry.TreatmentTypeId, PlanEntry.ScheduledDate, //
+                                   PlanEntry.ActionDate, PlanEntry.PlanEntryNotes);
+  return result;
+}
+//--------------------------------------------------------------------------------------------------
+public static TreatmentGridWidget getTreatmentGridUsingPetId(final int petId) throws GLDBException {
+  final TreatmentGridWidget result;
+  final GLRecordValidator validator;
+  validator = GLClientUtil.getValidators().getRecordValidator(EFAPTable.PlanEntry);
+  TreatmentGridWidget.setCreatePetId(petId);
+  result = new TreatmentGridWidget(validator, false, true, false, //
+                                   Treatment.TreatmentTypeId, Treatment.ScheduledDate, //
+                                   Treatment.TreatmentDate, Treatment.LocId, Treatment.LocId,//
+                                   Treatment.Cost, Treatment.TreatmentDesc);
+  return result;
 }
 //--------------------------------------------------------------------------------------------------
 }
