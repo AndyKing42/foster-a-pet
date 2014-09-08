@@ -65,6 +65,7 @@ public void onFosterHistoryButtonSelect(@SuppressWarnings("unused") final Select
     }
   }
   else {
+    this_needs_to_use_a_container_containing_the_grid_and_the_button_panel();
     detailPanel.setWidget(_fosterHistoryGridWidget);
   }
 }
