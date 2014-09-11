@@ -6,13 +6,11 @@
   xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
-  xmlns:ui='urn:ui:com.google.gwt.uibinder'
->
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
   <!--====== Padding =========================================================================== -->
   <ui:with
     type='com.sencha.gxt.core.client.util.Padding'
-    field='padding_3_3_3_3'
-  >
+    field='padding_3_3_3_3'>
     <ui:attributes
       top='3'
       right='3'
@@ -22,8 +20,7 @@
   <!--====== Margins =========================================================================== -->
   <ui:with
     field='margins_3_3_3_3'
-    type='com.sencha.gxt.core.client.util.Margins'
-  >
+    type='com.sencha.gxt.core.client.util.Margins'>
     <ui:attributes
       bottom='3'
       left='3'
@@ -32,8 +29,7 @@
   </ui:with>
   <ui:with
     field='margins_0_3_3_0'
-    type='com.sencha.gxt.core.client.util.Margins'
-  >
+    type='com.sencha.gxt.core.client.util.Margins'>
     <ui:attributes
       bottom='0'
       left='3'
@@ -42,8 +38,7 @@
   </ui:with>
   <ui:with
     field='margins_0_0_0_0'
-    type='com.sencha.gxt.core.client.util.Margins'
-  >
+    type='com.sencha.gxt.core.client.util.Margins'>
     <ui:attributes
       bottom='0'
       left='0'
@@ -53,16 +48,14 @@
   <!--====== BorderLayoutData ================================================================== -->
   <ui:with
     field='northData'
-    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'
-  >
+    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_3_3_3_3}'
       size='30'/>
   </ui:with>
   <ui:with
     field='westData'
-    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'
-  >
+    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_0_3_3_0}'
       size='50'
@@ -70,16 +63,14 @@
   </ui:with>
   <ui:with
     field='eastData'
-    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'
-  >
+    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_0_3_3_0}'
       size='100'/>
   </ui:with>
   <ui:with
     field='southData'
-    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'
-  >
+    type='com.sencha.gxt.widget.core.client.container.BorderLayoutContainer.BorderLayoutData'>
     <ui:attributes
       margins='{margins_3_3_3_3}'
       size='100'/>
@@ -87,45 +78,39 @@
   <!--====== BoxLayoutData ===================================================================== -->
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.BoxLayoutContainer.BoxLayoutData'
-    field='boxLayoutDataMargins_3_3_3_3'
-  >
+    field='boxLayoutDataMargins_3_3_3_3'>
     <ui:attributes margins='{margins_3_3_3_3}'/>
   </ui:with>
   <!--====== VerticalLayoutData ================================================================ -->
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='appTabPanelLayoutData'
-  >
+    field='appTabPanelLayoutData'>
     <ui:attributes
       height='1'
       width='1'/>
   </ui:with>
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='mainContainerLayoutData'
-  >
+    field='mainContainerLayoutData'>
     <ui:attributes
       height='1'
       width='1'/>
   </ui:with>
   <ui:with
     type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
-    field='mainMenuLayoutData'
-  >
+    field='mainMenuLayoutData'>
     <ui:attributes
       height='-1'
       width='1'/>
   </ui:with>
   <!--========================================================================================== -->
   <gxtcontainer:Viewport>
-    <gxtcontainer:VerticalLayoutContainer>
+    <gxtcontainer:VerticalLayoutContainer ui:field='mainLayoutTopLevelContainer'>
       <gxtcontainer:child layoutData='{mainContainerLayoutData}'>
         <gxtcontainer:BorderLayoutContainer borders='true'>
           <gxtcontainer:north layoutData='{northData}'>
             <gxt:ContentPanel headerVisible='false'>
-              <gxtform:FieldLabel
-                labelSeparator=''
-                text='North'/>
+              <gxtbutton:TextButton ui:field='mainLayoutForceLayoutButton' text='Main Layout'/>
             </gxt:ContentPanel>
           </gxtcontainer:north>
           <gxtcontainer:west layoutData='{westData}'>

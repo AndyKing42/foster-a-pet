@@ -77,6 +77,7 @@ private GridFilters<GLRecord>        _gridFilters;
 private final boolean                _inlineEditing;
 protected GLListStore                _listStore;
 private final String                 _noRowsMessage;
+private ResizeContainer              _parentContainer;
 private final GLRecordValidator      _recordValidator;
 private final boolean                _rowLevelCommits;
 private final TreeSet<GLRecord>      _selectedRecordSet;
@@ -250,6 +251,7 @@ public void clearAllRowSelectCheckboxes() {
 //--------------------------------------------------------------------------------------------------
 private void createGrid(final ResizeContainer parentContainer) {
   GLLog.popup(60, "createGrid for table:" + _table);
+  _parentContainer = parentContainer;
   _selectionModel = new GridSelectionModel<>();
   _columnModel = new GLGridColumnModel(this, _inlineEditing, _useCheckBoxSelection);
   grid = new Grid<>(_listStore, _columnModel);
@@ -269,11 +271,10 @@ private void createGrid(final ResizeContainer parentContainer) {
   new QuickTip(grid);
   final IGLGridWidgetUiBinder uiBinder = GWT.create(IGLGridWidgetUiBinder.class);
   initWidget(uiBinder.createAndBindUi(this));
-  if (parentContainer != null) {
-    parentContainer.add(this);
-    parentContainer.forceLayout();
-    topLevelContainer.forceLayout();
+  if (_parentContainer != null) {
+    _parentContainer.add(this);
   }
+  forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
 private GridView<GLRecord> createGridView() {
@@ -321,6 +322,13 @@ private Filter<GLRecord, ?> createListFilter(final IGLColumn column,
     }
   }
   return new ListFilter<GLRecord, String>((ValueProvider<GLRecord, String>)valueProvider, listStore);
+}
+//--------------------------------------------------------------------------------------------------
+public void forceLayout() {
+  if (_parentContainer != null) {
+    _parentContainer.forceLayout();
+    topLevelContainer.forceLayout();
+  }
 }
 //--------------------------------------------------------------------------------------------------
 GLGridColumnModel getColumnModel() {
