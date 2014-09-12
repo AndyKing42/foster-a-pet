@@ -443,7 +443,8 @@ private void resizeNextColumn(final ProgressMessageBox messageBox, final int col
         grid.getView().refresh(true);
         return;
       }
-      messageBox.updateProgress((double)columnIndex / (lastColumnIndex + 1), "{0}% Complete");
+      final int numberOfColumnsToResize = lastColumnIndex + (_useCheckBoxSelection ? 0 : 1);
+      messageBox.updateProgress((double)columnIndex / numberOfColumnsToResize, "{0}% Complete");
       resizeNextColumn(messageBox, columnIndex + 1, lastColumnIndex);
     }
   });
