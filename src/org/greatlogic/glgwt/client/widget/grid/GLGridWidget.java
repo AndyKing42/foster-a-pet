@@ -11,6 +11,7 @@ import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
 import org.greatlogic.glgwt.client.db.IGLListStoreLoadedCallback;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
@@ -113,7 +114,13 @@ public GLGridWidget(final IGLTable table, final String noRowsMessage,
 //--------------------------------------------------------------------------------------------------
 protected final void addButton(final String buttonLabel,
                                final EGLGridContentPanelButtonType contentPanelButtonType) {
-  buttonContainer.addButton(buttonLabel, contentPanelButtonType);
+  addButton(buttonLabel, contentPanelButtonType, null);
+}
+//--------------------------------------------------------------------------------------------------
+protected final void addButton(final String buttonLabel,
+                               final EGLGridContentPanelButtonType contentPanelButtonType,
+                               final IGLColumnInitializer columnInitializer) {
+  buttonContainer.addButton(buttonLabel, contentPanelButtonType, columnInitializer);
 }
 //--------------------------------------------------------------------------------------------------
 protected final void addButton(final String buttonLabel, final SelectHandler selectHandler) {
