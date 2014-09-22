@@ -18,12 +18,13 @@ import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLContextMenuItemType;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLDBException;
 import org.greatlogic.glgwt.client.db.GLSQL;
+import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
 import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.GLRecordValidator;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLDBOp;
 
-public class OrgPersonGridWidget extends GLGridWidget {
+public class OrgPersonGridWidget extends GLGridWidget implements IGLColumnInitializer {
 //--------------------------------------------------------------------------------------------------
 private static int _createPersonId; /* this is only used during creation of the grid */
 //--------------------------------------------------------------------------------------------------
@@ -37,7 +38,7 @@ public OrgPersonGridWidget(final GLRecordValidator recordValidator, final boolea
 //--------------------------------------------------------------------------------------------------
 @Override
 protected void addButtons() {
-  addButton("New Organization Entry", EGLGridContentPanelButtonType.New);
+  addButton("New Organization Entry", EGLGridContentPanelButtonType.New, this);
   addButton("Delete Selected", EGLGridContentPanelButtonType.Delete);
 }
 //--------------------------------------------------------------------------------------------------
@@ -63,6 +64,14 @@ public GLSQL getSQL() throws GLDBException {
     _sql.whereAnd(OrgPerson.ArchiveDate, EGLDBOp.IsNull, null);
   }
   return _sql;
+}
+//--------------------------------------------------------------------------------------------------
+@Override
+public Object initializeColumn(final IGLColumn column) {
+  if (column == OrgPerson.PersonId) {
+    return 1;
+  }
+  return null;
 }
 //--------------------------------------------------------------------------------------------------
 public static void setCreatePersonId(final int createPersonId) {
