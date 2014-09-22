@@ -38,7 +38,7 @@ public GLRecord getPersonRecord() {
   if (_personRecord == null) {
     final GLRecordDef recordDef = new GLRecordDef(EFAPTable.Person, _personColumnCSV.split(","));
     try {
-      _personRecord = new GLRecord(recordDef, (ArrayList)GLCSV.extract(_personDataCSV));
+      _personRecord = new GLRecord(recordDef, (ArrayList)GLCSV.extract(_personDataCSV), null);
     }
     catch (final GLCSVException e) {
       GLLog.popup(30, "CSV extract failed:" + e.getMessage());

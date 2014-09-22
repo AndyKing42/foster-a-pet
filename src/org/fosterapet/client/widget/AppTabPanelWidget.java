@@ -26,8 +26,6 @@ import org.greatlogic.glgwt.client.widget.grid.GLGridWidget;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLTable;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -130,12 +128,6 @@ public void createPersonDetails(final GLRecord person) {
     final ContentPanel contentPanel = addTab(person, Person.DisplayName);
     final PersonDetailsWidget personDetailsWidget = new PersonDetailsWidget(person);
     contentPanel.setWidget(personDetailsWidget);
-    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-      @Override
-      public void execute() {
-        contentPanel.forceLayout();
-      }
-    });
   }
 }
 //--------------------------------------------------------------------------------------------------

@@ -86,7 +86,7 @@ private static void loadPetTestData(final GLListStore listStore, final List<GLRe
     valueList.add(GLClientUtil.getRandomInt(PetTypes.length) + 1);
     valueList.add(nameAndSex[1]);
     valueList.add(GLClientUtil.getRandomInt(2) == 0 ? "Y" : "N");
-    final GLRecord record = new GLRecord(recordDef, valueList);
+    final GLRecord record = new GLRecord(recordDef, valueList, null);
     addRecordToList(listStore, recordList, record);
     ++nextPetId;
   }
@@ -111,7 +111,7 @@ private static void loadPetTypeTestData(final GLListStore listStore, final List<
     valueList.add(petTypeFields[0]);
     valueList.add(petTypeFields[1]);
     valueList.add(nextPetTypeId);
-    final GLRecord record = new GLRecord(recordDef, valueList);
+    final GLRecord record = new GLRecord(recordDef, valueList, null);
     addRecordToList(listStore, recordList, record);
     ++nextPetTypeId;
   }

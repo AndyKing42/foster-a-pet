@@ -4,6 +4,7 @@ import org.greatlogic.glgwt.client.core.GLClientUtil;
 import org.greatlogic.glgwt.client.core.GLLog;
 import org.greatlogic.glgwt.client.core.IGLClientEnums.EGLGridContentPanelButtonType;
 import org.greatlogic.glgwt.client.db.GLRecord;
+import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,13 +40,19 @@ public GLGridButtonContainer(final GLGridWidget gridWidget) {
 //--------------------------------------------------------------------------------------------------
 public void addButton(final String buttonLabel,
                       final EGLGridContentPanelButtonType contentPanelButtonType) {
+  addButton(buttonLabel, contentPanelButtonType, null);
+}
+//--------------------------------------------------------------------------------------------------
+public void addButton(final String buttonLabel,
+                      final EGLGridContentPanelButtonType contentPanelButtonType,
+                      final IGLColumnInitializer columnInitializer) {
   SelectHandler selectHandler;
   switch (contentPanelButtonType) {
     case Delete:
       selectHandler = createDeleteButtonHandler();
       break;
     case New:
-      selectHandler = createNewButtonHandler();
+      selectHandler = createNewButtonHandler(columnInitializer);
       break;
     case Save:
       selectHandler = createSaveButtonHandler();
@@ -108,7 +115,7 @@ private SelectHandler createDeleteButtonHandler() {
   };
 }
 //--------------------------------------------------------------------------------------------------
-private SelectHandler createNewButtonHandler() {
+private SelectHandler createNewButtonHandler(final IGLColumnInitializer columnInitializer) {
   final IGLCreateNewRecordCallback newRecordCallback = new IGLCreateNewRecordCallback() {
     @Override
     public void onFailure(final Throwable t) {
@@ -125,7 +132,8 @@ private SelectHandler createNewButtonHandler() {
   return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
-      GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), newRecordCallback);
+      GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), columnInitializer,
+                                   newRecordCallback);
     }
   };
 }

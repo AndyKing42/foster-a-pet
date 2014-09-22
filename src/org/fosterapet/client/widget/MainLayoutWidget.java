@@ -16,11 +16,9 @@ import org.fosterapet.client.FAPUtil;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer;
-import com.sencha.gxt.widget.core.client.event.SelectEvent;
 
 public class MainLayoutWidget extends Composite {
 //--------------------------------------------------------------------------------------------------
@@ -43,11 +41,6 @@ public MainLayoutWidget() {
 //--------------------------------------------------------------------------------------------------
 public AppTabPanelWidget getAppTabPanelWidget() {
   return appTabPanelWidget;
-}
-//--------------------------------------------------------------------------------------------------
-@UiHandler({"mainLayoutForceLayoutButton"})
-public void onMainLayoutForceLayoutButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
-  mainLayoutTopLevelContainer.forceLayout();
 }
 //--------------------------------------------------------------------------------------------------
 }
