@@ -24,6 +24,7 @@ import org.greatlogic.glgwt.client.db.GLDBUpdater;
 import org.greatlogic.glgwt.client.db.GLLookupCache;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.db.GLRecordDef;
+import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
 import org.greatlogic.glgwt.client.db.IGLCreateNewRecordCallback;
 import org.greatlogic.glgwt.client.event.GLEventBus;
 import org.greatlogic.glgwt.client.event.GLLoginSuccessfulEvent.IGLLoginSuccessfulEventHandler;
@@ -94,6 +95,7 @@ public static void changePassword(final int userId,
 }
 //--------------------------------------------------------------------------------------------------
 public static void createNewRecord(final GLRecordDef recordDef,
+                                   final IGLColumnInitializer columnInitializer,
                                    final IGLCreateNewRecordCallback createNewRecordCallback) {
   final AsyncCallback<GLServiceResponse> callback;
   callback = new AsyncCallback<GLServiceResponse>() {
@@ -106,7 +108,7 @@ public static void createNewRecord(final GLRecordDef recordDef,
     @Override
     public void onSuccess(final GLServiceResponse response) {
       final GLGetNextIdServiceResponse serviceResponse = (GLGetNextIdServiceResponse)response;
-      final GLRecord record = new GLRecord(recordDef);
+      final GLRecord record = new GLRecord(recordDef, columnInitializer);
       record.put(recordDef.getTable().getPrimaryKeyColumn(), serviceResponse.getNextId());
       _clientFactory.getEventBus().fireEvent(new GLNewRecordEvent(record));
       if (createNewRecordCallback != null) {

@@ -34,8 +34,8 @@ private final ArrayList<Object> _valueList;
  * @param recordDef The record definition associated with this record. This is used when values are
  * retrieved using the field name or column.
  */
-public GLRecord(final GLRecordDef recordDef) {
-  this(recordDef, null);
+public GLRecord(final GLRecordDef recordDef, final IGLColumnInitializer columnInitializer) {
+  this(recordDef, null, columnInitializer);
 }
 //--------------------------------------------------------------------------------------------------
 /**
@@ -56,12 +56,13 @@ public GLRecord(final GLRecord copyFromRecord) {
  * constructor. If the list is null then the record will be initialized based upon the default
  * values that are set in the IGLTable#initialize method.
  */
-public GLRecord(final GLRecordDef recordDef, final ArrayList<Object> list) {
+public GLRecord(final GLRecordDef recordDef, final ArrayList<Object> list,
+                final IGLColumnInitializer columnInitializer) {
   _recordDef = recordDef;
   if (list == null) {
     _inserted = true;
     _valueList = new ArrayList<Object>(_recordDef.getNumberOfFields());
-    _recordDef.getTable().initializeNewRecord(this);
+    _recordDef.getTable().initializeNewRecord(this, columnInitializer);
   }
   else {
     _valueList = list;

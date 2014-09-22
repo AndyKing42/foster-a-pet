@@ -110,7 +110,9 @@
         <gxtcontainer:BorderLayoutContainer borders='true'>
           <gxtcontainer:north layoutData='{northData}'>
             <gxt:ContentPanel headerVisible='false'>
-              <gxtbutton:TextButton ui:field='mainLayoutForceLayoutButton' text='Main Layout'/>
+              <gxtform:FieldLabel
+                labelSeparator=''
+                text='North'/>
             </gxt:ContentPanel>
           </gxtcontainer:north>
           <gxtcontainer:west layoutData='{westData}'>

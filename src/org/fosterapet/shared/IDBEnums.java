@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.TreeMap;
 import org.fosterapet.shared.IFAPEnums.ELookupType;
 import org.greatlogic.glgwt.client.db.GLRecord;
+import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
 import org.greatlogic.glgwt.shared.IGLColumn;
 import org.greatlogic.glgwt.shared.IGLLookupType;
 import org.greatlogic.glgwt.shared.IGLSharedEnums.EGLColumnDataType;
@@ -171,12 +172,18 @@ public void initializeColumnSettings() {
   }
 }
 @Override
-public void initializeNewRecord(final GLRecord record) {
+public void initializeNewRecord(final GLRecord record, final IGLColumnInitializer columnInitializer) {
   initializeColumnSettings();
   for (final IGLColumn column : _columnByColumnNameMap.values()) {
     final Object defaultValue = column.getDefaultValue();
     if (defaultValue != null) {
       record.set(column, defaultValue);
+    }
+    if (columnInitializer != null) {
+      final Object value = columnInitializer.initializeColumn(column);
+      if (value != null) {
+        record.set(column, value);
+      }
     }
   }
 }

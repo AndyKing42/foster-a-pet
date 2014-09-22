@@ -4,13 +4,23 @@
   xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
   xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
   xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  <!-- VerticalLayoutData declarations ========================================================= -->
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='fillRemainingVLD'>
+    <ui:attributes
+      height='1'
+      width='1'/>
+  </ui:with>
   <!--========================================================================================== -->
-  <gxtcontainer:SimpleContainer>
-    <gxt:PlainTabPanel
-      ui:field='tabPanel'
-      animScroll='true'
-      closeContextMenu='true'
-      tabScroll='true'>
-    </gxt:PlainTabPanel>
-  </gxtcontainer:SimpleContainer>
+  <gxtcontainer:VerticalLayoutContainer>
+    <gxtcontainer:child layoutData='{fillRemainingVLD}'>
+      <gxt:PlainTabPanel
+        ui:field='tabPanel'
+        animScroll='true'
+        closeContextMenu='true'
+        tabScroll='true'>
+      </gxt:PlainTabPanel>
+    </gxtcontainer:child>
+  </gxtcontainer:VerticalLayoutContainer>
 </ui:UiBinder>

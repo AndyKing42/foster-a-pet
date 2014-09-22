@@ -1,4 +1,4 @@
-package org.greatlogic.glgwt.shared;
+package org.greatlogic.glgwt.client.db;
 /*
  * Copyright 2006-2014 Andy King (GreatLogic.com)
  * 
@@ -12,21 +12,10 @@ package org.greatlogic.glgwt.shared;
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import java.util.Collection;
-import java.util.TreeMap;
-import org.greatlogic.glgwt.client.db.GLRecord;
-import org.greatlogic.glgwt.client.db.IGLColumnInitializer;
+import org.greatlogic.glgwt.shared.IGLColumn;
 
-public interface IGLTable {
+public interface IGLColumnInitializer {
 //--------------------------------------------------------------------------------------------------
-public String getAbbrev();
-public IGLColumn findColumnUsingColumnName(final String columnName);
-public Class<? extends Enum<?>> getColumnEnumClass();
-public Collection<IGLColumn> getColumns();
-public TreeMap<Integer, IGLColumn> getComboboxColumnMap();
-public String getDataSourceName();
-public IGLColumn getPrimaryKeyColumn();
-public void initializeColumnSettings();
-public void initializeNewRecord(final GLRecord record, final IGLColumnInitializer columnInitializer);
+public Object initializeColumn(final IGLColumn column);
 //--------------------------------------------------------------------------------------------------
 }

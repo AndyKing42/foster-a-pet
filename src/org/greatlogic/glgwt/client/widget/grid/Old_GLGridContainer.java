@@ -129,7 +129,8 @@ private SelectHandler createNewButtonHandler() {
   return new SelectHandler() {
     @Override
     public void onSelect(final SelectEvent event) {
-      GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), newRecordCallback);
+      GLClientUtil.createNewRecord(_gridWidget.getListStore().getRecordDef(), null,
+                                   newRecordCallback);
     }
   };
 }
