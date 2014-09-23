@@ -55,7 +55,7 @@ GLDBUpdate(final GLRecord modifiedRecord, final TreeSet<IGLColumn> modifiedColum
       }
     }
   }
-  populateDefaultValuesForInsert(modifiedColumnSet);
+  populateDefaultValuesForInsert(modifiedRecord, modifiedColumnSet);
 }
 //--------------------------------------------------------------------------------------------------
 GLDBUpdate(final IGLTable table, final Store<GLRecord>.Record listStoreRecord) {
@@ -70,7 +70,7 @@ GLDBUpdate(final IGLTable table, final Store<GLRecord>.Record listStoreRecord) {
       updatedColumnSet.add(column);
     }
   }
-  populateDefaultValuesForInsert(updatedColumnSet);
+  populateDefaultValuesForInsert(listStoreRecord.getModel(), updatedColumnSet);
 }
 //--------------------------------------------------------------------------------------------------
 public boolean getInserted() {
@@ -93,11 +93,28 @@ public IGLTable getTable() {
   return _table;
 }
 //--------------------------------------------------------------------------------------------------
-private void populateDefaultValuesForInsert(final TreeSet<IGLColumn> updatedColumnSet) {
+private void populateDefaultValuesForInsert(final GLRecord record,
+                                            final TreeSet<IGLColumn> updatedColumnSet) {
   if (_inserted) {
+    final IGLColumnInitializer columnInitializer = record.getColumnInitializer();
     for (final IGLColumn column : _table.getColumns()) {
-      if (!updatedColumnSet.contains(column) && column.getDefaultValue() != null) {
-        _modifiedColumnMap.put(column, column.getDefaultValue().toString());
+      if (!updatedColumnSet.contains(column) && _modifiedColumnMap.get(column) == null) {
+        String modifiedColumnValue = null;
+        if (columnInitializer != null) {
+          final Object value = columnInitializer.initializeColumn(column);
+          if (value != null) {
+            modifiedColumnValue = value.toString();
+          }
+        }
+        if (modifiedColumnValue == null) {
+          final Object value = column.getDefaultValue();
+          if (value != null) {
+            modifiedColumnValue = value.toString();
+          }
+        }
+        if (modifiedColumnValue != null) {
+          _modifiedColumnMap.put(column, modifiedColumnValue);
+        }
       }
     }
   }

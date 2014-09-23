@@ -25,6 +25,7 @@ import org.greatlogic.glgwt.shared.IGLColumn;
 public class GLRecord implements Comparable<GLRecord> {
 //--------------------------------------------------------------------------------------------------
 private ArrayList<String>       _changedFieldNameList;
+private IGLColumnInitializer    _columnInitializer;
 private boolean                 _inserted;
 private final GLRecordDef       _recordDef;
 private final ArrayList<Object> _valueList;
@@ -59,10 +60,11 @@ public GLRecord(final GLRecord copyFromRecord) {
 public GLRecord(final GLRecordDef recordDef, final ArrayList<Object> list,
                 final IGLColumnInitializer columnInitializer) {
   _recordDef = recordDef;
+  _columnInitializer = columnInitializer;
   if (list == null) {
     _inserted = true;
     _valueList = new ArrayList<Object>(_recordDef.getNumberOfFields());
-    _recordDef.getTable().initializeNewRecord(this, columnInitializer);
+    _recordDef.getTable().initializeNewRecord(this, _columnInitializer);
   }
   else {
     _valueList = list;
@@ -227,6 +229,10 @@ public ArrayList<String> getChangedFieldNameList() {
     _changedFieldNameList = new ArrayList<String>();
   }
   return _changedFieldNameList;
+}
+//--------------------------------------------------------------------------------------------------
+public IGLColumnInitializer getColumnInitializer() {
+  return _columnInitializer;
 }
 //--------------------------------------------------------------------------------------------------
 public boolean getInserted() {
