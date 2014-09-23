@@ -187,7 +187,7 @@ public void initializeNewRecord(final GLRecord record, final IGLColumnInitialize
     }
   }
 }
-}
+} // EFAPTable
 //--------------------------------------------------------------------------------------------------
 public enum Address implements IGLColumn {
 AddressId("AddressId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
@@ -262,7 +262,7 @@ public String getTitle() {
 public String getToolTip() {
   return _toolTip;
 }
-}
+} // Address
 //--------------------------------------------------------------------------------------------------
 public enum Attribute implements IGLColumn {
 AdditionalComments("Additional Comments", null, EGLColumnDataType.String, 2000, true, null, false, 0, null, -1),
