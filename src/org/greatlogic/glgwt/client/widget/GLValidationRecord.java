@@ -25,12 +25,12 @@ import com.sencha.gxt.widget.core.client.grid.editing.GridRowEditing;
 public class GLValidationRecord {
 //--------------------------------------------------------------------------------------------------
 private final TreeMap<String, GLColumnConfig<?>> _columnConfigMap; // column name -> GLColumnConfig
-private final GridRowEditing<GLRecord>           _gridEditing;
+private final GridRowEditing<GLRecord>           _gridRowEditing;
 //--------------------------------------------------------------------------------------------------
 public GLValidationRecord(final TreeMap<String, GLColumnConfig<?>> columnConfigMap,
-                          final GridRowEditing<GLRecord> gridEditing) {
+                          final GridRowEditing<GLRecord> gridRowEditing) {
   _columnConfigMap = columnConfigMap;
-  _gridEditing = gridEditing;
+  _gridRowEditing = gridRowEditing;
 }
 //--------------------------------------------------------------------------------------------------
 public BigDecimal asDec(final IGLColumn column) {
@@ -46,7 +46,7 @@ private Object asObject(final IGLColumn column) {
   if (columnConfig == null) {
     return null;
   }
-  final IsField<Object> editor = _gridEditing.getEditor(columnConfig);
+  final IsField<Object> editor = _gridRowEditing.getEditor(columnConfig);
   if (editor == null) {
     return null;
   }
