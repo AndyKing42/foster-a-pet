@@ -15,6 +15,7 @@ package org.greatlogic.glgwt.client.widget.grid;
 import java.util.ArrayList;
 import java.util.TreeMap;
 import org.greatlogic.glgwt.client.core.GLClientUtil;
+import org.greatlogic.glgwt.client.db.GLListStore;
 import org.greatlogic.glgwt.client.db.GLRecord;
 import org.greatlogic.glgwt.client.widget.GLFieldUtils;
 import org.greatlogic.glgwt.client.widget.GLValidationRecord;
@@ -99,9 +100,20 @@ private void createGridEditing(final boolean inlineEditing) {
   else {
     final GridRowEditing<GLRecord> gridRowEditing = new GridRowEditing<>(_gridWidget.getGrid());
     _gridEditing = gridRowEditing;
+    createGridRowEditingCancelButtonHandler(gridRowEditing);
     createGridRowEditingSaveButtonHandler(gridRowEditing);
     addButtonBarDeleteButton(gridRowEditing);
   }
+}
+//--------------------------------------------------------------------------------------------------
+private void createGridRowEditingCancelButtonHandler(final GridRowEditing<GLRecord> gridRowEditing) {
+  gridRowEditing.getCancelButton().addBeforeSelectHandler(new BeforeSelectHandler() {
+    @Override
+    public void onBeforeSelect(final BeforeSelectEvent event) {
+      final GLListStore listStore = _gridWidget.getListStore();
+      listStore.remove(0);
+    }
+  });
 }
 //--------------------------------------------------------------------------------------------------
 private void createGridRowEditingSaveButtonHandler(final GridRowEditing<GLRecord> gridRowEditing) {
@@ -112,8 +124,8 @@ private void createGridRowEditingSaveButtonHandler(final GridRowEditing<GLRecord
       if (_recordValidator != null) {
         final TreeMap<String, GLColumnConfig<?>> columnConfigMap;
         columnConfigMap = _gridWidget.getColumnModel().getColumnConfigMap();
-        final GLValidationRecord validationRecord = new GLValidationRecord(columnConfigMap, //
-                                                                           gridRowEditing);
+        final GLValidationRecord validationRecord;
+        validationRecord = new GLValidationRecord(columnConfigMap, gridRowEditing);
         final ArrayList<GLValidationError> errorList = _recordValidator.validate(validationRecord);
         if (errorList != null && errorList.size() > 0) {
           for (final GLValidationError validationError : errorList) {
