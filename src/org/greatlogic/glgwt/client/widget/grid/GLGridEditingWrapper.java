@@ -110,8 +110,10 @@ private void createGridRowEditingCancelButtonHandler(final GridRowEditing<GLReco
   gridRowEditing.getCancelButton().addBeforeSelectHandler(new BeforeSelectHandler() {
     @Override
     public void onBeforeSelect(final BeforeSelectEvent event) {
-      final GLListStore listStore = _gridWidget.getListStore();
-      listStore.remove(0);
+      if (_gridWidget.getSelectionModel().getSelectedItem().getInserted()) {
+        final GLListStore listStore = _gridWidget.getListStore();
+        listStore.remove(0);
+      }
     }
   });
 }
