@@ -39,12 +39,11 @@ public GLColumnConfig(final IGLColumn column,
   super(valueProvider, width, header);
   _column = column;
   if (width < 0) {
-    if (column.getDefaultGridColumnWidth() < 0) {
-      setWidth(column.getDataType().getDefaultGridColumnWidth());
+    int defaultWidth = column.getDefaultGridColumnWidth();
+    if (defaultWidth < 0) {
+      defaultWidth = column.getDataType().getDefaultGridColumnWidth();
     }
-    else {
-      setWidth(column.getDefaultGridColumnWidth());
-    }
+    setWidth(defaultWidth);
   }
   if (_column != null) {
     _validator = GLClientUtil.getValidators().getColumnValidator(_column);
