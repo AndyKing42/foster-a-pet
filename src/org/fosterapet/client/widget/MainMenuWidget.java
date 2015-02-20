@@ -156,6 +156,11 @@ public void onPetsButtonSelect(@SuppressWarnings("unused") final SelectEvent eve
   }
 }
 //--------------------------------------------------------------------------------------------------
+@UiHandler({"reloadCacheButton"})
+public void onReloadCacheButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
+  GLClientUtil.getLookupCache().reloadAll();
+}
+//--------------------------------------------------------------------------------------------------
 @UiHandler({"reloadTestDataButton"})
 public void onReloadTestDataButtonSelect(@SuppressWarnings("unused") final SelectEvent event) {
   final ConfirmMessageBox messageBox;
