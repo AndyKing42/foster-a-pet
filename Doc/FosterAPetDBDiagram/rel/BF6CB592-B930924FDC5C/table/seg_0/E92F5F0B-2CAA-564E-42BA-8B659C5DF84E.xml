@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E92F5F0B-2CAA-564E-42BA-8B659C5DF84E" name="TreatmentType">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="TreatmentTypeId" id="66AE9FE4-5D5D-D7FA-FB38-BECA325D93EE">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="ArchiveDate" id="493D3629-955D-6DDA-082C-49EE669E0F12">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-27 20:43:05 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Column>
+<Column name="OrgId" id="2B0FA521-8962-EE23-C016-86F7F84D530D">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-15 04:13:17 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+</Column>
+<Column name="TreatmentTypeDesc" id="4A5C7CD6-550D-FF59-D4D5-966D2C928939">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+</Column>
+<Column name="TreatmentTypeShortDesc" id="122F348A-D3AD-66C9-75AA-73F3654F6935">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+</Column>
+<Column name="Version" id="8C6031BC-C4DC-9539-AE18-E42EBBF5835B">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30</dataTypeSize>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="44EC2D73-78CA-A87E-1F2F-F6D39ACA40D3" name="FosterLocTypePK">
+<createdBy>aking</createdBy>
+<createdTime>2011-09-26 22:57:14 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="66AE9FE4-5D5D-D7FA-FB38-BECA325D93EE"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="86A96EC9-AB55-1890-BFA2-D19283A4BEB9" name="TreatmentType__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:44:11 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<indexColumnUsage>
+<colUsage columnID="2B0FA521-8962-EE23-C016-86F7F84D530D"/>
+<colUsage columnID="122F348A-D3AD-66C9-75AA-73F3654F6935"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A93D04F2-FDCA-049A-93D5-99F6F4AF6862" name="TreatmentType__IDX">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-19 15:44:11 UTC</createdTime>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<indexColumnUsage>
+<colUsage columnID="2B0FA521-8962-EE23-C016-86F7F84D530D"/>
+<colUsage columnID="4A5C7CD6-550D-FF59-D4D5-966D2C928939"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

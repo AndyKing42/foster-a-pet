@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM 'http://dl.google.com/gwt/DTD/xhtml.ent'>
+<ui:UiBinder
+  xmlns:gl='urn:import:org.greatlogic.glgwt.client.widget.grid'
+  xmlns:gwt='urn:import:com.google.gwt.user.client.ui'
+  xmlns:gxt='urn:import:com.sencha.gxt.widget.core.client'
+  xmlns:gxtbutton='urn:import:com.sencha.gxt.widget.core.client.button'
+  xmlns:gxtcontainer='urn:import:com.sencha.gxt.widget.core.client.container'
+  xmlns:gxtform='urn:import:com.sencha.gxt.widget.core.client.form'
+  xmlns:gxtgrid='urn:import:com.sencha.gxt.widget.core.client.grid'
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'>
+  <!-- VerticalLayoutData declarations ========================================================= -->
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='fillRemainingVLD'>
+    <ui:attributes
+      height='1'
+      width='1'/>
+  </ui:with>
+  <ui:with
+    type='com.sencha.gxt.widget.core.client.container.VerticalLayoutContainer.VerticalLayoutData'
+    field='sizeToContentsVLD'>
+    <ui:attributes
+      height='-1'
+      width='1'/>
+  </ui:with>
+  <!-- ========================================================================================= -->
+  <gxtcontainer:VerticalLayoutContainer ui:field='topLevelContainer'>
+    <gxtcontainer:child layoutData='{fillRemainingVLD}'>
+      <gxt:ContentPanel headerVisible='false'>
+        <gxtgrid:Grid ui:field='grid'/>
+      </gxt:ContentPanel>
+    </gxtcontainer:child>
+    <gxtcontainer:child layoutData='{sizeToContentsVLD}'>
+      <gl:GLGridButtonContainer ui:field='buttonContainer'/>
+    </gxtcontainer:child>
+  </gxtcontainer:VerticalLayoutContainer>
+</ui:UiBinder>

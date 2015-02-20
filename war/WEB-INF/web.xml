@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+  version="2.5"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <context-param>
+    <param-name>ConfigFilename</param-name>
+    <param-value>cfg/FosterAPet.cfg</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.fosterapet.server.FAPServletContextListener</listener-class>
+  </listener>
+  <servlet>
+    <servlet-name>FAPRemoteServiceServlet</servlet-name>
+    <servlet-class>org.fosterapet.server.FAPRemoteServiceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FAPRemoteServiceServlet</servlet-name>
+    <url-pattern>/fosterapet/FAPRemoteServiceServlet</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  <init-param>
+    <!-- This value assumes a GWT compile with '-deploy war/WEB-INF/deploy/' -->
+    <param-name>symbolMapsFileSystem</param-name>
+    <param-value>WEB-INF/deploy/fosterapet/symbolMaps/</param-value>
+  </init-param>
+</web-app>

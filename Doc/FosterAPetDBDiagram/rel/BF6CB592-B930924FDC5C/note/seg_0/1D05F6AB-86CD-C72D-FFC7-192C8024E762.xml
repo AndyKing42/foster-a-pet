@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Note class="oracle.dbtools.crest.model.design.Note" name="Note_1" directorySegmentName="seg_0" id="1D05F6AB-86CD-C72D-FFC7-192C8024E762">
+<createdBy>aking</createdBy>
+<createdTime>2013-04-17 19:02:31 UTC</createdTime>
+<comment>AttributeDefType can be: Per, Pet, Loc, or Tre (for person, pet, location, or treatment).</comment>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+</Note>

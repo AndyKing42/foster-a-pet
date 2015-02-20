@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Note class="oracle.dbtools.crest.model.design.Note" name="Note_6" directorySegmentName="seg_0" id="BA3ECA79-B101-436F-BF33-97B0D14BFE0C">
+<createdBy>Andy</createdBy>
+<createdTime>2013-04-18 02:03:57 UTC</createdTime>
+<comment>Loc Attributes&lt;br/&gt;&lt;br/&gt;Children&lt;br/&gt;House/Apartment/etc</comment>
+<ownerDesignName>FosterAPetDBDiagram</ownerDesignName>
+</Note>
