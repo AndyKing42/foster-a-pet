@@ -1253,8 +1253,8 @@ ArchiveDate("Archive Date", null, EGLColumnDataType.DateTime, 0, true, null, fal
 PersonId1("Person 1", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
 PersonId2("Person 2", null, EGLColumnDataType.Int, 0, false, null, false, 0, ELookupType.Person, -1),
 PersonRelationshipId("PersonRelationshipId", null, EGLColumnDataType.Int, 0, false, null, true, 0, null, -1),
-RelationshipOf1To2("Relationship Of 1 To 2", null, EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
-RelationshipOf2To1("Relationship Of 2 To 1", null, EGLColumnDataType.String, 20, false, null, false, 0, ELookupType.PersonRelationship, -1),
+RelationshipOf1To2("Relationship Of 1 To 2", null, EGLColumnDataType.String, 20, false, null, false, 0, null, -1),
+RelationshipOf2To1("Relationship Of 2 To 1", null, EGLColumnDataType.String, 20, false, null, false, 0, null, -1),
 Version("Version", null, EGLColumnDataType.String, 30, false, null, false, 0, null, -1);
 private final int               _comboboxSeq;
 private final EGLColumnDataType _dataType;
