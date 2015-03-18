@@ -1,0 +1,1 @@
+Enables caregivers to find animals that need temporary homes, and vice versa.
